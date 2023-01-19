@@ -5,6 +5,7 @@ import { Suspense } from 'react'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 
 import Overview from './pages/Customer/Overview/Overview'
+import { Support } from './pages/Customer/Support/Support'
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
       <Suspense fallback="loading">
         <Routes>
           <Route path="/" element={<Overview />} />
+          <Route path="/support" element={<Support />} />
         </Routes>
       </Suspense>
     </Router>

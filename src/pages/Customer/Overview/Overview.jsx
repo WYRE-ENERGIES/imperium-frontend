@@ -1,6 +1,5 @@
 import { theme } from 'antd'
-import React, { useState } from 'react'
-import Swal from 'sweetalert2'
+import React from 'react'
 
 import PageLayout from '../../../components/Layout/PageLayout'
 import InstructionModal from './InstructionModal/InstructionModal'

@@ -1,6 +1,6 @@
 import { Layout, theme } from 'antd'
-import React from 'react'
 
+import React from 'react'
 import Sidebar from '../SideBar/Sidebar'
 
 const { Content } = Layout
@@ -17,6 +17,7 @@ const PageLayout = ({ children }) => {
         className="site-layout"
         style={{
           marginLeft: 280,
+          backgroundColor: '#FCFCFD',
         }}
       >
         <Content

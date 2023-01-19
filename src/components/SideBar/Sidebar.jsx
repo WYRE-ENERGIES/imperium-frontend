@@ -25,7 +25,7 @@ const items = [{ icon: BarChartOutlined, title: 'Overview', linkTo: '/' }].map(
 )
 
 const bottomItems = [
-  { icon: HiOutlineSupport, title: 'Support', linkTo: '#' },
+  { icon: HiOutlineSupport, title: 'Support', linkTo: '/support' },
   { icon: SettingOutlined, title: 'My Account', linkTo: '#' },
 ].map((item, index) => (
   <Item
