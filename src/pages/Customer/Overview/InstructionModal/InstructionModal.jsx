@@ -1,6 +1,5 @@
-import React from 'react'
 import { Link } from 'react-router-dom'
-
+import React from 'react'
 import classes from './InstructionModal.module.scss'
 
 const InstructionModal = () => {
@@ -15,7 +14,7 @@ const InstructionModal = () => {
         <Link to="" className={classes.InstructionModal__buttonTop}>
           Visit Imperium Ecommerce to view all SHS offers
         </Link>
-        <Link to="/" className={classes.InstructionModal__buttonBottom}>
+        <Link to="/support" className={classes.InstructionModal__buttonBottom}>
           Contact Support
         </Link>
       </div>

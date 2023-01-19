@@ -23,14 +23,15 @@ const columns = [
     dataIndex: 'priority',
     width: '10%',
     render: (text) => {
+      const color = getPriorityColor(text)
       return (
         <Tag
-          color="error"
           key={text}
           style={{
             backgroundColor: 'white',
-            border: '1px solid red',
+            border: `1px solid ${color}`,
             borderRadius: '10px',
+            color: color,
           }}
         >
           {text}
@@ -93,17 +94,29 @@ const getColor = (name) => {
   let color = ''
 
   switch (name) {
-    case 'Urgent':
-      color = 'error'
-      break
     case 'Pending':
       color = 'warning'
       break
-    case 'Completed':
+    case 'Resolved':
       color = 'success'
       break
     default:
       color = 'error'
+      break
+  }
+
+  return color
+}
+
+const getPriorityColor = (name) => {
+  let color = ''
+
+  switch (name) {
+    case 'Urgent':
+      color = '#B42318'
+      break
+    case 'Normal':
+      color = '#363F72'
       break
   }
 
@@ -119,9 +132,27 @@ const data = [
   },
   {
     id: 2,
-    subject: 'Failing SHS',
+    subject: 'TDS is missing',
     priority: 'Urgent',
-    status: 'Completed',
+    status: 'Pending',
+  },
+  {
+    id: 3,
+    subject: 'Tags • Applications & Uses is missing',
+    priority: 'Normal',
+    status: 'Resolved',
+  },
+  {
+    id: 4,
+    subject: 'Image is missing',
+    priority: 'Urgent',
+    status: 'Resolved',
+  },
+  {
+    id: 5,
+    subject: 'Failing SHS',
+    priority: 'Normal',
+    status: 'Resolved',
   },
 ]
 
