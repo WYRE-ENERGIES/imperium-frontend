@@ -1,0 +1,45 @@
+.InstructionModal {
+  background: linear-gradient(106.01deg, #c2fcaf 0%, #b7a9ff 98.25%);
+  border-radius: 16px;
+  width: 595px;
+  height: 320px;
+  border: 1px solid #c4c4c4;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 42px 36px;
+  text-align: center;
+  margin: 20% auto;
+  box-shadow: -5px 6px 11px 2px rgba(77, 76, 76, 0.65);
+  -webkit-box-shadow: -5px 6px 11px 2px rgba(77, 76, 76, 0.65);
+  -moz-box-shadow: -5px 6px 11px 2px rgba(77, 76, 76, 0.65);
+
+  &__buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    & > * {
+      border-radius: 8px;
+      height: 46px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+  &__buttonTop {
+    width: 380px;
+    margin-bottom: 16px;
+    margin-top: 32px;
+    background: #497a38;
+    color: #fff;
+  }
+
+  &__buttonBottom {
+    width: 177px;
+    background: #f5f5f5;
+    color: #18181B
+  }
+}

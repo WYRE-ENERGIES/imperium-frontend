@@ -1,0 +1,9 @@
+.ant-menu > .ant-menu-item:hover,
+.ant-menu > .ant-menu-item-active {
+  background: #f0f7ed !important;
+}
+
+.ant-menu > .ant-menu-item-selected {
+  background-color: #f0f7ed;
+  color: #385e2b;
+}

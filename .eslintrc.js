@@ -36,5 +36,6 @@ module.exports = {
     'react/prop-types': 'off',
     'simple-import-sort/imports': 'error',
     'simple-import-sort/exports': 'error',
+    'no-unused-vars': 'off',
   },
 }
