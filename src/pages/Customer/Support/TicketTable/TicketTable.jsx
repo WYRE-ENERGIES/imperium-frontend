@@ -3,6 +3,7 @@ import { Space, Table, Tag, Tooltip } from 'antd'
 import { BsDot } from 'react-icons/bs'
 import { FaRegQuestionCircle } from 'react-icons/fa'
 import React from 'react'
+import Swal from 'sweetalert2'
 
 const columns = [
   {
@@ -81,10 +82,12 @@ const columns = [
     title: '',
     key: 'action',
     width: '10%',
-    render: (_) => (
+    render: (_, record) => (
       <Space size="middle">
-        <a>Delete</a>
-        <a>Edit</a>
+        <a style={{ color: '#737373' }} onClick={() => handleDelete(record.id)}>
+          Delete
+        </a>
+        <a style={{ color: '#737373' }}>Edit</a>
       </Space>
     ),
   },
@@ -123,36 +126,57 @@ const getPriorityColor = (name) => {
   return color
 }
 
+const handleDelete = (id) => {
+  Swal.fire({
+    title: 'Are you sure?',
+    text: "You won't be able to revert this!",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Yes, delete it!',
+  }).then((result) => {
+    if (result.isConfirmed) {
+      Swal.fire('Deleted!', 'ticket has been deleted.', 'success')
+    }
+  })
+}
+
 const data = [
   {
     id: 1,
     subject: 'Missing SHS',
     priority: 'Urgent',
     status: 'Pending',
+    key: 1,
   },
   {
     id: 2,
     subject: 'TDS is missing',
     priority: 'Urgent',
     status: 'Pending',
+    key: 2,
   },
   {
     id: 3,
     subject: 'Tags • Applications & Uses is missing',
     priority: 'Normal',
     status: 'Resolved',
+    key: 3,
   },
   {
     id: 4,
     subject: 'Image is missing',
     priority: 'Urgent',
     status: 'Resolved',
+    key: 4,
   },
   {
     id: 5,
     subject: 'Failing SHS',
     priority: 'Normal',
     status: 'Resolved',
+    key: 5,
   },
 ]
 

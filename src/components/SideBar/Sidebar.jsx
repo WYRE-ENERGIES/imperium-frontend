@@ -1,44 +1,36 @@
 import { BarChartOutlined, SettingOutlined } from '@ant-design/icons'
 import { Divider, Layout, Menu } from 'antd'
-import React from 'react'
-import { HiOutlineSupport } from 'react-icons/hi'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 
-import { ReactComponent as Logo } from '../../assets/logo.svg'
 import Footer from './Footer/Footer'
+import { HiOutlineSupport } from 'react-icons/hi'
+import { ReactComponent as Logo } from '../../assets/logo.svg'
+import React from 'react'
 import styles from './Sidebar.module.scss'
 
 const { Sider } = Layout
-const { Item } = Menu
 
 const items = [{ icon: BarChartOutlined, title: 'Overview', linkTo: '/' }].map(
-  (item, index) => (
-    <Item
-      key={String(index + 1)}
-      icon={React.createElement(item.icon)}
-      className={styles.SidebarMenuItem}
-      style={{ paddingLeft: '12px' }}
-    >
-      <Link to={item.linkTo}>{item.title}</Link>
-    </Item>
-  ),
+  (item) => ({
+    key: `${item.linkTo}`,
+    icon: React.createElement(item.icon),
+    className: styles.SidebarMenuItem,
+    label: <Link to={item.linkTo}>{item.title}</Link>,
+  }),
 )
 
 const bottomItems = [
   { icon: HiOutlineSupport, title: 'Support', linkTo: '/support' },
   { icon: SettingOutlined, title: 'My Account', linkTo: '#' },
-].map((item, index) => (
-  <Item
-    key={String(index + 1)}
-    icon={React.createElement(item.icon)}
-    className={styles.SidebarMenuItem}
-    style={{ paddingLeft: '12px' }}
-  >
-    <Link to={item.linkTo}>{item.title}</Link>
-  </Item>
-))
+].map((item) => ({
+  key: `${item.linkTo}`,
+  icon: React.createElement(item.icon),
+  label: <Link to={item.linkTo}>{item.title}</Link>,
+}))
 
 const Sidebar = ({ bgColor }) => {
+  const location = useLocation()
+
   return (
     <Sider
       style={{
@@ -67,15 +59,18 @@ const Sidebar = ({ bgColor }) => {
           className={styles.SidebarMenu}
           theme="light"
           mode="inline"
-          defaultSelectedKeys={['1']}
+          selectedKeys={[location.pathname]}
           style={{ flex: 1, marginTop: '24px' }}
-        >
-          {items}
-        </Menu>
+          items={items}
+        />
         <div>
-          <Menu theme="light" mode="inline" className={styles.SidebarMenu}>
-            {bottomItems}
-          </Menu>
+          <Menu
+            className={styles.SidebarMenu}
+            theme="light"
+            mode="inline"
+            selectedKeys={[location.pathname]}
+            items={bottomItems}
+          />
           <Divider />
           <Footer userName="Emeka Isokun" />
         </div>

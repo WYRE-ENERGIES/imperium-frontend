@@ -1,7 +1,7 @@
 .SidebarMenu {
   border: 0 !important;
 
-  & > .SidebarMenuItem {
-    padding-left: 0;
+  & > li {
+    padding-left: 12px !important;
   }
 }

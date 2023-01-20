@@ -1,5 +1,6 @@
 import './App.css'
 import 'antd/dist/reset.css'
+import 'react-toastify/dist/ReactToastify.css'
 
 import { Suspense } from 'react'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'

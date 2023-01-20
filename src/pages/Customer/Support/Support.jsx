@@ -1,9 +1,11 @@
+import React, { useState } from 'react'
+
 import { Button } from 'antd'
 import { ReactComponent as Logo } from '../../../assets/icon.svg'
 import { MdNorthEast } from 'react-icons/md'
 import PageBreadcrumb from '../../../components/PageBreadcrumb/PageBreadcrumb'
 import PageLayout from '../../../components/Layout/PageLayout'
-import React from 'react'
+import TicketForm from './TicketForm/TicketForm'
 import TicketTable from './TicketTable/TicketTable'
 import classes from './Support.module.scss'
 
@@ -25,12 +27,18 @@ const InnerCard = ({ title, description, icon }) => (
 )
 
 export const Support = () => {
+  const [openModal, setOpenModal] = useState(false)
+
+  const toggleModal = () => setOpenModal(!openModal)
+
   return (
     <PageLayout>
       <div className={classes.Support} style={{ backgroundColor: '#FCFCFD' }}>
         <section className={classes.Support__headerSection}>
           <PageBreadcrumb title="Support" />
-          <Button className={classes.Support__button}>Create Ticket</Button>
+          <Button className={classes.Support__button} onClick={toggleModal}>
+            Create Ticket
+          </Button>
         </section>
         <section className={classes.Support__topSection}>
           <TicketTable />
@@ -46,6 +54,11 @@ export const Support = () => {
           ))}
         </section>
       </div>
+      <TicketForm
+        title="Create Ticket"
+        isOpen={openModal}
+        toggleModal={toggleModal}
+      />
     </PageLayout>
   )
 }

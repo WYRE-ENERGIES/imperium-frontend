@@ -1,8 +1,9 @@
-import { theme } from 'antd'
-import React from 'react'
-
-import PageLayout from '../../../components/Layout/PageLayout'
 import InstructionModal from './InstructionModal/InstructionModal'
+import PageBreadcrumb from '../../../components/PageBreadcrumb/PageBreadcrumb'
+import PageLayout from '../../../components/Layout/PageLayout'
+import React from 'react'
+import classes from './Overview.module.scss'
+import { theme } from 'antd'
 
 const Overview = () => {
   const {
