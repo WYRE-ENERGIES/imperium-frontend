@@ -1,7 +1,7 @@
 import { Button, Divider, Form, Input, Modal, Select, Typography } from 'antd'
+import React, { useEffect } from 'react'
 import { ToastContainer, toast } from 'react-toastify'
 
-import React from 'react'
 import { ReactComponent as TicketIcon } from '../../../../assets/ticket-icon.svg'
 import classes from './TicketForm.module.scss'
 
@@ -18,7 +18,7 @@ const layout = {
   },
 }
 
-const ModalForm = ({ toggleModal }) => {
+const ModalForm = ({ toggleModal, ticketData }) => {
   const [form] = Form.useForm()
   const onFinish = (values) => {
     toast.success('Ticket submitted', {
@@ -28,6 +28,8 @@ const ModalForm = ({ toggleModal }) => {
     })
   }
 
+  useEffect(() => form.resetFields(), [ticketData])
+
   return (
     <Form
       {...layout}
@@ -35,6 +37,7 @@ const ModalForm = ({ toggleModal }) => {
       className={classes.TicketForm}
       form={form}
       onFinish={onFinish}
+      initialValues={ticketData}
     >
       <Divider />
       <Form.Item
@@ -101,7 +104,7 @@ const ModalForm = ({ toggleModal }) => {
   )
 }
 
-const TicketForm = ({ title, isOpen, toggleModal }) => {
+const TicketForm = ({ title, isOpen, toggleModal, ticketData }) => {
   return (
     <Modal
       title={
@@ -130,7 +133,11 @@ const TicketForm = ({ title, isOpen, toggleModal }) => {
       width={688}
       footer={null}
     >
-      <ModalForm title={title} toggleModal={toggleModal} />
+      <ModalForm
+        title={title}
+        toggleModal={toggleModal}
+        ticketData={ticketData}
+      />
     </Modal>
   )
 }

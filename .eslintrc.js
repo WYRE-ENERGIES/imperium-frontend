@@ -28,7 +28,7 @@ module.exports = {
       files: ['src/**/*.js', 'src/**/*.jsx'],
     },
   ],
-  plugins: ['simple-import-sort', 'prettier'],
+  plugins: ['prettier'],
   rules: {
     camelcase: 0,
     'prettier/prettier': ['error', {}, { usePrettierrc: true }],

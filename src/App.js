@@ -1,4 +1,3 @@
-import './App.css'
 import 'antd/dist/reset.css'
 import 'react-toastify/dist/ReactToastify.css'
 

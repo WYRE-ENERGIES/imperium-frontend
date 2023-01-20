@@ -17,7 +17,7 @@ const data = [
 
 const InnerCard = ({ title, description, icon }) => (
   <div className={classes.Support__innerSection}>
-    <p>{title}</p>
+    <p className={classes.Support__title}>{title}</p>
     <p className={classes.Support__p}>
       {!icon && <Logo style={{ marginRight: 13 }} />}
       {description}
@@ -28,20 +28,32 @@ const InnerCard = ({ title, description, icon }) => (
 
 export const Support = () => {
   const [openModal, setOpenModal] = useState(false)
+  const [ticketData, setTicketData] = useState({})
 
   const toggleModal = () => setOpenModal(!openModal)
+
+  const handleEditTicket = (data) => {
+    setTicketData((prev) => ({ ...prev, ...data }))
+    toggleModal()
+  }
 
   return (
     <PageLayout>
       <div className={classes.Support} style={{ backgroundColor: '#FCFCFD' }}>
         <section className={classes.Support__headerSection}>
           <PageBreadcrumb title="Support" />
-          <Button className={classes.Support__button} onClick={toggleModal}>
+          <Button
+            className={classes.Support__button}
+            onClick={() => {
+              setTicketData({})
+              toggleModal()
+            }}
+          >
             Create Ticket
           </Button>
         </section>
         <section className={classes.Support__topSection}>
-          <TicketTable />
+          <TicketTable onEditTicket={handleEditTicket} />
         </section>
         <section className={classes.Support__bottomSection}>
           {data.map((item, index) => (
@@ -58,6 +70,7 @@ export const Support = () => {
         title="Create Ticket"
         isOpen={openModal}
         toggleModal={toggleModal}
+        ticketData={ticketData}
       />
     </PageLayout>
   )
