@@ -1,16 +1,7 @@
-import {
-  Button,
-  Divider,
-  Form,
-  Input,
-  message,
-  Modal,
-  Select,
-  Typography,
-} from 'antd'
-import React, { memo, useState } from 'react'
-import { toast, ToastContainer } from 'react-toastify'
+import { Button, Divider, Form, Input, Modal, Select, Typography } from 'antd'
+import { ToastContainer, toast } from 'react-toastify'
 
+import React from 'react'
 import { ReactComponent as TicketIcon } from '../../../../assets/ticket-icon.svg'
 import classes from './TicketForm.module.scss'
 
