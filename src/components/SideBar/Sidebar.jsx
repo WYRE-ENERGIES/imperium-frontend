@@ -10,14 +10,14 @@ import styles from './Sidebar.module.scss'
 
 const { Sider } = Layout
 
-const items = [{ icon: BarChartOutlined, title: 'Overview', linkTo: '/' }].map(
-  (item) => ({
-    key: `${item.linkTo}`,
-    icon: React.createElement(item.icon),
-    className: styles.SidebarMenuItem,
-    label: <Link to={item.linkTo}>{item.title}</Link>,
-  }),
-)
+const items = [
+  { icon: BarChartOutlined, title: 'Overview', linkTo: '/overview' },
+].map((item) => ({
+  key: `${item.linkTo}`,
+  icon: React.createElement(item.icon),
+  className: styles.SidebarMenuItem,
+  label: <Link to={item.linkTo}>{item.title}</Link>,
+}))
 
 const bottomItems = [
   { icon: HiOutlineSupport, title: 'Support', linkTo: '/support' },
