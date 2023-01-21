@@ -7,14 +7,10 @@ import PageLayout from '../../../components/Layout/PageLayout'
 import React from 'react'
 import { ReactComponent as SEnergyWidgetIcon } from '../../../assets/overview/cancel-energy-con.svg'
 import SHSTable from '../../../components/SHSTable/SHSTable'
+import WidgetFilter from '../../../components/WidgetFilter/WidgetFilter'
 import classes from './Overview.module.scss'
-import { theme } from 'antd'
 
 const Overview = () => {
-  const {
-    token: { colorBgContainer },
-  } = theme.useToken()
-
   const widgets = [
     {
       id: 1,
@@ -49,11 +45,13 @@ const Overview = () => {
 
   return (
     <PageLayout>
-      <div
-        style={{ backgroundColor: colorBgContainer }}
-        className={classes.Overview}
-      >
-        Overview Page
+      <div style={{ backgroundColor: '#FCFCFD' }} className={classes.Overview}>
+        <section className={classes.Overview__headerSection}>
+          <PageBreadcrumb title="Overview" />
+        </section>
+        <section className={classes.Overview__filters}>
+          <WidgetFilter />
+        </section>
         <div className={classes.Overview__widgets}>{widgets}</div>
         <div className={classes.Overview__shsTable}>
           <SHSTable />
