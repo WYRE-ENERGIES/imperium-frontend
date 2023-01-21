@@ -14,6 +14,11 @@
 
   &__widgets {
     display: flex;
+    flex-wrap: wrap;
     gap: 24px;
+  }
+
+  &__shsTable {
+    
   }
 }
