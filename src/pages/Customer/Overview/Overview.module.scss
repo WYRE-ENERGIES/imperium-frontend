@@ -1,6 +1,13 @@
 .Overview {
+  & > div:not(:last-child) {
+    margin-bottom: 24px;
+  }
+
   &__widgets {
     display: flex;
     gap: 24px;
+  }
+
+  &__shsTable {
   }
 }

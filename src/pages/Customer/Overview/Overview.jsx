@@ -6,6 +6,7 @@ import PageBreadcrumb from '../../../components/PageBreadcrumb/PageBreadcrumb'
 import PageLayout from '../../../components/Layout/PageLayout'
 import React from 'react'
 import { ReactComponent as SEnergyWidgetIcon } from '../../../assets/overview/cancel-energy-con.svg'
+import SHSTable from '../../../components/SHSTable/SHSTable'
 import classes from './Overview.module.scss'
 import { theme } from 'antd'
 
@@ -48,9 +49,15 @@ const Overview = () => {
 
   return (
     <PageLayout>
-      <div style={{ backgroundColor: colorBgContainer }}>
+      <div
+        style={{ backgroundColor: colorBgContainer }}
+        className={classes.Overview}
+      >
         Overview Page
         <div className={classes.Overview__widgets}>{widgets}</div>
+        <div className={classes.Overview__shsTable}>
+          <SHSTable />
+        </div>
       </div>
       {/* <InstructionModal /> */}
     </PageLayout>
