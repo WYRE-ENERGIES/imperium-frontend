@@ -50,6 +50,7 @@
   &__btn {
     display: flex;
     justify-content: space-between;
+    gap: 12px;
 
     & > * {
       padding: 10px 18px;
@@ -71,12 +72,10 @@
   &__submitBtn {
     background: #385e2b;
     color: #fff;
-    margin-left: 6px;
   }
 
   &__cancelBtn {
     background: #ffffff;
-    margin-right: 6px;
 
     &:hover,
     &:active {

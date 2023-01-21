@@ -1,0 +1,49 @@
+.OverviewWidget {
+  display: flex;
+  flex: 1;
+  padding: 24px;
+  height: 168px;
+  background: #ffffff;
+  border: 1px solid #e6e6e6;
+  box-shadow: 0px 1px 3px rgba(16, 24, 40, 0.1),
+    0px 1px 2px rgba(16, 24, 40, 0.06);
+  border-radius: 8px;
+  gap: 24px;
+
+  &__data {
+    & > * {
+      font-style: normal;
+      letter-spacing: -0.02em;
+    }
+  }
+
+  &__title {
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 24px;
+    color: #363636;
+    margin-bottom: 24px;
+  }
+
+  &__subtitle {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
+    color: #808080;
+    margin-bottom: 8px;
+  }
+
+  &__value {
+    font-weight: 600;
+    font-size: 36px;
+    line-height: 44px;
+    color: #363636;
+
+    & span {
+      font-weight: 400;
+      font-size: 12px;
+      line-height: 18px;
+      color: #363636;
+    }
+  }
+}
