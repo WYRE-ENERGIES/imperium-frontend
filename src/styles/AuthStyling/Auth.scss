@@ -1,0 +1,371 @@
+@import "../variables/vairables.scss";
+
+$bgWhite : white;
+$formBottonpadding: 12px 20px;
+$Inputpadding: 7px 14px;
+$FullWidth: 100%;
+$borderRadius : 6px;
+$cursor : pointer;
+$boxShadow: 1px 1.5px 1px #c4c4c498;
+$letterSpacing: 1.5px;
+
+
+.leftSection {
+    background: $bgWhite;
+    padding: $AuthSectionPadding
+}
+
+
+.FormHeader {
+
+    h1 {
+        font-size: $AuthFormHeaderFontSize;
+        font-weight: 600;
+    }
+
+    p {
+        color: #808080;
+        font-size: $FormTaglineFontSize;
+        margin-top: -.4rem;
+        line-height: 24px;
+    }
+}
+
+
+.SignUp {
+    width: 415px;
+    margin-top: 3rem;
+
+    .submitButton {
+        margin-top: -31px;
+    }
+
+    button {
+        background-color: white;
+        border: 1px Solid #e6e3e3;
+        font-weight: 600;
+        box-shadow: 1px 1.5px 1px #c4c4c498;
+        margin: 1rem 0;
+    }
+
+
+    .ant-divider-horizontal.ant-divider-with-text-center::before,
+    .ant-divider-horizontal.ant-divider-with-text-center::after {
+        border-top: 1px solid #C4C4C4;
+        height: 10px;
+    }
+
+    .leftFooterText {
+        font-size: $FormTaglineFontSize;
+        margin-top: -.5rem;
+        color: #556275;
+        line-height: 24px;
+
+        span {
+            color: #5C9D48
+        }
+
+        strong {
+            color: #000000
+        }
+    }
+
+}
+
+.samlSSO {
+    color: #294620;
+    text-align: center;
+    font-weight: bold;
+    margin-top: 2rem;
+}
+
+.haveAccount {
+    text-align: center;
+    margin-top: 2rem;
+
+    p {
+        color: #808080;
+    }
+
+    strong {
+        color: #385E2B;
+    }
+}
+
+.Form {
+    margin-top: 2rem;
+    width: $FullWidth;
+
+    .ant-input-affix-wrapper {
+        background-color: $bgWhite;
+
+    }
+
+    .ant-input-affix-wrapper {
+        background-color: $bgWhite;
+        border: 1px Solid #e6e3e3;
+        box-shadow: 1px 1.5px 1px #c4c4c498;
+        padding: 30px, 16px, 10px, 16px;
+    }
+
+    .ant-input-affix-wrapper:hover {
+        border-color: #5C9D48;
+    }
+
+    .ant-input-affix-wrapper:focus {
+        border-color: #5C9D48;
+        box-shadow: none;
+    }
+
+
+    .ant-input {
+        width: $FullWidth;
+        border: 1px solid #e6e3e3;
+        background: $bgWhite ;
+        padding: $Inputpadding;
+        border-radius: $borderRadius;
+        width: $FullWidth;
+        box-shadow: $boxShadow;
+        margin-top: -2px;
+        margin-bottom: 1px;
+        font-size: 16px;
+        font-family: 'Baloo 2', cursive;
+    }
+
+    .ant-input:focus {
+        border-color: #65AA4F;
+        background: $bgWhite;
+        outline: none;
+    }
+
+    .ant-input:hover {
+        border-color: #65AA4F;
+        background: $bgWhite;
+        outline: none;
+    }
+
+    .ant-input-password {
+        margin-top: -5rem;
+
+        .ant-input {
+            font-size: larger;
+            border: none;
+            box-shadow: none;
+            margin-top: 2px;
+            padding: 2px 5px;
+        }
+
+        .ant-input[type=password]:not(:placeholder-shown) {
+            font-size: 18px;
+            font-family: verdana;
+            font-weight: bolder;
+        }
+
+
+    }
+
+    .ant-input-suffix {
+        font-size: 16px;
+    }
+
+    .ant-btn {
+        background-color: #385E2B;
+        border: none;
+        color: white;
+        width: $FullWidth;
+        height: 56px;
+        padding: $formBottonpadding;
+        margin-top: 1px;
+        letter-spacing: $letterSpacing;
+    }
+
+    .ant-btn:hover {
+        background-color: #2a4720;
+    }
+
+    button:hover {
+        cursor: pointer;
+        background-color: #385E2B;
+    }
+
+    input {
+        border: 1px solid #C4C4C4;
+        padding: $Inputpadding;
+        border-radius: $borderRadius;
+        width: $FullWidth;
+        box-shadow: $boxShadow;
+        margin-top: -2px;
+        margin-bottom: 1px;
+    }
+
+
+}
+
+.FormButton {
+    button {
+        padding: $formBottonpadding;
+        width: $FullWidth;
+        border-radius: $borderRadius;
+
+        span {
+            padding: 0 10px;
+            letter-spacing: 1px;
+        }
+    }
+
+    button:hover {
+        cursor: $cursor;
+    }
+}
+
+
+.rightSection {
+    background: rgba(240, 247, 237, 0.6);
+    padding: $AuthSectionPadding;
+
+    img {
+        margin-top: 4.5rem;
+    }
+
+    .FormHeader {
+        text-align: center;
+        margin-top: 3rem;
+    }
+
+    h1 {
+        width: 367px;
+        text-align: center;
+        line-height: 44px;
+    }
+
+    p {
+        width: 367px;
+        font-size: 16px;
+        line-height: 24px;
+    }
+}
+
+.PageNavigation {
+    text-align: center;
+    margin-top: 5.5rem;
+    width: 100%;
+
+    .indicators {
+        width: 100%;
+    }
+
+    .pageIndex {
+        height: 2px;
+        margin: 0 4px;
+        width: 15px;
+    }
+}
+
+.Authfooter {
+    color: #667085;
+    margin-top: 15rem;
+
+    span {
+        font-size: 14px;
+    }
+}
+
+// Verification page styling 
+.Verify{
+    .leftSection {
+        background-color: rgb(255, 255, 255);
+        height: 100%;
+
+        .FormHeader {
+            p {
+                font-size: 17px;
+                margin-top: -10px;
+            }
+        }
+    }
+
+    .rightSection {
+        .FormHeader {
+
+            h1 {
+                font-size: $AuthFormHeaderFontSize;
+                font-weight: 600;
+                margin-top: -3rem;
+            }
+
+            p {
+                color: #18181B;
+                margin-bottom: -1px;
+            }
+        }
+
+        img {
+            width: 380px;
+            margin-top: 3rem;
+        }
+    }
+
+}
+
+.Verification {
+    width: 430px;
+    text-align: left;
+    margin-top: 43%;
+    height: 100%;
+}
+
+.VerificationForm {
+    @extend .Form;
+    margin-top: -10px;
+}
+
+
+
+// Detail page design 
+.Detail{
+    .rightSection {
+        .FormHeader {
+
+            h1 {
+                font-size: $AuthFormHeaderFontSize;
+                font-weight: 600;
+                margin-top: -3rem;
+            }
+
+            p {
+                color: #18181B;
+                margin-bottom: -2rem;
+            }
+        }
+
+        img {
+            width: 380px;
+            margin-top: 2rem;
+        }
+    }
+
+
+}
+.Details{
+    @extend .Form;
+    margin-top: 14.5%;
+
+    .DetailsForm{
+        width: 430px;
+
+        input{
+            margin-bottom: -2rem;
+        }
+    }
+   
+}
+
+
+.Business{
+    @extend .Form;
+    margin-top: 7.5rem;
+}
+
+.BusinessForm{
+    width: 430px;
+}

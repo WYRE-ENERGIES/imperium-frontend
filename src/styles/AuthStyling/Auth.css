@@ -1,0 +1,285 @@
+.leftSection {
+  background: white;
+  padding: 20px 40px;
+}
+
+.FormHeader h1 {
+  font-size: 33px;
+  font-weight: 600;
+}
+.FormHeader p {
+  color: #808080;
+  font-size: 15px;
+  margin-top: -0.4rem;
+  line-height: 24px;
+}
+
+.SignUp {
+  width: 415px;
+  margin-top: 3rem;
+}
+.SignUp .submitButton {
+  margin-top: -31px;
+}
+.SignUp button {
+  background-color: white;
+  border: 1px Solid #e6e3e3;
+  font-weight: 600;
+  box-shadow: 1px 1.5px 1px rgba(196, 196, 196, 0.5960784314);
+  margin: 1rem 0;
+}
+.SignUp .ant-divider-horizontal.ant-divider-with-text-center::before,
+.SignUp .ant-divider-horizontal.ant-divider-with-text-center::after {
+  border-top: 1px solid #C4C4C4;
+  height: 10px;
+}
+.SignUp .leftFooterText {
+  font-size: 15px;
+  margin-top: -0.5rem;
+  color: #556275;
+  line-height: 24px;
+}
+.SignUp .leftFooterText span {
+  color: #5C9D48;
+}
+.SignUp .leftFooterText strong {
+  color: #000000;
+}
+
+.samlSSO {
+  color: #294620;
+  text-align: center;
+  font-weight: bold;
+  margin-top: 2rem;
+}
+
+.haveAccount {
+  text-align: center;
+  margin-top: 2rem;
+}
+.haveAccount p {
+  color: #808080;
+}
+.haveAccount strong {
+  color: #385E2B;
+}
+
+.Form, .Business, .Details, .VerificationForm {
+  margin-top: 2rem;
+  width: 100%;
+}
+.Form .ant-input-affix-wrapper, .Business .ant-input-affix-wrapper, .Details .ant-input-affix-wrapper, .VerificationForm .ant-input-affix-wrapper {
+  background-color: white;
+}
+.Form .ant-input-affix-wrapper, .Business .ant-input-affix-wrapper, .Details .ant-input-affix-wrapper, .VerificationForm .ant-input-affix-wrapper {
+  background-color: white;
+  border: 1px Solid #e6e3e3;
+  box-shadow: 1px 1.5px 1px rgba(196, 196, 196, 0.5960784314);
+  padding: 30px, 16px, 10px, 16px;
+}
+.Form .ant-input-affix-wrapper:hover, .Business .ant-input-affix-wrapper:hover, .Details .ant-input-affix-wrapper:hover, .VerificationForm .ant-input-affix-wrapper:hover {
+  border-color: #5C9D48;
+}
+.Form .ant-input-affix-wrapper:focus, .Business .ant-input-affix-wrapper:focus, .Details .ant-input-affix-wrapper:focus, .VerificationForm .ant-input-affix-wrapper:focus {
+  border-color: #5C9D48;
+  box-shadow: none;
+}
+.Form .ant-input, .Business .ant-input, .Details .ant-input, .VerificationForm .ant-input {
+  width: 100%;
+  border: 1px solid #e6e3e3;
+  background: white;
+  padding: 7px 14px;
+  border-radius: 6px;
+  width: 100%;
+  box-shadow: 1px 1.5px 1px rgba(196, 196, 196, 0.5960784314);
+  margin-top: -2px;
+  margin-bottom: 1px;
+  font-size: 16px;
+  font-family: "Baloo 2", cursive;
+}
+.Form .ant-input:focus, .Business .ant-input:focus, .Details .ant-input:focus, .VerificationForm .ant-input:focus {
+  border-color: #65AA4F;
+  background: white;
+  outline: none;
+}
+.Form .ant-input:hover, .Business .ant-input:hover, .Details .ant-input:hover, .VerificationForm .ant-input:hover {
+  border-color: #65AA4F;
+  background: white;
+  outline: none;
+}
+.Form .ant-input-password, .Business .ant-input-password, .Details .ant-input-password, .VerificationForm .ant-input-password {
+  margin-top: -5rem;
+}
+.Form .ant-input-password .ant-input, .Business .ant-input-password .ant-input, .Details .ant-input-password .ant-input, .VerificationForm .ant-input-password .ant-input {
+  font-size: larger;
+  border: none;
+  box-shadow: none;
+  margin-top: 2px;
+  padding: 2px 5px;
+}
+.Form .ant-input-password .ant-input[type=password]:not(:-moz-placeholder-shown), .Business .ant-input-password .ant-input[type=password]:not(:-moz-placeholder-shown), .Details .ant-input-password .ant-input[type=password]:not(:-moz-placeholder-shown), .VerificationForm .ant-input-password .ant-input[type=password]:not(:-moz-placeholder-shown) {
+  font-size: 18px;
+  font-family: verdana;
+  font-weight: bolder;
+}
+.Form .ant-input-password .ant-input[type=password]:not(:-ms-input-placeholder), .Business .ant-input-password .ant-input[type=password]:not(:-ms-input-placeholder), .Details .ant-input-password .ant-input[type=password]:not(:-ms-input-placeholder), .VerificationForm .ant-input-password .ant-input[type=password]:not(:-ms-input-placeholder) {
+  font-size: 18px;
+  font-family: verdana;
+  font-weight: bolder;
+}
+.Form .ant-input-password .ant-input[type=password]:not(:placeholder-shown), .Business .ant-input-password .ant-input[type=password]:not(:placeholder-shown), .Details .ant-input-password .ant-input[type=password]:not(:placeholder-shown), .VerificationForm .ant-input-password .ant-input[type=password]:not(:placeholder-shown) {
+  font-size: 18px;
+  font-family: verdana;
+  font-weight: bolder;
+}
+.Form .ant-input-suffix, .Business .ant-input-suffix, .Details .ant-input-suffix, .VerificationForm .ant-input-suffix {
+  font-size: 16px;
+}
+.Form .ant-btn, .Business .ant-btn, .Details .ant-btn, .VerificationForm .ant-btn {
+  background-color: #385E2B;
+  border: none;
+  color: white;
+  width: 100%;
+  height: 56px;
+  padding: 12px 20px;
+  margin-top: 1px;
+  letter-spacing: 1.5px;
+}
+.Form .ant-btn:hover, .Business .ant-btn:hover, .Details .ant-btn:hover, .VerificationForm .ant-btn:hover {
+  background-color: #2a4720;
+}
+.Form button:hover, .Business button:hover, .Details button:hover, .VerificationForm button:hover {
+  cursor: pointer;
+  background-color: #385E2B;
+}
+.Form input, .Business input, .Details input, .VerificationForm input {
+  border: 1px solid #C4C4C4;
+  padding: 7px 14px;
+  border-radius: 6px;
+  width: 100%;
+  box-shadow: 1px 1.5px 1px rgba(196, 196, 196, 0.5960784314);
+  margin-top: -2px;
+  margin-bottom: 1px;
+}
+
+.FormButton button {
+  padding: 12px 20px;
+  width: 100%;
+  border-radius: 6px;
+}
+.FormButton button span {
+  padding: 0 10px;
+  letter-spacing: 1px;
+}
+.FormButton button:hover {
+  cursor: pointer;
+}
+
+.rightSection {
+  background: rgba(240, 247, 237, 0.6);
+  padding: 20px 40px;
+}
+.rightSection img {
+  margin-top: 4.5rem;
+}
+.rightSection .FormHeader {
+  text-align: center;
+  margin-top: 3rem;
+}
+.rightSection h1 {
+  width: 367px;
+  text-align: center;
+  line-height: 44px;
+}
+.rightSection p {
+  width: 367px;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.PageNavigation {
+  text-align: center;
+  margin-top: 5.5rem;
+  width: 100%;
+}
+.PageNavigation .indicators {
+  width: 100%;
+}
+.PageNavigation .pageIndex {
+  height: 2px;
+  margin: 0 4px;
+  width: 15px;
+}
+
+.Authfooter {
+  color: #667085;
+  margin-top: 15rem;
+}
+.Authfooter span {
+  font-size: 14px;
+}
+
+.Verify .leftSection {
+  background-color: rgb(255, 255, 255);
+  height: 100%;
+}
+.Verify .leftSection .FormHeader p {
+  font-size: 17px;
+  margin-top: -10px;
+}
+.Verify .rightSection .FormHeader h1 {
+  font-size: 33px;
+  font-weight: 600;
+  margin-top: -3rem;
+}
+.Verify .rightSection .FormHeader p {
+  color: #18181B;
+  margin-bottom: -1px;
+}
+.Verify .rightSection img {
+  width: 380px;
+  margin-top: 3rem;
+}
+
+.Verification {
+  width: 430px;
+  text-align: left;
+  margin-top: 43%;
+  height: 100%;
+}
+
+.VerificationForm {
+  margin-top: -10px;
+}
+
+.Detail .rightSection .FormHeader h1 {
+  font-size: 33px;
+  font-weight: 600;
+  margin-top: -3rem;
+}
+.Detail .rightSection .FormHeader p {
+  color: #18181B;
+  margin-bottom: -2rem;
+}
+.Detail .rightSection img {
+  width: 380px;
+  margin-top: 2rem;
+}
+
+.Details {
+  margin-top: 14.5%;
+}
+.Details .DetailsForm {
+  width: 430px;
+}
+.Details .DetailsForm input {
+  margin-bottom: -2rem;
+}
+
+.Business {
+  margin-top: 7.5rem;
+}
+
+.BusinessForm {
+  width: 430px;
+}/*# sourceMappingURL=Auth.css.map */
