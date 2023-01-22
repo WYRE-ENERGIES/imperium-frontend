@@ -3,6 +3,9 @@ export const overviewStackedOptions = {
     legend: {
       position: 'top',
       align: 'end',
+      labels: {
+        usePointStyle: true,
+      },
     },
   },
   responsive: true,

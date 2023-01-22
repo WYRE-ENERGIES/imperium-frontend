@@ -8,6 +8,7 @@ import PageBreadcrumb from '../../../components/PageBreadcrumb/PageBreadcrumb'
 import PageLayout from '../../../components/Layout/PageLayout'
 import { ReactComponent as SEnergyWidgetIcon } from '../../../assets/overview/cancel-energy-con.svg'
 import SHSTable from '../../../components/SHSTable/SHSTable'
+import ShsDeviceMap from '../../../components/Map/ShsDeviceMap'
 import StackedBarChart from '../../../components/Charts/StackedBarChart/StackedBarChart'
 import WidgetFilter from '../../../components/WidgetFilter/WidgetFilter'
 import classes from './Overview.module.scss'
@@ -31,6 +32,7 @@ const Overview = () => {
       },
     ],
   })
+
   const widgets = [
     {
       id: 1,
@@ -73,6 +75,9 @@ const Overview = () => {
           <WidgetFilter />
         </section>
         <div className={classes.Overview__widgets}>{widgets}</div>
+        {/* <div className={classes.Overview__map}>
+          <ShsDeviceMap />
+        </div> */}
         <div className={classes.Overview__chart}>
           <StackedBarChart
             title="Energy Generation vs Energy Consumption"
