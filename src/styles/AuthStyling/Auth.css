@@ -282,4 +282,21 @@
 
 .BusinessForm {
   width: 430px;
+}
+.BusinessForm .ant-upload {
+  background: white;
+  border: 1px solid #C4C4C4;
+  border-radius: 6px;
+}
+.BusinessForm .ant-input-affix-wrapper {
+  background-color: #000000;
+}
+.BusinessForm .ant-input-affix-wrapper input {
+  background-color: red;
+}
+.BusinessForm .ant-input-affix-wrapper input {
+  box-shadow: none;
+}
+.BusinessForm .ant-input-prefix {
+  border: none;
 }/*# sourceMappingURL=Auth.css.map */

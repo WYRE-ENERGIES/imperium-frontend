@@ -271,7 +271,7 @@ $letterSpacing: 1.5px;
 }
 
 // Verification page styling 
-.Verify{
+.Verify {
     .leftSection {
         background-color: rgb(255, 255, 255);
         height: 100%;
@@ -322,7 +322,7 @@ $letterSpacing: 1.5px;
 
 
 // Detail page design 
-.Detail{
+.Detail {
     .rightSection {
         .FormHeader {
 
@@ -346,26 +346,49 @@ $letterSpacing: 1.5px;
 
 
 }
-.Details{
+
+.Details {
     @extend .Form;
     margin-top: 14.5%;
 
-    .DetailsForm{
+    .DetailsForm {
         width: 430px;
 
-        input{
+        input {
             margin-bottom: -2rem;
         }
     }
-   
+
 }
 
 
-.Business{
+// Business styling 
+.Business {
     @extend .Form;
     margin-top: 7.5rem;
 }
 
-.BusinessForm{
+.BusinessForm {
     width: 430px;
+
+    .ant-upload {
+        background: $bgWhite;
+        border: 1px solid #C4C4C4;
+        border-radius: 6px;
+    }
+
+    .ant-input-affix-wrapper {
+        input{
+            background-color: red;
+        }
+        background-color: #000000;
+        input {
+            box-shadow: none;
+        }
+    }
+
+    .ant-input-prefix {
+        border: none;
+    }
+
 }
