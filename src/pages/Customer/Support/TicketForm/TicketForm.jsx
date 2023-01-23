@@ -38,6 +38,7 @@ const ModalForm = ({ toggleModal, ticketData }) => {
       form={form}
       onFinish={onFinish}
       initialValues={ticketData}
+      requiredMark="optional"
     >
       <Divider />
       <Form.Item

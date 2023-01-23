@@ -1,4 +1,8 @@
-import { BarChartOutlined, SettingOutlined } from '@ant-design/icons'
+import {
+  BarChartOutlined,
+  SettingOutlined,
+  ThunderboltOutlined,
+} from '@ant-design/icons'
 import { Divider, Layout, Menu } from 'antd'
 import { Link, useLocation } from 'react-router-dom'
 
@@ -12,6 +16,11 @@ const { Sider } = Layout
 
 const items = [
   { icon: BarChartOutlined, title: 'Overview', linkTo: '/overview' },
+  {
+    icon: ThunderboltOutlined,
+    title: 'Energy Analytic',
+    linkTo: '/energy-analytic',
+  },
 ].map((item) => ({
   key: `${item.linkTo}`,
   icon: React.createElement(item.icon),
