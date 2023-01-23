@@ -28,6 +28,7 @@
   }
 
   &__topSection {
+    overflow: scroll;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;

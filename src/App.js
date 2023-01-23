@@ -12,7 +12,10 @@ function App() {
     <Router>
       <Suspense fallback="loading">
         <Routes>
-          <Route path="/overview" element={<Overview />} />
+          <Route path="overview">
+            <Route index element={<Overview />} />
+            <Route path="shs/:id" element={<Support />} />
+          </Route>
           <Route path="/support" element={<Support />} />
         </Routes>
       </Suspense>
