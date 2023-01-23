@@ -28,13 +28,12 @@ module.exports = {
       files: ['src/**/*.js', 'src/**/*.jsx'],
     },
   ],
-  plugins: ['simple-import-sort', 'prettier'],
+  plugins: ['prettier'],
   rules: {
     camelcase: 0,
     'prettier/prettier': ['error', {}, { usePrettierrc: true }],
     'react/react-in-jsx-scope': 'off',
     'react/prop-types': 'off',
-    'simple-import-sort/imports': 'error',
-    'simple-import-sort/exports': 'error',
+    'no-unused-vars': 'off',
   },
 }

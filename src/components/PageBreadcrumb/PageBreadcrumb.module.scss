@@ -1,0 +1,17 @@
+.PageBreadcrumb {
+  &__title {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 32px;
+    line-height: 40px;
+    letter-spacing: -0.02em;
+    color: #363636;
+  }
+
+  &__breadcrumb {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 20px;
+  }
+}

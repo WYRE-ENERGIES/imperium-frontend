@@ -1,16 +1,19 @@
-import './App.css'
+import 'antd/dist/reset.css'
+import 'react-toastify/dist/ReactToastify.css'
 
-import { Suspense } from 'react'
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import { Route, BrowserRouter as Router, Routes } from 'react-router-dom'
 
 import Overview from './pages/Customer/Overview/Overview'
+import { Support } from './pages/Customer/Support/Support'
+import { Suspense } from 'react'
 
 function App() {
   return (
     <Router>
       <Suspense fallback="loading">
         <Routes>
-          <Route path="/" element={<Overview />} />
+          <Route path="/overview" element={<Overview />} />
+          <Route path="/support" element={<Support />} />
         </Routes>
       </Suspense>
     </Router>
