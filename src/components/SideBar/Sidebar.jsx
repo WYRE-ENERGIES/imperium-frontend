@@ -6,6 +6,7 @@ import {
 import { Divider, Layout, Menu } from 'antd'
 import { Link, useLocation } from 'react-router-dom'
 
+import { BsSunset } from 'react-icons/bs'
 import Footer from './Footer/Footer'
 import { HiOutlineSupport } from 'react-icons/hi'
 import { ReactComponent as Logo } from '../../assets/logo.svg'
@@ -20,6 +21,11 @@ const items = [
     icon: ThunderboltOutlined,
     title: 'Energy Analytic',
     linkTo: '/energy-analytic',
+  },
+  {
+    icon: BsSunset,
+    title: 'Panel Analytic',
+    linkTo: '/panel-analytic',
   },
 ].map((item) => ({
   key: `${item.linkTo}`,
