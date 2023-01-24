@@ -1,0 +1,58 @@
+export const tableData = [
+  {
+    id: 1,
+    key: 1,
+    name: 'January, 2023',
+    energyConsumed: 6.35,
+    energyGenerated: 14.36,
+  },
+  {
+    id: 2,
+    key: 2,
+    name: 'December, 2022',
+    energyConsumed: 9.52,
+    energyGenerated: 21.52,
+  },
+  {
+    id: 3,
+    key: 3,
+    name: 'November, 2022',
+    energyConsumed: 3.18,
+    energyGenerated: 7.18,
+  },
+  {
+    id: 4,
+    key: 4,
+    name: 'October, 2022',
+    energyConsumed: 4.67,
+    energyGenerated: 9.01,
+  },
+  {
+    id: 5,
+    key: 5,
+    name: 'September, 2022',
+    energyConsumed: 6.82,
+    energyGenerated: 14.74,
+  },
+  {
+    id: 6,
+    key: 6,
+    name: 'August, 2022',
+    energyConsumed: 3.18,
+    energyGenerated: 7.18,
+  },
+  {
+    id: 7,
+    key: 7,
+    name: 'July, 2022',
+    energyConsumed: 4.67,
+    energyGenerated: 9.01,
+  },
+  {
+    id: 8,
+    key: 8,
+    name: 'June, 2022',
+    energyConsumed: 6.82,
+    energyGenerated: 14.74,
+  },
+]

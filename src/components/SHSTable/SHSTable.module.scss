@@ -1,6 +1,5 @@
 .SHSTable {
   display: flex;
-  flex: 1;
   flex-direction: column;
   align-items: flex-start;
   padding: 0px;
@@ -24,11 +23,18 @@
   }
 
   &__shsTableTitle {
+    height: 83px;
     display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
     gap: 8px;
-    padding: 24px;
+    padding: 0 24px;
 
     & > h1 {
+      display: flex;
+      flex: 1;
+      gap: 8px;
       font-weight: 500;
       font-size: 18px;
       line-height: 24px;

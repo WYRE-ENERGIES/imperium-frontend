@@ -1,4 +1,4 @@
-import { Table, Tag } from 'antd'
+import { Space, Table, Tag } from 'antd'
 
 import { BsDot } from 'react-icons/bs'
 import { EyeOutlined } from '@ant-design/icons'
@@ -107,23 +107,23 @@ const SHSTable = () => {
     <div className={classes.SHSTable}>
       <section className={classes.SHSTable__shsTableTitle}>
         <h1>
-          Solar House System <span></span>
+          Solar House System
+          <Tag
+            style={{
+              backgroundColor: '#f0f7ed',
+              borderRadius: '16px',
+              color: '#497A38',
+              height: '24px',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              fontSize: '12px',
+              lineHeight: '20px',
+            }}
+          >
+            {11} SHS
+          </Tag>
         </h1>
-        <Tag
-          style={{
-            backgroundColor: '#f0f7ed',
-            borderRadius: '16px',
-            color: '#497A38',
-            height: '24px',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            fontSize: '12px',
-            lineHeight: '20px',
-          }}
-        >
-          {11} SHS
-        </Tag>
       </section>
       <Table
         style={{ width: '100%' }}

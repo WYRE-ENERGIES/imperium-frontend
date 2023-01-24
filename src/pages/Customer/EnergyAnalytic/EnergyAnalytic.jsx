@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
 
 import EnergyAnalyticWidget from '../../../components/Widget/EnergyAnalytic/EnergyAnalyticWidget'
+import EnergyTable from '../../../components/EnergyTable/EnergyTable'
 import { ReactComponent as EnergyWidgetIcon } from '../../../assets/widget-icons/energy-icon.svg'
 import PageBreadcrumb from '../../../components/PageBreadcrumb/PageBreadcrumb'
 import PageLayout from '../../../components/Layout/PageLayout'
 import { ReactComponent as SEnergyWidgetIcon } from '../../../assets/widget-icons/cancel-energy-con.svg'
+import ShsCapacityDropdown from '../../../components/ShsCapacityDropdown/ShsCapacityDropdown'
 import StackedBarChart from '../../../components/Charts/StackedBarChart/StackedBarChart'
 import WidgetFilter from '../../../components/WidgetFilter/WidgetFilter'
 import classes from './EnergyAnalytic.module.scss'
@@ -19,12 +21,14 @@ const EnergyAnalytic = () => {
         data: stackBarData.map((data) => data.energyConsumed),
         backgroundColor: '#C9E00C',
         borderRadius: '5',
+        barThickness: '16',
       },
       {
         label: 'Energy Generated',
         data: stackBarData.map((data) => data.energyGenerated),
         backgroundColor: '#5C9D48',
         borderRadius: '7',
+        barThickness: '16',
       },
     ],
   })
@@ -61,13 +65,17 @@ const EnergyAnalytic = () => {
       >
         <section className={classes.EnergyAnalytic__headerSection}>
           <PageBreadcrumb title="Energy Analytic" />
+          <ShsCapacityDropdown />
         </section>
         <section className={classes.EnergyAnalytic__filters}>
           <WidgetFilter />
         </section>
         <div className={classes.EnergyAnalytic__widgets}>{widgets}</div>
-        <div className={classes.Overview__chart}>
+        <div className={classes.EnergyAnalytic__chart}>
           <StackedBarChart title="Energy Generation" chartData={chartData} />
+        </div>
+        <div className={classes.EnergyAnalytic__shsTable}>
+          <EnergyTable />
         </div>
       </div>
     </PageLayout>

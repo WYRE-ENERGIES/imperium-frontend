@@ -23,12 +23,14 @@ const Overview = () => {
         data: stackBarData.map((data) => data.energyConsumed),
         backgroundColor: '#66AB4F',
         borderRadius: '5',
+        barThickness: '32',
       },
       {
         label: 'Energy Generation',
         data: stackBarData.map((data) => data.energyGenerated),
         backgroundColor: '#497A38',
         borderRadius: '7',
+        barThickness: '32',
       },
     ],
   })
