@@ -1,4 +1,4 @@
-import { Space, Table, Tag } from 'antd'
+import { Table, Tag } from 'antd'
 
 import React from 'react'
 import SearchAndFilter from '../SearchAndFilter/SearchAndFilter'
@@ -54,15 +54,7 @@ const EnergyTable = () => {
         dataSource={tableData}
         className={classes.SHSTable__table}
         pagination={{
-          simple: true,
           hideOnSinglePage: true,
-          itemRender: (page, type) => {
-            if (type === 'next') {
-              return <a>Next</a>
-            } else if (type === 'prev') {
-              return <a>Previous</a>
-            }
-          },
         }}
       />
     </div>
