@@ -1,72 +1,63 @@
 @import '../_variables.module.scss';
 
 .authForm {
-    padding: 0;
+  padding: 0;
 }
-
 
 .ant-divider-horizontal.ant-divider-with-text-center::before,
 .ant-divider-horizontal.ant-divider-with-text-center::after {
-    border-top: 1px solid #C4C4C4;
-    height: 10px;
+  border-top: 1px solid #c4c4c4;
+  height: 10px;
 }
-
-
-
 
 .ant-input {
-    font-size: 15px;
-    padding: $formElementPadding;
-    offset: 10px 30px;
-    border-bottom: 2px solid #c4c4c498;
-    font-family: $font-family;
-    
+  font-size: 15px;
+  padding: $formElementPadding;
+  offset: 10px 30px;
+  border-bottom: 2px solid #c4c4c498;
+  font-family: $font-family;
 
-    &:hover {
-        offset: $offset;
-        border: 1px solid $light-green;
-        box-shadow: $box-shadow-input;
-        border-bottom: 2px solid $light-green;
-    }
+  &:hover {
+    offset: $offset;
+    border: 1px solid $light-green;
+    box-shadow: $box-shadow-input;
+    border-bottom: 2px solid $light-green;
+  }
 
-    &:focus {
-        offset: $offset;
-        border: 1px solid $light-green;
-        box-shadow: $box-shadow-input;
-        border-bottom: 2px solid $light-green;
-    }
+  &:focus {
+    offset: $offset;
+    border: 1px solid $light-green;
+    box-shadow: $box-shadow-input;
+    border-bottom: 2px solid $light-green;
+  }
 }
 
-
-
 .ant-input-affix-wrapper {
-    font-size: 15px;
-    background: white;
-    padding: 8px 10px;
-    border-bottom: 2px solid #c4c4c498;
-    
+  font-size: 15px;
+  background: white;
+  padding: 8px 10px;
+  border-bottom: 2px solid #c4c4c498;
 
-    &:hover {
-        border: 1px solid $light-green !important;
-        box-shadow: $box-shadow-input;
-        border-bottom: 2px solid $light-green !important;
-    }
+  &:hover {
+    border: 1px solid $light-green !important;
+    box-shadow: $box-shadow-input;
+    border-bottom: 2px solid $light-green !important;
+  }
 
-    &:focus-within {
-        border-color: $light-green !important;
-        offset: $offset;
-        box-shadow: $box-shadow-input;
-        border-bottom: 2px solid $light-green;
-    }
+  &:focus-within {
+    border-color: $light-green !important;
+    offset: $offset;
+    box-shadow: $box-shadow-input;
+    border-bottom: 2px solid $light-green;
+  }
 
-    .ant-input {
-        box-shadow: none;
-    }
+  .ant-input {
+    box-shadow: none;
+  }
 
-    .ant-input[type=password]:not(:placeholder-shown) {
-        font-size: 18px;
-        font-family: verdana;
-        font-weight: bolder;
-    }
-
+  .ant-input[type='password']:not(:placeholder-shown) {
+    font-size: 18px;
+    font-family: verdana;
+    font-weight: bolder;
+  }
 }

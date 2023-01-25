@@ -1,26 +1,25 @@
-.Layout{
-    background: rgba(240, 247, 237, 0.6);
-    height: 960px;;
+.Layout {
+  background: rgba(240, 247, 237, 0.6);
+  height: 960px;
+  position: relative;
+
+  &__footer {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 80px;
+    color: #808080;
     position: relative;
+    bottom: -19em;
+  }
 
-    &__footer{
-        display: flex;
-        justify-content: space-between;
-        padding: 0 80px;
-        color: #808080;
-        position: relative;
-        bottom: -19em;
+  &__icon {
+    display: flex;
+
+    p {
+      margin: 0 2px;
     }
-
-    &__icon{
-        display: flex;
-
-        p{
-            margin: 0 2px;
-        }
-        p:nth-child(2n){
-            margin-top: 2px;
-        }
+    p:nth-child(2n) {
+      margin-top: 2px;
     }
-
+  }
 }

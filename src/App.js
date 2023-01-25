@@ -24,7 +24,7 @@ function App() {
             <Route path="shs/:id" element={<Support />} />
           </Route>
           <Route path="/support" element={<Support />} />
-          <Route path="signup" element={<SignUp />} />
+          <Route path="/" element={<SignUp />} />
           <Route path="signin" element={<SignIn />} />
           <Route path="verification/code" element={<Verification />} />
           <Route path="details" element={<Detail />} />
