@@ -20,14 +20,3 @@ const FormFooter = ({ footer, action, url }) => {
 }
 
 export default FormFooter
-
-{
-  /* <div>
-  <p>
-    <Link>Continue with SAML SSO</Link>
-  </p>
-  <p>
-    {footer} <Link to={'/'}>{action}</Link>
-  </p>
-  </div> */
-}
