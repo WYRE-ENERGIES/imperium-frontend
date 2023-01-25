@@ -1,7 +1,7 @@
 import { Divider } from 'antd'
 import React from 'react'
 
-import googleIcon from '../../Img/google.svg'
+import googleIcon from '../../../../../src/assets/Auth/google.svg'
 import classes from './Widget.module.scss'
 const ThirdPartyAuth = () => {
   return (

@@ -5,7 +5,7 @@ import FormDescription from '../../../../components/Auth/Forms/Widgets/FormDescr
 import LeftLayout from '../../../../components/Auth/Layout/LeftLayout/LeftLayout'
 import RightLayout from '../../../../components/Auth/Layout/RightLayout/RightLayout'
 import classes from './Details.module.scss'
-import imageDesc from '../../../../components/Auth/Img/Site Stats-amico 1.svg'
+import imageDesc from '../../../../../src/assets/Auth/Site Stats-amico 1.svg'
 import DetailForm from '../../../../components/Auth/Forms/Details/DetailsForm'
 import PageIndicator from '../../../../components/Auth/Forms/Widgets/FormPageIndicator'
 

@@ -1,7 +1,7 @@
 import { Col, Row } from 'antd'
 import React from 'react'
 
-import Logo from '../../Img/Logo.svg'
+import Logo from '../../../../../src/assets/Auth/Logo.svg'
 import classes from './LeftLayout.module.scss'
 const LeftLayout = ({ children }) => {
   return (

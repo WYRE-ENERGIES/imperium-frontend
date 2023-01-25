@@ -9,7 +9,7 @@ const VerificationForm = () => {
   const nextPage = useNavigate()
   const handleOnCreateAccountBtn = () => {
     console.log(nextPage)
-    nextPage('signup/details')
+    nextPage('/details')
   }
   const onFinish = (values) => {
     console.log('Success:', values)

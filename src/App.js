@@ -6,10 +6,13 @@ import { Route, BrowserRouter as Router, Routes } from 'react-router-dom'
 import Overview from './pages/Customer/Overview/Overview'
 import { Support } from './pages/Customer/Support/Support'
 import { Suspense } from 'react'
+
+// Auth dirs
 import SignUp from './pages/Customer/Auth/SignUp/SignUp'
 import SignIn from './pages/Customer/Auth/SignIn/SignIn'
 import Verification from './pages/Customer/Auth/Verification/Verification'
 import Detail from './pages/Customer/Auth/Detail/Detail'
+import ForgotPasswordPage from './pages/Customer/Auth/ForgotPassword/ForgotPassword'
 
 function App() {
   return (
@@ -21,10 +24,11 @@ function App() {
             <Route path="shs/:id" element={<Support />} />
           </Route>
           <Route path="/support" element={<Support />} />
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/signin" element={<SignIn />} />
-          <Route path="signup/verification/code" element={<Verification />} />
-          <Route path="signup/details" element={<Detail />} />
+          <Route path="signup" element={<SignUp />} />
+          <Route path="signin" element={<SignIn />} />
+          <Route path="verification/code" element={<Verification />} />
+          <Route path="details" element={<Detail />} />
+          <Route path="forgot/password/" element={<ForgotPasswordPage />} />
         </Routes>
       </Suspense>
     </Router>

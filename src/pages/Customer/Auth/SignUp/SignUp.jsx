@@ -4,8 +4,7 @@ import FormDescription from '../../../../components/Auth/Forms/Widgets/FormDescr
 import SignUpForm from '../../../../components/Auth/Forms/AuthForm/SignUp/SignUp'
 import LeftLayout from '../../../../components/Auth/Layout/LeftLayout/LeftLayout'
 import RightLayout from '../../../../components/Auth/Layout/RightLayout/RightLayout'
-// import '../../../../components/Auth/Forms/global.module.scss'
-import imageDesc from '../../../../components/Auth/Img/Multi-device targeting-pana 1.svg'
+import imageDesc from '../../../../../src/assets/Auth/Multi-device targeting-pana 1.svg'
 import classes from './SignUp.module.scss'
 import PageIndicator from '../../../../components/Auth/Forms/Widgets/FormPageIndicator'
 

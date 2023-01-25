@@ -6,7 +6,7 @@ import SignInForm from '../../../../components/Auth/Forms/AuthForm/SignInForm/Si
 import LeftLayout from '../../../../components/Auth/Layout/LeftLayout/LeftLayout'
 import RightLayout from '../../../../components/Auth/Layout/RightLayout/RightLayout'
 import '../../../../components/Auth/Forms/global.module.scss'
-import imageDesc from '../../../../components/Auth/Img/Sun energy-amico 1.svg'
+import imageDesc from '../../../../../src/assets/Auth/Sun energy-amico 1.svg'
 
 const SignIn = () => {
   const formDescription = {

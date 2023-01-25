@@ -12,8 +12,7 @@ const AuthForm = ({ children, props }) => {
   const { header, tag, helpertext, footer, action, url, btnText } = props
   const nextPage = useNavigate()
   const handleOnCreateAccountBtn = () => {
-    console.log(nextPage)
-    nextPage('signup/verification/code')
+    nextPage('verification/code')
   }
   const onFinish = (values) => {
     console.log('Success:', values)
