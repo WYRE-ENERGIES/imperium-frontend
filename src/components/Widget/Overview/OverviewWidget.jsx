@@ -1,7 +1,7 @@
 import React from 'react'
 import classes from './OverviewWidget.module.scss'
 
-const OverviewWidget = ({ Icon, title, range, value }) => {
+const OverviewWidget = ({ Icon, title, range, value, valueCurrency }) => {
   return (
     <div className={classes.OverviewWidget}>
       <Icon />
@@ -11,7 +11,7 @@ const OverviewWidget = ({ Icon, title, range, value }) => {
           {range}
         </h4>
         <h1 className={classes.OverviewWidget__value}>
-          {value} <span>kWh</span>
+          {value} <span>{valueCurrency}</span>
         </h1>
       </div>
     </div>

@@ -42,6 +42,7 @@ const Overview = () => {
       title: 'Total Energy Generation ',
       range: 'For the year',
       value: '100.241',
+      valueCurrency: 'kWh',
     },
     {
       id: 2,
@@ -49,6 +50,7 @@ const Overview = () => {
       title: 'Total Energy Consumption',
       range: 'For the year',
       value: '50.82',
+      valueCurrency: 'kWh',
     },
     {
       id: 3,
@@ -56,6 +58,7 @@ const Overview = () => {
       title: 'Total SHS',
       range: 'For the year',
       value: '7',
+      valueCurrency: 'kWh',
     },
   ].map((widget) => (
     <OverviewWidget
@@ -64,6 +67,7 @@ const Overview = () => {
       range={widget.range}
       title={widget.title}
       value={widget.value}
+      valueCurrency={widget.valueCurrency}
     />
   ))
 

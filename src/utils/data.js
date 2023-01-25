@@ -1,3 +1,8 @@
+import { ReactComponent as BentArrowWidgetIcon } from '../assets/widget-icons/bent-arrow.svg'
+import { ReactComponent as EnergyWidgetIcon } from '../assets/widget-icons/energy-icon.svg'
+import { ReactComponent as SEnergyWidgetIcon } from '../assets/widget-icons/cancel-energy-con.svg'
+import { ReactComponent as SunWidgetIcon } from '../assets/widget-icons/sun.svg'
+
 export const panelData = [
   {
     id: 1,
@@ -83,4 +88,59 @@ export const energyFilterOptions = [
   { name: 'Solar house System', value: 'solar' },
   { name: 'recently added', value: 'recent' },
   ...generalFilterOptions,
+]
+
+export const energyAnalyticColumns = [
+  {
+    title: 'Name',
+    dataIndex: 'name',
+    key: 'name',
+  },
+  {
+    title: 'Energy Consumed',
+    key: 'energyConsumed',
+    dataIndex: 'energyConsumed',
+    render: (value) => value.toLocaleString(),
+  },
+  {
+    title: 'Energy Generated',
+    key: 'energyGenerated',
+    dataIndex: 'energyGenerated',
+    render: (value) => value.toLocaleString(),
+  },
+]
+
+export const panelWidgetsData = [
+  {
+    id: 1,
+    icon: EnergyWidgetIcon,
+    title: 'Panel Total Energy',
+    range: 'For the year',
+    value: '987.87',
+    valueCurrency: 'WH',
+  },
+  {
+    id: 2,
+    icon: BentArrowWidgetIcon,
+    title: 'Panel Voltage',
+    range: 'For the year',
+    value: '111.12',
+    valueCurrency: 'V',
+  },
+  {
+    id: 1,
+    icon: SEnergyWidgetIcon,
+    title: 'Panel Total Power',
+    range: 'For the year',
+    value: '790.06',
+    valueCurrency: 'W',
+  },
+  {
+    id: 1,
+    icon: SunWidgetIcon,
+    title: 'Panel Current',
+    range: 'For the year',
+    value: '987.87',
+    valueCurrency: 'A',
+  },
 ]

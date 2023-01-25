@@ -3,6 +3,7 @@ import { generalFilterOptions, panelData } from '../../../utils/data'
 import EnergyAnalyticWidget from '../../../components/SHSTableWithFilter/SHSTableWithFilter'
 import PageBreadcrumb from '../../../components/PageBreadcrumb/PageBreadcrumb'
 import PageLayout from '../../../components/Layout/PageLayout'
+import PanelWidgets from '../../../components/Widget/Panel/Panel'
 import React from 'react'
 import ShsCapacityDropdown from '../../../components/ShsCapacityDropdown/ShsCapacityDropdown'
 import classes from './PanelAnalytic.module.scss'
@@ -50,6 +51,9 @@ const PanelAnalytic = () => {
           <PageBreadcrumb title="Panel Analytic" />
           <ShsCapacityDropdown />
         </section>
+        <div className={classes.PanelAnalytic__widgets}>
+          <PanelWidgets />
+        </div>
         <div className={classes.PanelAnalytic__shsTable}>
           <EnergyAnalyticWidget
             columns={columns}
