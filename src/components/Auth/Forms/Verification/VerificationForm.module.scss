@@ -1,0 +1,17 @@
+@import '../variables.module';
+.VerificationForm {
+  margin-top: 45%;
+  width: 420px;
+
+  .tagline {
+    color: $gray-text;
+    line-height: 24px;
+    font-size: 16px;
+    background: red;
+
+    span {
+      color: $rightlayout-text-color;
+      font-weight: bold;
+    }
+  }
+}
