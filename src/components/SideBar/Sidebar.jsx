@@ -22,11 +22,11 @@ const items = [
     title: 'Energy Analytic',
     linkTo: '/energy-analytic',
   },
-  // {
-  //   icon: BsSunset,
-  //   title: 'Panel Analytic',
-  //   linkTo: '/panel-analytic',
-  // },
+  {
+    icon: BsSunset,
+    title: 'Panel Analytic',
+    linkTo: '/panel-analytic',
+  },
   {
     icon: BsBattery,
     title: 'Battery',

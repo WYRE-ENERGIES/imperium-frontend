@@ -1,3 +1,5 @@
+import { Col, Row } from 'antd'
+
 import React from 'react'
 import Widget from '../Widget/Widget'
 import classes from './panel.module.scss'
@@ -13,9 +15,23 @@ const PanelWidgets = () => {
       valueCurrency={data.valueCurrency}
     />
   ))
+
   return (
     <div className={classes.Panel}>
-      <div className={classes.Panel__widgets}>{widgets}</div>
+      <Row gutter={[16, 24]} className={classes.Panel__widgets}>
+        <Col className="gutter-row" span={14}>
+          {widgets[0]}
+        </Col>
+        <Col className="gutter-row" span={10}>
+          {widgets[1]}
+        </Col>
+        <Col className="gutter-row" span={14}>
+          {widgets[2]}
+        </Col>
+        <Col className="gutter-row" span={10}>
+          {widgets[3]}
+        </Col>
+      </Row>
       <div className={classes.Panel__calendar}>calendar widgets</div>
     </div>
   )
