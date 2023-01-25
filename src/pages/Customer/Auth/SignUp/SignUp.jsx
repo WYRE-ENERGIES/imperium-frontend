@@ -1,4 +1,3 @@
-/* eslint-disable simple-import-sort/imports */
 import { Row } from 'antd'
 import React from 'react'
 import FormDescription from '../../../../components/Auth/Forms/Widgets/FormDescription'

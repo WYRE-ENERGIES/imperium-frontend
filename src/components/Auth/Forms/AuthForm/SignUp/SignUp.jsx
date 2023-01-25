@@ -9,7 +9,7 @@ const SignUpForm = () => {
     tag: 'Let’s get started with imperium today',
     footer: 'Already have an account?',
     action: 'Log in',
-    url: 'login',
+    url: 'signin',
     helpertext: 'Must be at least 8 characters.',
     btnText: 'Create account',
   }
