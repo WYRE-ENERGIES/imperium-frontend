@@ -13,6 +13,9 @@ export const overviewStackedOptions = {
     x: {
       title: { display: true, text: 'Month' },
       stacked: true,
+      grid: {
+        display: false,
+      },
     },
     y: {
       stacked: true,

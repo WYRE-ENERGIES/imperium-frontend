@@ -1,40 +1,37 @@
 import React, { useState } from 'react'
 
+import EnergyAnalyticWidget from '../../../components/Widget/EnergyAnalytic/EnergyAnalyticWidget'
+import EnergyTable from '../../../components/EnergyTable/EnergyTable'
 import { ReactComponent as EnergyWidgetIcon } from '../../../assets/widget-icons/energy-icon.svg'
-import { ReactComponent as HomeWidgetIcon } from '../../../assets/widget-icons/home-icon.svg'
-import InstructionModal from './InstructionModal/InstructionModal'
-import OverviewWidget from '../../../components/Widget/Overview/OverviewWidget'
 import PageBreadcrumb from '../../../components/PageBreadcrumb/PageBreadcrumb'
 import PageLayout from '../../../components/Layout/PageLayout'
 import { ReactComponent as SEnergyWidgetIcon } from '../../../assets/widget-icons/cancel-energy-con.svg'
-import SHSTable from '../../../components/SHSTable/SHSTable'
-import ShsDeviceMap from '../../../components/Map/ShsDeviceMap'
+import ShsCapacityDropdown from '../../../components/ShsCapacityDropdown/ShsCapacityDropdown'
 import StackedBarChart from '../../../components/Charts/StackedBarChart/StackedBarChart'
 import WidgetFilter from '../../../components/WidgetFilter/WidgetFilter'
-import classes from './Overview.module.scss'
+import classes from './EnergyAnalytic.module.scss'
 import { stackBarData } from '../../../components/Charts/StackedBarChart/data'
 
-const Overview = () => {
+const EnergyAnalytic = () => {
   const [chartData, setChartData] = useState({
     labels: stackBarData.map((data) => data.month),
     datasets: [
       {
-        label: 'Energy Consumption',
+        label: 'Energy Consumed',
         data: stackBarData.map((data) => data.energyConsumed),
-        backgroundColor: '#66AB4F',
+        backgroundColor: '#C9E00C',
         borderRadius: '5',
-        barThickness: '32',
+        barThickness: '16',
       },
       {
-        label: 'Energy Generation',
+        label: 'Energy Generated',
         data: stackBarData.map((data) => data.energyGenerated),
-        backgroundColor: '#497A38',
+        backgroundColor: '#5C9D48',
         borderRadius: '7',
-        barThickness: '32',
+        barThickness: '16',
       },
     ],
   })
-
   const widgets = [
     {
       id: 1,
@@ -50,15 +47,8 @@ const Overview = () => {
       range: 'For the year',
       value: '50.82',
     },
-    {
-      id: 3,
-      icon: HomeWidgetIcon,
-      title: 'Total SHS',
-      range: 'For the year',
-      value: '7',
-    },
   ].map((widget) => (
-    <OverviewWidget
+    <EnergyAnalyticWidget
       key={widget.id}
       Icon={widget.icon}
       range={widget.range}
@@ -69,30 +59,27 @@ const Overview = () => {
 
   return (
     <PageLayout>
-      <div style={{ backgroundColor: '#FCFCFD' }} className={classes.Overview}>
-        <section className={classes.Overview__headerSection}>
-          <PageBreadcrumb title="Overview" />
+      <div
+        style={{ backgroundColor: '#FCFCFD' }}
+        className={classes.EnergyAnalytic}
+      >
+        <section className={classes.EnergyAnalytic__headerSection}>
+          <PageBreadcrumb title="Energy Analytic" />
+          <ShsCapacityDropdown />
         </section>
-        <section className={classes.Overview__filters}>
+        <section className={classes.EnergyAnalytic__filters}>
           <WidgetFilter />
         </section>
-        <div className={classes.Overview__widgets}>{widgets}</div>
-        {/* <div className={classes.Overview__map}>
-          <ShsDeviceMap />
-        </div> */}
-        <div className={classes.Overview__chart}>
-          <StackedBarChart
-            title="Energy Generation vs Energy Consumption"
-            chartData={chartData}
-          />
+        <div className={classes.EnergyAnalytic__widgets}>{widgets}</div>
+        <div className={classes.EnergyAnalytic__chart}>
+          <StackedBarChart title="Energy Generation" chartData={chartData} />
         </div>
-        <div className={classes.Overview__shsTable}>
-          <SHSTable />
+        <div className={classes.EnergyAnalytic__shsTable}>
+          <EnergyTable />
         </div>
       </div>
-      {/* <InstructionModal /> */}
     </PageLayout>
   )
 }
 
-export default Overview
+export default EnergyAnalytic

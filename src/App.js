@@ -3,6 +3,7 @@ import 'react-toastify/dist/ReactToastify.css'
 
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom'
 
+import EnergyAnalytic from './pages/Customer/EnergyAnalytic/EnergyAnalytic'
 import Overview from './pages/Customer/Overview/Overview'
 import { Support } from './pages/Customer/Support/Support'
 import { Suspense } from 'react'
@@ -17,6 +18,7 @@ function App() {
             <Route path="shs/:id" element={<Support />} />
           </Route>
           <Route path="/support" element={<Support />} />
+          <Route path="/energy-analytic" element={<EnergyAnalytic />} />
         </Routes>
       </Suspense>
     </Router>

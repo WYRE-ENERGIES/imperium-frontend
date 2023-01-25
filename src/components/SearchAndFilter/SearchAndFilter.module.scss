@@ -1,0 +1,59 @@
+.SearchAndFilter {
+  display: flex;
+  flex: 1;
+  gap: 18px;
+
+  &__search {
+    flex: 2;
+
+    &:focus,
+    &:focus-within,
+    &:hover,
+    &:active {
+      border: 0;
+      box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05), 0px 0px 0px 4px #f0f7ed;
+    }
+  }
+
+  & input[type='text'] {
+    height: 44px;
+    padding: 10px 16px;
+  }
+
+  & .ant-select-open {
+    border: 0;
+  }
+
+  &__filterSection {
+    border: 1px solid #d0d5dd;
+    box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05);
+    border-radius: 8px;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+
+    & > h3 {
+      margin: 0;
+    }
+  }
+
+  &__select {
+    flex: 1;
+
+    & > div {
+      border: 0 !important;
+
+      & > span {
+        & > input::placeholder {
+          color: #18181b;
+        }
+      }
+    }
+
+    & > .ant-select-arrow {
+      display: none;
+    }
+  }
+}
