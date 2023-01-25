@@ -3,13 +3,13 @@ import React, { useState } from 'react'
 import { ReactComponent as EnergyWidgetIcon } from '../../../assets/widget-icons/energy-icon.svg'
 import { ReactComponent as HomeWidgetIcon } from '../../../assets/widget-icons/home-icon.svg'
 import InstructionModal from './InstructionModal/InstructionModal'
-import OverviewWidget from '../../../components/Widget/Overview/OverviewWidget'
 import PageBreadcrumb from '../../../components/PageBreadcrumb/PageBreadcrumb'
 import PageLayout from '../../../components/Layout/PageLayout'
 import { ReactComponent as SEnergyWidgetIcon } from '../../../assets/widget-icons/cancel-energy-con.svg'
 import SHSTable from '../../../components/SHSTable/SHSTable'
 import ShsDeviceMap from '../../../components/Map/ShsDeviceMap'
 import StackedBarChart from '../../../components/Charts/StackedBarChart/StackedBarChart'
+import Widget from '../../../components/Widget/Widget/Widget'
 import WidgetFilter from '../../../components/WidgetFilter/WidgetFilter'
 import classes from './Overview.module.scss'
 import { stackBarData } from '../../../components/Charts/StackedBarChart/data'
@@ -61,7 +61,7 @@ const Overview = () => {
       valueCurrency: 'kWh',
     },
   ].map((widget) => (
-    <OverviewWidget
+    <Widget
       key={widget.id}
       Icon={widget.icon}
       range={widget.range}

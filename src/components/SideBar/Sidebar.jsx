@@ -3,10 +3,10 @@ import {
   SettingOutlined,
   ThunderboltOutlined,
 } from '@ant-design/icons'
+import { BsBattery, BsSunset } from 'react-icons/bs'
 import { Divider, Layout, Menu } from 'antd'
 import { Link, useLocation } from 'react-router-dom'
 
-import { BsSunset } from 'react-icons/bs'
 import Footer from './Footer/Footer'
 import { HiOutlineSupport } from 'react-icons/hi'
 import { ReactComponent as Logo } from '../../assets/logo.svg'
@@ -22,10 +22,15 @@ const items = [
     title: 'Energy Analytic',
     linkTo: '/energy-analytic',
   },
+  // {
+  //   icon: BsSunset,
+  //   title: 'Panel Analytic',
+  //   linkTo: '/panel-analytic',
+  // },
   {
-    icon: BsSunset,
-    title: 'Panel Analytic',
-    linkTo: '/panel-analytic',
+    icon: BsBattery,
+    title: 'Battery',
+    linkTo: '/battery',
   },
 ].map((item) => ({
   key: `${item.linkTo}`,

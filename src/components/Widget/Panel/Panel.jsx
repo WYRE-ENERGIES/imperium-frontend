@@ -1,11 +1,11 @@
-import OverviewWidget from '../Overview/OverviewWidget'
 import React from 'react'
+import Widget from '../Widget/Widget'
 import classes from './panel.module.scss'
 import { panelWidgetsData } from '../../../utils/data'
 
 const PanelWidgets = () => {
   const widgets = panelWidgetsData.map((data, index) => (
-    <OverviewWidget
+    <Widget
       key={index}
       title={data.title}
       Icon={data.icon}

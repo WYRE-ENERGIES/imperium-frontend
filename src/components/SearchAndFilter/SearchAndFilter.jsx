@@ -16,7 +16,6 @@ const prefix = (
 )
 
 const SearchAndFilter = ({ filterOptions }) => {
-  console.log(filterOptions)
   const options = filterOptions?.map((option, index) => (
     <Option key={index} value={option.value}>
       {option.name}
