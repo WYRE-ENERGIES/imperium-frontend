@@ -1,0 +1,216 @@
+@import '../_variables.module.scss';
+
+$buttonPadding: 14px 48px;
+
+
+// Form button 
+.button {
+  button {
+    width: 100%;
+    padding: $buttonPadding;
+    border-radius: $borderRadius;
+    border: none;
+    background: $dark-green;
+    color: white;
+    font-size: 16px;
+
+    &:hover{
+        background: #294620;
+        cursor: pointer;
+    }
+  }
+}
+
+.text {
+  h1 {
+    font-weight: 600;
+    color: #363636;
+    font-size: 32px;
+    line-height: 60%;
+  }
+
+  p {
+    color: #808080;
+    font-size: 15px;
+  }
+}
+
+// google login option 
+
+.ThirdPartyAuth {
+    margin-top: 2.5rem;
+  button {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    background: white;
+    padding: 4px 48px;
+    border-radius: 8px;
+    border: 1px solid #C4C4C4;
+
+    img{
+        margin-top: 8px;
+    }
+
+    p{
+        margin-top: 14px;
+        font-weight: 600;
+        letter-spacing: 1px;
+        margin-left: 10px;
+        font-size: 13px;
+    }
+
+    &:hover{
+        background: rgba(240, 247, 237, 0.6);
+    }
+  }
+
+  &__divider{
+    margin: 35px 0;
+  }
+}
+
+
+// Leftlayer form Footer
+
+.FormFooter{
+    text-align: center;
+
+    &__content{
+        p{
+            margin: 2rem 0;
+        }
+        a{
+        color: $dark-green !important;
+        font-weight: 600;
+        }
+    }
+
+    &__AuthOpt{
+        color: #808080;
+
+        a{
+            margin-left: 5px;
+        }
+    }
+    
+}
+
+
+// RightLayout content
+.desc{
+    margin-top: 29%;
+    &__image{
+        display: flex;
+        justify-content: center;
+
+        img{
+            width: 400px;
+        }
+    }
+    &__text{
+        text-align: center;
+        margin: 2rem 0;
+
+        h1{
+            width: 100%;
+        }
+        p{
+            margin-top: 2rem;
+            color: #18181B;
+            font-size: 16px;
+        }
+    }
+}
+
+
+// page indicator 
+.PageIndicator {
+    text-align: center;
+    margin-top: 5.5rem;
+    width: 100%;
+
+    &__indicators {
+        width: 100%;
+    }
+
+    &__pageIndex {
+        height: 2px;
+        margin: 0 4px;
+        width: 15px;
+    }
+}
+
+
+
+// form styling 
+.authForm {
+    padding: 0;
+}
+
+
+.ant-divider-horizontal.ant-divider-with-text-center::before,
+.ant-divider-horizontal.ant-divider-with-text-center::after {
+    border-top: 1px solid #C4C4C4;
+    height: 10px;
+}
+
+
+
+
+.ant-input {
+    font-size: 15px;
+    padding: $formElementPadding;
+    offset: 10px 30px;
+    border-bottom: 2px solid #c4c4c498;
+    font-family: $font-family;
+    
+
+    &:hover {
+        offset: $offset;
+        border: 1px solid $light-green;
+        box-shadow: $box-shadow-input;
+        border-bottom: 2px solid $light-green;
+    }
+
+    &:focus {
+        offset: $offset;
+        border: 1px solid $light-green;
+        box-shadow: $box-shadow-input;
+        border-bottom: 2px solid $light-green;
+    }
+}
+
+
+
+.ant-input-affix-wrapper {
+    font-size: 15px;
+    background: white;
+    padding: 8px 10px;
+    border-bottom: 2px solid #c4c4c498;
+    
+
+    &:hover {
+        border: 1px solid $light-green !important;
+        box-shadow: $box-shadow-input;
+        border-bottom: 2px solid $light-green !important;
+    }
+
+    &:focus-within {
+        border-color: $light-green !important;
+        offset: $offset;
+        box-shadow: $box-shadow-input;
+        border-bottom: 2px solid $light-green;
+    }
+
+    .ant-input {
+        box-shadow: none;
+    }
+
+    .ant-input[type=password]:not(:placeholder-shown) {
+        font-size: 18px;
+        font-family: verdana;
+        font-weight: bolder;
+    }
+
+}

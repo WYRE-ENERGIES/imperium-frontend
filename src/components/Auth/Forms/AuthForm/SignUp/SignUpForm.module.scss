@@ -1,0 +1,19 @@
+.SignUp{
+    margin-top: 10%;
+    width: 420px;
+
+    &__Info{
+        margin-top: 2rem;
+        p{
+            color: #556275;
+            font-size: 15px;
+            font-weight: 600;
+        }
+        span{
+            color: #5C9D48;
+        }
+        strong{
+            color: #363636;
+        }
+    }
+}
