@@ -74,7 +74,9 @@ const Sidebar = ({ bgColor }) => {
           justifyContent: 'space-between',
         }}
       >
-        <Logo style={{ marginLeft: '4px' }} />
+        <Link to="/">
+          <Logo style={{ marginLeft: '4px' }} />
+        </Link>
         <Menu
           className={styles.SidebarMenu}
           theme="light"
