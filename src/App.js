@@ -27,15 +27,8 @@ function App() {
           </Route>
           <Route path="/support" element={<Support />} />
           <Route path="/energy-analytic" element={<EnergyAnalytic />} />
-<<<<<<< HEAD
           <Route path="/panel-analytic" element={<PanelAnalytic />} />
           <Route path="/battery" element={<Battery />} />
-=======
-          <Route path="/" element={<SignUp />} />
-          <Route path="signin" element={<SignIn />} />
-          <Route path="verification" element={<Verification />} />
-          <Route path="details" element={<Detail />} />
->>>>>>> updated-onboarding
         </Routes>
       </Suspense>
     </Router>
