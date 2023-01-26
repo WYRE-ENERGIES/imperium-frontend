@@ -3,33 +3,19 @@ import { Table, Tag } from 'antd'
 import React from 'react'
 import SearchAndFilter from '../SearchAndFilter/SearchAndFilter'
 import classes from '../SHSTable/SHSTable.module.scss'
-import { tableData } from './data'
 
-const columns = [
-  {
-    title: 'Name',
-    dataIndex: 'name',
-    key: 'name',
-  },
-  {
-    title: 'Energy Consumed',
-    key: 'energyConsumed',
-    dataIndex: 'energyConsumed',
-    render: (value) => value.toLocaleString(),
-  },
-  {
-    title: 'Energy Generated',
-    key: 'energyGenerated',
-    dataIndex: 'energyGenerated',
-    render: (value) => value.toLocaleString(),
-  },
-]
-const EnergyTable = () => {
+const SHSTableWithFilter = ({
+  columns,
+  data,
+  tableTitle,
+  tagValue,
+  filterOptions,
+}) => {
   return (
     <div className={classes.SHSTable}>
       <section className={classes.SHSTable__shsTableTitle}>
         <h1>
-          Energy Table
+          {tableTitle}
           <Tag
             style={{
               backgroundColor: '#f0f7ed',
@@ -43,15 +29,15 @@ const EnergyTable = () => {
               lineHeight: '20px',
             }}
           >
-            kWh
+            {tagValue}
           </Tag>
         </h1>
-        <SearchAndFilter />
+        <SearchAndFilter filterOptions={filterOptions} />
       </section>
       <Table
         style={{ width: '100%' }}
         columns={columns}
-        dataSource={tableData}
+        dataSource={data}
         className={classes.SHSTable__table}
         pagination={{
           hideOnSinglePage: true,
@@ -61,4 +47,4 @@ const EnergyTable = () => {
   )
 }
 
-export default EnergyTable
+export default SHSTableWithFilter

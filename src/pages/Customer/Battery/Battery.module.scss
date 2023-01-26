@@ -1,0 +1,20 @@
+.Battery {
+  &__headerSection {
+    margin-bottom: 35px;
+    display: flex;
+    justify-content: space-between;
+  }
+  & > div:not(:last-child) {
+    margin-bottom: 24px;
+  }
+
+  &__filters {
+    margin-bottom: 32px;
+  }
+
+  &__widgets {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+  }
+}

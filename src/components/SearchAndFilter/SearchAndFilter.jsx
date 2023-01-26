@@ -15,7 +15,13 @@ const prefix = (
   />
 )
 
-const SearchAndFilter = () => {
+const SearchAndFilter = ({ filterOptions }) => {
+  const options = filterOptions?.map((option, index) => (
+    <Option key={index} value={option.value}>
+      {option.name}
+    </Option>
+  ))
+
   return (
     <div className={classes.SearchAndFilter}>
       <Input
@@ -40,11 +46,7 @@ const SearchAndFilter = () => {
           }}
           className={classes.SearchAndFilter__select}
         >
-          <Option value="solar">Solar house System</Option>
-          <Option value="recently">Recently added</Option>
-          <Option value="weekly">Weekly</Option>
-          <Option value="monthly">Monthly</Option>
-          <Option value="yearly">Yearly</Option>
+          {options}
         </Select>
       </section>
     </div>
