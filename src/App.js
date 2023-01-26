@@ -10,6 +10,12 @@ import PanelAnalytic from './pages/Customer/PanelAnalytic/PanelAnalytic'
 import { Support } from './pages/Customer/Support/Support'
 import { Suspense } from 'react'
 
+import SignUp from './pages/Customer/Auth/SignUp/SignUp'
+import SignIn from './pages/Customer/Auth/SignIn/SignIn'
+import Verification from './pages/Customer/Auth/Verification/Verification'
+import Detail from './pages/Customer/Auth/Detail/Detail'
+import ForgotPasswordPage from './pages/Customer/Auth/ForgotPassword/ForgotPassword'
+
 function App() {
   return (
     <Router>
@@ -21,8 +27,15 @@ function App() {
           </Route>
           <Route path="/support" element={<Support />} />
           <Route path="/energy-analytic" element={<EnergyAnalytic />} />
+<<<<<<< HEAD
           <Route path="/panel-analytic" element={<PanelAnalytic />} />
           <Route path="/battery" element={<Battery />} />
+=======
+          <Route path="/" element={<SignUp />} />
+          <Route path="signin" element={<SignIn />} />
+          <Route path="verification" element={<Verification />} />
+          <Route path="details" element={<Detail />} />
+>>>>>>> updated-onboarding
         </Routes>
       </Suspense>
     </Router>
