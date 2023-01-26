@@ -1,4 +1,4 @@
-.OverviewWidget {
+.Widget {
   display: flex;
   flex: 1;
   padding: 24px;
@@ -11,6 +11,10 @@
   gap: 24px;
 
   &__data {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+
     & > * {
       font-style: normal;
       letter-spacing: -0.02em;
@@ -45,5 +49,10 @@
       line-height: 18px;
       color: #363636;
     }
+  }
+
+  &__valueSection {
+    display: flex;
+    justify-content: space-between;
   }
 }

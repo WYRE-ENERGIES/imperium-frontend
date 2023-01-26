@@ -1,0 +1,29 @@
+.Panel {
+  border: 1px solid green;
+  display: flex;
+  flex: 1;
+  justify-content: space-between;
+  gap: 25px;
+  height: 346px;
+
+  & > * {
+    flex: 1;
+  }
+
+  &__widgets {
+    border: 1px solid red;
+    display: flex;
+    justify-content: space-between;
+    gap: 18px;
+    flex-wrap: wrap;
+    height: inherit;
+
+    & > *{
+      flex: 1;
+    }
+  }
+
+  &__calendar {
+    border: 1px solid blue;
+  }
+}

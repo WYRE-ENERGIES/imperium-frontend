@@ -1,16 +1,18 @@
 import React, { useState } from 'react'
+import { energyAnalyticColumns, energyFilterOptions } from '../../../utils/data'
 
 import EnergyAnalyticWidget from '../../../components/Widget/EnergyAnalytic/EnergyAnalyticWidget'
-import EnergyTable from '../../../components/EnergyTable/EnergyTable'
 import { ReactComponent as EnergyWidgetIcon } from '../../../assets/widget-icons/energy-icon.svg'
 import PageBreadcrumb from '../../../components/PageBreadcrumb/PageBreadcrumb'
 import PageLayout from '../../../components/Layout/PageLayout'
 import { ReactComponent as SEnergyWidgetIcon } from '../../../assets/widget-icons/cancel-energy-con.svg'
+import SHSTableWithFilter from '../../../components/SHSTableWithFilter/SHSTableWithFilter'
 import ShsCapacityDropdown from '../../../components/ShsCapacityDropdown/ShsCapacityDropdown'
 import StackedBarChart from '../../../components/Charts/StackedBarChart/StackedBarChart'
 import WidgetFilter from '../../../components/WidgetFilter/WidgetFilter'
 import classes from './EnergyAnalytic.module.scss'
 import { stackBarData } from '../../../components/Charts/StackedBarChart/data'
+import { tableData } from '../../../components/SHSTableWithFilter/data'
 
 const EnergyAnalytic = () => {
   const [chartData, setChartData] = useState({
@@ -75,7 +77,13 @@ const EnergyAnalytic = () => {
           <StackedBarChart title="Energy Generation" chartData={chartData} />
         </div>
         <div className={classes.EnergyAnalytic__shsTable}>
-          <EnergyTable />
+          <SHSTableWithFilter
+            columns={energyAnalyticColumns}
+            data={tableData}
+            tableTitle="Energy Table"
+            tagValue="kWh"
+            filterOptions={energyFilterOptions}
+          />
         </div>
       </div>
     </PageLayout>
