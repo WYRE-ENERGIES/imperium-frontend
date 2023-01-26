@@ -29,7 +29,6 @@ function App() {
           <Route path="signin" element={<SignIn />} />
           <Route path="verification/code" element={<Verification />} />
           <Route path="details" element={<Detail />} />
-          <Route path="forgot/password/" element={<ForgotPasswordPage />} />
         </Routes>
       </Suspense>
     </Router>
