@@ -11,10 +11,9 @@ import Overview from './pages/Customer/Overview/Overview'
 import PanelAnalytic from './pages/Customer/PanelAnalytic/PanelAnalytic'
 import SignIn from './pages/Customer/Auth/SignIn/SignIn'
 import SignUp from './pages/Customer/Auth/SignUp/SignUp'
-import Verification from './pages/Customer/Auth/Verification/Verification'
 import { Support } from './pages/Customer/Support/Support'
 import { Suspense } from 'react'
-
+import Verification from './pages/Customer/Auth/Verification/Verification'
 
 function App() {
   return (
