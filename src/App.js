@@ -27,7 +27,7 @@ function App() {
           <Route path="/energy-analytic" element={<EnergyAnalytic />} />
           <Route path="/" element={<SignUp />} />
           <Route path="signin" element={<SignIn />} />
-          <Route path="verification/code" element={<Verification />} />
+          <Route path="verification" element={<Verification />} />
           <Route path="details" element={<Detail />} />
         </Routes>
       </Suspense>
