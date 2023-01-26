@@ -19,16 +19,17 @@ function App() {
     <Router>
       <Suspense fallback="loading">
         <Routes>
+          <Route path="/" element={<SignUp />} />
+          <Route path="signin" element={<SignIn />} />
+          <Route path="verification" element={<Verification />} />
+          <Route path="details" element={<Detail />} />
+          <Route path="forgot-password" element={<ForgotPasswordPage />} />
           <Route path="overview">
             <Route index element={<Overview />} />
             <Route path="shs/:id" element={<Support />} />
           </Route>
           <Route path="/support" element={<Support />} />
           <Route path="/energy-analytic" element={<EnergyAnalytic />} />
-          <Route path="/" element={<SignUp />} />
-          <Route path="signin" element={<SignIn />} />
-          <Route path="verification" element={<Verification />} />
-          <Route path="details" element={<Detail />} />
         </Routes>
       </Suspense>
     </Router>
