@@ -1,6 +1,5 @@
-import React from 'react'
-
 import AuthForm from '../AuthForm'
+import React from 'react'
 import classes from './SignUpForm.module.scss'
 
 const SignUpForm = () => {
@@ -9,7 +8,7 @@ const SignUpForm = () => {
     tag: 'Let’s get started with imperium today',
     footer: 'Already have an account?',
     action: 'Log in',
-    url: 'signin',
+    url: '',
     helpertext: 'Must be at least 8 characters.',
     btnText: 'Create account',
   }

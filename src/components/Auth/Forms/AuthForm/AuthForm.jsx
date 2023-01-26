@@ -1,18 +1,18 @@
 import { Form, Input } from 'antd'
-import React from 'react'
-import { useNavigate } from 'react-router-dom'
 
 import FormButton from '../Widgets/FormButton'
 import FormFooter from '../Widgets/FormFooter'
 import FormHeader from '../Widgets/FormHeader'
+import React from 'react'
 import ThirdPartyAuth from '../Widgets/ThirdPartyAuth'
 import classes from './AuthForm.modules.scss'
+import { useNavigate } from 'react-router-dom'
 
 const AuthForm = ({ children, props }) => {
   const { header, tag, helpertext, footer, action, url, btnText } = props
   const nextPage = useNavigate()
   const handleOnCreateAccountBtn = () => {
-    nextPage('verification/code')
+    nextPage('/verification')
   }
   const onFinish = (values) => {
     console.log('Success:', values)
