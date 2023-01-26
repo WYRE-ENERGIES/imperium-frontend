@@ -15,12 +15,6 @@ import { Support } from './pages/Customer/Support/Support'
 import { Suspense } from 'react'
 import Verification from './pages/Customer/Auth/Verification/Verification'
 
-import SignUp from './pages/Customer/Auth/SignUp/SignUp'
-import SignIn from './pages/Customer/Auth/SignIn/SignIn'
-import Verification from './pages/Customer/Auth/Verification/Verification'
-import Detail from './pages/Customer/Auth/Detail/Detail'
-import ForgotPasswordPage from './pages/Customer/Auth/ForgotPassword/ForgotPassword'
-
 function App() {
   return (
     <Router>
