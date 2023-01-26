@@ -1,6 +1,5 @@
-import { React } from 'react'
 import { Link } from 'react-router-dom'
-
+import { React } from 'react'
 import classes from './Widget.module.scss'
 
 const FormFooter = ({ footer, action, url }) => {

@@ -1,14 +1,14 @@
 // import { InboxOutlined } from '@ant-design/icons'
 import { Button, Form, Input, Upload } from 'antd'
-import { useNavigate } from 'react-router-dom'
 
 import uploadImg from '../../assets/images/Auth/Featured icon.svg'
+import { useNavigate } from 'react-router-dom'
 
 const BusinessForm = () => {
   const nextPage = useNavigate()
   const handleOnCreateAccountBtn = () => {
     console.log(nextPage)
-    nextPage('/verification/code')
+    nextPage('/verification')
   }
   const onFinish = (values) => {
     console.log('Success:', values)
