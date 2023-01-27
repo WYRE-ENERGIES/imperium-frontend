@@ -66,7 +66,6 @@ const ErrorContactForm = () => {
                   />
                 </Form.Item>
 
-                {/* <Form.Item label="" required> */}
                 <Select
                   showArrow
                   defaultValue={['gold', 'cyan']}
@@ -75,7 +74,6 @@ const ErrorContactForm = () => {
                   }}
                   options={options}
                 />
-                {/* </Form.Item> */}
 
                 <Form.Item>
                   <FormButton type={'submit'} action={'Submit'} icon={''} />
