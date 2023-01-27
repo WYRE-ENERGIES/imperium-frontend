@@ -7,6 +7,7 @@ import PanelWidgets from '../../../components/Widget/Panel/Panel'
 import React from 'react'
 import ShsCapacityDropdown from '../../../components/ShsCapacityDropdown/ShsCapacityDropdown'
 import classes from './PanelAnalytic.module.scss'
+import { useWeather } from '../../../hooks/useWeather'
 
 const columns = [
   {
@@ -41,6 +42,8 @@ const columns = [
 ]
 
 const PanelAnalytic = () => {
+  const [coord, weatherResult, isLoading, error] = useWeather()
+
   return (
     <PageLayout>
       <div
