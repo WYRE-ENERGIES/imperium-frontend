@@ -52,7 +52,7 @@ const PanelAnalytic = () => {
           <ShsCapacityDropdown />
         </section>
         <div className={classes.PanelAnalytic__widgets}>
-          <PanelWidgets />
+          <PanelWidgets totalPanel={8} />
         </div>
         <div className={classes.PanelAnalytic__shsTable}>
           <EnergyAnalyticWidget

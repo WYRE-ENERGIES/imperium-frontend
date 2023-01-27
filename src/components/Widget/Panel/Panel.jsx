@@ -5,7 +5,7 @@ import Widget from '../Widget/Widget'
 import classes from './panel.module.scss'
 import { panelWidgetsData } from '../../../utils/data'
 
-const PanelWidgets = () => {
+const PanelWidgets = ({ totalPanel }) => {
   const widgets = panelWidgetsData.map((data, index) => (
     <Widget
       key={index}
@@ -32,7 +32,22 @@ const PanelWidgets = () => {
           {widgets[3]}
         </Col>
       </Row>
-      <div className={classes.Panel__calendar}>calendar widgets</div>
+      <div className={classes.Panel__weather}>
+        <div className={classes.Panel__weatherDetails}>
+          <div>
+            Today’s weather forecast <span>31</span>
+          </div>
+          <div>
+            CO2 avoided <span>12kg</span>
+          </div>
+          <div>
+            Total Panel <span>{totalPanel}</span>
+          </div>
+        </div>
+        <div className={classes.Panel__weatherForecast}>
+          <section>forecast goes here</section>
+        </div>
+      </div>
     </div>
   )
 }
