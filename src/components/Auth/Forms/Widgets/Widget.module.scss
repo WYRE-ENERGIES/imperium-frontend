@@ -222,3 +222,34 @@ $buttonPadding: 14px 48px;
     }
   }
 }
+
+.FormFileUpload {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 16px;
+
+  &__fileUploadStatus {
+    display: flex;
+    justify-content: space-around;
+    gap: 7px;
+  }
+
+  &__Text {
+    width: 325px;
+    text-align: left;
+  }
+
+  &__FileName {
+    width: 300px;
+    color: #606062;
+  }
+
+  &__FileSize {
+    color: #cf0b0b;
+  }
+
+  &__FileUploadProgress {
+    width: 100%;
+    margin-top: 10px;
+  }
+}

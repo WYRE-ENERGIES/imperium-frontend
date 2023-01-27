@@ -4,6 +4,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom'
 
 import Battery from './pages/Customer/Battery/Battery'
+import Business from './pages/Customer/Auth/Business/Business'
 import Detail from './pages/Customer/Auth/Detail/Detail'
 import EnergyAnalytic from './pages/Customer/EnergyAnalytic/EnergyAnalytic'
 import ForgotPasswordPage from './pages/Customer/Auth/ForgotPassword/ForgotPassword'
@@ -25,6 +26,7 @@ function App() {
             <Route path="signup" element={<SignUp />} />
             <Route path="verification" element={<Verification />} />
             <Route path="details" element={<Detail />} />
+            <Route path="business" element={<Business />} />
             <Route path="forgot-password" element={<ForgotPasswordPage />} />
             <Route path="overview">
               <Route index element={<Overview />} />
