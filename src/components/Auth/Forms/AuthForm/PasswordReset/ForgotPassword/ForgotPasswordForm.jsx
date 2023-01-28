@@ -9,7 +9,7 @@ const ForgotPasswordForm = () => {
   const nextPage = useNavigate()
   const handleOnCreateAccountBtn = () => {
     console.log(nextPage)
-    nextPage('/new-password')
+    nextPage('/otp')
   }
   const onFinish = (values) => {
     console.log('Success:', values)

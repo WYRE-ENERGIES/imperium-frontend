@@ -2,7 +2,6 @@
 
 $buttonPadding: 14px 48px;
 
-// Form button
 .button {
   button {
     width: 100%;
@@ -12,6 +11,7 @@ $buttonPadding: 14px 48px;
     background: $dark-green;
     color: white;
     font-size: 16px;
+    box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05);
 
     &:hover {
       background: #294620;
@@ -34,8 +34,6 @@ $buttonPadding: 14px 48px;
   }
 }
 
-// google login option
-
 .ThirdPartyAuth {
   margin-top: 2.5rem;
   button {
@@ -46,6 +44,7 @@ $buttonPadding: 14px 48px;
     padding: 4px 48px;
     border-radius: 8px;
     border: 1px solid #c4c4c4;
+    box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05);
 
     img {
       margin-top: 8px;
@@ -69,8 +68,6 @@ $buttonPadding: 14px 48px;
   }
 }
 
-// Leftlayer form Footer
-
 .FormFooter {
   text-align: center;
 
@@ -93,7 +90,6 @@ $buttonPadding: 14px 48px;
   }
 }
 
-// RightLayout content
 .desc {
   margin-top: 29%;
   &__image {
@@ -119,7 +115,6 @@ $buttonPadding: 14px 48px;
   }
 }
 
-// page indicator
 .PageIndicator {
   text-align: center;
   margin-top: 5.5rem;
@@ -136,7 +131,6 @@ $buttonPadding: 14px 48px;
   }
 }
 
-// form styling
 .authForm {
   padding: 0;
 }
@@ -207,15 +201,16 @@ $buttonPadding: 14px 48px;
 
   &__btn {
     margin-top: 5px;
-    button {
-      padding: 10px 40px;
+    a {
+      padding: 7px 40px;
       border-radius: 8px;
       border: none;
       margin-left: 20px;
       background: #497a38;
       color: white;
+      text-decoration: none;
     }
-    & > button:not(:last-child) {
+    & > a:not(:last-child) {
       background: white;
       color: #385e2b;
       font-size: 16px;

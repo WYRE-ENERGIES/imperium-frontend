@@ -2,6 +2,7 @@ import React from 'react'
 import ErrorLayout from '../Layout/ErrorLayout'
 import FormButton from '../../Auth/Forms/Widgets/FormButton'
 import classes from './DisabledAccount.module.scss'
+import { Link } from 'react-router-dom'
 const DisabledAccountInfo = () => {
   return (
     <div>
@@ -18,7 +19,9 @@ const DisabledAccountInfo = () => {
             </p>
 
             <div className={classes.DisabledAccountInfo__Btn}>
-              <FormButton type={'submit'} action={'Contact Support'} />
+              <Link to="/contact-error">
+                <FormButton type={'submit'} action={'Contact Support'} />
+              </Link>
             </div>
           </div>
         </div>

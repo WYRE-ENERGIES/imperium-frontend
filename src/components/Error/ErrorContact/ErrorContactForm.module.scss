@@ -1,4 +1,33 @@
 .ErrorContactForm {
-  width: 320px;
-  margin-top: 15%;
+  width: 310px;
+  margin-top: 19.5%;
+  margin-left: 25px;
+
+  &__Phone {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: -0.7rem;
+    background: #fcfcfd;
+    width: 320px;
+    color: #737373;
+    border-radius: 6px;
+    border: 1px solid #f5f5f5;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+
+    div {
+      margin-top: 10px;
+    }
+
+    p {
+      margin-bottom: -1px;
+      margin-left: 3px;
+    }
+  }
+
+  &__FormContent {
+    width: 100%;
+  }
 }

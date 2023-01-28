@@ -5,19 +5,23 @@ import { Form, Input, Select } from 'antd'
 import { useNavigate } from 'react-router-dom'
 import classes from './ErrorContactForm.module.scss'
 import { BiEnvelope } from 'react-icons/bi'
+import { BiPhone } from 'react-icons/bi'
 const ErrorContactForm = () => {
   const options = [
     {
-      value: 'gold',
+      value: 'Location',
     },
     {
-      value: 'lime',
+      value: 'Device malfunction',
     },
     {
-      value: 'green',
+      value: 'Inconsistent data post',
     },
     {
-      value: 'cyan',
+      value: 'Suspicious activity',
+    },
+    {
+      value: 'Payment',
     },
   ]
   const nextPage = useNavigate()
@@ -61,18 +65,21 @@ const ErrorContactForm = () => {
               >
                 <Form.Item label="" name="email" required>
                   <Input
-                    prefix={<BiEnvelope color="#606062" />}
+                    prefix={<BiEnvelope color="#606062" size={22} />}
                     placeholder="nisha@uitrend.com"
                   />
                 </Form.Item>
 
                 <Select
+                  menuItemSelectedIcon="hello"
                   showArrow
-                  defaultValue={['gold', 'cyan']}
+                  placeholder="Select error message"
                   style={{
                     width: '100%',
+                    padding: '-12px',
                   }}
                   options={options}
+                  className={classes.ErrorContactForm__FormSelect}
                 />
 
                 <Form.Item>
@@ -81,6 +88,15 @@ const ErrorContactForm = () => {
               </Form>
             </div>
           </div>
+
+          <a href="tel:+234 81 2345 6789">
+            <div className={classes.ErrorContactForm__Phone}>
+              <div>
+                <BiPhone size={20} />
+              </div>
+              <p>081 2345 6789</p>
+            </div>
+          </a>
         </div>
       </ErrorLayout>
     </div>

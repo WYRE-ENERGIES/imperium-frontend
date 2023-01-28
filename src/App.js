@@ -11,6 +11,7 @@ import ErrorContact from './pages/Customer/Error/ErrorContact/ErrorContact'
 import EnergyAnalytic from './pages/Customer/EnergyAnalytic/EnergyAnalytic'
 import ForgotPasswordPage from './pages/Customer/Auth/ForgotPassword/ForgotPassword'
 import NewPasswordPage from './pages/Customer/Auth/NewPassword/Newpassword'
+import OTP from './pages/Customer/Auth/Otp/Otp'
 import Overview from './pages/Customer/Overview/Overview'
 import PanelAnalytic from './pages/Customer/PanelAnalytic/PanelAnalytic'
 import SignIn from './pages/Customer/Auth/SignIn/SignIn'
@@ -31,6 +32,7 @@ function App() {
             <Route path="details" element={<Detail />} />
             <Route path="business" element={<Business />} />
             <Route path="forgot-password" element={<ForgotPasswordPage />} />
+            <Route path="otp" element={<OTP />} />
             <Route path="new-password" element={<NewPasswordPage />} />
             <Route path="disabled-account" element={<DisabledAccount />} />
             <Route path="contact-error" element={<ErrorContact />} />
