@@ -26,7 +26,7 @@ const InnerCard = ({ title, description, icon }) => (
   </div>
 )
 
-export const Support = () => {
+const Support = () => {
   const [openModal, setOpenModal] = useState(false)
   const [ticketData, setTicketData] = useState({})
 
@@ -75,3 +75,5 @@ export const Support = () => {
     </PageLayout>
   )
 }
+
+export default Support

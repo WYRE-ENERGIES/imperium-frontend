@@ -22,11 +22,11 @@ const items = [
     title: 'Energy Analytic',
     linkTo: '/energy-analytic',
   },
-  // {
-  //   icon: BsSunset,
-  //   title: 'Panel Analytic',
-  //   linkTo: '/panel-analytic',
-  // },
+  {
+    icon: BsSunset,
+    title: 'Panel Analytic',
+    linkTo: '/panel-analytic',
+  },
   {
     icon: BsBattery,
     title: 'Battery',
@@ -74,7 +74,9 @@ const Sidebar = ({ bgColor }) => {
           justifyContent: 'space-between',
         }}
       >
-        <Logo style={{ marginLeft: '4px' }} />
+        <Link to="/">
+          <Logo style={{ marginLeft: '4px' }} />
+        </Link>
         <Menu
           className={styles.SidebarMenu}
           theme="light"
