@@ -1,0 +1,18 @@
+.DisabledAccountInfo {
+  text-align: center;
+  margin-top: 3rem;
+  &__Header {
+    font-size: 20px;
+    padding: 0 24px;
+    line-height: 28px;
+    color: #18181b;
+    font-weight: 600;
+  }
+  &__Caption {
+    color: #454545;
+    font-size: 16px;
+    padding: 0 20px;
+    line-height: 24px;
+    margin-bottom: 3rem;
+  }
+}

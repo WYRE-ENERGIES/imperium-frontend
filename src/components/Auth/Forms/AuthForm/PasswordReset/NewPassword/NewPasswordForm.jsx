@@ -1,15 +1,15 @@
 import React from 'react'
 import { Form, Input } from 'antd'
 import FormHeader from '../../../Widgets/FormHeader'
-import classes from './ForgetPasswordForm.module.scss'
-import icon from '../../../../../../../src/assets/Auth/Group 18.svg'
+import classes from './NewPasswordForm.module.scss'
+import icon from '../../../../../../../src/assets/Auth/Frame 1707478103.svg'
 import { useNavigate } from 'react-router-dom'
 import FormButton from '../../../Widgets/FormButton'
-const ForgotPasswordForm = () => {
+const NewPasswordForm = () => {
   const nextPage = useNavigate()
   const handleOnCreateAccountBtn = () => {
     console.log(nextPage)
-    nextPage('/otp')
+    nextPage('/')
   }
   const onFinish = (values) => {
     console.log('Success:', values)
@@ -20,19 +20,19 @@ const ForgotPasswordForm = () => {
     console.log('Failed:', errorInfo)
   }
   return (
-    <div className={classes.ForgotPassword}>
-      <div className={classes.ForgotPassword__FormContent}>
-        <h1 className={classes.ForgotPassword__header}>Forgot password</h1>
+    <div className={classes.NewPassword}>
+      <div className={classes.NewPassword__FormContent}>
+        <h1 className={classes.NewPassword__header}>Forgot password</h1>
 
-        <div className={classes.ForgotPassword__Form}>
+        <div className={classes.NewPassword__Form}>
           <div>
             <img src={icon} alt="" srcSet="" />
           </div>
-          <div className={classes.ForgotPassword__FormText}>
+          <div className={classes.NewPassword__FormText}>
             {' '}
             <FormHeader
               header={'Forgot password'}
-              tagline={'Link would be sent to your email address'}
+              tagline={'Create new password'}
             />
           </div>
         </div>
@@ -54,8 +54,11 @@ const ForgotPasswordForm = () => {
             layout="vertical"
             requiredMark="optional"
           >
-            <Form.Item label="" name="email" required>
-              <Input placeholder="nisha@uitrend.com" />
+            <Form.Item label="Password" name="email" required>
+              <Input.Password placeholder="Create a password" />
+            </Form.Item>
+            <Form.Item label="Confirm Password" name="email" required>
+              <Input.Password placeholder="Confirm password" />
             </Form.Item>
 
             <Form.Item>
@@ -68,4 +71,4 @@ const ForgotPasswordForm = () => {
   )
 }
 
-export default ForgotPasswordForm
+export default NewPasswordForm
