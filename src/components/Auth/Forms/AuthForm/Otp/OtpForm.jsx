@@ -5,7 +5,6 @@ import icon from '../../../../../assets/Auth/Group 18.svg'
 import { useNavigate } from 'react-router-dom'
 import FormButton from '../../Widgets/FormButton'
 import { Link } from 'react-router-dom'
-import OtpInput from 'react-otp-input'
 const Otp = () => {
   const [otp, setOtp] = useState('')
   const nextPage = useNavigate()
@@ -33,18 +32,6 @@ const Otp = () => {
         </div>
         <div>
           <form action="" method="post" onSubmit={handleOnsubmit}>
-            <OtpInput
-              value={otp}
-              onChange={(e) => {
-                setOtp(e)
-              }}
-              inputStyle={classes.Otp__FormInput}
-              containerStyle={classes.Otp__FormInputContainer}
-              focusStyle={classes.Otp__FormInputFocus}
-              placeholder="0000"
-              numInputs={4}
-              isInputNum={true}
-            />
             <FormButton type={'submit'} action={'Continue'} icon={''} />
           </form>
           <div className={classes.Otp__Resend}>
