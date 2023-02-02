@@ -1,7 +1,8 @@
 import { Layout, theme } from 'antd'
-import React from 'react'
 
+import React from 'react'
 import Sidebar from '../SideBar/Sidebar'
+import classes from './PageLayout.module.scss'
 
 const { Content } = Layout
 
@@ -13,17 +14,11 @@ const PageLayout = ({ children }) => {
   return (
     <Layout hasSider>
       <Sidebar bgColor={colorBgContainer} />
-      <Layout
-        className="site-layout"
-        style={{
-          marginLeft: 280,
-          backgroundColor: '#FCFCFD',
-        }}
-      >
+      <Layout className={classes.PageLayout}>
         <Content
           style={{
             margin: '32px',
-            overflow: 'initial',
+            overflow: 'scroll',
           }}
         >
           {children}

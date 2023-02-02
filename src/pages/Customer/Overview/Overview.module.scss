@@ -14,11 +14,20 @@
 
   &__widgets {
     display: flex;
-    flex-wrap: wrap;
+
+    overflow: scroll;
     gap: 24px;
   }
 
-  &__shsTable {
-    
+  &__chart {
+    height: 433px;
+  }
+}
+
+@media only screen and (max-width: 779px) {
+  .Overview {
+    &__widgets {
+      flex-wrap: wrap;
+    }
   }
 }
