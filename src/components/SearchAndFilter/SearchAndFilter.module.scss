@@ -1,6 +1,5 @@
 .SearchAndFilter {
   display: flex;
-  flex: 1;
   gap: 18px;
 
   &__search {
@@ -56,4 +55,13 @@
       display: none;
     }
   }
+}
+
+@media only screen and (max-width: 820px) {
+  .SearchAndFilter {
+    width: 100%;
+  }
+}
+
+@media only screen and (max-width: 425px) {
 }

@@ -6,6 +6,7 @@ import PageLayout from '../../../components/Layout/PageLayout'
 import PanelWidgets from '../../../components/Widget/Panel/Panel'
 import React from 'react'
 import ShsCapacityDropdown from '../../../components/ShsCapacityDropdown/ShsCapacityDropdown'
+import WidgetFilter from '../../../components/WidgetFilter/WidgetFilter'
 import classes from './PanelAnalytic.module.scss'
 import { useWeather } from '../../../hooks/useWeather'
 
@@ -53,6 +54,9 @@ const PanelAnalytic = () => {
         <section className={classes.PanelAnalytic__headerSection}>
           <PageBreadcrumb title="Panel Analytic" />
           <ShsCapacityDropdown />
+        </section>
+        <section className={classes.PanelAnalytic__filters}>
+          <WidgetFilter />
         </section>
         <div className={classes.PanelAnalytic__widgets}>
           <PanelWidgets totalPanel={8} />
