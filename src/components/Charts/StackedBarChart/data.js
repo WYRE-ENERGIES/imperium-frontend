@@ -1,29 +1,50 @@
-export const overviewStackedOptions = {
-  plugins: {
-    legend: {
-      position: 'top',
-      align: 'end',
-      labels: {
-        usePointStyle: true,
-      },
+export const apexChartOptions = {
+  chart: {
+    stacked: true,
+    toolbar: {
+      show: false,
     },
   },
-  responsive: true,
-  scales: {
-    x: {
-      title: { display: true, text: 'Month' },
-      stacked: true,
-      grid: {
-        display: false,
-      },
+  legend: {
+    position: 'top',
+    horizontalAlign: 'right',
+    markers: {
+      radius: 10,
     },
-    y: {
-      stacked: true,
-      title: {
-        text: 'kWh',
-        display: true,
-      },
+  },
+  xaxis: {
+    categories: [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December',
+    ],
+    title: {
+      text: 'Month',
+      offsetY: 90,
     },
+  },
+  yaxis: {
+    title: {
+      text: 'kWh',
+    },
+  },
+  plotOptions: {
+    bar: {
+      borderRadiusWhenStacked: 'last',
+      borderRadiusApplication: 'end',
+    },
+  },
+  dataLabels: {
+    enabled: false,
   },
 }
 

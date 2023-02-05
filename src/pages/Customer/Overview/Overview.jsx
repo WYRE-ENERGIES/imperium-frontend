@@ -12,28 +12,18 @@ import StackedBarChart from '../../../components/Charts/StackedBarChart/StackedB
 import Widget from '../../../components/Widget/Widget/Widget'
 import WidgetFilter from '../../../components/WidgetFilter/WidgetFilter'
 import classes from './Overview.module.scss'
-import { stackBarData } from '../../../components/Charts/StackedBarChart/data'
 
 const Overview = () => {
-  const [chartData, setChartData] = useState({
-    labels: stackBarData.map((data) => data.month),
-    datasets: [
-      {
-        label: 'Energy Consumption',
-        data: stackBarData.map((data) => data.energyConsumed),
-        backgroundColor: '#66AB4F',
-        borderRadius: '5',
-        barThickness: '32',
-      },
-      {
-        label: 'Energy Generation',
-        data: stackBarData.map((data) => data.energyGenerated),
-        backgroundColor: '#497A38',
-        borderRadius: '7',
-        barThickness: '32',
-      },
-    ],
-  })
+  const [chartData, setChartData] = useState([
+    {
+      name: 'Energy Consumption',
+      data: [400, 500, 350, 420, 320, 500, 410, 430, 410, 500, 570, 400],
+    },
+    {
+      name: 'Energy Generation',
+      data: [400, 500, 230, 430, 260, 430, 390, 380, 390, 330, 430, 310],
+    },
+  ])
 
   const widgets = [
     {
@@ -88,6 +78,9 @@ const Overview = () => {
           <StackedBarChart
             title="Energy Generation vs Energy Consumption"
             chartData={chartData}
+            colors={['#66AB4F', '#497A38']}
+            borderRadius={10}
+            columnWidth={30}
           />
         </div>
         <div className={classes.Overview__shsTable}>

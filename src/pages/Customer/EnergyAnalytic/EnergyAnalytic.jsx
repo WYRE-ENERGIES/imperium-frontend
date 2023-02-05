@@ -11,29 +11,20 @@ import ShsCapacityDropdown from '../../../components/ShsCapacityDropdown/ShsCapa
 import StackedBarChart from '../../../components/Charts/StackedBarChart/StackedBarChart'
 import WidgetFilter from '../../../components/WidgetFilter/WidgetFilter'
 import classes from './EnergyAnalytic.module.scss'
-import { stackBarData } from '../../../components/Charts/StackedBarChart/data'
 import { tableData } from '../../../components/SHSTableWithFilter/data'
 
 const EnergyAnalytic = () => {
-  const [chartData, setChartData] = useState({
-    labels: stackBarData.map((data) => data.month),
-    datasets: [
-      {
-        label: 'Energy Consumed',
-        data: stackBarData.map((data) => data.energyConsumed),
-        backgroundColor: '#C9E00C',
-        borderRadius: '5',
-        barThickness: '16',
-      },
-      {
-        label: 'Energy Generated',
-        data: stackBarData.map((data) => data.energyGenerated),
-        backgroundColor: '#5C9D48',
-        borderRadius: '7',
-        barThickness: '16',
-      },
-    ],
-  })
+  const [chartData, setChartData] = useState([
+    {
+      name: 'Energy Consumed',
+      data: [400, 500, 350, 420, 320, 500, 410, 430, 410, 500, 570, 400],
+    },
+    {
+      name: 'Energy Generated',
+      data: [400, 500, 230, 430, 260, 430, 390, 380, 390, 330, 430, 310],
+    },
+  ])
+
   const widgets = [
     {
       id: 1,
@@ -74,7 +65,13 @@ const EnergyAnalytic = () => {
         </section>
         <div className={classes.EnergyAnalytic__widgets}>{widgets}</div>
         <div className={classes.EnergyAnalytic__chart}>
-          <StackedBarChart title="Energy Generation" chartData={chartData} />
+          <StackedBarChart
+            title="Energy Generation"
+            chartData={chartData}
+            colors={['#C9E00C', '#5C9D48']}
+            borderRadius={2}
+            columnWidth={10}
+          />
         </div>
         <div className={classes.EnergyAnalytic__shsTable}>
           <SHSTableWithFilter

@@ -65,6 +65,7 @@ const Sidebar = ({ bgColor }) => {
         padding: '32px 16px',
       }}
       width="280px"
+      className={styles.Sidebar}
     >
       <div
         style={{
