@@ -34,15 +34,17 @@ const SHSTableWithFilter = ({
         </h1>
         <SearchAndFilter filterOptions={filterOptions} />
       </section>
-      <Table
-        style={{ width: '100%' }}
-        columns={columns}
-        dataSource={data}
-        className={classes.SHSTable__table}
-        pagination={{
-          hideOnSinglePage: true,
-        }}
-      />
+      <div style={{ width: '100%', overflow: 'scroll' }}>
+        <Table
+          style={{ width: '100%' }}
+          columns={columns}
+          dataSource={data}
+          className={classes.SHSTable__table}
+          pagination={{
+            hideOnSinglePage: true,
+          }}
+        />
+      </div>
     </div>
   )
 }
