@@ -6,8 +6,14 @@ import { Route, BrowserRouter as Router, Routes } from 'react-router-dom'
 import { Suspense } from 'react'
 import { lazy } from 'react'
 
-const AccountDetails = lazy(() =>
+const AccountBusiness = lazy(() =>
   import('./pages/Customer/Account/AccountBusiness/AccountBusiness'),
+)
+const AccountDetails = lazy(() =>
+  import('./pages/Customer/Account/AccountDetails/AccountDetails'),
+)
+const AccountPassword = lazy(() =>
+  import('./pages/Customer/Account/AccountPassword/AccountPassword'),
 )
 const Battery = lazy(() => import('./pages/Customer/Battery/Battery'))
 const Business = lazy(() => import('./pages/Customer/Auth/Business/Business'))
@@ -56,9 +62,9 @@ function App() {
             <Route path="disabled-account" element={<DisabledAccount />} />
             <Route path="contact-error" element={<ErrorContact />} />
             <Route path="account">
+              <Route path="business" element={<AccountBusiness />} />
               <Route index path="details" element={<AccountDetails />} />
-              {/* <Route path="business" element={<AccountBusiness />} />
-              <Route path="password" element={<AccountPassword />} /> */}
+              <Route path="password" element={<AccountPassword />} />
             </Route>
             <Route path="overview">
               <Route index element={<Overview />} />
