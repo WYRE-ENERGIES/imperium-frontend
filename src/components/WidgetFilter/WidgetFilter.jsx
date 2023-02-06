@@ -1,7 +1,30 @@
-import { DatePicker, Radio } from 'antd'
+import { DatePicker, Radio, Select } from 'antd'
 import React, { useState } from 'react'
 
+import DropDownFilter from '../DropDownFilter/DropDownFilter'
 import classes from './WidgetFilter.module.scss'
+
+const { Option } = Select
+const { Group, Button } = Radio
+
+const optionData = [
+  { name: '12 months', value: '12' },
+  { name: '30 days', value: '30' },
+  { name: '7 days', value: '7' },
+  { name: '24 days', value: '24' },
+]
+
+const options = optionData.map((option, index) => (
+  <Option key={index} value={option.value}>
+    {option.name}
+  </Option>
+))
+
+const radioButtonOptions = optionData.map((option, index) => (
+  <Button key={index} value={option.value}>
+    {option.name}
+  </Button>
+))
 
 const WidgetFilter = () => {
   const [filterBy, SetFilterBy] = useState('')
@@ -11,16 +34,19 @@ const WidgetFilter = () => {
   }
   return (
     <div className={classes.WidgetFilter}>
-      <Radio.Group
-        value={filterBy}
-        onChange={filterByChange}
-        className={classes.WidgetFilter__btn}
-      >
-        <Radio.Button value="12">12 months</Radio.Button>
-        <Radio.Button value="30">30 days</Radio.Button>
-        <Radio.Button value="7">7 days</Radio.Button>
-        <Radio.Button value="24">24 hours</Radio.Button>
-      </Radio.Group>
+      <div className={classes.WidgetFilter__btnSection}>
+        <Group
+          value={filterBy}
+          onChange={filterByChange}
+          className={classes.WidgetFilter__btn}
+        >
+          {radioButtonOptions}
+        </Group>
+      </div>
+
+      <div className={classes.WidgetFilter__btnSectionMobile}>
+        <DropDownFilter options={options} />
+      </div>
 
       <DatePicker />
     </div>

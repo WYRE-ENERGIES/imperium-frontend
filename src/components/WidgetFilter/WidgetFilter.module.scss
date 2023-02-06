@@ -42,4 +42,22 @@
       }
     }
   }
+
+  &__btnSectionMobile {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 425px) {
+  .WidgetFilter {
+    gap: 5px;
+
+    &__btnSectionMobile {
+      display: flex;
+    }
+
+    &__btnSection {
+      display: none;
+    }
+  }
 }
