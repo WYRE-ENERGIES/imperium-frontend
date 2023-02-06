@@ -19,9 +19,9 @@ const InnerCard = ({ title, description, icon }) => (
   <div className={classes.Support__innerSection}>
     <p className={classes.Support__title}>{title}</p>
     <p className={classes.Support__p}>
-      {!icon && <Logo style={{ marginRight: 13 }} />}
+      {!icon && <Logo className={classes.Support__logo} />}
       {description}
-      {icon && <MdNorthEast style={{ marginLeft: 13 }} size={15} />}
+      {icon && <MdNorthEast className={classes.Support__icon} size={12} />}
     </p>
   </div>
 )
