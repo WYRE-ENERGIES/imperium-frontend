@@ -44,6 +44,7 @@ const Support = lazy(() => import('./pages/Customer/Support/Support'))
 const Verification = lazy(() =>
   import('./pages/Customer/Auth/Verification/Verification'),
 )
+const Users = lazy(() => import('./pages/Customer/Users/Users'))
 
 function App() {
   return (
@@ -74,6 +75,7 @@ function App() {
             <Route path="energy-analytic" element={<EnergyAnalytic />} />
             <Route path="panel-analytic" element={<PanelAnalytic />} />
             <Route path="battery" element={<Battery />} />
+            <Route path="users" element={<Users />} />
           </Route>
         </Routes>
       </Suspense>

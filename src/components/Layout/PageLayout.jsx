@@ -19,6 +19,7 @@ const PageLayout = ({ children }) => {
           style={{
             margin: '32px',
             overflow: 'scroll',
+            backgroundColor: '#FCFCFD',
           }}
         >
           {children}
