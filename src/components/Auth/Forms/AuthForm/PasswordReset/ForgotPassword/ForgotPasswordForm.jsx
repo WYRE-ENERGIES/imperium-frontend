@@ -55,7 +55,10 @@ const ForgotPasswordForm = () => {
             requiredMark="optional"
           >
             <Form.Item label="" name="email" required>
-              <Input placeholder="nisha@uitrend.com" />
+              <Input
+                className={classes.ForgotPassword__Input}
+                placeholder="nisha@uitrend.com"
+              />
             </Form.Item>
 
             <Form.Item>

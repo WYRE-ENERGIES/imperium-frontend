@@ -3,6 +3,9 @@ import 'react-toastify/dist/ReactToastify.css'
 
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom'
 
+import AccountBusiness from './pages/Customer/Account/AccountBusiness/AccountBusiness'
+import AccountDetails from './pages/Customer/Account/AccountDetails/AccountDetails'
+import AccountPassword from './pages/Customer/Account/AccountPassword/AccountPassword'
 import Battery from './pages/Customer/Battery/Battery'
 import Business from './pages/Customer/Auth/Business/Business'
 import Detail from './pages/Customer/Auth/Detail/Detail'
@@ -36,6 +39,11 @@ function App() {
             <Route path="new-password" element={<NewPasswordPage />} />
             <Route path="disabled-account" element={<DisabledAccount />} />
             <Route path="contact-error" element={<ErrorContact />} />
+            <Route path="account">
+              <Route index path="details" element={<AccountDetails />} />
+              <Route path="password" element={<AccountPassword />} />
+              <Route path="business" element={<AccountBusiness />} />
+            </Route>
             <Route path="overview">
               <Route index element={<Overview />} />
               <Route path="shs/:id" element={<Support />} />

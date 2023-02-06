@@ -5,7 +5,7 @@ import FormFooter from '../Widgets/FormFooter'
 import FormHeader from '../Widgets/FormHeader'
 import React from 'react'
 import ThirdPartyAuth from '../Widgets/ThirdPartyAuth'
-import classes from './AuthForm.modules.scss'
+import classes from './AuthForm.module.scss'
 import { useNavigate } from 'react-router-dom'
 
 const AuthForm = ({ children, props }) => {
@@ -60,6 +60,7 @@ const AuthForm = ({ children, props }) => {
             required
           >
             <Input
+              className={classes.authForm__Input}
               placeholder="Enter your email"
               style={{ marginTop: '-1rem' }}
             />
@@ -83,6 +84,7 @@ const AuthForm = ({ children, props }) => {
             required
           >
             <Input.Password
+              className={classes.authForm__Password}
               placeholder="Create a password"
               style={{ marginTop: '-1px' }}
             />

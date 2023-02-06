@@ -41,7 +41,7 @@ const items = [
 
 const bottomItems = [
   { icon: HiOutlineSupport, title: 'Support', linkTo: '/support' },
-  { icon: SettingOutlined, title: 'My Account', linkTo: '#' },
+  { icon: SettingOutlined, title: 'My Account', linkTo: '/account/details' },
 ].map((item) => ({
   key: `${item.linkTo}`,
   icon: React.createElement(item.icon),
