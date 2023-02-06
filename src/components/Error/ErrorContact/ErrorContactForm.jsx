@@ -4,7 +4,7 @@ import FormButton from '../../Auth/Forms/Widgets/FormButton'
 import { Form, Input, Select } from 'antd'
 import { useNavigate } from 'react-router-dom'
 import classes from './ErrorContactForm.module.scss'
-import { BiEnvelope } from 'react-icons/bi'
+import { BiCheck, BiEnvelope } from 'react-icons/bi'
 import { BiPhone } from 'react-icons/bi'
 const ErrorContactForm = () => {
   const options = [
@@ -25,9 +25,7 @@ const ErrorContactForm = () => {
     },
   ]
   const nextPage = useNavigate()
-  const handleChange = (value) => {
-    console.log(`selected ${value}`)
-  }
+
   const handleOnCreateAccountBtn = () => {
     console.log(nextPage)
     nextPage('/new-password')
@@ -65,22 +63,23 @@ const ErrorContactForm = () => {
               >
                 <Form.Item label="" name="email" required>
                   <Input
-                    prefix={<BiEnvelope color="#606062" size={22} />}
+                    prefix={<BiEnvelope />}
                     placeholder="nisha@uitrend.com"
                   />
                 </Form.Item>
 
-                <Select
-                  menuItemSelectedIcon="hello"
-                  showArrow
-                  placeholder="Select error message"
-                  style={{
-                    width: '100%',
-                    padding: '-12px',
-                  }}
-                  options={options}
-                  className={classes.ErrorContactForm__FormSelect}
-                />
+                <Form.Item>
+                  <Select
+                    className={classes.ErrorContactForm__FormSelect}
+                    menuItemSelectedIcon={<BiCheck color="#385E2B" />}
+                    showArrow
+                    placeholder="Select error message"
+                    style={{
+                      width: '100%',
+                    }}
+                    options={options}
+                  />
+                </Form.Item>
 
                 <Form.Item>
                   <FormButton type={'submit'} action={'Submit'} icon={''} />

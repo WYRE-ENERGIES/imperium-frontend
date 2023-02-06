@@ -96,6 +96,7 @@ const BusinessForm = () => {
             required
           >
             <Input
+              className={classes.BusinessForm__Input}
               style={{ marginBottom: '-30px' }}
               placeholder="Enter your business name"
             />
@@ -115,23 +116,9 @@ const BusinessForm = () => {
             required
           >
             <Input
-              prefix={
-                <span
-                  style={{
-                    color: '#c4c4c4',
-                    borderRight: '1px solid #C4C4C4',
-                    padding: '8px 12px',
-                    marginRight: '10px',
-                  }}
-                >
-                  {'https://'}
-                </span>
-              }
+              addonBefore={'http://'}
+              className={classes.BusinessForm__Company}
               placeholder="www.yourdomain.com"
-              style={{
-                padding: '0',
-                paddingRight: '10px',
-              }}
             />
           </Form.Item>
           <Form.Item

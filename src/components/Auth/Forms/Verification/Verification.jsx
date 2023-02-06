@@ -58,7 +58,10 @@ const VerificationForm = () => {
             name="otp"
             required
           >
-            <Input placeholder="Enter code" />
+            <Input
+              className={classes.VerificationForm__Input}
+              placeholder="Enter code"
+            />
           </Form.Item>
 
           <Form.Item>

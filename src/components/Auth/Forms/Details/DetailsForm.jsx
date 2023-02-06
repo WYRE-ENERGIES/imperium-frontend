@@ -1,4 +1,4 @@
-import { Form, Input } from 'antd'
+import { Form, Input, InputNumber } from 'antd'
 import { useNavigate } from 'react-router-dom'
 
 import FormButton from '../Widgets/FormButton'
@@ -41,12 +41,14 @@ const DetailForm = () => {
         >
           <Form.Item label={<p>First Name</p>} name="firstname" required>
             <Input
+              className={classes.DetailForm__Input}
               style={{ marginBottom: '-5px' }}
               placeholder="Enter your first name"
             />
           </Form.Item>
           <Form.Item label={<p>Last Name</p>} name="lastname" required>
             <Input
+              className={classes.DetailForm__Input}
               style={{ marginTop: '-4px' }}
               placeholder="Enter your last name"
             />
@@ -58,12 +60,14 @@ const DetailForm = () => {
             required
           >
             <Input
+              className={classes.DetailForm__Input}
               style={{ marginBottom: '18.5px', marginTop: '-10xp' }}
               placeholder="Enter your phone number"
             />
           </Form.Item>
           <Form.Item label={<p>Address</p>} name="address" required>
             <Input.TextArea
+              className={classes.DetailForm__Input}
               style={{ marginTop: '-1px' }}
               placeholder="Enter a Address..."
             />

@@ -54,11 +54,17 @@ const NewPasswordForm = () => {
             layout="vertical"
             requiredMark="optional"
           >
-            <Form.Item label="Password" name="email" required>
-              <Input.Password placeholder="Create a password" />
+            <Form.Item label="Password" name="password-1" required>
+              <Input.Password
+                className={classes.NewPassword__Password}
+                placeholder="Create a password"
+              />
             </Form.Item>
-            <Form.Item label="Confirm Password" name="email" required>
-              <Input.Password placeholder="Confirm password" />
+            <Form.Item label="Confirm Password" name="password-2" required>
+              <Input.Password
+                className={classes.NewPassword__Password}
+                placeholder="Confirm password"
+              />
             </Form.Item>
 
             <Form.Item>
