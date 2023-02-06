@@ -12,12 +12,12 @@ const RightLayout = ({ children }) => {
         </Row>
         <div className={classes.Layout__footer}>
           <p>© imperium 2023</p>
-          <p className={classes.Layout__icon}>
+          <div className={classes.Layout__icon}>
             <p>
               <BiEnvelope size={18} />
             </p>
             <p>help@imperium.com</p>
-          </p>
+          </div>
         </div>
       </div>
     </Col>

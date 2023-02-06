@@ -7,7 +7,7 @@ const FormHeader = ({ header, tagline }) => {
     <div className={classes.text}>
       <div>
         <h1>{header}</h1>
-        <p>{tagline}</p>
+        <div>{tagline}</div>
       </div>
     </div>
   )

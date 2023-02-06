@@ -21,7 +21,7 @@ const Verification = () => {
   }
   return (
     <div className={classes.Verification}>
-      <Row>
+      <Row className={classes.Verification__Layout}>
         <LeftLayout>
           <VerificationForm />
         </LeftLayout>

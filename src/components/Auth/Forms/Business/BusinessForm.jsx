@@ -37,8 +37,6 @@ const BusinessForm = () => {
                                file uploaded successfully`)
       } else if (status === 'error') {
         setFileUpload(true)
-        message.error(`${info.file.name} 
-                             file upload failed.`)
       }
     },
     onDrop(e) {
