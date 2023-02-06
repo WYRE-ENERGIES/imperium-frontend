@@ -125,12 +125,14 @@ const SHSTable = () => {
           </Tag>
         </h1>
       </section>
-      <Table
-        style={{ width: '100%' }}
-        columns={columns}
-        dataSource={data}
-        className={classes.SHSTable__table}
-      />
+      <div style={{ width: '100%', overflow: 'scroll' }}>
+        <Table
+          style={{ width: '100%' }}
+          columns={columns}
+          dataSource={data}
+          className={classes.SHSTable__table}
+        />
+      </div>
     </div>
   )
 }

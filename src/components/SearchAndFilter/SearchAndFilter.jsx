@@ -1,6 +1,6 @@
 import { Input, Select } from 'antd'
 
-import { MdFilterList } from 'react-icons/md'
+import DropDownFilter from '../DropDownFilter/DropDownFilter'
 import React from 'react'
 import { SearchOutlined } from '@ant-design/icons'
 import classes from './SearchAndFilter.module.scss'
@@ -31,24 +31,7 @@ const SearchAndFilter = ({ filterOptions }) => {
         className={classes.SearchAndFilter__search}
       />
 
-      <section className={classes.SearchAndFilter__filterSection}>
-        <MdFilterList />
-        <Select
-          placeholder="Filter by"
-          onChange={() => {}}
-          size="large"
-          allowClear
-          dropdownStyle={{
-            border: 'none',
-            ':hover': {
-              backgroundColor: 'green',
-            },
-          }}
-          className={classes.SearchAndFilter__select}
-        >
-          {options}
-        </Select>
-      </section>
+      <DropDownFilter options={options} />
     </div>
   )
 }
