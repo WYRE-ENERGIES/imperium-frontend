@@ -15,14 +15,7 @@ const PageLayout = ({ children }) => {
     <Layout hasSider>
       <Sidebar bgColor={colorBgContainer} />
       <Layout className={classes.PageLayout}>
-        <Content
-          style={{
-            margin: '32px',
-            overflow: 'scroll',
-          }}
-        >
-          {children}
-        </Content>
+        <Content className={classes.PageLayout__content}>{children}</Content>
       </Layout>
     </Layout>
   )

@@ -1,14 +1,14 @@
-import React, { useState } from 'react'
+import React, { Suspense, lazy, useState, useTransition } from 'react'
 
 import { Button } from 'antd'
 import { ReactComponent as Logo } from '../../../assets/icon.svg'
 import { MdNorthEast } from 'react-icons/md'
 import PageBreadcrumb from '../../../components/PageBreadcrumb/PageBreadcrumb'
 import PageLayout from '../../../components/Layout/PageLayout'
-import TicketForm from './TicketForm/TicketForm'
 import TicketTable from './TicketTable/TicketTable'
 import classes from './Support.module.scss'
 
+const TicketForm = lazy(() => import('./TicketForm/TicketForm'))
 const data = [
   { title: 'Contact Us', description: 'Imperium Support Mediums', icon: false },
   { title: 'Phone Number', description: '07029189834', icon: true },
@@ -29,12 +29,15 @@ const InnerCard = ({ title, description, icon }) => (
 const Support = () => {
   const [openModal, setOpenModal] = useState(false)
   const [ticketData, setTicketData] = useState({})
+  const [isPending, startTransition] = useTransition()
 
   const toggleModal = () => setOpenModal(!openModal)
 
   const handleEditTicket = (data) => {
-    setTicketData((prev) => ({ ...prev, ...data }))
-    toggleModal()
+    startTransition(() => {
+      setTicketData((prev) => ({ ...prev, ...data }))
+      toggleModal()
+    })
   }
 
   return (
@@ -45,8 +48,10 @@ const Support = () => {
           <Button
             className={classes.Support__button}
             onClick={() => {
-              setTicketData({})
-              toggleModal()
+              startTransition(() => {
+                setTicketData({})
+                toggleModal()
+              })
             }}
           >
             Create Ticket
@@ -66,12 +71,16 @@ const Support = () => {
           ))}
         </section>
       </div>
-      <TicketForm
-        title="Create Ticket"
-        isOpen={openModal}
-        toggleModal={toggleModal}
-        ticketData={ticketData}
-      />
+      <Suspense fallback="loading">
+        {openModal && (
+          <TicketForm
+            title="Create Ticket"
+            isOpen={openModal}
+            toggleModal={toggleModal}
+            ticketData={ticketData}
+          />
+        )}
+      </Suspense>
     </PageLayout>
   )
 }

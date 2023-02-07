@@ -3,6 +3,7 @@ import 'react-toastify/dist/ReactToastify.css'
 
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom'
 
+import PageLoader from './components/PageLoader/PageLoader'
 import { Suspense } from 'react'
 import { lazy } from 'react'
 
@@ -44,11 +45,12 @@ const Support = lazy(() => import('./pages/Customer/Support/Support'))
 const Verification = lazy(() =>
   import('./pages/Customer/Auth/Verification/Verification'),
 )
+const Users = lazy(() => import('./pages/Customer/Users/Users'))
 
 function App() {
   return (
     <Router>
-      <Suspense fallback="loading">
+      <Suspense fallback={<PageLoader />}>
         <Routes>
           <Route path="/">
             <Route index element={<SignIn />} />
@@ -74,6 +76,7 @@ function App() {
             <Route path="energy-analytic" element={<EnergyAnalytic />} />
             <Route path="panel-analytic" element={<PanelAnalytic />} />
             <Route path="battery" element={<Battery />} />
+            <Route path="users" element={<Users />} />
           </Route>
         </Routes>
       </Suspense>

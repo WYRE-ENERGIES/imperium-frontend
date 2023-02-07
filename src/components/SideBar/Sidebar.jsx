@@ -7,6 +7,7 @@ import { BsBattery, BsSunset } from 'react-icons/bs'
 import { Divider, Layout, Menu } from 'antd'
 import { Link, useLocation } from 'react-router-dom'
 
+import { FiUsers } from 'react-icons/fi'
 import Footer from './Footer/Footer'
 import { HiOutlineSupport } from 'react-icons/hi'
 import { ReactComponent as Logo } from '../../assets/logo.svg'
@@ -31,6 +32,11 @@ const items = [
     icon: BsBattery,
     title: 'Battery',
     linkTo: '/battery',
+  },
+  {
+    icon: FiUsers,
+    title: 'Users',
+    linkTo: '/users',
   },
 ].map((item) => ({
   key: `${item.linkTo}`,
