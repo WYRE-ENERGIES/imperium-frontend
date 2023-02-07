@@ -91,6 +91,8 @@ export const energyFilterOptions = [
   ...generalFilterOptions,
 ]
 
+export const userFilterOptions = [{ name: 'Status', value: 'status' }]
+
 export const energyAnalyticColumns = [
   {
     title: 'Name',
