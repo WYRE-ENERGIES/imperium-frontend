@@ -46,6 +46,9 @@ const Verification = lazy(() =>
   import('./pages/Customer/Auth/Verification/Verification'),
 )
 const Users = lazy(() => import('./pages/Customer/Users/Users'))
+const UserInvitePage = lazy(() =>
+  import('./pages/Customer/UserInvite/UserInvite'),
+)
 
 function App() {
   return (
@@ -77,6 +80,7 @@ function App() {
             <Route path="panel-analytic" element={<PanelAnalytic />} />
             <Route path="battery" element={<Battery />} />
             <Route path="users" element={<Users />} />
+            <Route path="user-invite" element={<UserInvitePage />} />
           </Route>
         </Routes>
       </Suspense>

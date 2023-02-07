@@ -1,9 +1,10 @@
 import { Input, Select } from 'antd'
+import React, { Suspense, lazy } from 'react'
 
-import DropDownFilter from '../DropDownFilter/DropDownFilter'
-import React from 'react'
 import { SearchOutlined } from '@ant-design/icons'
 import classes from './SearchAndFilter.module.scss'
+
+const DropDownFilter = lazy(() => import('../DropDownFilter/DropDownFilter'))
 
 const { Option } = Select
 const prefix = (
@@ -30,8 +31,9 @@ const SearchAndFilter = ({ filterOptions }) => {
         prefix={prefix}
         className={classes.SearchAndFilter__search}
       />
-
-      <DropDownFilter options={options} />
+      <Suspense fallback={<h4>loading</h4>}>
+        {filterOptions && <DropDownFilter options={options} />}
+      </Suspense>
     </div>
   )
 }

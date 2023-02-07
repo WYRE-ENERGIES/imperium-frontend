@@ -21,7 +21,7 @@ const ModalForm = ({ toggleModal }) => {
   const [roleDescription, setRoleDescription] = useState('')
   const [form] = Form.useForm()
   const onFinish = (values) => {
-    toast.success('Ticket submitted', {
+    toast.success('User Added', {
       hideProgressBar: true,
       autoClose: 3000,
       theme: 'colored',
@@ -31,9 +31,9 @@ const ModalForm = ({ toggleModal }) => {
   const handleRoleChange = (role) => {
     setRoleDescription((prev) => {
       return role === 'Admin'
-        ? 'Admin can view all the statistics as well as shutdown SHS’s if needed'
+        ? "Admin can view all the statistics as well as shutdown SHS's if needed"
         : role === 'Viewer'
-        ? 'Viewers can view all the statistics only'
+        ? "Viewer have access to all statistics but can't shut down the SHS systems if necessary."
         : ''
     })
   }

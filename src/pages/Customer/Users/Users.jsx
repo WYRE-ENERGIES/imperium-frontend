@@ -10,7 +10,6 @@ import Swal from 'sweetalert2'
 import TableWithFilter from '../../../components/SHSTableWithFilter/SHSTableWithFilter'
 import classes from './Users.module.scss'
 import { userData } from '../../../utils/userData'
-import { userFilterOptions } from '../../../utils/data'
 
 const NewUserForm = lazy(() => import('./NewUserForm/NewUserForm'))
 
@@ -100,6 +99,7 @@ const columns = [
     title: '',
     key: 'action',
     width: '10%',
+    align: 'center',
     render: (_, record) => (
       <FiTrash2
         style={{ cursor: 'pointer' }}
@@ -133,12 +133,7 @@ const Users = () => {
             <PlusOutlined /> Add User
           </Button>
         </section>
-        <TableWithFilter
-          columns={columns}
-          data={userData}
-          tableTitle="Users"
-          filterOptions={userFilterOptions}
-        />
+        <TableWithFilter columns={columns} data={userData} tableTitle="Users" />
       </div>
       <Suspense fallback={<h4>Loading...</h4>}>
         {openModal && (
