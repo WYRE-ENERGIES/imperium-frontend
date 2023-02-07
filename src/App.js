@@ -3,6 +3,7 @@ import 'react-toastify/dist/ReactToastify.css'
 
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom'
 
+import PageLoader from './components/PageLoader/PageLoader'
 import { Suspense } from 'react'
 import { lazy } from 'react'
 
@@ -49,7 +50,7 @@ const Users = lazy(() => import('./pages/Customer/Users/Users'))
 function App() {
   return (
     <Router>
-      <Suspense fallback="loading">
+      <Suspense fallback={<PageLoader />}>
         <Routes>
           <Route path="/">
             <Route index element={<SignIn />} />
