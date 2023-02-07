@@ -1,0 +1,92 @@
+.UserInvite {
+  background-color: #f0f7ed;
+  backdrop-filter: blur(8px);
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &__msgBox {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 48px;
+    gap: 32px;
+
+    width: 636px;
+
+    background: #ffffff;
+    box-shadow: 0px 20px 24px -4px rgba(16, 24, 40, 0.08),
+      0px 8px 8px -4px rgba(16, 24, 40, 0.03);
+    border-radius: 12px;
+  }
+
+  &__btn {
+    width: 100%;
+    padding: 16px 48px;
+    height: 56px;
+    background: #385e2b;
+    border: 1px solid #385e2b;
+    box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05);
+    border-radius: 8px;
+
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 24px;
+    letter-spacing: -0.02em;
+    color: #ffffff;
+
+    &:hover,
+    &:active {
+      color: #fff !important;
+      border: 1px solid #385e2b !important;
+      box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05), 0px 0px 0px 4px #f0f7ed;
+    }
+  }
+
+  &__title {
+    font-style: normal;
+    font-weight: 600 !important;
+    font-size: 32px !important;
+    line-height: 40px !important;
+    letter-spacing: -0.02em;
+    color: #363636 !important;
+  }
+
+  &__txt {
+    font-style: normal;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 24px;
+    color: #606062;
+
+    & > *:not(:last-child) {
+      margin-bottom: 15px;
+    }
+  }
+}
+
+@media only screen and (max-width: 425px) {
+  .UserInvite {
+    &__msgBox {
+      padding: 20px;
+    }
+
+    &__title {
+      font-size: 16px !important;
+      line-height: 24px !important;
+    }
+
+    &__txt {
+      font-size: 10px;
+      line-height: 18px;
+
+      & > *:not(:last-child) {
+        margin-bottom: 6px;
+      }
+    }
+  }
+}
