@@ -3,10 +3,10 @@ import ErrorLayout from '../Layout/ErrorLayout'
 import FormButton from '../../Auth/Forms/Widgets/FormButton'
 import { Form, Input, Select } from 'antd'
 import { useNavigate } from 'react-router-dom'
-import classes from './ErrorContactForm.module.scss'
+import classes from './ContactErrorForm.module.scss'
 import { BiCheck, BiEnvelope } from 'react-icons/bi'
 import { BiPhone } from 'react-icons/bi'
-const ErrorContactForm = () => {
+const ContactErrorForm = () => {
   const options = [
     {
       value: 'Location',
@@ -41,8 +41,8 @@ const ErrorContactForm = () => {
   return (
     <div>
       <ErrorLayout>
-        <div className={classes.ErrorContactForm}>
-          <div className={classes.ErrorContactForm__FormContent}>
+        <div className={classes.ContactErrorForm}>
+          <div className={classes.ContactErrorForm__FormContent}>
             <div>
               <Form
                 name="basic"
@@ -70,7 +70,7 @@ const ErrorContactForm = () => {
 
                 <Form.Item>
                   <Select
-                    className={classes.ErrorContactForm__FormSelect}
+                    className={classes.ContactErrorForm__FormSelect}
                     menuItemSelectedIcon={<BiCheck color="#385E2B" />}
                     showArrow
                     placeholder="Select error message"
@@ -89,7 +89,7 @@ const ErrorContactForm = () => {
           </div>
 
           <a href="tel:+234 81 2345 6789">
-            <div className={classes.ErrorContactForm__Phone}>
+            <div className={classes.ContactErrorForm__Phone}>
               <div>
                 <BiPhone size={20} />
               </div>
@@ -102,4 +102,4 @@ const ErrorContactForm = () => {
   )
 }
 
-export default ErrorContactForm
+export default ContactErrorForm

@@ -16,14 +16,17 @@ const AccountDetails = lazy(() =>
 const AccountPassword = lazy(() =>
   import('./pages/Customer/Account/AccountPassword/AccountPassword'),
 )
+const ActiveAlerts = lazy(() =>
+  import('./pages/Customer/ActiveAlerts/ActiveAlerts'),
+)
 const Battery = lazy(() => import('./pages/Customer/Battery/Battery'))
 const Business = lazy(() => import('./pages/Customer/Auth/Business/Business'))
 const Detail = lazy(() => import('./pages/Customer/Auth/Detail/Detail'))
 const DisabledAccount = lazy(() =>
   import('./pages/Customer/Error/DisabledAccount/DisabledAccount'),
 )
-const ErrorContact = lazy(() =>
-  import('./pages/Customer/Error/ErrorContact/ErrorContact'),
+const ContactError = lazy(() =>
+  import('./pages/Customer/Error/ContactError/ContactError'),
 )
 const EnergyAnalytic = lazy(() =>
   import('./pages/Customer/EnergyAnalytic/EnergyAnalytic'),
@@ -65,7 +68,7 @@ function App() {
             <Route path="otp" element={<OTP />} />
             <Route path="new-password" element={<NewPasswordPage />} />
             <Route path="disabled-account" element={<DisabledAccount />} />
-            <Route path="contact-error" element={<ErrorContact />} />
+            <Route path="contact-error" element={<ContactError />} />
             <Route path="account">
               <Route path="business" element={<AccountBusiness />} />
               <Route index path="details" element={<AccountDetails />} />
@@ -79,6 +82,7 @@ function App() {
             <Route path="energy-analytic" element={<EnergyAnalytic />} />
             <Route path="panel-analytic" element={<PanelAnalytic />} />
             <Route path="battery" element={<Battery />} />
+            <Route path="active-alerts" element={<ActiveAlerts />} />
             <Route path="users" element={<Users />} />
             <Route path="user-invite" element={<UserInvitePage />} />
           </Route>
