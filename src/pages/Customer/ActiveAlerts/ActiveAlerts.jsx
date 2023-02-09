@@ -5,10 +5,12 @@ import PageBreadcrumb from '../../../components/PageBreadcrumb/PageBreadcrumb'
 import ShsCapacityDropdown from '../../../components/ShsCapacityDropdown/ShsCapacityDropdown'
 import classes from './ActiveAlerts.module.scss'
 import FormButton from '../../../components/Auth/Forms/Widgets/FormButton'
+import alertIcon from '../../../../src/assets/widget-icons/alertIcon.svg'
 const ActiveAlerts = () => {
   const title = () => (
     <p style={{ fontWeight: '500', fontSize: '18px' }}>Active Alerts Table</p>
   )
+
   const footer = () => {
     return (
       <div className={classes.ActiveAlerts__Footer}>
@@ -21,11 +23,34 @@ const ActiveAlerts = () => {
       </div>
     )
   }
+
   const columns = [
+    {
+      title: ' ',
+      dataIndex: 'icon',
+      render: (text) => (
+        <span>
+          <img
+            src={alertIcon}
+            alt=""
+            srcSet=""
+            style={{ marginRight: '5px' }}
+          />
+        </span>
+      ),
+    },
     {
       title: 'Active Alert',
       dataIndex: 'activeAlert',
-      render: (text) => <span style={{ color: 'black' }}>{text}</span>,
+      render: (text) => (
+        <span
+          style={{
+            color: 'black',
+          }}
+        >
+          {text}
+        </span>
+      ),
     },
     {
       title: 'Time',
@@ -85,7 +110,24 @@ const ActiveAlerts = () => {
         'Check for corroded/loose connections, if none found contact support.',
       status: 'Unresolved',
     },
+    {
+      key: '5',
+      activeAlert: 'Low panel voltage',
+      time: '11:58pm  2/01/2023',
+      eventDescription:
+        'Check for corroded/loose connections, if none found contact support.',
+      status: 'Unresolved',
+    },
+    {
+      key: '6',
+      activeAlert: 'Low panel voltage',
+      time: '11:58pm  2/01/2023',
+      eventDescription:
+        'Check for corroded/loose connections, if none found contact support.',
+      status: 'Unresolved',
+    },
   ]
+
   return (
     <PageLayout>
       <section className={classes.ActiveAlerts}>
@@ -129,9 +171,7 @@ const ActiveAlerts = () => {
             title={title}
             footer={footer}
             columns={columns}
-            bordered={false}
             dataSource={activeAlertdata}
-            pagination={false}
           />
         </section>
       </section>

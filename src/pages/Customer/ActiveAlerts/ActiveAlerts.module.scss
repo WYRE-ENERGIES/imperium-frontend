@@ -81,7 +81,10 @@
       line-height: 20px;
       color: #454545;
     }
-    td:nth-child(3) {
+    td:nth-child(1) {
+      width: 20px;
+    }
+    td:nth-child(4) {
       width: 400px;
     }
   }
