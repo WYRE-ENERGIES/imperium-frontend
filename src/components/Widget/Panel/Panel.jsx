@@ -18,17 +18,21 @@ const PanelWidgets = ({ totalPanel }) => {
 
   return (
     <div className={classes.Panel}>
-      <Row gutter={[16, 24]} className={classes.Panel__widgets}>
-        <Col className="gutter-row" span={14}>
+      <Row
+        justify={'space-between'}
+        gutter={[2, 16]}
+        className={classes.Panel__widgets}
+      >
+        <Col lg={14} md={14} sm={14} xs={24}>
           {widgets[0]}
         </Col>
-        <Col className="gutter-row" span={10}>
+        <Col lg={10} md={10} sm={10} xs={24}>
           {widgets[1]}
         </Col>
-        <Col className="gutter-row" span={14}>
+        <Col lg={14} md={14} sm={14} xs={24}>
           {widgets[2]}
         </Col>
-        <Col className="gutter-row" span={10}>
+        <Col lg={10} md={10} sm={10} xs={24}>
           {widgets[3]}
         </Col>
       </Row>
