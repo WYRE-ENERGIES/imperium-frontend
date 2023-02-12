@@ -3,7 +3,7 @@ import {
   SettingOutlined,
   ThunderboltOutlined,
 } from '@ant-design/icons'
-import { BsBattery, BsSunset } from 'react-icons/bs'
+import { BsBattery, BsBell, BsSunset } from 'react-icons/bs'
 import { Divider, Layout, Menu } from 'antd'
 import { Link, useLocation } from 'react-router-dom'
 
@@ -13,6 +13,7 @@ import { HiOutlineSupport } from 'react-icons/hi'
 import { ReactComponent as Logo } from '../../assets/logo.svg'
 import React from 'react'
 import styles from './Sidebar.module.scss'
+import { BiNotification } from 'react-icons/bi'
 
 const { Sider } = Layout
 
@@ -32,6 +33,11 @@ const items = [
     icon: BsBattery,
     title: 'Battery',
     linkTo: '/battery',
+  },
+  {
+    icon: BsBell,
+    title: 'Active Alerts',
+    linkTo: '/active-alerts',
   },
   {
     icon: FiUsers,

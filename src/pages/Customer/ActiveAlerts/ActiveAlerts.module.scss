@@ -1,0 +1,113 @@
+.ActiveAlerts {
+  &__headerSection {
+    margin-bottom: 35px;
+    display: flex;
+    justify-content: space-between;
+  }
+  &__Banner {
+    border: 1px solid #f5f5f5;
+    border-radius: 8px;
+    width: 100%;
+    height: 200px;
+    padding: 20px;
+    background: white;
+  }
+  &__Status {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    display: flex;
+    justify-content: space-between;
+
+    span {
+      background: #f0f7ed;
+      width: 24px;
+      height: 24px;
+      padding: 2px 10px;
+      border-radius: 100%;
+    }
+  }
+  &__Dot {
+    background: #65aa4f;
+    width: 8px;
+    height: 8px;
+    border-radius: 100%;
+    float: right;
+  }
+  &__Description {
+    margin-top: 10px;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
+  }
+  &__Error {
+    display: flex;
+    p {
+      color: #e45858;
+      margin-right: 13px;
+      background: #fef3f2;
+      border-radius: 5px;
+      padding: 10px 20px;
+    }
+    span {
+      padding: 10px 20px;
+      color: #737373;
+    }
+  }
+  &__Success {
+    display: flex;
+    margin-left: 1.4rem;
+    p {
+      color: #84bb72;
+      margin-right: 13px;
+      background: #f9fcf8;
+      border-radius: 5px;
+      padding: 10px 20px;
+    }
+    span {
+      padding: 10px 20px;
+      color: #737373;
+    }
+  }
+
+  &__Table {
+    margin: 30px 0;
+
+    & table > thead > tr > th {
+      background: #f0f7ed !important;
+      font-weight: 500;
+      font-size: 12px;
+      line-height: 20px;
+      color: #454545;
+    }
+    td:nth-child(1) {
+      width: 20px;
+    }
+    td:nth-child(4) {
+      width: 400px;
+    }
+  }
+
+  &__Footer {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__NavBtn {
+    display: flex;
+    justify-content: space-between;
+    width: 170px;
+    button {
+      background: #ffffff !important;
+      border: 1px solid #d0d5dd;
+      box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05);
+      border-radius: 8px;
+      color: #999999 !important;
+      padding: 5px 14px !important;
+    }
+  }
+  &__Pagination {
+    font-size: 14px;
+  }
+}
