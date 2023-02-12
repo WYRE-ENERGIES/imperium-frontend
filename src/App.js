@@ -39,6 +39,8 @@ const Overview = lazy(() => import('./pages/Customer/Overview/Overview'))
 const PanelAnalytic = lazy(() =>
   import('./pages/Customer/PanelAnalytic/PanelAnalytic'),
 )
+
+const Shs = lazy(() => import('./pages/Customer/Shs/Shs'))
 const SignIn = lazy(() => import('./pages/Customer/Auth/SignIn/SignIn'))
 const SignUp = lazy(() => import('./pages/Customer/Auth/SignUp/SignUp'))
 const Support = lazy(() => import('./pages/Customer/Support/Support'))
@@ -73,6 +75,7 @@ function App() {
             </Route>
             <Route path="overview">
               <Route index element={<Overview />} />
+              <Route path="shs" element={<Shs />} />
               <Route path="shs/:id" element={<Support />} />
             </Route>
             <Route path="support" element={<Support />} />
