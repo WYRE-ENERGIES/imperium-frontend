@@ -5,21 +5,88 @@
     background: white;
     display: flex;
     align-items: center;
+    justify-content: center;
     height: 45px;
-    color: #912018;
     width: 45px;
     background: #ffffff;
     border: 1px solid #c4c4c4;
     box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05);
     border-radius: 8px;
-    padding: 10px;
     &:hover {
       cursor: pointer;
     }
+    a {
+      color: #912018;
+      padding-top: 4px;
+    }
   }
+
   button {
     width: 155px;
     font-size: 14px;
     padding: 14px 10px;
   }
+
+  &__OnAndOff {
+    border: none;
+    width: 275px;
+    height: 40px;
+    background: white;
+    font-size: 14px;
+    font-weight: 600;
+    background: #ffffff;
+    border: 1px solid #c4c4c4;
+    box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05);
+    border-radius: 8px;
+    &:hover {
+      cursor: pointer;
+      background: #f5f5f5;
+    }
+  }
+  &__Modal {
+    margin-top: 50px;
+  }
+  &__ModalContent {
+    img {
+      margin: 10px 40%;
+    }
+    h1 {
+      text-align: center;
+      font-size: 18px;
+      color: #363636;
+      margin: 10px;
+    }
+    p {
+      color: #737373;
+      font-size: 14px;
+      margin: 20px 0;
+    }
+  }
+
+  &__Confirm {
+    display: flex;
+    gap: 15px;
+
+    button {
+      width: 170px;
+      padding: 10px 18px;
+      box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05);
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 16px;
+    }
+
+    & > button:first-child {
+      background: #ffffff;
+      border: 1px solid #c4c4c4;
+    }
+    & > button:first-child:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+li:hover {
+  background: white !important;
+  cursor: default !important;
 }

@@ -14,21 +14,6 @@ import { BsFillSunFill } from 'react-icons/bs'
 import { FcFlashOn } from 'react-icons/fc'
 
 const Shs = () => {
-  const performanceData = [
-    {
-      system: {
-        status: 'On',
-        systemLoad: { label: 'System Load', value: '60% (36 kw)' },
-        source: 'PHCN',
-      },
-      batteryVoltage: { label: ' Battery Voltage', value: '60% (36 kw)' },
-      powerUsageToday: {
-        label: ' Power Usage Today',
-        value: '60% (36 kw)',
-        approx: '+2.0%',
-      },
-    },
-  ]
   return (
     <PageLayout>
       <section className={classes.Shs}>
@@ -110,7 +95,7 @@ const Shs = () => {
                       <div>
                         <p>Battery Percent</p>
                         <p>
-                          <span>1</span> 80%
+                          <span>2</span> 80%
                         </p>
                       </div>
                     </div>
@@ -121,7 +106,7 @@ const Shs = () => {
                       <div>
                         <p>Charging Status</p>
                         <p>
-                          <span>1</span> Charging
+                          <span>3</span> Charging
                         </p>
                       </div>
                     </div>
