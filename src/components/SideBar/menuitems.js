@@ -21,7 +21,7 @@ export const userMenuItems = [
   {
     icon: BsBattery,
     title: 'Battery',
-    linkTo: '/battery',
+    linkTo: '/battery-analytic',
   },
   {
     icon: BsBell,
@@ -52,11 +52,11 @@ export const adminMenuItems = [
     title: 'Panel Analytic',
     linkTo: '/admin/panel-analytic',
   },
-  // {
-  //   icon: BsBattery,
-  //   title: 'Battery',
-  //   linkTo: '/admin/battery',
-  // },
+  {
+    icon: BsBattery,
+    title: 'Battery',
+    linkTo: '/admin/battery-analytic',
+  },
   // {
   //   icon: BsBell,
   //   title: 'Active Alerts',
