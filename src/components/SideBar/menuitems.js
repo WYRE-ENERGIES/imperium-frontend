@@ -41,32 +41,32 @@ export const userMenuItems = [
 }))
 
 export const adminMenuItems = [
-  { icon: BarChartOutlined, title: 'Overview', linkTo: '/admin/overview' },
-  {
-    icon: ThunderboltOutlined,
-    title: 'Energy Analytic',
-    linkTo: '/admin/energy-analytic',
-  },
+  // { icon: BarChartOutlined, title: 'Overview', linkTo: '/admin/overview' },
+  // {
+  //   icon: ThunderboltOutlined,
+  //   title: 'Energy Analytic',
+  //   linkTo: '/admin/energy-analytic',
+  // },
   {
     icon: BsSunset,
     title: 'Panel Analytic',
     linkTo: '/admin/panel-analytic',
   },
-  {
-    icon: BsBattery,
-    title: 'Battery',
-    linkTo: '/admin/battery',
-  },
-  {
-    icon: BsBell,
-    title: 'Active Alerts',
-    linkTo: '/admin/active-alerts',
-  },
-  {
-    icon: FiUsers,
-    title: 'Users',
-    linkTo: '/admin/users',
-  },
+  // {
+  //   icon: BsBattery,
+  //   title: 'Battery',
+  //   linkTo: '/admin/battery',
+  // },
+  // {
+  //   icon: BsBell,
+  //   title: 'Active Alerts',
+  //   linkTo: '/admin/active-alerts',
+  // },
+  // {
+  //   icon: FiUsers,
+  //   title: 'Users',
+  //   linkTo: '/admin/users',
+  // },
 ].map((item) => ({
   key: `${item.linkTo}`,
   icon: React.createElement(item.icon),
