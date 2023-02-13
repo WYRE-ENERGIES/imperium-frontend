@@ -42,11 +42,11 @@ export const userMenuItems = [
 
 export const adminMenuItems = [
   // { icon: BarChartOutlined, title: 'Overview', linkTo: '/admin/overview' },
-  // {
-  //   icon: ThunderboltOutlined,
-  //   title: 'Energy Analytic',
-  //   linkTo: '/admin/energy-analytic',
-  // },
+  {
+    icon: ThunderboltOutlined,
+    title: 'Energy Analytic',
+    linkTo: '/admin/energy-analytic',
+  },
   {
     icon: BsSunset,
     title: 'Panel Analytic',

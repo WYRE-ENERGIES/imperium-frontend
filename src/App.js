@@ -60,6 +60,9 @@ const AdminPanelAnalytic = lazy(() =>
 const AdminBattery = lazy(() =>
   import('./pages/Admin/BatteryAnalytic/BatteryAnalytic'),
 )
+const AdminEnergyAnalytic = lazy(() =>
+  import('./pages/Admin/EnergyAnalytic/EnergyAnalytic'),
+)
 
 function App() {
   return (
@@ -98,6 +101,7 @@ function App() {
             <Route path="admin">
               <Route path="panel-analytic" element={<AdminPanelAnalytic />} />
               <Route path="battery-analytic" element={<AdminBattery />} />
+              <Route path="energy-analytic" element={<AdminEnergyAnalytic />} />
             </Route>
           </Route>
         </Routes>
