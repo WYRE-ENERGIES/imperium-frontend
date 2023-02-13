@@ -4,28 +4,26 @@ import {
   panelData,
 } from '../../../utils/data'
 
+import AdminPageLayout from '../../../components/Layout/AdminPageLayout/AdminPageLayout'
 import EnergyAnalyticWidget from '../../../components/SHSTableWithFilter/SHSTableWithFilter'
 import PageBreadcrumb from '../../../components/PageBreadcrumb/PageBreadcrumb'
-import PageLayout from '../../../components/Layout/PageLayout'
 import PanelWidgets from '../../../components/Widget/Panel/Panel'
 import React from 'react'
-import ShsCapacityDropdown from '../../../components/ShsCapacityDropdown/ShsCapacityDropdown'
 import WidgetFilter from '../../../components/WidgetFilter/WidgetFilter'
-import classes from './PanelAnalytic.module.scss'
+import classes from '../../Customer/PanelAnalytic/PanelAnalytic.module.scss'
 import { useWeather } from '../../../hooks/useWeather'
 
 const PanelAnalytic = () => {
   const [coord, weatherResult, isLoading, error] = useWeather()
 
   return (
-    <PageLayout>
+    <AdminPageLayout>
       <div
         style={{ backgroundColor: '#FCFCFD' }}
         className={classes.PanelAnalytic}
       >
         <section className={classes.PanelAnalytic__headerSection}>
           <PageBreadcrumb title="Panel Analytic" />
-          <ShsCapacityDropdown />
         </section>
         <section className={classes.PanelAnalytic__filters}>
           <WidgetFilter />
@@ -40,10 +38,11 @@ const PanelAnalytic = () => {
             tableTitle="Panel Table"
             tagValue="kWh"
             filterOptions={generalFilterOptions}
+            isAdmin={true}
           />
         </div>
       </div>
-    </PageLayout>
+    </AdminPageLayout>
   )
 }
 

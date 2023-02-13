@@ -1,7 +1,7 @@
-import { Input, Select } from 'antd'
+import { Button, Input, Select } from 'antd'
+import { CloudDownloadOutlined, SearchOutlined } from '@ant-design/icons'
 import React, { Suspense, lazy } from 'react'
 
-import { SearchOutlined } from '@ant-design/icons'
 import classes from './SearchAndFilter.module.scss'
 
 const DropDownFilter = lazy(() => import('../DropDownFilter/DropDownFilter'))
@@ -16,7 +16,7 @@ const prefix = (
   />
 )
 
-const SearchAndFilter = ({ filterOptions }) => {
+const SearchAndFilter = ({ filterOptions, isAdmin }) => {
   const options = filterOptions?.map((option, index) => (
     <Option key={index} value={option.value}>
       {option.name}
@@ -34,6 +34,12 @@ const SearchAndFilter = ({ filterOptions }) => {
       <Suspense fallback={<h4>loading</h4>}>
         {filterOptions && <DropDownFilter options={options} />}
       </Suspense>
+      {isAdmin && (
+        <Button className={classes.SearchAndFilter__exportBtn}>
+          <CloudDownloadOutlined />
+          Export
+        </Button>
+      )}
     </div>
   )
 }

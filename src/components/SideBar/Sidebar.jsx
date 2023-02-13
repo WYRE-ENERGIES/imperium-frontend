@@ -13,43 +13,8 @@ import { HiOutlineSupport } from 'react-icons/hi'
 import { ReactComponent as Logo } from '../../assets/logo.svg'
 import React from 'react'
 import styles from './Sidebar.module.scss'
-import { BiNotification } from 'react-icons/bi'
 
 const { Sider } = Layout
-
-const items = [
-  { icon: BarChartOutlined, title: 'Overview', linkTo: '/overview' },
-  {
-    icon: ThunderboltOutlined,
-    title: 'Energy Analytic',
-    linkTo: '/energy-analytic',
-  },
-  {
-    icon: BsSunset,
-    title: 'Panel Analytic',
-    linkTo: '/panel-analytic',
-  },
-  {
-    icon: BsBattery,
-    title: 'Battery',
-    linkTo: '/battery',
-  },
-  {
-    icon: BsBell,
-    title: 'Active Alerts',
-    linkTo: '/active-alerts',
-  },
-  {
-    icon: FiUsers,
-    title: 'Users',
-    linkTo: '/users',
-  },
-].map((item) => ({
-  key: `${item.linkTo}`,
-  icon: React.createElement(item.icon),
-  className: styles.SidebarMenuItem,
-  label: <Link to={item.linkTo}>{item.title}</Link>,
-}))
 
 const bottomItems = [
   { icon: HiOutlineSupport, title: 'Support', linkTo: '/support' },
@@ -60,7 +25,7 @@ const bottomItems = [
   label: <Link to={item.linkTo}>{item.title}</Link>,
 }))
 
-const Sidebar = ({ bgColor }) => {
+const Sidebar = ({ bgColor, color, menuItems }) => {
   const location = useLocation()
 
   return (
@@ -75,6 +40,7 @@ const Sidebar = ({ bgColor }) => {
         background: bgColor,
         borderRight: '1px solid #C4C4C4',
         padding: '32px 16px',
+        color: color,
       }}
       width="280px"
       className={styles.Sidebar}
@@ -95,8 +61,13 @@ const Sidebar = ({ bgColor }) => {
           theme="light"
           mode="inline"
           selectedKeys={[location.pathname]}
-          style={{ flex: 1, marginTop: '24px' }}
-          items={items}
+          style={{
+            flex: 1,
+            marginTop: '24px',
+            backgroundColor: bgColor,
+            color: color,
+          }}
+          items={menuItems}
         />
         <div>
           <Menu
@@ -105,6 +76,7 @@ const Sidebar = ({ bgColor }) => {
             mode="inline"
             selectedKeys={[location.pathname]}
             items={bottomItems}
+            style={{ backgroundColor: bgColor, color: color }}
           />
           <Divider />
           <Footer userName="Emeka Isokun" />
