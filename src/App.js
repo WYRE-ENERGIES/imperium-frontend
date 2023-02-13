@@ -57,6 +57,9 @@ const UserInvitePage = lazy(() =>
 const AdminPanelAnalytic = lazy(() =>
   import('./pages/Admin/PanelAnalytic/PanelAnalytic'),
 )
+const AdminBattery = lazy(() =>
+  import('./pages/Admin/BatteryAnalytic/BatteryAnalytic'),
+)
 
 function App() {
   return (
@@ -86,7 +89,7 @@ function App() {
             <Route path="support" element={<Support />} />
             <Route path="energy-analytic" element={<EnergyAnalytic />} />
             <Route path="panel-analytic" element={<PanelAnalytic />} />
-            <Route path="battery" element={<Battery />} />
+            <Route path="battery-analytic" element={<Battery />} />
             <Route path="active-alerts" element={<ActiveAlerts />} />
             <Route path="users" element={<Users />} />
             <Route path="user-invite" element={<UserInvitePage />} />
@@ -94,6 +97,7 @@ function App() {
             {/* Admin routes */}
             <Route path="admin">
               <Route path="panel-analytic" element={<AdminPanelAnalytic />} />
+              <Route path="battery-analytic" element={<AdminBattery />} />
             </Route>
           </Route>
         </Routes>

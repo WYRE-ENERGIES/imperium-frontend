@@ -1,5 +1,7 @@
+import { ReactComponent as BadBatteryWidgetIcon } from '../assets/widget-icons/bad-battery-icon.svg'
 import { ReactComponent as BentArrowWidgetIcon } from '../assets/widget-icons/bent-arrow.svg'
 import { ReactComponent as EnergyWidgetIcon } from '../assets/widget-icons/energy-icon.svg'
+import { ReactComponent as GoodBatteryWidgetIcon } from '../assets/widget-icons/good-battery-icon.svg'
 import { ReactComponent as HomeWidgetIcon } from '../assets/widget-icons/home-icon.svg'
 import { ReactComponent as SEnergyWidgetIcon } from '../assets/widget-icons/cancel-energy-con.svg'
 import { ReactComponent as SunWidgetIcon } from '../assets/widget-icons/sun.svg'
@@ -277,5 +279,112 @@ export const panelColumns = [
     key: 'panelTotalEnergy',
     dataIndex: 'panelTotalEnergy',
     render: (value) => `${value.toLocaleString()} WH`,
+  },
+]
+
+export const adminBatteryWidgetsData = [
+  {
+    id: 1,
+    icon: EnergyWidgetIcon,
+    title: 'Total SHS Battery',
+    range: 'For the year',
+    value: 6834,
+  },
+  {
+    id: 2,
+    icon: GoodBatteryWidgetIcon,
+    title: 'Good SHS Battery',
+    range: 'For the year',
+    value: 6619,
+  },
+  {
+    id: 3,
+    icon: BadBatteryWidgetIcon,
+    title: 'Bad SHS Battery',
+    range: 'For the year',
+    value: 215,
+  },
+]
+
+export const adminBatteryTableData = [
+  {
+    id: 1,
+    key: 1,
+    name: 'January, 2023',
+    batteryVoltage: 6.35,
+    batteryCurrent: 14.36,
+    batteryHealth: true,
+    chargingSource: 'Utility',
+    status: { percentage: 80, isCharging: true },
+  },
+  {
+    id: 2,
+    key: 2,
+    name: 'December, 2022',
+    batteryVoltage: 9.52,
+    batteryCurrent: 21.52,
+    batteryHealth: true,
+    chargingSource: 'Utility',
+    status: { percentage: 80, isCharging: true },
+  },
+  {
+    id: 3,
+    key: 3,
+    name: 'November, 2022',
+    batteryVoltage: 3.18,
+    batteryCurrent: 7.18,
+    batteryHealth: true,
+    chargingSource: 'Solar',
+    status: { percentage: 80, isCharging: true },
+  },
+  {
+    id: 4,
+    key: 4,
+    name: 'October, 2022',
+    batteryVoltage: 4.67,
+    batteryCurrent: 9.01,
+    batteryHealth: false,
+    chargingSource: 'Solar',
+    status: { percentage: 80, isCharging: true },
+  },
+  {
+    id: 5,
+    key: 5,
+    name: 'September, 2022',
+    batteryVoltage: 6.82,
+    batteryCurrent: 14.74,
+    batteryHealth: true,
+    chargingSource: 'Utility',
+    status: { percentage: 10, isCharging: false },
+  },
+  {
+    id: 6,
+    key: 6,
+    name: 'August, 2022',
+    batteryVoltage: 3.18,
+    batteryCurrent: 7.18,
+    batteryHealth: true,
+    chargingSource: 'Utility',
+    status: { percentage: 80, isCharging: true },
+  },
+  {
+    id: 7,
+    key: 7,
+    name: 'July, 2022',
+    batteryVoltage: 4.67,
+    batteryCurrent: 9.01,
+    batteryHealth: false,
+    chargingSource: 'Solar',
+    status: { percentage: 80, isCharging: true },
+  },
+  {
+    id: 8,
+    key: 8,
+    name: 'June, 2022',
+    batteryVoltage: 6.82,
+    batteryCurrent: 14.74,
+    batteryHealth: true,
+    chargingSource: 'Utility',
+    status: { percentage: 80, isCharging: true },
   },
 ]

@@ -17,4 +17,44 @@
     flex-wrap: wrap;
     gap: 24px;
   }
+
+  &__status {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+
+    font-style: normal;
+  }
+
+  &__statusText {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 18px;
+    color: #808080;
+    margin-left: 10px;
+  }
+
+  &__statusResultSection {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    & h4 {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      font-weight: 400;
+      font-size: 12px;
+      line-height: 20px;
+      color: #5c9d48;
+    }
+  }
+
+  &__statusResult {
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 20px;
+    color: #363636;
+  }
 }
