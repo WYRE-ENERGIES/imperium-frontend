@@ -53,6 +53,11 @@ const UserInvitePage = lazy(() =>
   import('./pages/Customer/UserInvite/UserInvite'),
 )
 
+// Admin Routes
+const AdminPanelAnalytic = lazy(() =>
+  import('./pages/Admin/PanelAnalytic/PanelAnalytic'),
+)
+
 function App() {
   return (
     <Router>
@@ -85,6 +90,11 @@ function App() {
             <Route path="active-alerts" element={<ActiveAlerts />} />
             <Route path="users" element={<Users />} />
             <Route path="user-invite" element={<UserInvitePage />} />
+
+            {/* Admin routes */}
+            <Route path="admin">
+              <Route path="panel-analytic" element={<AdminPanelAnalytic />} />
+            </Route>
           </Route>
         </Routes>
       </Suspense>

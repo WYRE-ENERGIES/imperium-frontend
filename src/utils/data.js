@@ -247,3 +247,35 @@ export const batteryTableData = [
     chargingSource: 'Utility',
   },
 ]
+
+export const panelColumns = [
+  {
+    title: 'Monthly',
+    dataIndex: 'name',
+    key: 'name',
+  },
+  {
+    title: 'Panel Voltage',
+    key: 'panelVoltage',
+    dataIndex: 'panelVoltage',
+    render: (value) => `${value.toLocaleString()} V`,
+  },
+  {
+    title: 'Panel Current',
+    key: 'panelCurrent',
+    dataIndex: 'panelCurrent',
+    render: (value) => `${value.toLocaleString()} A`,
+  },
+  {
+    title: 'Panel Power',
+    key: 'panelPower',
+    dataIndex: 'panelPower',
+    render: (value) => `${value.toLocaleString()} W`,
+  },
+  {
+    title: 'Panel Total Energy',
+    key: 'panelTotalEnergy',
+    dataIndex: 'panelTotalEnergy',
+    render: (value) => `${value.toLocaleString()} WH`,
+  },
+]
