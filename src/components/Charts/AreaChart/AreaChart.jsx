@@ -1,11 +1,10 @@
 import Chart from 'react-apexcharts'
 import React from 'react'
 import { areaChartOptions } from '../data'
-import classes from './AreaChart.module.scss'
 
 const AreaChart = ({ chartData }) => {
   return (
-    <div className={classes.AreaChart}>
+    <div>
       <Chart
         options={{
           ...areaChartOptions,

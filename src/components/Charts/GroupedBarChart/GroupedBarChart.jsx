@@ -5,7 +5,7 @@ import { groupedChartOptions } from '../data'
 
 const GroupedBarChart = ({ chartData, colors, borderRadius, columnWidth }) => {
   return (
-    <div className={classes.GroupedBarChart}>
+    <div>
       <Chart
         options={{
           ...groupedChartOptions,
@@ -27,9 +27,7 @@ const GroupedBarChart = ({ chartData, colors, borderRadius, columnWidth }) => {
           },
         }}
         type="bar"
-        // height="90%"
         series={chartData}
-        // width="100%"
       />
     </div>
   )
