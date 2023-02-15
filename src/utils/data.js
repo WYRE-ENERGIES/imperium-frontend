@@ -388,3 +388,29 @@ export const adminBatteryTableData = [
     status: { percentage: 80, isCharging: true },
   },
 ]
+
+export const adminEnergyAnalyticColumns = [
+  {
+    title: 'Solar House System(SHS)',
+    dataIndex: 'SHS',
+    key: 'SHS',
+  },
+  {
+    title: 'Energy Consumed',
+    key: 'energyConsumed',
+    dataIndex: 'energyConsumed',
+    render: (value) => `${value.toLocaleString()} kwh`,
+  },
+  {
+    title: 'Energy Generated',
+    key: 'energyGenerated',
+    dataIndex: 'energyGenerated',
+    render: (value) => `${value.toLocaleString()} kwh`,
+  },
+  {
+    title: 'Capacity',
+    key: 'capacity',
+    dataIndex: 'capacity',
+    render: (value) => value,
+  },
+]
