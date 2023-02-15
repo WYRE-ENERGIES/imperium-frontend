@@ -127,7 +127,7 @@ const Users = () => {
     <DefaultLayout>
       <div className={classes.Users}>
         <section className={classes.Users__headerSection}>
-          <PageBreadcrumb title="User" />
+          <PageBreadcrumb title="Users" />
           <Button
             className={classes.Users__button}
             onClick={() => {
