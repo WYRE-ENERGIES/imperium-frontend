@@ -1,6 +1,5 @@
 import Chart from 'react-apexcharts'
 import React from 'react'
-import classes from './GroupedBarChart.module.scss'
 import { groupedChartOptions } from '../data'
 
 const GroupedBarChart = ({ chartData, colors, borderRadius, columnWidth }) => {
