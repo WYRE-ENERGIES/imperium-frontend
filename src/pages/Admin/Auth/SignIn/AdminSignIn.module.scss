@@ -1,0 +1,27 @@
+.SignPage {
+  &__RightLayOut {
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.39), rgba(0, 0, 0, 0.39)),
+      url('../../../../../public/adminSignIn.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    img {
+      width: 240px;
+      margin-top: 60px;
+    }
+    div[id='tagline'] {
+      padding: 0 70px;
+      font-weight: 400;
+      font-size: 18px;
+      line-height: 24px;
+      margin-bottom: 100px;
+    }
+  }
+}
+@media only screen and (max-width: 768px) {
+  .SignPage {
+    &__Layout {
+      display: block;
+    }
+  }
+}

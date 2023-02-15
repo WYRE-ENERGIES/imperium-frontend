@@ -3,9 +3,13 @@ import React from 'react'
 import { BiEnvelope } from 'react-icons/bi'
 
 import classes from './RightLayout.module.scss'
-const RightLayout = ({ children }) => {
+const RightLayout = ({
+  children,
+  span = 12,
+  backgroundColor = 'rgba(240, 247, 237, 0.6)',
+}) => {
   return (
-    <Col span={12}>
+    <Col span={span} style={{ backgroundColor: backgroundColor }}>
       <div className={classes.Layout}>
         <Row justify="center" align={'middle'}>
           <div>{children}</div>

@@ -58,6 +58,15 @@ const AdminPanelAnalytic = lazy(() =>
   import('./pages/Admin/PanelAnalytic/PanelAnalytic'),
 )
 
+const AdminSignIn = lazy(() => import('./pages/Admin/Auth/SignIn/AdminSignIn'))
+const AdminForgotPassword = lazy(() =>
+  import('./pages/Admin/Auth/ForgotPassword/AdminForgotPassword'),
+)
+const AdminNewPassword = lazy(() =>
+  import('./pages/Admin/Auth/NewPassword/AdminNewpassword'),
+)
+const AdminOtp = lazy(() => import('./pages/Admin/Auth/Otp/AdminOtp'))
+
 function App() {
   return (
     <Router>
@@ -94,6 +103,10 @@ function App() {
             {/* Admin routes */}
             <Route path="admin">
               <Route path="panel-analytic" element={<AdminPanelAnalytic />} />
+              <Route path="sign-in" element={<AdminSignIn />} />
+              <Route path="forgot-password" element={<AdminForgotPassword />} />
+              <Route path="new-password" element={<AdminNewPassword />} />
+              <Route path="otp" element={<AdminOtp />} />
             </Route>
           </Route>
         </Routes>
