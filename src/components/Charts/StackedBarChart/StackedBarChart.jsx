@@ -1,6 +1,6 @@
 import Chart from 'react-apexcharts'
 import React from 'react'
-import { apexChartOptions } from './data'
+import { apexChartOptions } from '../data'
 import classes from './StackedBarChart.module.scss'
 
 const StackedBarChart = ({

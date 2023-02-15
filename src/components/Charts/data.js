@@ -48,6 +48,80 @@ export const apexChartOptions = {
   },
 }
 
+export const groupedChartOptions = {
+  chart: {
+    toolbar: {
+      show: false,
+    },
+  },
+  legend: {
+    position: 'top',
+    horizontalAlign: 'left',
+    markers: {
+      radius: 10,
+    },
+  },
+  xaxis: {
+    categories: [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December',
+    ],
+  },
+  plotOptions: {
+    bar: {
+      borderRadiusApplication: 'around',
+    },
+  },
+  dataLabels: {
+    enabled: false,
+  },
+  theme: {
+    mode: 'dark',
+  },
+}
+
+export const areaChartOptions = {
+  chart: {
+    height: 500,
+    type: 'area',
+    toolbar: {
+      show: false,
+    },
+  },
+  stroke: {
+    curve: 'smooth',
+  },
+  xaxis: {
+    categories: [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December',
+    ],
+  },
+  dataLabels: {
+    enabled: false,
+  },
+}
+
 export const stackBarData = [
   {
     id: 1,

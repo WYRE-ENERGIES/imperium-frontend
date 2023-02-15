@@ -21,7 +21,7 @@ export const userMenuItems = [
   {
     icon: BsBattery,
     title: 'Battery',
-    linkTo: '/battery',
+    linkTo: '/battery-analytic',
   },
   {
     icon: BsBell,
@@ -42,21 +42,21 @@ export const userMenuItems = [
 
 export const adminMenuItems = [
   // { icon: BarChartOutlined, title: 'Overview', linkTo: '/admin/overview' },
-  // {
-  //   icon: ThunderboltOutlined,
-  //   title: 'Energy Analytic',
-  //   linkTo: '/admin/energy-analytic',
-  // },
+  {
+    icon: ThunderboltOutlined,
+    title: 'Energy Analytic',
+    linkTo: '/admin/energy-analytic',
+  },
   {
     icon: BsSunset,
     title: 'Panel Analytic',
     linkTo: '/admin/panel-analytic',
   },
-  // {
-  //   icon: BsBattery,
-  //   title: 'Battery',
-  //   linkTo: '/admin/battery',
-  // },
+  {
+    icon: BsBattery,
+    title: 'Battery',
+    linkTo: '/admin/battery-analytic',
+  },
   // {
   //   icon: BsBell,
   //   title: 'Active Alerts',
