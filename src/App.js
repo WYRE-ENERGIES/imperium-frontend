@@ -83,8 +83,7 @@ function App() {
             </Route>
             <Route path="overview">
               <Route index element={<Overview />} />
-              <Route path="shs" element={<Shs />} />
-              <Route path="shs/:id" element={<Support />} />
+              <Route path="shs/:id" element={<Shs />} />
             </Route>
             <Route path="support" element={<Support />} />
             <Route path="energy-analytic" element={<EnergyAnalytic />} />
