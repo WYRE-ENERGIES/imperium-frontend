@@ -4,6 +4,7 @@
     display: flex;
     justify-content: space-between;
   }
+
   & > div:not(:last-child) {
     margin-bottom: 24px;
   }
@@ -16,6 +17,7 @@
     display: flex;
     flex-wrap: wrap;
     gap: 24px;
+    margin-bottom: 32px;
   }
 
   &__chart {

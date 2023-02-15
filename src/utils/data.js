@@ -1,8 +1,11 @@
+import { TbActivityHeartbeat, TbBolt, TbBoltOff } from 'react-icons/tb'
+
 import { ReactComponent as BadBatteryWidgetIcon } from '../assets/widget-icons/bad-battery-icon.svg'
 import { ReactComponent as BentArrowWidgetIcon } from '../assets/widget-icons/bent-arrow.svg'
 import { ReactComponent as EnergyWidgetIcon } from '../assets/widget-icons/energy-icon.svg'
 import { ReactComponent as GoodBatteryWidgetIcon } from '../assets/widget-icons/good-battery-icon.svg'
 import { ReactComponent as HomeWidgetIcon } from '../assets/widget-icons/home-icon.svg'
+import { RiseOutlined } from '@ant-design/icons'
 import { ReactComponent as SEnergyWidgetIcon } from '../assets/widget-icons/cancel-energy-con.svg'
 import { ReactComponent as SunWidgetIcon } from '../assets/widget-icons/sun.svg'
 
@@ -391,24 +394,70 @@ export const adminBatteryTableData = [
 
 export const adminEnergyAnalyticColumns = [
   {
-    title: 'Solar House System(SHS)',
+    title: (
+      <span
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+        }}
+      >
+        Solar House System(SHS)
+        <TbBolt style={{ marginLeft: '5px', color: '#497A38' }} size={18} />
+      </span>
+    ),
     dataIndex: 'SHS',
     key: 'SHS',
   },
   {
-    title: 'Energy Consumed',
+    title: (
+      <span
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+        }}
+      >
+        Energy Consumed
+        <TbBoltOff style={{ marginLeft: '5px', color: '#497A38' }} size={18} />
+      </span>
+    ),
     key: 'energyConsumed',
     dataIndex: 'energyConsumed',
     render: (value) => `${value.toLocaleString()} kwh`,
   },
   {
-    title: 'Energy Generated',
+    title: (
+      <span
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+        }}
+      >
+        Energy Generated
+        <TbActivityHeartbeat
+          style={{ marginLeft: '5px', color: '#497A38' }}
+          size={18}
+        />
+      </span>
+    ),
     key: 'energyGenerated',
     dataIndex: 'energyGenerated',
     render: (value) => `${value.toLocaleString()} kwh`,
   },
   {
-    title: 'Capacity',
+    title: (
+      <span
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+        }}
+      >
+        Capacity
+        <RiseOutlined
+          style={{ marginLeft: '5px', color: '#497A38' }}
+          size={18}
+        />
+      </span>
+    ),
     key: 'capacity',
     dataIndex: 'capacity',
     render: (value) => value,
