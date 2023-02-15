@@ -102,6 +102,7 @@ function App() {
               <Route path="panel-analytic" element={<AdminPanelAnalytic />} />
               <Route path="battery-analytic" element={<AdminBattery />} />
               <Route path="energy-analytic" element={<AdminEnergyAnalytic />} />
+              <Route path="users" element={<Users />} />
             </Route>
           </Route>
         </Routes>
