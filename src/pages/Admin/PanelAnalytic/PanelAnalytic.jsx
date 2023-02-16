@@ -23,7 +23,7 @@ const PanelAnalytic = () => {
         className={classes.PanelAnalytic}
       >
         <section className={classes.PanelAnalytic__headerSection}>
-          <PageBreadcrumb title="Panel Analytic" />
+          <PageBreadcrumb title="Panel Analytic" items={['Panel Analytic']} />
         </section>
         <section className={classes.PanelAnalytic__filters}>
           <WidgetFilter />

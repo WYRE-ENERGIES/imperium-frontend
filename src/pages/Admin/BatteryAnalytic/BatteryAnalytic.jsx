@@ -127,7 +127,7 @@ const BatteryAnalytic = () => {
     <AdminPageLayout>
       <div style={{ backgroundColor: '#FCFCFD' }} className={classes.Battery}>
         <section className={classes.Battery__headerSection}>
-          <PageBreadcrumb title="Battery" />
+          <PageBreadcrumb title="Battery" items={['Battery']} />
         </section>
         <section className={classes.Battery__filters}>
           <WidgetFilter />

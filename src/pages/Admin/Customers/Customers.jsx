@@ -131,7 +131,10 @@ const Customers = () => {
     <AdminPageLayout>
       <div className={classes.Customers}>
         <section className={classes.Customers__headerSection}>
-          <PageBreadcrumb title="Customers" items={['Assign SHS']} />
+          <PageBreadcrumb
+            title="Customers"
+            items={['Customers', 'Assign SHS']}
+          />
         </section>
         <section className={classes.Customers__filters}>
           <WidgetFilter />

@@ -44,7 +44,7 @@ const Support = () => {
     <PageLayout>
       <div className={classes.Support} style={{ backgroundColor: '#FCFCFD' }}>
         <section className={classes.Support__headerSection}>
-          <PageBreadcrumb title="Support" />
+          <PageBreadcrumb title="Support" items={['Support']} />
           <Button
             className={classes.Support__button}
             onClick={() => {
