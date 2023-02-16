@@ -1,3 +1,4 @@
+import React, { useState } from 'react'
 import {
   adminBatteryTableData,
   adminBatteryWidgetsData,
@@ -7,8 +8,8 @@ import {
 import AdminPageLayout from '../../../components/Layout/AdminPageLayout/AdminPageLayout'
 import { BsDot } from 'react-icons/bs'
 import PageBreadcrumb from '../../../components/PageBreadcrumb/PageBreadcrumb'
-import React from 'react'
 import { RiBattery2ChargeLine } from 'react-icons/ri'
+import StackedBarChart from '../../../components/Charts/StackedBarChart/StackedBarChart'
 import TableWithFilter from '../../../components/SHSTableWithFilter/SHSTableWithFilter'
 import { Tag } from 'antd'
 import Widget from '../../../components/Widget/Widget/Widget'
@@ -72,13 +73,20 @@ const columns = [
     render: (value) => {
       return (
         <div className={classes.Battery__status}>
-          <RiBattery2ChargeLine color="#84BB72" size={20} />
+          <RiBattery2ChargeLine
+            color={value.isCharging ? '#84BB72' : '#B42318'}
+            size={20}
+          />
           <section className={classes.Battery__statusSection}>
             <h3 className={classes.Battery__statusText}>Charging Status</h3>
             <div className={classes.Battery__statusResultSection}>
-              <h4>
-                <BsDot size={20} style={{ marginLeft: 0 }} /> {value.percentage}
-                %
+              <h4 style={{ color: value.isCharging ? '#84BB72' : '#B42318' }}>
+                <BsDot
+                  color={value.isCharging ? '#84BB72' : '#B42318'}
+                  size={20}
+                  style={{ marginLeft: 0 }}
+                />
+                {value.percentage}%
               </h4>
               <h5 className={classes.Battery__statusResult}>
                 {value.isCharging ? 'Charging' : 'Not Charging'}
@@ -92,6 +100,17 @@ const columns = [
 ]
 
 const BatteryAnalytic = () => {
+  const [chartData, setChartData] = useState([
+    {
+      name: 'Bad Battery Status',
+      data: [400, 500, 350, 420, 320, 500, 410, 430, 410, 500, 570, 400],
+    },
+    {
+      name: 'Good battery status',
+      data: [400, 500, 230, 430, 260, 430, 390, 380, 390, 330, 430, 310],
+    },
+  ])
+
   const widgets = adminBatteryWidgetsData.map((widget) => (
     <Widget
       key={widget.id}
@@ -114,7 +133,17 @@ const BatteryAnalytic = () => {
           <WidgetFilter />
         </section>
         <div className={classes.Battery__widgets}>{widgets}</div>
-        <div className={classes.Battery__chart}>chart</div>
+        <div className={classes.Battery__chart}>
+          <StackedBarChart
+            title="Battery Statistical Representation"
+            chartData={chartData}
+            colors={['#F04438', '#66AB4F']}
+            borderRadius={2}
+            columnWidth={10}
+            legendPosition="bottom"
+            legendHorizontalAlign="center"
+          />
+        </div>
         <div className={classes.Battery__shsTable}>
           <TableWithFilter
             columns={columns}

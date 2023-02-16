@@ -378,7 +378,7 @@ export const adminBatteryTableData = [
     batteryCurrent: 9.01,
     batteryHealth: false,
     chargingSource: 'Solar',
-    status: { percentage: 80, isCharging: true },
+    status: { percentage: 15, isCharging: false },
   },
   {
     id: 8,

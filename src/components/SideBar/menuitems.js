@@ -20,7 +20,7 @@ export const userMenuItems = [
   },
   {
     icon: BsBattery,
-    title: 'Battery',
+    title: 'Battery Analytic',
     linkTo: '/battery-analytic',
   },
   {
@@ -54,7 +54,7 @@ export const adminMenuItems = [
   },
   {
     icon: BsBattery,
-    title: 'Battery',
+    title: 'Battery Analytic',
     linkTo: '/admin/battery-analytic',
   },
   // {

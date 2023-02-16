@@ -6,8 +6,6 @@ export const apexChartOptions = {
     },
   },
   legend: {
-    position: 'top',
-    horizontalAlign: 'right',
     markers: {
       radius: 10,
     },
@@ -28,15 +26,11 @@ export const apexChartOptions = {
       'December',
     ],
     title: {
-      text: 'Month',
+      // text: 'Month',
       offsetY: 90,
     },
   },
-  yaxis: {
-    title: {
-      text: 'kWh',
-    },
-  },
+  yaxis: {},
   plotOptions: {
     bar: {
       borderRadiusWhenStacked: 'last',

@@ -9,6 +9,10 @@ const StackedBarChart = ({
   colors,
   borderRadius,
   columnWidth,
+  legendPosition,
+  legendHorizontalAlign,
+  yLabelTitle,
+  xLabelTitle,
 }) => {
   return (
     <div className={classes.StackedBarChart}>
@@ -19,6 +23,8 @@ const StackedBarChart = ({
           fill: { colors },
           legend: {
             ...apexChartOptions.legend,
+            position: legendPosition,
+            horizontalAlign: legendHorizontalAlign,
             markers: {
               ...apexChartOptions.legend.markers,
               fillColors: colors,
@@ -30,6 +36,19 @@ const StackedBarChart = ({
               ...apexChartOptions.plotOptions.bar,
               borderRadius,
               columnWidth,
+            },
+          },
+          xaxis: {
+            ...apexChartOptions.xaxis,
+            title: {
+              ...apexChartOptions.xaxis.title,
+              text: xLabelTitle,
+            },
+          },
+          yaxis: {
+            ...apexChartOptions.yaxis,
+            title: {
+              text: yLabelTitle,
             },
           },
         }}
