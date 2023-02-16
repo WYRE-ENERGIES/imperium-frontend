@@ -22,6 +22,7 @@ const SearchAndFilter = ({
   hasBtn,
   btnText,
   BtnIcon,
+  btnAction,
 }) => {
   const options = filterOptions?.map((option, index) => (
     <Option key={index} value={option.value}>
@@ -47,7 +48,10 @@ const SearchAndFilter = ({
         </Button>
       )}
       {hasBtn && (
-        <Button className={classes.SearchAndFilter__additionalBtn}>
+        <Button
+          onClick={btnAction}
+          className={classes.SearchAndFilter__additionalBtn}
+        >
           <BtnIcon />
           {btnText}
         </Button>

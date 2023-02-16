@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { Suspense, useState, useTransition } from 'react'
 import { Switch, Tag } from 'antd'
 
 import AdminPageLayout from '../../../components/Layout/AdminPageLayout/AdminPageLayout'
@@ -8,6 +8,7 @@ import { FiHome } from 'react-icons/fi'
 import { Link } from 'react-router-dom'
 import PageBreadcrumb from '../../../components/PageBreadcrumb/PageBreadcrumb'
 import ReactAvatar from 'react-avatar'
+import SHSForm from './SHSForm/SHSForm'
 import TableWithFilter from '../../../components/SHSTableWithFilter/SHSTableWithFilter'
 import TotalClientWidget from '../../../components/Widget/Customers/TotalClientWidget'
 import { ReactComponent as UsersIcon } from '../../../assets/widget-icons/users-icon.svg'
@@ -121,6 +122,10 @@ const Customers = () => {
       data: [400, 500, 350, 420, 320, 500, 410, 430, 410, 500, 570, 400],
     },
   ])
+  const [openModal, setOpenModal] = useState(false)
+  const [isPending, startTransition] = useTransition()
+
+  const toggleModal = () => setOpenModal(!openModal)
 
   return (
     <AdminPageLayout>
@@ -160,9 +165,13 @@ const Customers = () => {
             hasBtn={true}
             btnText="Add SHS"
             BtnIcon={FiHome}
+            btnAction={toggleModal}
           />
         </div>
       </div>
+      <Suspense fallback={<h4>Loading...</h4>}>
+        {openModal && <SHSForm isOpen={openModal} toggleModal={toggleModal} />}
+      </Suspense>
     </AdminPageLayout>
   )
 }

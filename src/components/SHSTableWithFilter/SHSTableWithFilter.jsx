@@ -14,6 +14,7 @@ const SHSTableWithFilter = ({
   hasBtn = false,
   btnText,
   BtnIcon,
+  btnAction,
 }) => {
   return (
     <div className={classes.SHSTable}>
@@ -46,6 +47,7 @@ const SHSTableWithFilter = ({
           hasBtn={hasBtn}
           btnText={btnText}
           BtnIcon={BtnIcon}
+          btnAction={btnAction}
         />
       </section>
       <Table
