@@ -62,11 +62,11 @@ export const adminMenuItems = [
   //   title: 'Active Alerts',
   //   linkTo: '/admin/active-alerts',
   // },
-  // {
-  //   icon: FiUsers,
-  //   title: 'Users',
-  //   linkTo: '/admin/users',
-  // },
+  {
+    icon: FiUsers,
+    title: 'Users',
+    linkTo: '/admin/users',
+  },
 ].map((item) => ({
   key: `${item.linkTo}`,
   icon: React.createElement(item.icon),
