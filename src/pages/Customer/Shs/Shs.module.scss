@@ -1,14 +1,14 @@
 @import '../../../components/Auth/Forms/variables.module';
 .Shs {
+  box-sizing: border-box;
   &__BreadCrumb {
     display: flex;
-    justify-content: space-between;
+    gap: 420px;
     font-family: $font-family;
   }
 
   &__EnergyPerfomance {
     display: flex;
-    justify-content: space-between;
     gap: 15px;
     margin-top: 30px;
   }
