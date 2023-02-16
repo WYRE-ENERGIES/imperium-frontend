@@ -16,7 +16,13 @@ const prefix = (
   />
 )
 
-const SearchAndFilter = ({ filterOptions, isAdmin }) => {
+const SearchAndFilter = ({
+  filterOptions,
+  isAdmin,
+  hasBtn,
+  btnText,
+  BtnIcon,
+}) => {
   const options = filterOptions?.map((option, index) => (
     <Option key={index} value={option.value}>
       {option.name}
@@ -38,6 +44,12 @@ const SearchAndFilter = ({ filterOptions, isAdmin }) => {
         <Button className={classes.SearchAndFilter__exportBtn}>
           <CloudDownloadOutlined />
           Export
+        </Button>
+      )}
+      {hasBtn && (
+        <Button className={classes.SearchAndFilter__additionalBtn}>
+          <BtnIcon />
+          {btnText}
         </Button>
       )}
     </div>

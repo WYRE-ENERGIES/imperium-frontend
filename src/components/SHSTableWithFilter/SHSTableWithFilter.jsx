@@ -10,7 +10,10 @@ const SHSTableWithFilter = ({
   tableTitle,
   tagValue,
   filterOptions,
-  isAdmin,
+  isAdmin = false,
+  hasBtn = false,
+  btnText,
+  BtnIcon,
 }) => {
   return (
     <div className={classes.SHSTable}>
@@ -37,7 +40,13 @@ const SHSTableWithFilter = ({
         ) : (
           <h1>{tableTitle}</h1>
         )}
-        <SearchAndFilter filterOptions={filterOptions} isAdmin={isAdmin} />
+        <SearchAndFilter
+          filterOptions={filterOptions}
+          isAdmin={isAdmin}
+          hasBtn={hasBtn}
+          btnText={btnText}
+          BtnIcon={BtnIcon}
+        />
       </section>
       <Table
         style={{ width: '100%', overflow: 'scroll' }}

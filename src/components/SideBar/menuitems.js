@@ -1,4 +1,8 @@
-import { BarChartOutlined, ThunderboltOutlined } from '@ant-design/icons'
+import {
+  BarChartOutlined,
+  ThunderboltOutlined,
+  UserOutlined,
+} from '@ant-design/icons'
 import { BsBattery, BsBell, BsSunset } from 'react-icons/bs'
 
 import { FiUsers } from 'react-icons/fi'
@@ -62,6 +66,7 @@ export const adminMenuItems = [
   //   title: 'Active Alerts',
   //   linkTo: '/admin/active-alerts',
   // },
+  { icon: UserOutlined, title: 'Customers', linkTo: '/admin/customers' },
   {
     icon: FiUsers,
     title: 'Users',
