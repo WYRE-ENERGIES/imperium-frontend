@@ -2,6 +2,14 @@
   display: flex;
   gap: 10px;
 
+  &__EditShutDown {
+    display: flex;
+    gap: 10px;
+    button:hover {
+      cursor: pointer;
+    }
+  }
+
   &__PowerBtn {
     background: white;
     display: flex;

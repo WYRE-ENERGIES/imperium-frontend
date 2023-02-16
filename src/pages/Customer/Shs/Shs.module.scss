@@ -146,6 +146,51 @@
     p {
       color: #66ab4f;
       line-height: 32px;
+      font-weight: 500;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+
+  &__DeviceInfo {
+    h1 {
+      font-weight: 500;
+      font-size: 18px;
+      line-height: 24px;
+      padding-top: 20px;
+    }
+    & > div {
+      border: 1px solid #e6e6e6;
+      border-radius: 12px;
+      padding: 20px 20px;
+      margin-bottom: 10px;
+    }
+    & > div > div > p:not(:last-child) {
+      font-weight: 400;
+      font-size: 16px;
+      color: #737373;
+    }
+    & > div > div > p {
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 6px;
+      color: #363636;
+    }
+  }
+  &__Gps {
+    display: flex;
+    justify-content: space-between;
+    & > div > p:not(:last-child) {
+      font-weight: 400;
+      font-size: 16px;
+      color: #606062;
+    }
+    & > div > p {
+      font-weight: 400;
+      font-size: 14px;
+      color: #363636;
+      line-height: 8px;
     }
   }
   &__Capacity {

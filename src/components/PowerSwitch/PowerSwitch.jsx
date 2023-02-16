@@ -2,12 +2,22 @@ import { React, useState } from 'react'
 import { BiPowerOff } from 'react-icons/bi'
 
 import classes from './PowerSwitch.module.scss'
-import { Dropdown, Modal, Space, DatePicker } from 'antd'
+import { Dropdown, Modal, Space, notification, DatePicker, Divider } from 'antd'
 import cautionIcon from '../../../src/assets/widget-icons/caution.svg'
 import scheduleIcon from '../../../src/assets/widget-icons/scheduleIcon.svg'
+const openNotification = (startDate, endDate) => {
+  notification.success({
+    message: 'Schedule Shutdown',
+    description: `Scheduled for shutdown at ${startDate} to ${endDate}`,
 
+    onClick: () => {
+      console.log('Notification Clicked!')
+    },
+  })
+}
 const PowerButton = ({ action, color }) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
+
   const showModal = () => {
     setIsModalOpen(true)
   }
@@ -61,31 +71,44 @@ const PowerSwitch = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [startDate, setStartDate] = useState('')
   const [endDate, setEndDate] = useState('')
+
+  const dateTimeOption = {
+    timeZone: 'Africa/Accra',
+    hour12: true,
+    hour: 'numeric',
+    minute: 'numeric',
+    seconds: 'numeric',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  }
+
   const showModal = () => {
     setIsModalOpen(true)
   }
-  const handleOk = () => {
+  const handleOk = (value) => {
     setIsModalOpen(false)
+    openNotification(startDate, endDate)
   }
   const handleCancel = () => {
     setIsModalOpen(false)
   }
 
-  const onChange = (value, dateString) => {
-    setStartDate(dateString[0])
-    setEndDate(dateString[1])
-    console.log('Selected Time: ', value)
-    console.log('Formatted Selected Time: ', dateString[1])
-  }
+  const onChange = (value, dateString) => {}
   const onClick = ({ key }) => {
-    console.log('key: ', key)
+    console.log('Power Button Onclick : ', key)
   }
 
-  const onOk = ({ $d }) => {
+  const onOk = (e) => {
+    const startSchedule = e[0].$d.toLocaleTimeString('en-US', dateTimeOption)
+    const endSchedule = e[1].$d.toLocaleTimeString('en-US', dateTimeOption)
+    setStartDate(startSchedule)
+    setEndDate(endSchedule)
+
     showModal()
-
-    console.log('onOk: ', $d)
+    console.log('onOk testing: ', e[0])
   }
+
   const powerOptions = [
     {
       label: <PowerButton action="Power Off" color={'#B42318'} />,
@@ -115,7 +138,51 @@ const PowerSwitch = () => {
 
   const powerSchedule = [
     {
-      label: (
+      label: startDate ? (
+        <div>
+          <p
+            style={{
+              width: '280px',
+              textAlign: 'center',
+              paddingTop: '10px',
+              color: '#606062',
+            }}
+          >
+            Would you like to edit the shutdown time created for{' '}
+            <strong>{startDate}</strong>{' '}
+          </p>
+          <Divider />
+          <div className={classes.PowerSwitch__EditShutDown}>
+            <button
+              onClick={handleOk}
+              style={{
+                width: '134px',
+                height: '40px',
+                backgroundColor: '#FFFFFF',
+                border: '1px solid #C4C4C4',
+                boxShadow: '0px 1px 2px rgba(16, 24, 40, 0.05)',
+                borderRadius: ' 8px',
+              }}
+            >
+              Cancel
+            </button>
+            <button
+              onClick={() => setStartDate('')}
+              style={{
+                width: '134px',
+                height: '40px',
+                backgroundColor: '#385E2B',
+                border: '1px solid #C4C4C4',
+                boxShadow: '0px 1px 2px rgba(16, 24, 40, 0.05)',
+                borderRadius: ' 8px',
+                color: 'white',
+              }}
+            >
+              Edit
+            </button>
+          </div>
+        </div>
+      ) : (
         <Space
           direction="vertical"
           size={12}
@@ -129,7 +196,6 @@ const PowerSwitch = () => {
             format="DD-MM-YYYY HH:mm"
             onChange={onChange}
             onOk={onOk}
-            // separator={<p>hello</p>}
           />
         </Space>
       ),
@@ -163,7 +229,11 @@ const PowerSwitch = () => {
           }}
           trigger={['click']}
           placement="bottom"
-          overlayStyle={{ paddingTop: '10px' }}
+          overlayStyle={{
+            paddingTop: '10px',
+            width: '357px',
+            paddingRight: '50px',
+          }}
         >
           <button>Schedule shutdown</button>
         </Dropdown>
@@ -188,7 +258,7 @@ const PowerSwitch = () => {
 
               <div className={classes.PowerSwitch__Confirm}>
                 <button onClick={handleOk}>Cancel</button>
-                <button>Proceed</button>
+                <button onClick={handleOk}>Proceed</button>
               </div>
             </div>
           </Modal>

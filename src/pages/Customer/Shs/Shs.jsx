@@ -1,4 +1,4 @@
-import { Tag } from 'antd'
+import { Divider, Dropdown, Modal, Tag } from 'antd'
 import React from 'react'
 import Chart from 'react-apexcharts'
 import PageLayout from '../../../components/Layout/PageLayout'
@@ -11,9 +11,50 @@ import batteryStatus from '../../../assets/widget-icons/BatteryIcon2.svg'
 import SolarPanel from '../../../assets/widget-icons/Frame 20.svg'
 import { BiTrendingUp } from 'react-icons/bi'
 import { BsFillSunFill } from 'react-icons/bs'
-import { FcFlashOn } from 'react-icons/fc'
+import { EyeOutlined, ThunderboltOutlined } from '@ant-design/icons'
+
+const DeviceInfo = () => {
+  return (
+    <div className={classes.Shs__DeviceInfo}>
+      <h1>Device Details </h1>
+      <div>
+        <div>
+          <p>Device Name</p>
+          <p>Alday Banamex</p>
+        </div>
+        <Divider />
+        <div>
+          <p>Device address</p>
+          <p>Number 10 ijaoye street, Jibowu, Lagos </p>
+        </div>
+        <Divider />
+        <div>
+          <p>G.P.S address</p>
+          <p>10 Ijaoye St, Igbobi 101245, Lagos</p>
+        </div>
+        <Divider />
+        <div className={classes.Shs__Gps}>
+          <div>
+            <p>Latitude</p>
+            <p>6.520940</p>
+          </div>
+          <div>
+            <p>Longitude</p>
+            <p>6.520940</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
 
 const Shs = () => {
+  const deviceDetails = [
+    {
+      label: <DeviceInfo />,
+      key: '1',
+    },
+  ]
   return (
     <PageLayout>
       <section className={classes.Shs}>
@@ -28,7 +69,21 @@ const Shs = () => {
             <div className={classes.Shs__Monitoring}>
               <div className={classes.Shs__PerformanceMonitor}>
                 <h1>Performance Monitoring</h1>
-                <p>See Device Details</p>
+                <Dropdown
+                  className={classes.Shs__DeviceDropDown}
+                  menu={{
+                    items: deviceDetails,
+                    onClick: (e) => e.preventDefault(),
+                  }}
+                  trigger={['click']}
+                  placement="bottom"
+                  overlayStyle={{ paddingLeft: '90px' }}
+                >
+                  <p>
+                    See Device Details{' '}
+                    <EyeOutlined style={{ marginLeft: '3px' }} />
+                  </p>
+                </Dropdown>
               </div>
               <div className={classes.Shs__Capacity}>
                 <p>
@@ -305,7 +360,10 @@ const Shs = () => {
                   <div className={classes.Shs__BoltIcon}>
                     <p>
                       {' '}
-                      <FcFlashOn size={20} />
+                      <ThunderboltOutlined
+                        style={{ color: '#EAAA08' }}
+                        size={20}
+                      />
                     </p>
                     <p>12.4 kwh</p>
                   </div>
@@ -323,7 +381,10 @@ const Shs = () => {
                   <div className={classes.Shs__BoltIcon}>
                     <p>
                       {' '}
-                      <FcFlashOn size={20} />
+                      <ThunderboltOutlined
+                        style={{ color: '#EAAA08' }}
+                        size={20}
+                      />
                     </p>
                     <p>12.4 kwh</p>
                   </div>
@@ -341,7 +402,10 @@ const Shs = () => {
                   <div className={classes.Shs__BoltIcon}>
                     <p>
                       {' '}
-                      <FcFlashOn size={20} />
+                      <ThunderboltOutlined
+                        style={{ color: '#EAAA08' }}
+                        size={20}
+                      />
                     </p>
                     <p>12.4 kwh</p>
                   </div>
