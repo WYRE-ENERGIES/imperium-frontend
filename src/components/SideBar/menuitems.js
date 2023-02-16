@@ -1,11 +1,13 @@
 import {
   BarChartOutlined,
+  SettingOutlined,
   ThunderboltOutlined,
   UserOutlined,
 } from '@ant-design/icons'
 import { BsBattery, BsBell, BsSunset } from 'react-icons/bs'
 
 import { FiUsers } from 'react-icons/fi'
+import { HiOutlineSupport } from 'react-icons/hi'
 import { Link } from 'react-router-dom'
 import React from 'react'
 import styles from './Sidebar.module.scss'
@@ -76,5 +78,27 @@ export const adminMenuItems = [
   key: `${item.linkTo}`,
   icon: React.createElement(item.icon),
   className: styles.SidebarMenuItem,
+  label: <Link to={item.linkTo}>{item.title}</Link>,
+}))
+
+export const userBottomItems = [
+  { icon: HiOutlineSupport, title: 'Support', linkTo: '/support' },
+  { icon: SettingOutlined, title: 'My Account', linkTo: '/account/details' },
+].map((item) => ({
+  key: `${item.linkTo}`,
+  icon: React.createElement(item.icon),
+  label: <Link to={item.linkTo}>{item.title}</Link>,
+}))
+
+export const adminBottomItems = [
+  { icon: HiOutlineSupport, title: 'Support', linkTo: '/admin/support' },
+  // {
+  //   icon: SettingOutlined,
+  //   title: 'My Account',
+  //   linkTo: '/admin/account/details',
+  // },
+].map((item) => ({
+  key: `${item.linkTo}`,
+  icon: React.createElement(item.icon),
   label: <Link to={item.linkTo}>{item.title}</Link>,
 }))

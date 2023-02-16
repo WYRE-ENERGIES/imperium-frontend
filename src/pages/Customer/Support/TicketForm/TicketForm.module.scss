@@ -92,4 +92,15 @@
       background-color: #ecfdf3;
     }
   }
+
+  &__switch {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
+    color: #606062;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
 }

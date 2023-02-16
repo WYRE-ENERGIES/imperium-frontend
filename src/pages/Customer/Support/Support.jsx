@@ -78,6 +78,7 @@ const Support = () => {
             isOpen={openModal}
             toggleModal={toggleModal}
             ticketData={ticketData}
+            isAdmin={false}
           />
         )}
       </Suspense>
