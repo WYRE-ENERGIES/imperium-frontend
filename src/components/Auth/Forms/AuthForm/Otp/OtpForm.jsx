@@ -6,7 +6,6 @@ import { useNavigate } from 'react-router-dom'
 import FormButton from '../../Widgets/FormButton'
 import { Link } from 'react-router-dom'
 const Otp = () => {
-  const [otp, setOtp] = useState('')
   const nextPage = useNavigate()
 
   const handleOnsubmit = () => {
@@ -31,7 +30,7 @@ const Otp = () => {
           </div>
         </div>
         <div>
-          <form action="" method="post" onSubmit={handleOnsubmit}>
+          <form action="/new-password" method="" onSubmit={handleOnsubmit}>
             <FormButton type={'submit'} action={'Continue'} icon={''} />
           </form>
           <div className={classes.Otp__Resend}>
