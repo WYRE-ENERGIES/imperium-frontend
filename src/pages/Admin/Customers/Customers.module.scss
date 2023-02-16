@@ -14,8 +14,14 @@
   }
 
   &__widgets {
+    width: 100%;
     display: flex;
     gap: 20px;
+    overflow: scroll;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 
   &__nameDiv {
