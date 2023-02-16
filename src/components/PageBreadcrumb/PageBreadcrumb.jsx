@@ -1,11 +1,14 @@
 import { Breadcrumb } from 'antd'
+import { Link } from 'react-router-dom'
 import React from 'react'
 import { RiHome6Line } from 'react-icons/ri'
-import { Link } from 'react-router-dom'
-
 import classes from './PageBreadcrumb.module.scss'
 
-const PageBreadcrumb = ({ title }) => {
+const PageBreadcrumb = ({ title, items }) => {
+  const breadcrumbItems = items?.map((item, index) => (
+    <Breadcrumb.Item key={index}>{item}</Breadcrumb.Item>
+  ))
+
   return (
     <div className={classes.PageBreadcrumb}>
       <h1 className={classes.PageBreadcrumb__title}>{title}</h1>
@@ -16,6 +19,7 @@ const PageBreadcrumb = ({ title }) => {
           </Link>
         </Breadcrumb.Item>
         <Breadcrumb.Item>{title}</Breadcrumb.Item>
+        {breadcrumbItems}
       </Breadcrumb>
     </div>
   )
