@@ -190,3 +190,49 @@ export const stackBarData = [
     month: 'December',
   },
 ]
+
+export const barChartOptions = {
+  chart: {
+    toolbar: {
+      show: false,
+    },
+  },
+  legend: {
+    markers: {
+      radius: 10,
+    },
+  },
+  grid: {
+    show: false,
+  },
+  xaxis: {
+    categories: [
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sept',
+      'Oct',
+      'Nov',
+      'Dec',
+    ],
+    axisBorder: {
+      show: false,
+    },
+    axisTicks: {
+      show: false,
+    },
+  },
+  plotOptions: {
+    bar: {
+      borderRadiusApplication: 'around',
+    },
+  },
+  dataLabels: {
+    enabled: false,
+  },
+}

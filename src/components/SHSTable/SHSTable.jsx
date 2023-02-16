@@ -1,4 +1,4 @@
-import { Space, Table, Tag } from 'antd'
+import { Table, Tag } from 'antd'
 
 import { BsDot } from 'react-icons/bs'
 import { EyeOutlined } from '@ant-design/icons'

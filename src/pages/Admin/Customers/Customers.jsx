@@ -1,13 +1,16 @@
+import React, { useState } from 'react'
 import { Switch, Tag } from 'antd'
 
 import AdminPageLayout from '../../../components/Layout/AdminPageLayout/AdminPageLayout'
+import CustomerChartWidget from '../../../components/Widget/Customers/CustomerChartWidget'
 import { ExclamationCircleOutlined } from '@ant-design/icons'
 import { FiHome } from 'react-icons/fi'
 import { Link } from 'react-router-dom'
 import PageBreadcrumb from '../../../components/PageBreadcrumb/PageBreadcrumb'
-import React from 'react'
 import ReactAvatar from 'react-avatar'
 import TableWithFilter from '../../../components/SHSTableWithFilter/SHSTableWithFilter'
+import TotalClientWidget from '../../../components/Widget/Customers/TotalClientWidget'
+import { ReactComponent as UsersIcon } from '../../../assets/widget-icons/users-icon.svg'
 import WidgetFilter from '../../../components/WidgetFilter/WidgetFilter'
 import classes from './Customers.module.scss'
 import { customersData } from '../../../utils/userData'
@@ -112,6 +115,13 @@ const columns = [
 ]
 
 const Customers = () => {
+  const [chartData, setChartData] = useState([
+    {
+      name: 'users',
+      data: [400, 500, 350, 420, 320, 500, 410, 430, 410, 500, 570, 400],
+    },
+  ])
+
   return (
     <AdminPageLayout>
       <div className={classes.Customers}>
@@ -121,18 +131,37 @@ const Customers = () => {
         <section className={classes.Customers__filters}>
           <WidgetFilter />
         </section>
-      </div>
-      <div className={classes.Customers__shsTable}>
-        <TableWithFilter
-          columns={columns}
-          data={customersData}
-          tableTitle="All Customers"
-          filterOptions={[]}
-          isAdmin={true}
-          hasBtn={true}
-          btnText="Add SHS"
-          BtnIcon={FiHome}
-        />
+        <div className={classes.Customers__widgets}>
+          <CustomerChartWidget
+            chartData={chartData}
+            colors="#497A38"
+            borderRadius={5}
+            columnWidth={30}
+          />
+          <TotalClientWidget
+            title="All Added Users"
+            Icon={UsersIcon}
+            count={598}
+            duration="For the last 12 months"
+          />
+          <TotalClientWidget
+            title="Total Imperium Client"
+            count={214}
+            duration="For the last 12 months"
+          />
+        </div>
+        <div className={classes.Customers__shsTable}>
+          <TableWithFilter
+            columns={columns}
+            data={customersData}
+            tableTitle="All Customers"
+            filterOptions={[]}
+            isAdmin={true}
+            hasBtn={true}
+            btnText="Add SHS"
+            BtnIcon={FiHome}
+          />
+        </div>
       </div>
     </AdminPageLayout>
   )

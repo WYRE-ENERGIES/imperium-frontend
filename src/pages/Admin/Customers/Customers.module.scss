@@ -13,6 +13,11 @@
     margin-bottom: 32px;
   }
 
+  &__widgets {
+    display: flex;
+    gap: 20px;
+  }
+
   &__nameDiv {
     display: flex;
     align-items: center;
