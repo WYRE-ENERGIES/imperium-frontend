@@ -71,6 +71,10 @@ const EnergyAnalytic = () => {
             colors={['#C9E00C', '#5C9D48']}
             borderRadius={2}
             columnWidth={10}
+            legendPosition="top"
+            legendHorizontalAlign="right"
+            yLabelTitle="kWh"
+            xLabelTitle="Month"
           />
         </div>
         <div className={classes.EnergyAnalytic__shsTable}>

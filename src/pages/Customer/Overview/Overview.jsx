@@ -81,6 +81,10 @@ const Overview = () => {
             colors={['#66AB4F', '#497A38']}
             borderRadius={10}
             columnWidth={30}
+            legendPosition="top"
+            legendHorizontalAlign="right"
+            yLabelTitle="kWh"
+            xLabelTitle="Month"
           />
         </div>
         <div className={classes.Overview__shsTable}>

@@ -5,8 +5,8 @@ import {
 } from '../../../utils/data'
 
 import AdminPageLayout from '../../../components/Layout/AdminPageLayout/AdminPageLayout'
-import EnergyAnalyticWidget from '../../../components/SHSTableWithFilter/SHSTableWithFilter'
 import PageBreadcrumb from '../../../components/PageBreadcrumb/PageBreadcrumb'
+import PanelTable from '../../../components/SHSTableWithFilter/SHSTableWithFilter'
 import PanelWidgets from '../../../components/Widget/Panel/Panel'
 import React from 'react'
 import WidgetFilter from '../../../components/WidgetFilter/WidgetFilter'
@@ -32,7 +32,7 @@ const PanelAnalytic = () => {
           <PanelWidgets totalPanel={8} />
         </div>
         <div className={classes.PanelAnalytic__shsTable}>
-          <EnergyAnalyticWidget
+          <PanelTable
             columns={panelColumns}
             data={panelData}
             tableTitle="Panel Table"

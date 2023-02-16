@@ -57,6 +57,14 @@ const UserInvitePage = lazy(() =>
 const AdminPanelAnalytic = lazy(() =>
   import('./pages/Admin/PanelAnalytic/PanelAnalytic'),
 )
+const AdminBattery = lazy(() =>
+  import('./pages/Admin/BatteryAnalytic/BatteryAnalytic'),
+)
+const AdminEnergyAnalytic = lazy(() =>
+  import('./pages/Admin/EnergyAnalytic/EnergyAnalytic'),
+)
+const AdminCustomer = lazy(() => import('./pages/Admin/Customers/Customers'))
+const AdminSupport = lazy(() => import('./pages/Admin/Support/Support'))
 
 const AdminSignIn = lazy(() => import('./pages/Admin/Auth/SignIn/AdminSignIn'))
 const AdminForgotPassword = lazy(() =>
@@ -95,7 +103,7 @@ function App() {
             <Route path="support" element={<Support />} />
             <Route path="energy-analytic" element={<EnergyAnalytic />} />
             <Route path="panel-analytic" element={<PanelAnalytic />} />
-            <Route path="battery" element={<Battery />} />
+            <Route path="battery-analytic" element={<Battery />} />
             <Route path="active-alerts" element={<ActiveAlerts />} />
             <Route path="users" element={<Users />} />
             <Route path="user-invite" element={<UserInvitePage />} />
@@ -103,6 +111,11 @@ function App() {
             {/* Admin routes */}
             <Route path="admin">
               <Route path="panel-analytic" element={<AdminPanelAnalytic />} />
+              <Route path="battery-analytic" element={<AdminBattery />} />
+              <Route path="energy-analytic" element={<AdminEnergyAnalytic />} />
+              <Route path="users" element={<Users />} />
+              <Route path="customers" element={<AdminCustomer />} />
+              <Route path="support" element={<AdminSupport />} />
               <Route path="sign-in" element={<AdminSignIn />} />
               <Route path="forgot-password" element={<AdminForgotPassword />} />
               <Route path="new-password" element={<AdminNewPassword />} />

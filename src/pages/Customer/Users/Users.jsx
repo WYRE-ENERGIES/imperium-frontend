@@ -1,6 +1,7 @@
 import { Button, Tag } from 'antd'
 import React, { Suspense, lazy, useState, useTransition } from 'react'
 
+import AdminPageLayout from '../../../components/Layout/AdminPageLayout/AdminPageLayout'
 import { FiTrash2 } from 'react-icons/fi'
 import PageBreadcrumb from '../../../components/PageBreadcrumb/PageBreadcrumb'
 import PageLayout from '../../../components/Layout/PageLayout'
@@ -9,6 +10,7 @@ import ReactAvatar from 'react-avatar'
 import Swal from 'sweetalert2'
 import TableWithFilter from '../../../components/SHSTableWithFilter/SHSTableWithFilter'
 import classes from './Users.module.scss'
+import { useLocation } from 'react-router-dom'
 import { userData } from '../../../utils/userData'
 
 const NewUserForm = lazy(() => import('./NewUserForm/NewUserForm'))
@@ -110,17 +112,22 @@ const columns = [
 ]
 
 const Users = () => {
+  const { pathname } = useLocation()
   const [openModal, setOpenModal] = useState(false)
   const [ticketData, setTicketData] = useState({})
   const [isPending, startTransition] = useTransition()
 
   const toggleModal = () => setOpenModal(!openModal)
 
+  const DefaultLayout = pathname.includes('admin')
+    ? AdminPageLayout
+    : PageLayout
+
   return (
-    <PageLayout>
+    <DefaultLayout>
       <div className={classes.Users}>
         <section className={classes.Users__headerSection}>
-          <PageBreadcrumb title="User" />
+          <PageBreadcrumb title="Users" />
           <Button
             className={classes.Users__button}
             onClick={() => {
@@ -145,7 +152,7 @@ const Users = () => {
           />
         )}
       </Suspense>
-    </PageLayout>
+    </DefaultLayout>
   )
 }
 
