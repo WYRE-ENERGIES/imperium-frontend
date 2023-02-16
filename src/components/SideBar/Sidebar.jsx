@@ -1,31 +1,14 @@
-import {
-  BarChartOutlined,
-  SettingOutlined,
-  ThunderboltOutlined,
-} from '@ant-design/icons'
-import { BsBattery, BsBell, BsSunset } from 'react-icons/bs'
 import { Divider, Layout, Menu } from 'antd'
 import { Link, useLocation } from 'react-router-dom'
 
-import { FiUsers } from 'react-icons/fi'
 import Footer from './Footer/Footer'
-import { HiOutlineSupport } from 'react-icons/hi'
 import { ReactComponent as Logo } from '../../assets/logo.svg'
 import React from 'react'
 import styles from './Sidebar.module.scss'
 
 const { Sider } = Layout
 
-const bottomItems = [
-  { icon: HiOutlineSupport, title: 'Support', linkTo: '/support' },
-  { icon: SettingOutlined, title: 'My Account', linkTo: '/account/details' },
-].map((item) => ({
-  key: `${item.linkTo}`,
-  icon: React.createElement(item.icon),
-  label: <Link to={item.linkTo}>{item.title}</Link>,
-}))
-
-const Sidebar = ({ bgColor, color, menuItems }) => {
+const Sidebar = ({ bgColor, color, menuItems, bottomItems }) => {
   const location = useLocation()
 
   return (
