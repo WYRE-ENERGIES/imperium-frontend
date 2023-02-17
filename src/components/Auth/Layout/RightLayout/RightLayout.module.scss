@@ -3,12 +3,15 @@
   position: relative;
 
   &__footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+  }
+  &__footerContact {
     display: flex;
-    justify-content: space-between;
     padding: 0 80px;
     color: #808080;
-    position: relative;
-    bottom: -19em;
+    justify-content: space-between;
   }
 
   &__icon {

@@ -15,12 +15,17 @@ const RightLayout = ({
           <div>{children}</div>
         </Row>
         <div className={classes.Layout__footer}>
-          <p>© imperium 2023</p>
-          <div className={classes.Layout__icon}>
-            <p>
-              <BiEnvelope size={18} />
-            </p>
-            <p>help@imperium.com</p>
+          <div className={classes.Layout__footerContact}>
+            {' '}
+            <div>
+              <p>© imperium 2023</p>
+            </div>
+            <div className={classes.Layout__icon}>
+              <p>
+                <BiEnvelope size={18} />
+              </p>
+              <p>help@imperium.com</p>
+            </div>
           </div>
         </div>
       </div>
