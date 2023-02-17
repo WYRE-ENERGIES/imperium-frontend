@@ -6,13 +6,15 @@ import PageBreadcrumb from '../../../components/PageBreadcrumb/PageBreadcrumb'
 import PowerSwitch from '../../../components/PowerSwitch/PowerSwitch'
 import classes from './Shs.module.scss'
 import building from '../../../assets/widget-icons/building.svg'
+import panelarrow from '../../../assets/widget-icons/panelArrow.svg'
+import panelbattery from '../../../assets/widget-icons/panelBattery.svg'
+import caretdown from '../../../assets/widget-icons/caretdown.svg'
 import batteryPercent from '../../../assets/widget-icons/BatteryIcon1.svg'
 import batteryStatus from '../../../assets/widget-icons/BatteryIcon2.svg'
 import SolarPanel from '../../../assets/widget-icons/Frame 20.svg'
 import { BiTrendingUp } from 'react-icons/bi'
-import { BsArrowUpRight, BsFillSunFill } from 'react-icons/bs'
+import { BsFillSunFill } from 'react-icons/bs'
 import { EyeOutlined, ThunderboltOutlined } from '@ant-design/icons'
-import { FaCaretDown } from 'react-icons/fa'
 
 const DeviceInfo = () => {
   return (
@@ -62,7 +64,15 @@ const Shs = () => {
       <section className={classes.Shs}>
         <section className={classes.Shs__BreadCrumb}>
           {' '}
-          <PageBreadcrumb title={'overview / ... / Alday Banamex '} />
+          <div style={{ display: 'flex' }}>
+            <PageBreadcrumb title={`overview / ... / Alday Banamex `} />
+            <img
+              src={caretdown}
+              alt=""
+              srcSet=""
+              style={{ margin: '-40px 0 0 10px' }}
+            />
+          </div>
           <PowerSwitch />
         </section>
 
@@ -286,7 +296,7 @@ const Shs = () => {
             <Col span={16}>
               <div className={classes.Shs__EnergyChart}>
                 <div className={classes.Shs__EnergyChartShowMore}>
-                  <div style={{ color: '#66ab4f' }}>Show more</div>
+                  <div style={{ color: '#385E2B' }}>Show more</div>
                 </div>
                 <Chart
                   height="100%"
@@ -388,8 +398,11 @@ const Shs = () => {
                 <p>Panels</p>
                 <div>
                   <div className={classes.Shs__PanelData}>
-                    <div style={{ padding: '0 10px' }}>
-                      <Row justify="space-between">
+                    <div>
+                      <Row
+                        justify="space-between"
+                        style={{ padding: '0 15px 0 20px' }}
+                      >
                         <Col span={4}>
                           {' '}
                           <div>
@@ -420,29 +433,23 @@ const Shs = () => {
                         </Col>
                       </Row>
                       <Divider />
-                      <div
-                        style={{
-                          color: '#497A38',
-                          fontWeight: '500',
-                          float: 'right',
-                          marginTop: '-10px',
-                        }}
-                      >
-                        <span style={{ marginRight: '2px' }}> Show more</span>
-                        <span>
-                          {' '}
-                          <BsArrowUpRight style={{ marginTop: '2px' }} />
-                        </span>
+                      <div className={classes.Shs__PanelShowMore}>
+                        <div>
+                          <p> Show more</p> <img src={panelarrow} alt="" />
+                        </div>
                       </div>
                     </div>
                   </div>
                   <div className={classes.Shs__PanelData}>
-                    <div style={{ padding: '0 10px' }}>
-                      <Row justify="space-between">
+                    <div>
+                      <Row
+                        justify="space-between"
+                        style={{ padding: '0 30px 0 20px' }}
+                      >
                         <Col span={4}>
                           {' '}
                           <div>
-                            <img src={SolarPanel} alt="" srcSet="" />
+                            <img src={panelbattery} alt="" srcSet="" />
                           </div>
                         </Col>
                         <Col span={13}>
@@ -467,19 +474,10 @@ const Shs = () => {
                         </Col>
                       </Row>
                       <Divider />
-                      <div
-                        style={{
-                          color: '#497A38',
-                          fontWeight: '500',
-                          float: 'right',
-                          marginTop: '-10px',
-                        }}
-                      >
-                        <span style={{ marginRight: '2px' }}> Show more</span>
-                        <span>
-                          {' '}
-                          <BsArrowUpRight style={{ marginTop: '2px' }} />
-                        </span>
+                      <div className={classes.Shs__PanelShowMore}>
+                        <div>
+                          <p> Show more</p> <img src={panelarrow} alt="" />
+                        </div>
                       </div>
                     </div>
                   </div>
