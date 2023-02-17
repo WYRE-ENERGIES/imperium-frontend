@@ -75,7 +75,7 @@ function App() {
         <Routes>
           <Route path="/">
             <Route index element={<SignIn />} />
-            <Route path="signup" element={<SignUp />} />
+            <Route path="sign-up" element={<SignUp />} />
             <Route path="verification" element={<Verification />} />
             <Route path="details" element={<Detail />} />
             <Route path="business" element={<Business />} />

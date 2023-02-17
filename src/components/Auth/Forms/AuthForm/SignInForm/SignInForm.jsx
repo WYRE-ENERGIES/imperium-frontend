@@ -9,9 +9,10 @@ const SignInForm = () => {
     tag: 'Welcome back! Please enter your details.',
     footer: 'Don’t have an account?',
     action: 'signup',
-    url: 'signup',
+    url: '/overview',
     helpertext: 'Can’t remember password ?',
     btnText: 'Log In',
+    footerlink: '/sign-up',
   }
   return (
     <div className={classes.SignIn}>
