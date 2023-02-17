@@ -388,7 +388,7 @@ const Shs = () => {
                 <p>Panels</p>
                 <div>
                   <div className={classes.Shs__PanelData}>
-                    <div>
+                    <div style={{ padding: '0 10px' }}>
                       <Row justify="space-between">
                         <Col span={4}>
                           {' '}
@@ -404,7 +404,7 @@ const Shs = () => {
                             </p>
                           </div>
                         </Col>
-                        <Col span={7}>
+                        <Col span={6}>
                           <div>
                             <div className={classes.Shs__BoltIcon}>
                               <p>
@@ -437,7 +437,7 @@ const Shs = () => {
                     </div>
                   </div>
                   <div className={classes.Shs__PanelData}>
-                    <div>
+                    <div style={{ padding: '0 10px' }}>
                       <Row justify="space-between">
                         <Col span={4}>
                           {' '}
@@ -451,7 +451,7 @@ const Shs = () => {
                             <p style={{ color: '#737373' }}>Good</p>
                           </div>
                         </Col>
-                        <Col span={7}>
+                        <Col span={6}>
                           <div>
                             <div className={classes.Shs__BoltIcon}>
                               <p>
