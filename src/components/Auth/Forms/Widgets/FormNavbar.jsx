@@ -1,7 +1,7 @@
 import React from 'react'
 import classes from './Widget.module.scss'
 import CustomerLogo from '../../../../assets/Auth/Logo.svg'
-import AdminLogo from '../../../../assets/Auth/Admin.svg'
+import AdminLogo from '../../../../assets/Auth/admin.svg'
 import { Link } from 'react-router-dom'
 const FormNavbar = ({
   txtColor1 = '#385e2b',
