@@ -399,17 +399,14 @@ const Shs = () => {
                 <div>
                   <div className={classes.Shs__PanelData}>
                     <div>
-                      <Row
-                        justify="space-between"
-                        style={{ padding: '0 15px 0 20px' }}
-                      >
-                        <Col span={4}>
+                      <Row style={{ padding: '0 15px 0 20px' }}>
+                        <Col style={{ marginRight: '6px' }}>
                           {' '}
                           <div>
                             <img src={SolarPanel} alt="" srcSet="" />
                           </div>
                         </Col>
-                        <Col span={13}>
+                        <Col style={{ marginRight: '3px' }}>
                           <div>
                             <p style={{ marginTop: '25px' }}>Xaxier Panel</p>
                             <p style={{ color: '#737373' }}>
@@ -417,7 +414,11 @@ const Shs = () => {
                             </p>
                           </div>
                         </Col>
-                        <Col span={6}>
+                        <Col
+                          style={{
+                            marginLeft: 'auto',
+                          }}
+                        >
                           <div>
                             <div className={classes.Shs__BoltIcon}>
                               <p>
@@ -442,23 +443,24 @@ const Shs = () => {
                   </div>
                   <div className={classes.Shs__PanelData}>
                     <div>
-                      <Row
-                        justify="space-between"
-                        style={{ padding: '0 30px 0 20px' }}
-                      >
-                        <Col span={4}>
+                      <Row style={{ padding: '0 15px 0 20px' }}>
+                        <Col style={{ marginRight: '6px' }}>
                           {' '}
                           <div>
                             <img src={panelbattery} alt="" srcSet="" />
                           </div>
                         </Col>
-                        <Col span={13}>
+                        <Col style={{ marginRight: '3px' }}>
                           <div>
                             <p style={{ marginTop: '25px' }}>Battery Health</p>
-                            <p style={{ color: '#737373' }}>Good</p>
+                            <p style={{ color: '#737373' }}>Good </p>
                           </div>
                         </Col>
-                        <Col span={6}>
+                        <Col
+                          style={{
+                            marginLeft: 'auto',
+                          }}
+                        >
                           <div>
                             <div className={classes.Shs__BoltIcon}>
                               <p>
