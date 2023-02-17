@@ -26,14 +26,9 @@
       line-height: 10px;
     }
   }
-  &__MonitoringData {
-    display: flex;
-    justify-content: space-between;
-    gap: 15px;
-  }
+
   &__MonitoringDataSystem > div {
     padding: 12px 28px;
-    width: 276px;
     height: 66px;
     background: #2c2d35;
     border-radius: 8px;
@@ -67,7 +62,6 @@
   }
   &__MonitoringDataBattery {
     position: relative;
-    width: 300px;
     height: 230px;
     background: #2c2d35;
     border-radius: 8px;
@@ -263,17 +257,19 @@
     }
   }
   &__PanelData {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 8px 16px;
-    height: 80px;
+    padding: 6px 8px;
+    height: 150px;
     background: #f0f7ed;
     border-radius: 12px;
     margin-bottom: 20px;
     p {
       line-height: 5px;
       font-size: 14px;
+      margin-top: 15px;
+    }
+    img {
+      width: 40px;
+      margin-top: 15px;
     }
   }
   &__BoltIcon {

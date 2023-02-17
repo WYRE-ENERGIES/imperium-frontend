@@ -10,13 +10,15 @@ import batteryPercent from '../../../assets/widget-icons/BatteryIcon1.svg'
 import batteryStatus from '../../../assets/widget-icons/BatteryIcon2.svg'
 import SolarPanel from '../../../assets/widget-icons/Frame 20.svg'
 import { BiTrendingUp } from 'react-icons/bi'
-import { BsFillSunFill } from 'react-icons/bs'
+import { BsArrowUpRight, BsFillSunFill } from 'react-icons/bs'
 import { EyeOutlined, ThunderboltOutlined } from '@ant-design/icons'
+import { FaCaretDown } from 'react-icons/fa'
 
 const DeviceInfo = () => {
   return (
     <div className={classes.Shs__DeviceInfo}>
       <h1>Device Details </h1>
+
       <div>
         <div>
           <p>Device Name</p>
@@ -60,7 +62,7 @@ const Shs = () => {
       <section className={classes.Shs}>
         <section className={classes.Shs__BreadCrumb}>
           {' '}
-          <PageBreadcrumb title="overview / ... / Alday Banamex" />
+          <PageBreadcrumb title={'overview / ... / Alday Banamex '} />
           <PowerSwitch />
         </section>
 
@@ -75,7 +77,7 @@ const Shs = () => {
               <div className={classes.Shs__Performance}>
                 <div className={classes.Shs__Monitoring}>
                   <div className={classes.Shs__PerformanceMonitor}>
-                    <h1>Performance Monitoring</h1>
+                    <h1>Performance Monitoring </h1>
                     <Dropdown
                       className={classes.Shs__DeviceDropDown}
                       menu={{
@@ -100,82 +102,98 @@ const Shs = () => {
                   </div>
                 </div>
                 <div className={classes.Shs__MonitoringData}>
-                  <div className={classes.Shs__MonitoringDataSystem}>
-                    <div className={classes.Shs__MonitoringDataSystemStatus}>
-                      <div>
-                        <small>Status</small>
-                        <p>On</p>
-                      </div>
-                      <div>
-                        <small>System Load</small>
-                        <p>
-                          60%{' '}
-                          <small style={{ color: '#ABABAB' }}>(36 kw)</small>
-                        </p>
-                      </div>
-                      <div>
-                        <small>Source</small>
-                        <p>PHCN</p>
-                      </div>
-                    </div>
-                    <div>
-                      <div>
-                        <small>Battery Voltage</small>
-                        <p>12.7 volts</p>
-                      </div>
-                    </div>
-                    <div>
-                      <div>
-                        <small>Power Usage Today</small>
-                        <p>
-                          37. 3 kwh
-                          <span>
-                            <span>
-                              <BiTrendingUp />+ 2.0 %
-                            </span>
-                          </span>
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                  <div className={classes.Shs__MonitoringDataBattery}>
-                    <div className={classes.Shs__MonitoringDataBuilding}>
-                      <img src={building} alt="" srcSet="" />
-                      <div className={classes.Shs__MonitoringDataRadiation}>
-                        <div>
-                          <span>
-                            <BsFillSunFill color="#FAC515" /> 32°C
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                    <div>
-                      <div className={classes.Shs__MonitoringDataBatteryStatus}>
-                        <div>
+                  <Row
+                    gutter={{
+                      lg: 10,
+                    }}
+                  >
+                    <Col span={12}>
+                      <div className={classes.Shs__MonitoringDataSystem}>
+                        <div
+                          className={classes.Shs__MonitoringDataSystemStatus}
+                        >
                           <div>
-                            <img src={batteryPercent} alt="" srcSet="" />
+                            <small>Status</small>
+                            <p>On</p>
                           </div>
                           <div>
-                            <p>Battery Percent</p>
+                            <small>System Load</small>
                             <p>
-                              <span>2</span> 80%
+                              60%{' '}
+                              <small style={{ color: '#ABABAB' }}>
+                                (36 kw)
+                              </small>
                             </p>
                           </div>
+                          <div>
+                            <small>Source</small>
+                            <p>PHCN</p>
+                          </div>
                         </div>
                         <div>
                           <div>
-                            <img src={batteryStatus} alt="" srcSet="" />
+                            <small>Battery Voltage</small>
+                            <p>12.7 volts</p>
                           </div>
+                        </div>
+                        <div>
                           <div>
-                            <p>Charging Status</p>
+                            <small>Power Usage Today</small>
                             <p>
-                              <span>3</span> Charging
+                              37. 3 kwh
+                              <span>
+                                <span>
+                                  <BiTrendingUp />+ 2.0 %
+                                </span>
+                              </span>
                             </p>
                           </div>
                         </div>
                       </div>
-                    </div>
-                  </div>
+                    </Col>
+                    <Col span={12}>
+                      <div className={classes.Shs__MonitoringDataBattery}>
+                        <div className={classes.Shs__MonitoringDataBuilding}>
+                          <img src={building} alt="" srcSet="" />
+                          <div className={classes.Shs__MonitoringDataRadiation}>
+                            <div>
+                              <span>
+                                <BsFillSunFill color="#FAC515" /> 32°C
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                        <div>
+                          <div
+                            className={classes.Shs__MonitoringDataBatteryStatus}
+                          >
+                            <div>
+                              <div>
+                                <img src={batteryPercent} alt="" srcSet="" />
+                              </div>
+                              <div>
+                                <p>Battery Percent</p>
+                                <p>
+                                  <span>2</span> 80%
+                                </p>
+                              </div>
+                            </div>
+                            <div>
+                              <div>
+                                <img src={batteryStatus} alt="" srcSet="" />
+                              </div>
+                              <div>
+                                <p>Charging Status</p>
+                                <p>
+                                  <span>3</span> Charging
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </Col>
+                  </Row>
                 </div>
               </div>
             </Col>
@@ -268,7 +286,7 @@ const Shs = () => {
             <Col span={16}>
               <div className={classes.Shs__EnergyChart}>
                 <div className={classes.Shs__EnergyChartShowMore}>
-                  <div>Show more</div>
+                  <div style={{ color: '#66ab4f' }}>Show more</div>
                 </div>
                 <Chart
                   height="100%"
@@ -371,76 +389,100 @@ const Shs = () => {
                 <div>
                   <div className={classes.Shs__PanelData}>
                     <div>
-                      <img src={SolarPanel} alt="" srcSet="" />
-                    </div>
-                    <div>
-                      <p style={{ marginTop: '15px' }}>Xaxier Panel</p>
-                      <p style={{ color: '#737373' }}>
-                        Panel Voltage: 3.3 kwh{' '}
-                      </p>
-                    </div>
-                    <div>
-                      <div className={classes.Shs__BoltIcon}>
-                        <p>
+                      <Row justify="space-between">
+                        <Col span={4}>
                           {' '}
-                          <ThunderboltOutlined
-                            style={{ color: '#EAAA08' }}
-                            size={20}
-                          />
-                        </p>
-                        <p>12.4 kwh</p>
+                          <div>
+                            <img src={SolarPanel} alt="" srcSet="" />
+                          </div>
+                        </Col>
+                        <Col span={13}>
+                          <div>
+                            <p style={{ marginTop: '25px' }}>Xaxier Panel</p>
+                            <p style={{ color: '#737373' }}>
+                              Panel Voltage: 3.3 kwh{' '}
+                            </p>
+                          </div>
+                        </Col>
+                        <Col span={7}>
+                          <div>
+                            <div className={classes.Shs__BoltIcon}>
+                              <p>
+                                {' '}
+                                <ThunderboltOutlined
+                                  style={{ color: '#EAAA08' }}
+                                  size={20}
+                                />
+                              </p>
+                              <p>12.4 kwh</p>
+                            </div>
+                          </div>
+                        </Col>
+                      </Row>
+                      <Divider />
+                      <div
+                        style={{
+                          color: '#497A38',
+                          fontWeight: '500',
+                          float: 'right',
+                          marginTop: '-10px',
+                        }}
+                      >
+                        <span style={{ marginRight: '2px' }}> Show more</span>
+                        <span>
+                          {' '}
+                          <BsArrowUpRight style={{ marginTop: '2px' }} />
+                        </span>
                       </div>
                     </div>
                   </div>
                   <div className={classes.Shs__PanelData}>
                     <div>
-                      <img src={SolarPanel} alt="" srcSet="" />
-                    </div>
-                    <div>
-                      <p style={{ marginTop: '15px' }}>Xaxier Panel</p>
-                      <p style={{ color: '#737373' }}>
-                        Panel Voltage: 3.3 kwh{' '}
-                      </p>
-                    </div>
-                    <div>
-                      <div className={classes.Shs__BoltIcon}>
-                        <p>
+                      <Row justify="space-between">
+                        <Col span={4}>
                           {' '}
-                          <ThunderboltOutlined
-                            style={{ color: '#EAAA08' }}
-                            size={20}
-                          />
-                        </p>
-                        <p>12.4 kwh</p>
+                          <div>
+                            <img src={SolarPanel} alt="" srcSet="" />
+                          </div>
+                        </Col>
+                        <Col span={13}>
+                          <div>
+                            <p style={{ marginTop: '25px' }}>Battery Health</p>
+                            <p style={{ color: '#737373' }}>Good</p>
+                          </div>
+                        </Col>
+                        <Col span={7}>
+                          <div>
+                            <div className={classes.Shs__BoltIcon}>
+                              <p>
+                                {' '}
+                                <ThunderboltOutlined
+                                  style={{ color: '#EAAA08' }}
+                                  size={20}
+                                />
+                              </p>
+                              <p>Charging</p>
+                            </div>
+                          </div>
+                        </Col>
+                      </Row>
+                      <Divider />
+                      <div
+                        style={{
+                          color: '#497A38',
+                          fontWeight: '500',
+                          float: 'right',
+                          marginTop: '-10px',
+                        }}
+                      >
+                        <span style={{ marginRight: '2px' }}> Show more</span>
+                        <span>
+                          {' '}
+                          <BsArrowUpRight style={{ marginTop: '2px' }} />
+                        </span>
                       </div>
                     </div>
                   </div>
-                  <div className={classes.Shs__PanelData}>
-                    <div>
-                      <img src={SolarPanel} alt="" srcSet="" />
-                    </div>
-                    <div>
-                      <p style={{ marginTop: '15px' }}>Xaxier Panel</p>
-                      <p style={{ color: '#737373' }}>
-                        Panel Voltage: 3.3 kwh{' '}
-                      </p>
-                    </div>
-                    <div>
-                      <div className={classes.Shs__BoltIcon}>
-                        <p>
-                          {' '}
-                          <ThunderboltOutlined
-                            style={{ color: '#EAAA08' }}
-                            size={20}
-                          />
-                        </p>
-                        <p>12.4 kwh</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div style={{ color: '#497A38', fontWeight: '500' }}>
-                  Show more
                 </div>
               </div>
             </Col>
