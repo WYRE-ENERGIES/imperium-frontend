@@ -42,6 +42,8 @@ const Overview = lazy(() => import('./pages/Customer/Overview/Overview'))
 const PanelAnalytic = lazy(() =>
   import('./pages/Customer/PanelAnalytic/PanelAnalytic'),
 )
+
+const Shs = lazy(() => import('./pages/Customer/Shs/Shs'))
 const SignIn = lazy(() => import('./pages/Customer/Auth/SignIn/SignIn'))
 const SignUp = lazy(() => import('./pages/Customer/Auth/SignUp/SignUp'))
 const Support = lazy(() => import('./pages/Customer/Support/Support'))
@@ -82,7 +84,7 @@ function App() {
         <Routes>
           <Route path="/">
             <Route index element={<SignIn />} />
-            <Route path="signup" element={<SignUp />} />
+            <Route path="sign-up" element={<SignUp />} />
             <Route path="verification" element={<Verification />} />
             <Route path="details" element={<Detail />} />
             <Route path="business" element={<Business />} />
@@ -98,7 +100,7 @@ function App() {
             </Route>
             <Route path="overview">
               <Route index element={<Overview />} />
-              <Route path="shs/:id" element={<Support />} />
+              <Route path="shs/:id" element={<Shs />} />
             </Route>
             <Route path="support" element={<Support />} />
             <Route path="energy-analytic" element={<EnergyAnalytic />} />

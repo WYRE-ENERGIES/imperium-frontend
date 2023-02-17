@@ -9,10 +9,11 @@ import classes from './AuthForm.module.scss'
 import { useNavigate } from 'react-router-dom'
 
 const AuthForm = ({ children, props }) => {
-  const { header, tag, helpertext, footer, action, url, btnText } = props
+  const { header, tag, helpertext, footer, action, url, btnText, footerlink } =
+    props
   const nextPage = useNavigate()
   const handleOnCreateAccountBtn = () => {
-    nextPage('/verification')
+    nextPage(url)
   }
   const onFinish = (values) => {
     console.log('Success:', values)
@@ -97,7 +98,7 @@ const AuthForm = ({ children, props }) => {
       </div>
       <div>
         {children}
-        <FormFooter footer={footer} action={action} url={url} />
+        <FormFooter footer={footer} action={action} footerlink={footerlink} />
       </div>
     </div>
   )

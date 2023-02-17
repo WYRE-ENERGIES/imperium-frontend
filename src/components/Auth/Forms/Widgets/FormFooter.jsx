@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import { React } from 'react'
 import classes from './Widget.module.scss'
 
-const FormFooter = ({ footer, action, url }) => {
+const FormFooter = ({ footer, action, footerlink }) => {
   return (
     <div className={classes.FormFooter}>
       <div className={classes.FormFooter__content}>
@@ -11,7 +11,7 @@ const FormFooter = ({ footer, action, url }) => {
         </p>
         <p className={classes.FormFooter__AuthOpt}>
           {footer}
-          <Link to={`/${url}`}>{action}</Link>
+          <Link to={footerlink}>{action}</Link>
         </p>
       </div>
     </div>
