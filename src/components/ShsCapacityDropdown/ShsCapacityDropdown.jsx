@@ -3,6 +3,8 @@ import { Dropdown, Space, Typography } from 'antd'
 import { BsSunset } from 'react-icons/bs'
 import { FaAngleDoubleDown } from 'react-icons/fa'
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
+
 import { RiHome6Line } from 'react-icons/ri'
 import { ThunderboltOutlined } from '@ant-design/icons'
 import classes from './ShsCapacityDropdown.module.scss'
@@ -26,6 +28,10 @@ const MenuItemLabel = ({ shsName, panelNo, capacity }) => (
 )
 
 function ShsCapacityDropdown() {
+  const nextPage = useNavigate()
+  const onClick = () => {
+    nextPage('/overview/shs/1')
+  }
   const items = [
     {
       key: '1',
@@ -91,10 +97,11 @@ function ShsCapacityDropdown() {
         <Dropdown
           menu={{
             items,
+            onClick,
           }}
         >
           <a
-            onClick={(e) => e.preventDefault()}
+            onClick={(e) => e.defaultPrevented()}
             className={classes.ShsCapacityDropdown__dropdown}
           >
             <FaAngleDoubleDown />
