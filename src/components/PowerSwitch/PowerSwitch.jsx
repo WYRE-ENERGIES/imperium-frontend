@@ -94,7 +94,10 @@ const PowerSwitch = () => {
     setIsModalOpen(false)
   }
 
-  const onChange = (value, dateString) => {}
+  const onChange = (value, dateString) => {
+    console.log('dateString: ', dateString)
+    console.log('value: ', value)
+  }
   const onClick = ({ key }) => {
     console.log('Power Button Onclick : ', key)
   }
@@ -107,6 +110,10 @@ const PowerSwitch = () => {
 
     showModal()
     console.log('onOk testing: ', e[0])
+  }
+
+  const HandleResetScheduleShutDown = () => {
+    setStartDate('')
   }
 
   const powerOptions = [
@@ -167,7 +174,7 @@ const PowerSwitch = () => {
               Cancel
             </button>
             <button
-              onClick={() => setStartDate('')}
+              onClick={HandleResetScheduleShutDown}
               style={{
                 width: '134px',
                 height: '40px',
