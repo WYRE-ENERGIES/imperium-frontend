@@ -6,13 +6,13 @@ import { React } from 'react'
 import classes from './Account.module.scss'
 
 const Account = ({ children, props }) => {
-  const accountInfo = {
+  const ShsInfo = {
     firstName: 'John',
     lastName: 'Kahan',
     email: 'JonniKahan@gmail.com',
   }
 
-  const userAccountInfo = [
+  const userAccountLink = [
     {
       page: 'Detail',
       link: '/account/details',
@@ -32,7 +32,7 @@ const Account = ({ children, props }) => {
       <PageLayout>
         <PageBreadcrumb title="My Account" items={['My Account']} />
         <div className={classes.Account__NavBar}>
-          {userAccountInfo.map((display, index) => (
+          {userAccountLink.map((display, index) => (
             <NavLink
               key={index}
               to={display.link}
@@ -47,7 +47,7 @@ const Account = ({ children, props }) => {
           ))}
         </div>
         <div>
-          <AccountInfo accountInfo={accountInfo} />
+          <AccountInfo ShsInfo={ShsInfo} type={props} />
         </div>
         {children}
       </PageLayout>
