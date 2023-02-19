@@ -65,7 +65,7 @@ const Overview = () => {
     <PageLayout>
       <div style={{ backgroundColor: '#FCFCFD' }} className={classes.Overview}>
         <section className={classes.Overview__headerSection}>
-          <PageBreadcrumb title="Overview" />
+          <PageBreadcrumb title="Overview" items={['Overview']} />
         </section>
         <section className={classes.Overview__filters}>
           <WidgetFilter />

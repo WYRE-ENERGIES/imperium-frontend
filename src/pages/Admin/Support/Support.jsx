@@ -220,7 +220,7 @@ const Support = () => {
     <AdminPageLayout>
       <div className={classes.Support}>
         <section className={classes.Support__headerSection}>
-          <PageBreadcrumb title="Support Ticket" />
+          <PageBreadcrumb title="Support Ticket" items={['Support Ticket']} />
         </section>
         <div className={classes.Support__widgets}>{widgets}</div>
         <div className={classes.Support__shsTable}>

@@ -3,8 +3,8 @@ import { Row, Col } from 'antd'
 import classes from './Account.module.scss'
 import { message, Form, Upload } from 'antd'
 import uploadImg from '../../../assets/widget-icons/bussinessuploadIcon.svg'
-const AccountProfile = ({ accountInfo, type }) => {
-  const { firstName, lastName, email } = accountInfo
+const AccountInfo = ({ ShsInfo, type }) => {
+  const { firstName, lastName, email } = ShsInfo
   const firstNameInit = firstName.slice(0, 1)
   const lastNameInit = lastName.slice(0, 1)
   const [fileUpload, setFileUpload] = useState(false)
@@ -117,4 +117,4 @@ const AccountProfile = ({ accountInfo, type }) => {
   )
 }
 
-export default AccountProfile
+export default AccountInfo
