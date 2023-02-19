@@ -1,4 +1,5 @@
 import { Col, Divider, Dropdown, Modal, Row, Tag } from 'antd'
+<<<<<<< HEAD
 import React, { useState } from 'react'
 import Chart from 'react-apexcharts'
 import PageLayout from '../../../components/Layout/PageLayout'
@@ -15,6 +16,25 @@ import SolarPanel from '../../../assets/widget-icons/Frame 20.svg'
 import { BiTrendingUp } from 'react-icons/bi'
 import { BsFillSunFill } from 'react-icons/bs'
 import { CloseOutlined, ThunderboltOutlined } from '@ant-design/icons'
+=======
+import { EyeOutlined, ThunderboltOutlined } from '@ant-design/icons'
+
+import { BiTrendingUp } from 'react-icons/bi'
+import { BsFillSunFill } from 'react-icons/bs'
+import Chart from 'react-apexcharts'
+import PageBreadcrumb from '../../../components/PageBreadcrumb/PageBreadcrumb'
+import PageLayout from '../../../components/Layout/PageLayout'
+import PowerSwitch from '../../../components/PowerSwitch/PowerSwitch'
+import React from 'react'
+import SolarPanel from '../../../assets/widget-icons/Frame 20.svg'
+import batteryPercent from '../../../assets/widget-icons/BatteryIcon1.svg'
+import batteryStatus from '../../../assets/widget-icons/BatteryIcon2.svg'
+import building from '../../../assets/widget-icons/building.svg'
+import caretdown from '../../../assets/widget-icons/caretdown.svg'
+import classes from './Shs.module.scss'
+import panelarrow from '../../../assets/widget-icons/panelArrow.svg'
+import panelbattery from '../../../assets/widget-icons/panelBattery.svg'
+>>>>>>> staging
 
 const DeviceInfo = () => {
   return (
@@ -91,7 +111,10 @@ const Shs = () => {
         <section className={classes.Shs__BreadCrumb}>
           {' '}
           <div style={{ display: 'flex' }}>
-            <PageBreadcrumb title={`overview / ... / Alday Banamex `} />
+            <PageBreadcrumb
+              title="Alday Banamex"
+              items={['Overview', '...', 'Alday Banamex']}
+            />
             <img
               src={caretdown}
               alt=""

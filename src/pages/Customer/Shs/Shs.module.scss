@@ -291,11 +291,11 @@
     display: flex;
     align-items: center;
     color: #497a38;
-    justify-content: end;
+    justify-content: flex-end;
   }
   &__PanelShowMore {
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
     color: #497a38;
     font-weight: 500;
     margin-top: -10px;

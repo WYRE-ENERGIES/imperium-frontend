@@ -53,7 +53,7 @@ const StackedBarChart = ({
           },
         }}
         type="bar"
-        height="90%"
+        height="100%"
         series={chartData}
         width="100%"
       />

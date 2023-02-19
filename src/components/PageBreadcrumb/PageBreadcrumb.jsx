@@ -6,7 +6,7 @@ import classes from './PageBreadcrumb.module.scss'
 
 const PageBreadcrumb = ({ title, items }) => {
   const breadcrumbItems = items?.map((item, index) => (
-    <Breadcrumb.Item key={index}>{item}</Breadcrumb.Item>
+    <Breadcrumb.Item key={`${item}-${index}`}>{item}</Breadcrumb.Item>
   ))
 
   return (
@@ -18,7 +18,6 @@ const PageBreadcrumb = ({ title, items }) => {
             <RiHome6Line style={{ marginTop: 3 }} />
           </Link>
         </Breadcrumb.Item>
-        <Breadcrumb.Item>{title}</Breadcrumb.Item>
         {breadcrumbItems}
       </Breadcrumb>
     </div>
