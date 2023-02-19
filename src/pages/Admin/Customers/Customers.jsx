@@ -1,4 +1,4 @@
-import React, { Suspense, useState, useTransition } from 'react'
+import React, { Suspense, lazy, useState } from 'react'
 import { Switch, Tag } from 'antd'
 
 import AdminPageLayout from '../../../components/Layout/AdminPageLayout/AdminPageLayout'
@@ -8,13 +8,14 @@ import { FiHome } from 'react-icons/fi'
 import { Link } from 'react-router-dom'
 import PageBreadcrumb from '../../../components/PageBreadcrumb/PageBreadcrumb'
 import ReactAvatar from 'react-avatar'
-import SHSForm from './SHSForm/SHSForm'
 import TableWithFilter from '../../../components/SHSTableWithFilter/SHSTableWithFilter'
 import TotalClientWidget from '../../../components/Widget/Customers/TotalClientWidget'
 import { ReactComponent as UsersIcon } from '../../../assets/widget-icons/users-icon.svg'
 import WidgetFilter from '../../../components/WidgetFilter/WidgetFilter'
 import classes from './Customers.module.scss'
 import { customersData } from '../../../utils/userData'
+
+const SHSForm = lazy(() => import('./SHSForm/SHSForm'))
 
 const columns = [
   {
@@ -91,7 +92,6 @@ const columns = [
   {
     title: '',
     key: 'action',
-    // width: '10%',
     align: 'center',
     render: (_, record) => {
       const color = record.status ? '#808080' : '#B54708'
@@ -123,15 +123,16 @@ const Customers = () => {
     },
   ])
   const [openModal, setOpenModal] = useState(false)
-  const [isPending, startTransition] = useTransition()
-
   const toggleModal = () => setOpenModal(!openModal)
 
   return (
     <AdminPageLayout>
       <div className={classes.Customers}>
         <section className={classes.Customers__headerSection}>
-          <PageBreadcrumb title="Customers" items={['Assign SHS']} />
+          <PageBreadcrumb
+            title="Customers"
+            items={['Customers', 'Assign SHS']}
+          />
         </section>
         <section className={classes.Customers__filters}>
           <WidgetFilter />
@@ -143,17 +144,20 @@ const Customers = () => {
             borderRadius={5}
             columnWidth={30}
           />
-          <TotalClientWidget
-            title="All Added Users"
-            Icon={UsersIcon}
-            count={598}
-            duration="For the last 12 months"
-          />
-          <TotalClientWidget
-            title="Total Imperium Client"
-            count={214}
-            duration="For the last 12 months"
-          />
+          <div className={classes.Customers__innerWidgets}>
+            <TotalClientWidget
+              title="All Added Users"
+              Icon={UsersIcon}
+              count={598}
+              duration="For the last 12 months"
+              linkTo="/admin/users"
+            />
+            <TotalClientWidget
+              title="Total Imperium Client"
+              count={214}
+              duration="For the last 12 months"
+            />
+          </div>
         </div>
         <div className={classes.Customers__shsTable}>
           <TableWithFilter

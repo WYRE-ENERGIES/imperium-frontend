@@ -1,11 +1,11 @@
-import React from 'react'
-import PageLayout from '../../../components/Layout/PageLayout'
-import { Table } from 'antd'
-import PageBreadcrumb from '../../../components/PageBreadcrumb/PageBreadcrumb'
-import ShsCapacityDropdown from '../../../components/ShsCapacityDropdown/ShsCapacityDropdown'
-import classes from './ActiveAlerts.module.scss'
 import FormButton from '../../../components/Auth/Forms/Widgets/FormButton'
+import PageBreadcrumb from '../../../components/PageBreadcrumb/PageBreadcrumb'
+import PageLayout from '../../../components/Layout/PageLayout'
+import React from 'react'
+import ShsCapacityDropdown from '../../../components/ShsCapacityDropdown/ShsCapacityDropdown'
+import { Table } from 'antd'
 import alertIcon from '../../../../src/assets/widget-icons/alertIcon.svg'
+import classes from './ActiveAlerts.module.scss'
 const ActiveAlerts = () => {
   const title = () => (
     <p style={{ fontWeight: '500', fontSize: '18px' }}>Active Alerts Table</p>
@@ -132,7 +132,7 @@ const ActiveAlerts = () => {
     <PageLayout>
       <section className={classes.ActiveAlerts}>
         <section className={classes.ActiveAlerts__headerSection}>
-          <PageBreadcrumb title="Active Alert" />
+          <PageBreadcrumb title="Active Alert" items={['Active Alert']} />
           <ShsCapacityDropdown />
         </section>
         <section className={classes.ActiveAlerts__Banner}>

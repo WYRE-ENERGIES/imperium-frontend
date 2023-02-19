@@ -1,8 +1,8 @@
-import { React } from 'react'
-import { NavLink } from 'react-router-dom'
-import PageLayout from '../../../components/Layout/PageLayout'
-import PageBreadcrumb from '../../../components/PageBreadcrumb/PageBreadcrumb'
 import AccountInfo from './AccountProfile'
+import { NavLink } from 'react-router-dom'
+import PageBreadcrumb from '../../../components/PageBreadcrumb/PageBreadcrumb'
+import PageLayout from '../../../components/Layout/PageLayout'
+import { React } from 'react'
 import classes from './Account.module.scss'
 
 const Account = ({ children, props }) => {
@@ -30,7 +30,7 @@ const Account = ({ children, props }) => {
   return (
     <div className={classes.Account}>
       <PageLayout>
-        <PageBreadcrumb title="My Account" />
+        <PageBreadcrumb title="My Account" items={['My Account']} />
         <div className={classes.Account__NavBar}>
           {userAccountInfo.map((display, index) => (
             <NavLink

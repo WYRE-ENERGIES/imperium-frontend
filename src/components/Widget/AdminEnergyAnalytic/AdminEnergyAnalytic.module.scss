@@ -25,9 +25,11 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 90px;
   }
 
   &__innerWrapper {
+    width: max-content;
   }
 
   &__h1 {

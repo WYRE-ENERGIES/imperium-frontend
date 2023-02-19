@@ -1,9 +1,9 @@
 import { BsDot } from 'react-icons/bs'
-import { Button } from 'antd'
+import { Link } from 'react-router-dom'
 import React from 'react'
 import classes from './CustomersWidget.module.scss'
 
-const TotalClientWidget = ({ title, count, duration, Icon }) => {
+const TotalClientWidget = ({ title, count, duration, Icon, linkTo = '#' }) => {
   return (
     <div
       className={`${classes.CustomersWidget} ${
@@ -11,14 +11,16 @@ const TotalClientWidget = ({ title, count, duration, Icon }) => {
       }`}
     >
       <h3 className={classes.CustomersWidget__title}>{title}</h3>
-      <h1 className={classes.CustomersWidget__count}>
-        {Icon && <Icon />}
-        {count}
-      </h1>
       <h3 className={classes.CustomersWidget__duration}>{duration}</h3>
-      <Button className={classes.CustomersWidget__btn}>
-        <BsDot size={20} /> {Icon ? 'Add User' : 'Add Client'}
-      </Button>
+      <div className={classes.CustomersWidget__bottom}>
+        <h1 className={classes.CustomersWidget__count}>
+          {Icon && <Icon />}
+          {count}
+        </h1>
+        <Link to={linkTo} className={classes.CustomersWidget__btn}>
+          <BsDot size={20} /> {Icon ? 'Add User' : 'Add Client'}
+        </Link>
+      </div>
     </div>
   )
 }

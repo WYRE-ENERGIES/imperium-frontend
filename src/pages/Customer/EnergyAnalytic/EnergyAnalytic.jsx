@@ -57,7 +57,7 @@ const EnergyAnalytic = () => {
         className={classes.EnergyAnalytic}
       >
         <section className={classes.EnergyAnalytic__headerSection}>
-          <PageBreadcrumb title="Energy Analytic" />
+          <PageBreadcrumb title="Energy Analytic" items={['Energy Analytic']} />
           <ShsCapacityDropdown />
         </section>
         <section className={classes.EnergyAnalytic__filters}>

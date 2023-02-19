@@ -15,9 +15,14 @@
 
   &__widgets {
     display: flex;
-    flex-wrap: wrap;
-    gap: 24px;
     margin-bottom: 32px;
+    overflow: scroll;
+    gap: 24px;
+    width: 100%;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 
   &__chart {
