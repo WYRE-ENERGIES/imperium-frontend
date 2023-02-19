@@ -1,17 +1,15 @@
-import { UserOutlined } from '@ant-design/icons'
 import { Col, Form, Input, Row } from 'antd'
 import React from 'react'
 import FormButton from '../../../../components/Auth/Forms/Widgets/FormButton'
 import classes from './AccountBusiness.module.scss'
 import Account from '../Account'
-
 const AccountBusiness = () => {
   const [form] = Form.useForm()
   const onFinish = (values) => {
     console.log('Finish:', values)
   }
   return (
-    <Account>
+    <Account props={'business'}>
       <div className={classes.AccountBusiness}>
         {' '}
         <Form
@@ -20,8 +18,8 @@ const AccountBusiness = () => {
           onFinish={onFinish}
           requiredMark="optional"
         >
-          <Row justify={'space-between'}>
-            <Col>
+          <Row justify={'space-between'} gutter={20}>
+            <Col span={8}>
               {' '}
               <Form.Item
                 label="Business name"
@@ -39,7 +37,7 @@ const AccountBusiness = () => {
                 />
               </Form.Item>
             </Col>
-            <Col>
+            <Col span={8}>
               {' '}
               <Form.Item
                 label="Company"
@@ -58,10 +56,13 @@ const AccountBusiness = () => {
                 />
               </Form.Item>
             </Col>
-            <Col>
+            <Col span={8}>
               <Form.Item>
                 <Row justify={'end'}>
-                  <FormButton type={'submit'} action={'Save changes'} />
+                  <Col span={18}>
+                    {' '}
+                    <FormButton type={'submit'} action={'Save changes'} />
+                  </Col>
                 </Row>
               </Form.Item>
             </Col>

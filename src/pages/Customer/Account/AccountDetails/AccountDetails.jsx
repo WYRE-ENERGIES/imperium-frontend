@@ -10,7 +10,7 @@ const AccountDetails = () => {
     console.log('Finish:', values)
   }
   return (
-    <Account>
+    <Account props={'details'}>
       <div className={classes.AccountDetails}>
         {' '}
         <Form
@@ -19,8 +19,8 @@ const AccountDetails = () => {
           onFinish={onFinish}
           requiredMark="optional"
         >
-          <Row justify={'space-between'}>
-            <Col>
+          <Row justify={'space-between'} gutter={20}>
+            <Col span={8}>
               {' '}
               <Form.Item
                 label="First Name"
@@ -38,7 +38,7 @@ const AccountDetails = () => {
                 />
               </Form.Item>
             </Col>
-            <Col>
+            <Col span={8}>
               {' '}
               <Form.Item
                 label="Last Name"
@@ -56,7 +56,7 @@ const AccountDetails = () => {
                 />
               </Form.Item>
             </Col>
-            <Col>
+            <Col span={8}>
               {' '}
               <Form.Item
                 label="Phone Number"
@@ -93,8 +93,11 @@ const AccountDetails = () => {
             />
           </Form.Item>
           <Form.Item>
-            <Row justify={'end'}>
-              <FormButton type={'submit'} action={'Save changes'} />
+            <Row justify={'end'} gutter={20}>
+              <Col span={8}>
+                {' '}
+                <FormButton type={'submit'} action={'Save changes'} />
+              </Col>{' '}
             </Row>
           </Form.Item>
         </Form>

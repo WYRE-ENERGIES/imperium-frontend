@@ -1,8 +1,8 @@
-import { React } from 'react'
+import { React, useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import PageLayout from '../../../components/Layout/PageLayout'
 import PageBreadcrumb from '../../../components/PageBreadcrumb/PageBreadcrumb'
-import AccountInfo from './AccountProfile'
+import AccountProfile from './AccountProfile'
 import classes from './Account.module.scss'
 
 const Account = ({ children, props }) => {
@@ -12,7 +12,7 @@ const Account = ({ children, props }) => {
     email: 'JonniKahan@gmail.com',
   }
 
-  const userAccountInfo = [
+  const userAccountLink = [
     {
       page: 'Detail',
       link: '/account/details',
@@ -32,7 +32,7 @@ const Account = ({ children, props }) => {
       <PageLayout>
         <PageBreadcrumb title="My Account" />
         <div className={classes.Account__NavBar}>
-          {userAccountInfo.map((display, index) => (
+          {userAccountLink.map((display, index) => (
             <NavLink
               key={index}
               to={display.link}
@@ -47,7 +47,7 @@ const Account = ({ children, props }) => {
           ))}
         </div>
         <div>
-          <AccountInfo accountInfo={accountInfo} />
+          <AccountProfile accountInfo={accountInfo} type={props} />
         </div>
         {children}
       </PageLayout>

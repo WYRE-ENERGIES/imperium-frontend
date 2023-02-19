@@ -63,11 +63,11 @@ export const adminMenuItems = [
     title: 'Battery Analytic',
     linkTo: '/admin/battery-analytic',
   },
-  // {
-  //   icon: BsBell,
-  //   title: 'Active Alerts',
-  //   linkTo: '/admin/active-alerts',
-  // },
+  {
+    icon: BsBell,
+    title: 'Active Alerts',
+    linkTo: '/admin/active-alerts',
+  },
   { icon: UserOutlined, title: 'Customers', linkTo: '/admin/customers' },
   {
     icon: FiUsers,
@@ -92,11 +92,11 @@ export const userBottomItems = [
 
 export const adminBottomItems = [
   { icon: HiOutlineSupport, title: 'Support', linkTo: '/admin/support' },
-  // {
-  //   icon: SettingOutlined,
-  //   title: 'My Account',
-  //   linkTo: '/admin/account/details',
-  // },
+  {
+    icon: SettingOutlined,
+    title: 'My Account',
+    linkTo: '/admin/account',
+  },
 ].map((item) => ({
   key: `${item.linkTo}`,
   icon: React.createElement(item.icon),
