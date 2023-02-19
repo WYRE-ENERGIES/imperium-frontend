@@ -1,4 +1,4 @@
-import { Col, Divider, Dropdown, Modal, Row, Tag } from 'antd'
+import { Col, Divider, Dropdown, Row, Tag } from 'antd'
 import React, { useState } from 'react'
 import Chart from 'react-apexcharts'
 import PageLayout from '../../../components/Layout/PageLayout'
