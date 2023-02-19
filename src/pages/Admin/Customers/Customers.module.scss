@@ -25,6 +25,17 @@
     }
   }
 
+  &__customerWidgets {
+    display: flex;
+    overflow: scroll;
+    gap: 24px;
+    width: 100%;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
   &__nameDiv {
     display: flex;
     align-items: center;

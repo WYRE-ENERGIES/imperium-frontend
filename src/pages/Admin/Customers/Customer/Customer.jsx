@@ -167,7 +167,7 @@ const Customer = () => {
         <section className={classes.Customers__filters}>
           <WidgetFilter />
         </section>
-        <div className={classes.Customers__widgets}>{widgets}</div>
+        <div className={classes.Customers__customerWidgets}>{widgets}</div>
         <div className={classes.Customers__shsTable}>
           <TableWithFilter
             columns={columns}
