@@ -136,7 +136,7 @@ const Customers = () => {
           <div className={classes.Customers__actions}>
             <ExclamationCircleOutlined style={{ color }} />
             <Link
-              to="#"
+              to={`/admin/customers/${record.id}`}
               style={{
                 color: record.status ? '#385E2B' : '#C4C4C4',
                 fontWeight: 600,

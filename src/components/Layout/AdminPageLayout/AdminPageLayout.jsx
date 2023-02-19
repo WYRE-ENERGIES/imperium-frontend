@@ -15,6 +15,7 @@ const AdminPageLayout = ({ children }) => {
         color="#fff"
         menuItems={adminMenuItems}
         bottomItems={adminBottomItems}
+        isAdmin={true}
       />
       <Layout className={classes.PageLayout}>
         <Content className={classes.PageLayout__content}>{children}</Content>

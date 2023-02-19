@@ -61,6 +61,22 @@
     display: flex;
     gap: 20px;
   }
+
+  &__Location {
+    & > * {
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 20px;
+    }
+
+    & > h3 {
+      color: #363636;
+    }
+
+    & > h4 {
+      color: #808080;
+    }
+  }
 }
 
 @media only screen and (max-width: 820px) {
