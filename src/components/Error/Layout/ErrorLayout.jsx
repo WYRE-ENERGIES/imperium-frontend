@@ -19,14 +19,25 @@ const ErrorLayout = ({ children }) => {
           </div>
         </div>
       </Layout>
-      <div className={classes.ErrorLayout__footer}>
-        <p>© imperium 2023</p>
-        <p className={classes.ErrorLayout__icon}>
-          <p>
-            <BiEnvelope size={18} />
-          </p>
-          <p>help@imperium.com</p>
-        </p>
+      <div>
+        {' '}
+        <div className={classes.ErrorLayout__footer}>
+          <div className={classes.ErrorLayout__footerContent}>
+            {' '}
+            <div>
+              {' '}
+              <p>© imperium 2023</p>
+            </div>
+            <div>
+              <p className={classes.ErrorLayout__icon}>
+                <span>
+                  <BiEnvelope size={18} />
+                </span>
+                <p>help@imperium.com</p>
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   )

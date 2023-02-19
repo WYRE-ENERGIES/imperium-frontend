@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 import AuthForm from '../AuthForm'
 import classes from './SignInForm.module.scss'
@@ -10,7 +11,11 @@ const SignInForm = () => {
     footer: 'Don’t have an account?',
     action: 'signup',
     url: '/overview',
-    helpertext: 'Can’t remember password ?',
+    helpertext: (
+      <Link to={'/forgot-password'} style={{ color: 'gray' }}>
+        Can’t remember password ?
+      </Link>
+    ),
     btnText: 'Log In',
     footerlink: '/sign-up',
   }

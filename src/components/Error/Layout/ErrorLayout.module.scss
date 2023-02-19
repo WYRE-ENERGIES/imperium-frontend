@@ -1,14 +1,18 @@
 .ErrorLayout {
-  background: #f0f7ed;
+  // background: #f0f7ed;
+  background: red;
+  height: 100%;
+  width: 100%;
   &__Container {
     display: flex;
     justify-content: center;
+    align-items: center;
   }
 
   &__Content {
     background: white;
     padding: 60px;
-    margin-top: 13.6%;
+    margin-top: 6%;
     offset: 1px 1px rgba(101, 170, 79, 0.04);
     border-radius: 24px;
     width: 830px;
@@ -22,15 +26,17 @@
     }
   }
   &__footer {
-    display: flex;
-    justify-content: space-between;
     padding: 0 80px;
     color: #808080;
-    position: relative;
-    bottom: 0.7rem;
+    position: absolute;
+    bottom: 0;
     font-size: 14px;
+    width: 100%;
   }
-
+  &__footerContent {
+    display: flex;
+    justify-content: space-between;
+  }
   &__icon {
     display: flex;
 
