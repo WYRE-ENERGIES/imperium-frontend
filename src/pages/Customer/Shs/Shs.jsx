@@ -1,27 +1,28 @@
 import { Col, Divider, Dropdown, Modal, Row, Tag } from 'antd'
-import { EyeOutlined, ThunderboltOutlined } from '@ant-design/icons'
-
-import { BiTrendingUp } from 'react-icons/bi'
-import { BsFillSunFill } from 'react-icons/bs'
+import React, { useState } from 'react'
 import Chart from 'react-apexcharts'
-import PageBreadcrumb from '../../../components/PageBreadcrumb/PageBreadcrumb'
 import PageLayout from '../../../components/Layout/PageLayout'
+import PageBreadcrumb from '../../../components/PageBreadcrumb/PageBreadcrumb'
 import PowerSwitch from '../../../components/PowerSwitch/PowerSwitch'
-import React from 'react'
-import SolarPanel from '../../../assets/widget-icons/Frame 20.svg'
-import batteryPercent from '../../../assets/widget-icons/BatteryIcon1.svg'
-import batteryStatus from '../../../assets/widget-icons/BatteryIcon2.svg'
-import building from '../../../assets/widget-icons/building.svg'
-import caretdown from '../../../assets/widget-icons/caretdown.svg'
 import classes from './Shs.module.scss'
+import building from '../../../assets/widget-icons/building.svg'
 import panelarrow from '../../../assets/widget-icons/panelArrow.svg'
 import panelbattery from '../../../assets/widget-icons/panelBattery.svg'
+import caretdown from '../../../assets/widget-icons/caretdown.svg'
+import batteryPercent from '../../../assets/widget-icons/BatteryIcon1.svg'
+import batteryStatus from '../../../assets/widget-icons/BatteryIcon2.svg'
+import SolarPanel from '../../../assets/widget-icons/Frame 20.svg'
+import { BiTrendingUp } from 'react-icons/bi'
+import { BsFillSunFill } from 'react-icons/bs'
+import { CloseOutlined, ThunderboltOutlined } from '@ant-design/icons'
 
 const DeviceInfo = () => {
   return (
     <div className={classes.Shs__DeviceInfo}>
-      <h1>Device Details </h1>
-
+      <div>
+        {' '}
+        <h1>Device Details </h1>
+      </div>
       <div>
         <div>
           <p>Device Name</p>
@@ -53,11 +54,35 @@ const DeviceInfo = () => {
   )
 }
 
+const CloseDeviceInfo = () => {
+  return (
+    <span className={classes.Shs__CloseDeviceInfo}>
+      <CloseOutlined />
+    </span>
+  )
+}
+
 const Shs = () => {
+  const [open, setOpen] = useState(false)
+  const handleOnCloseDeviceModal = (e) => {
+    if (e.key === '2') {
+      setOpen(false)
+      console.log(e.key)
+    }
+  }
+
+  const handleOpenChange = (flag) => {
+    setOpen(flag)
+  }
+
   const deviceDetails = [
     {
       label: <DeviceInfo />,
       key: '1',
+    },
+    {
+      label: <CloseDeviceInfo />,
+      key: '2',
     },
   ]
   return (
@@ -96,16 +121,15 @@ const Shs = () => {
                       className={classes.Shs__DeviceDropDown}
                       menu={{
                         items: deviceDetails,
-                        onClick: (e) => e.preventDefault(),
+                        onClick: handleOnCloseDeviceModal,
                       }}
                       trigger={['click']}
                       placement="bottom"
                       overlayStyle={{ paddingLeft: '90px' }}
+                      onOpenChange={handleOpenChange}
+                      open={open}
                     >
-                      <p>
-                        See Device Details{' '}
-                        <EyeOutlined style={{ marginLeft: '3px' }} />
-                      </p>
+                      <p>See Device Details </p>
                     </Dropdown>
                   </div>
                   <div className={classes.Shs__Capacity}>
@@ -310,7 +334,7 @@ const Shs = () => {
                       align: 'left',
                       margin: 10,
                       offsetX: 10,
-                      offsetY: 0,
+                      offsetY: 20,
                       floating: false,
                       style: {
                         fontSize: '18px',
@@ -320,23 +344,29 @@ const Shs = () => {
                       },
                     },
                     legend: {
-                      show: true,
                       fontSize: '14px',
                       position: 'top',
-                      horizontalAlign: 'center',
-                      offsetX: 299,
+                      horizontalAlign: 'right',
                     },
                     fill: {
                       opacity: 0.1,
+                      gradient: {
+                        shadeIntensity: 1,
+                        inverseColors: false,
+                        opacityFrom: 0.45,
+                        opacityTo: 0.05,
+                        stops: [20, 100, 100, 100],
+                      },
                     },
 
                     chart: {
                       id: 'energy-bar',
                       fontFamily: 'baloo 2',
+                      stacked: true,
                       toolbar: {
                         show: false,
                       },
-                      type: 'line',
+                      type: 'area',
                     },
                     stroke: {
                       curve: 'smooth',
@@ -344,7 +374,6 @@ const Shs = () => {
                     colors: ['#C9E00C', '#5C9D48'],
                     xaxis: {
                       categories: [
-                        0,
                         'Jan',
                         'Mar',
                         'May',
@@ -387,13 +416,14 @@ const Shs = () => {
                     {
                       name: 'Energy Consumed',
                       align: 'top',
-                      data: [15, 30, 60, 45, 62, 10, 86, 98],
+                      data: [15, 30, 60, 45, 10, 86, 98],
                     },
                     {
                       name: ' Energy Generated',
-                      data: [2, 5, 38, 20, 47, 2, 50, 71],
+                      data: [2, 5, 38, 20, 47, 2, 71],
                     },
                   ]}
+                  width="100%"
                 />
               </div>
             </Col>
