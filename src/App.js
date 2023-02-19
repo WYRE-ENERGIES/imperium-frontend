@@ -56,10 +56,20 @@ const UserInvitePage = lazy(() =>
 )
 
 // Admin Routes
+
+const AdminForgotPassword = lazy(() =>
+  import('./pages/Admin/Auth/ForgotPassword/AdminForgotPassword'),
+)
+const AdminOtp = lazy(() => import('./pages/Admin/Auth/Otp/AdminOtp'))
+const AdminResetPassword = lazy(() =>
+  import('./pages/Admin/Auth/ResetPassword/AdminResetPassword'),
+)
+
+const AdminSignIn = lazy(() => import('./pages/Admin/Auth/SignIn/AdminSignIn'))
+
 const AdminAccount = lazy(() =>
   import('./pages/Admin/Account/AccountPassword/AccountPassword'),
 )
-
 const AdminPanelAnalytic = lazy(() =>
   import('./pages/Admin/PanelAnalytic/PanelAnalytic'),
 )
@@ -114,6 +124,10 @@ function App() {
               <Route path="users" element={<Users />} />
               <Route path="customers" element={<AdminCustomer />} />
               <Route path="support" element={<AdminSupport />} />
+              <Route path="sign-in" element={<AdminSignIn />} />
+              <Route path="forgot-password" element={<AdminForgotPassword />} />
+              <Route path="new-password" element={<AdminResetPassword />} />
+              <Route path="otp" element={<AdminOtp />} />
             </Route>
           </Route>
         </Routes>
