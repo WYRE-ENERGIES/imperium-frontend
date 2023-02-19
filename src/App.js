@@ -84,6 +84,7 @@ const AdminSupport = lazy(() => import('./pages/Admin/Support/Support'))
 const AdminCustomer = lazy(() =>
   import('./pages/Admin/Customers/Customer/Customer'),
 )
+const AdminSHS = lazy(() => import('./pages/Admin/SHS/SHS'))
 
 function App() {
   return (
@@ -134,6 +135,7 @@ function App() {
                 <Route index element={<AdminCustomers />} />
                 <Route path=":id" element={<AdminCustomer />} />
               </Route>
+              <Route path="all-shs" element={<AdminSHS />} />
             </Route>
           </Route>
         </Routes>
