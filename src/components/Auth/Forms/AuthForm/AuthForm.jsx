@@ -50,7 +50,7 @@ const AuthForm = ({ children, props }) => {
               <p
                 style={{
                   marginBottom: '2px',
-                  marginTop: '-10px',
+                  marginTop: '-15px',
                   fontSize: '13.5px',
                 }}
               >

@@ -23,7 +23,9 @@ const SignIn = () => {
           <SignInForm />
         </LeftLayout>
         <RightLayout className={classes.SignPage__RightLayOut}>
-          <FormDescription content={formDescription} />
+          <div className={classes.SignPage__content}>
+            <FormDescription content={formDescription} />
+          </div>
         </RightLayout>
       </Row>
     </div>

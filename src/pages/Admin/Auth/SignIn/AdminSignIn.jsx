@@ -18,13 +18,13 @@ const SignIn = () => {
     ImgHeight: '3px',
   }
   return (
-    <div className={classes.SignPage}>
-      <Row className={classes.SignPage__Layout}>
-        <LeftLayout className={classes.SignPage__LeftLayOut}>
+    <div className={classes.AdminSignPage}>
+      <Row className={classes.AdminSignPage__Layout}>
+        <LeftLayout className={classes.AdminSignPage__LeftLayOut}>
           <SignInForm />
         </LeftLayout>
 
-        <Col span={12} className={classes.SignPage__RightLayOut}>
+        <Col span={12} className={classes.AdminSignPage__RightLayOut}>
           <RightLayout span={24} backgroundColor={'none'}>
             <FormDescription content={formDescription} />{' '}
           </RightLayout>
