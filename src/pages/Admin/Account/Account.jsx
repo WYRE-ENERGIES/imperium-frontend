@@ -5,7 +5,7 @@ import classes from './Account.module.scss'
 import AdminPageLayout from '../../../components/Layout/AdminPageLayout/AdminPageLayout'
 
 const Account = ({ children, props }) => {
-  const accountInfo = {
+  const AccountData = {
     firstName: 'John',
     lastName: 'Kahan',
     email: 'JonniKahan@gmail.com',
@@ -16,7 +16,7 @@ const Account = ({ children, props }) => {
       <AdminPageLayout>
         <PageBreadcrumb title="My Account" />
         <div>
-          <AccountProfile accountInfo={accountInfo} type={props} />
+          <AccountProfile AccountData={AccountData} type={props} />
         </div>
         {children}
       </AdminPageLayout>
