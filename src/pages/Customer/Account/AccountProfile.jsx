@@ -1,20 +1,105 @@
-import React from 'react'
+import { React, useState } from 'react'
 import { Row, Col } from 'antd'
 import classes from './Account.module.scss'
-const AccountInfo = ({ accountInfo }) => {
-  const { firstName, lastName, email } = accountInfo
+import { message, Form, Upload } from 'antd'
+import uploadImg from '../../../assets/widget-icons/bussinessuploadIcon.svg'
+const AccountInfo = ({ AccountData, type }) => {
+  const { firstName, lastName, email } = AccountData
   const firstNameInit = firstName.slice(0, 1)
   const lastNameInit = lastName.slice(0, 1)
+  const [fileUpload, setFileUpload] = useState(false)
+  const onFinish = (values) => {
+    console.log('Success:', values)
+  }
+  const onFinishFailed = (errorInfo) => {
+    console.log('Failed:', errorInfo)
+  }
+  const normFile = (e) => {
+    console.log('Upload event:', e)
+    if (Array.isArray(e)) {
+      return e
+    }
+    return e?.fileList
+  }
+
+  const { Dragger } = Upload
+  const fileUploadProps = {
+    name: 'file',
+    multiple: false,
+    progress: { showInfo: false },
+    showUploadList: false,
+    maxCount: 1,
+    action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
+    onChange(info) {
+      const { status } = info.file
+      console.log('info ', info)
+      if (status == 'uploading') {
+        setFileUpload(true)
+      }
+      if (status === 'done') {
+        setFileUpload(true)
+        message.success(`${info.file.name} 
+                               file uploaded successfully`)
+      } else if (status === 'error') {
+        setFileUpload(true)
+        message.success(`${info.file.name} 
+                               file uploaded successfully`)
+      }
+    },
+    onDrop(e) {
+      console.log('Dropped files', e.dataTransfer.files)
+    },
+  }
+
   return (
     <div className={classes.AccountInfo}>
       <Row>
         <Col>
-          <div className={classes.AccountInfo__Init}>
-            <p>
-              {firstNameInit}
-              {lastNameInit}
-            </p>
-          </div>
+          {type === 'business' ? (
+            <Form.Item>
+              <Form.Item
+                name="dragger"
+                valuePropName="fileList"
+                getValueFromEvent={normFile}
+                noStyle
+              >
+                <div className={classes.Account__FileUpload}>
+                  <Dragger
+                    {...fileUploadProps}
+                    name="files"
+                    action=""
+                    style={{
+                      border: 'none',
+                      borderRadius: '100%',
+                      background: '#f0f7ed',
+                    }}
+                  >
+                    <div className={classes.Account__FileUploadIcon}>
+                      <div>
+                        {' '}
+                        <div style={{ marginTop: '-9px', marginBottom: '2px' }}>
+                          <img
+                            src={uploadImg}
+                            alt=""
+                            srcSet=""
+                            style={{ width: '40px' }}
+                          />
+                          {fileUpload}
+                        </div>
+                      </div>
+                    </div>
+                  </Dragger>
+                </div>
+              </Form.Item>
+            </Form.Item>
+          ) : (
+            <div className={classes.AccountInfo__Init}>
+              <p>
+                {firstNameInit}
+                {lastNameInit}
+              </p>
+            </div>
+          )}
         </Col>
         <Col>
           <div className={classes.AccountInfo__Info}>

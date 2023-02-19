@@ -3,7 +3,7 @@ import React from 'react'
 import FormButton from '../../../../components/Auth/Forms/Widgets/FormButton'
 import classes from './AccountPassword.module.scss'
 import Account from '../Account'
-import passwordKeyIcon from '../../../../assets/Auth/passwordIcon.svg'
+import PasswordKeyIcon from '../../../../assets/Auth/passwordIcon.svg'
 
 const AccountPassword = () => {
   const [form] = Form.useForm()
@@ -12,7 +12,7 @@ const AccountPassword = () => {
     console.log('Finish:', values)
   }
   return (
-    <Account props={'password'}>
+    <Account props={'admin-password'}>
       <div className={classes.AccountPassword}>
         {' '}
         <Form
@@ -42,7 +42,7 @@ const AccountPassword = () => {
               >
                 <Input.Password
                   prefix={
-                    <img src={passwordKeyIcon} alt="" srcSet="" sizes="40px" />
+                    <img src={PasswordKeyIcon} alt="" srcSet="" sizes="40px" />
                   }
                   className={classes.AccountPassword__Password}
                   placeholder="Enter old password"
@@ -70,7 +70,7 @@ const AccountPassword = () => {
               >
                 <Input.Password
                   prefix={
-                    <img src={passwordKeyIcon} alt="" srcSet="" sizes="40px" />
+                    <img src={PasswordKeyIcon} alt="" srcSet="" sizes="40px" />
                   }
                   className={classes.AccountPassword__Password}
                   placeholder="Enter new password"
@@ -97,7 +97,7 @@ const AccountPassword = () => {
               >
                 <Input.Password
                   prefix={
-                    <img src={passwordKeyIcon} alt="" srcSet="" sizes="40px" />
+                    <img src={PasswordKeyIcon} alt="" srcSet="" sizes="40px" />
                   }
                   className={classes.AccountPassword__Password}
                   placeholder="Confirm new password"
