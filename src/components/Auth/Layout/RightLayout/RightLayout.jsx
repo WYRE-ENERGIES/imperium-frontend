@@ -9,12 +9,8 @@ const RightLayout = ({
   backgroundColor = 'rgba(240, 247, 237, 0.6)',
 }) => {
   return (
-    <Col
-      span={span}
-      style={{ backgroundColor: backgroundColor }}
-      className={classes.Layout}
-    >
-      <div>
+    <Col span={span} style={{ backgroundColor: backgroundColor }}>
+      <div className={classes.Layout}>
         <Row justify="center" align={'middle'}>
           <div>{children}</div>
         </Row>

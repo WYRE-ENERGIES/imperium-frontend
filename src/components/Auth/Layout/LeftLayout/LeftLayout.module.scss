@@ -1,10 +1,11 @@
 .Layout {
-  height: 100vh;
+  height: 100%;
   padding: 28px 48px;
+  position: relative;
 
   &__image {
     img {
-      height: 40px;
+      height: 50px;
     }
   }
 }
