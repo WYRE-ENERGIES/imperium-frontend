@@ -139,7 +139,7 @@ const BatteryAnalytic = () => {
             chartData={chartData}
             colors={['#F04438', '#66AB4F']}
             borderRadius={2}
-            columnWidth={10}
+            columnWidth={15}
             legendPosition="bottom"
             legendHorizontalAlign="center"
           />
