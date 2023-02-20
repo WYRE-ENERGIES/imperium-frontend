@@ -1,13 +1,14 @@
 import { Divider, Layout, Menu } from 'antd'
 import { Link, useLocation } from 'react-router-dom'
+import React, { Suspense, lazy, useState } from 'react'
 
 import { ReactComponent as AdminLogo } from '../../assets/Auth/adminlogo.svg'
 import Footer from './Footer/Footer'
 import { ReactComponent as Logo } from '../../assets/logo.svg'
-import React from 'react'
 import styles from './Sidebar.module.scss'
 
 const { Sider } = Layout
+const SwitchAccount = lazy(() => import('../SwitchAccount/SwitchAccount'))
 
 const Sidebar = ({
   bgColor,
@@ -17,7 +18,11 @@ const Sidebar = ({
   isAdmin = false,
 }) => {
   const location = useLocation()
+  const [showSwitchAccount, setShowSwitchAccount] = useState(false)
 
+  const toggleActivateShsModal = () => {
+    setShowSwitchAccount(!showSwitchAccount)
+  }
   return (
     <Sider
       style={{
@@ -79,9 +84,20 @@ const Sidebar = ({
             style={{ backgroundColor: bgColor, color: color }}
           />
           <Divider />
-          <Footer userName="Emeka Isokun" />
+          <Footer
+            userName="Emeka Isokun"
+            toggleActivateShsModal={toggleActivateShsModal}
+          />
         </div>
       </div>
+      <Suspense fallback={<h4>Loading...</h4>}>
+        {showSwitchAccount ? (
+          <SwitchAccount
+            isOpen={showSwitchAccount}
+            toggleModal={toggleActivateShsModal}
+          />
+        ) : null}
+      </Suspense>
     </Sider>
   )
 }
