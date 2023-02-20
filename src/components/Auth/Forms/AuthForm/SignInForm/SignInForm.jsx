@@ -1,15 +1,14 @@
-import React from 'react'
-
 import AuthForm from '../AuthForm'
+import React from 'react'
 import classes from './SignInForm.module.scss'
 
-const SignInForm = () => {
+const SignInForm = ({ isAdmin = false }) => {
   const headlines = {
     header: 'Log In',
     tag: 'Welcome back! Please enter your details.',
     footer: 'Don’t have an account?',
     action: 'signup',
-    url: '/overview',
+    url: isAdmin ? '/admin/battery-analytic' : '/overview',
     helpertext: 'Can’t remember password ?',
     btnText: 'Log In',
     footerlink: '/sign-up',

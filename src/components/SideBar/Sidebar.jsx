@@ -1,6 +1,7 @@
 import { Divider, Layout, Menu } from 'antd'
 import { Link, useLocation } from 'react-router-dom'
 
+import { ReactComponent as AdminLogo } from '../../assets/Auth/adminlogo.svg'
 import Footer from './Footer/Footer'
 import { ReactComponent as Logo } from '../../assets/logo.svg'
 import React from 'react'
@@ -8,7 +9,13 @@ import styles from './Sidebar.module.scss'
 
 const { Sider } = Layout
 
-const Sidebar = ({ bgColor, color, menuItems, bottomItems }) => {
+const Sidebar = ({
+  bgColor,
+  color,
+  menuItems,
+  bottomItems,
+  isAdmin = false,
+}) => {
   const location = useLocation()
 
   return (
@@ -36,8 +43,18 @@ const Sidebar = ({ bgColor, color, menuItems, bottomItems }) => {
           justifyContent: 'space-between',
         }}
       >
-        <Link to="/">
-          <Logo style={{ marginLeft: '4px' }} />
+        <Link to={isAdmin ? '/admin/sign-in' : '/'}>
+          {isAdmin ? (
+            <AdminLogo
+              style={{
+                marginLeft: '4px',
+                width: '70px',
+                height: '60px',
+              }}
+            />
+          ) : (
+            <Logo style={{ marginLeft: '4px' }} />
+          )}
         </Link>
         <Menu
           className={styles.SidebarMenu}
