@@ -1,0 +1,179 @@
+.SwitchAccount {
+  &__header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 30px;
+  }
+
+  &__title {
+    letter-spacing: -0.02em;
+  }
+
+  &__subTitle {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    text-align: center;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    gap: 10px;
+
+    & > div > *:not(:last-child) {
+      margin-bottom: 10px;
+    }
+  }
+
+  &__option {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px;
+    height: 72px;
+    border-radius: 8px;
+    margin-right: 0;
+    background: #ffffff;
+    border: 1px solid #e6e6e6;
+
+    &::after {
+      content: none;
+    }
+  }
+
+  &__selectedOption {
+    background: #f0f7ed;
+    border: 1px solid #497a38;
+  }
+
+  &__left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  &__names {
+    line-height: 20px;
+    font-size: 14px;
+    font-style: normal;
+
+    & > h3 {
+      margin-bottom: 0;
+    }
+
+    & > h4 {
+      font-weight: 400;
+      margin-bottom: 0;
+    }
+  }
+
+  &__name {
+    font-weight: 500;
+    color: #606062;
+  }
+
+  &__selectedName {
+    color: #385e2b;
+  }
+
+  &__email {
+    font-weight: 400;
+    color: #606062;
+  }
+
+  &__selectedEmail {
+    color: #66ab4f;
+  }
+
+  &__btn {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 34px;
+    flex-wrap: wrap;
+
+    & > * {
+      flex: 1;
+    }
+  }
+
+  &__actionBtn {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    flex: 0.8;
+
+    & > * {
+      width: 112px;;
+      height: 44px;
+      border: 1px solid #c4c4c4;
+      box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05);
+      border-radius: 8px;
+
+      &:hover,
+      &:active {
+        color: #fff !important;
+        border: 1px solid #385e2b !important;
+      }
+    }
+  }
+
+  &__submitBtn {
+    background: #385e2b;
+    color: #fff;
+  }
+
+  &__cancelBtn {
+    background: #ffffff;
+
+    &:hover,
+    &:active {
+      color: #000 !important;
+    }
+  }
+
+  &__logoutBtn {
+    margin-top: 10px;
+    width: 112px;
+    height: 44px;
+    border: 1px solid #c4c4c4;
+    box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05);
+    border-radius: 8px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    color: #000 !important;
+
+    &:hover,
+    &:active {
+      color: #fff !important;
+      border: 1px solid #385e2b !important;
+      color: inherit !important;
+    }
+  }
+}
+
+@media only screen and (max-width: 425px) {
+  .SwitchAccount {
+    &__names {
+      font-size: 10px;
+      line-height: 14px;
+    }
+
+    &__btn {
+      flex-direction: column-reverse;
+      align-items: normal;
+    }
+
+    &__logoutBtn {
+      margin-top: 30px;
+    }
+  }
+}

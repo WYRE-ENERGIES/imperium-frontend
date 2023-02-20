@@ -1,9 +1,9 @@
-import React from 'react'
-import ReactAvatar from 'react-avatar'
 import { HiOutlineRefresh } from 'react-icons/hi'
 import { MdLogout } from 'react-icons/md'
+import React from 'react'
+import ReactAvatar from 'react-avatar'
 
-const Footer = ({ userName }) => {
+const Footer = ({ userName, toggleActivateShsModal }) => {
   return (
     <div
       style={{
@@ -15,7 +15,11 @@ const Footer = ({ userName }) => {
     >
       <ReactAvatar size={30} round={true} name={userName} color="#C4C4C4" />
       <span>{userName}</span>
-      <HiOutlineRefresh color="C4C4C4" />
+      <HiOutlineRefresh
+        style={{ cursor: 'pointer' }}
+        color="C4C4C4"
+        onClick={toggleActivateShsModal}
+      />
       <MdLogout />
     </div>
   )
