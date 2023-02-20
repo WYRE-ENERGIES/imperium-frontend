@@ -1,5 +1,5 @@
-import { Tag, Select, Space, Table, Input } from 'antd'
-import React from 'react'
+import { Tag, Select, Space, Table, Input, Modal } from 'antd'
+import React, { useState } from 'react'
 import { MdFilterList } from 'react-icons/md'
 import {
   BsArrowsMove,
@@ -7,6 +7,7 @@ import {
   BsBell,
   BsBellSlash,
   BsEyeSlash,
+  BsHouse,
   BsPlus,
   BsThreeDots,
 } from 'react-icons/bs'
@@ -20,6 +21,239 @@ import classes from './ActiveAlert.module.scss'
 import { SearchOutlined, CloudDownloadOutlined } from '@ant-design/icons'
 
 const ActiveAlert = () => {
+  const activeAlertdata = [
+    {
+      key: '2',
+      shs: [
+        {
+          id: '2',
+          name: 'Quellax Mariot',
+          header: 'Low panel voltage',
+          text: 'Disconnect your solar panel from your PV system.',
+          time: '11:58pm  2/01/2023',
+          status: 'Unresolved',
+          type: 'Active Alert',
+        },
+        {
+          id: '10',
+          name: 'Demi Wilkinson',
+          header: 'Abnormal load',
+          text: 'Reduce load on SHS ',
+          time: '11:58pm  2/01/2023',
+          status: 'Unresolved',
+          type: 'Active Alert',
+        },
+      ],
+      view: 'view',
+      action: <BsThreeDots />,
+      email: 'jayhard@gmail.com',
+      username: 'James Harden',
+      fname: 'James',
+      lname: 'Harden',
+    },
+    {
+      key: '1',
+      shs: [
+        {
+          id: '4',
+          name: 'Demi Wilkinson',
+          header: 'Abnormal load',
+          text: 'Reduce load on SHS ',
+          time: '11:58pm  2/01/2023',
+          status: 'Resolved',
+          type: 'Active Alert',
+        },
+        {
+          id: '19',
+          name: 'Demi Wilkinson',
+          header: 'Abnormal load',
+          text: 'Reduce load on SHS ',
+          time: '11:58pm  2/01/2023',
+          status: 'Resolved',
+          type: 'Active Alert',
+        },
+      ],
+      view: 'view',
+      action: <BsThreeDots />,
+      email: 'Arokem@gmail.com',
+      username: 'Arogbo Kemisola',
+      fname: 'Arogbo',
+      lname: 'Kemisola',
+    },
+  ]
+
+  const columns = [
+    {
+      key: '1',
+      title: 'Active Alerts',
+      dataIndex: 'shs',
+      render: (data) => (
+        <span
+          style={{
+            color: 'black',
+          }}
+        >
+          {data[0]?.header}
+        </span>
+      ),
+    },
+    {
+      key: '2',
+      title: 'Solar House System(SHS)',
+      dataIndex: 'shs',
+      render: (data) => (
+        <span
+          style={{
+            color: 'black',
+          }}
+        >
+          {data[0]?.name}
+        </span>
+      ),
+    },
+    {
+      key: '3',
+      title: 'Time',
+      dataIndex: 'shs',
+      render: (data) => (
+        <span
+          style={{
+            color: 'black',
+          }}
+        >
+          {data[0]?.time}
+        </span>
+      ),
+    },
+    {
+      key: '4',
+      title: 'Status',
+      dataIndex: 'shs',
+      render: (data) => (
+        <span
+          style={{
+            color: data[0]?.status === 'Resolved' ? '#5C9D48' : '#B42318',
+          }}
+        >
+          {data[0]?.status}
+        </span>
+      ),
+    },
+    {
+      key: '5',
+      title: <span style={{ color: '#f0f7ed' }}>i</span>,
+      dataIndex: 'view',
+      render: (data) => (
+        <span
+          style={{
+            color: '#385E2B',
+          }}
+        >
+          View
+        </span>
+      ),
+    },
+  ]
+
+  const [data, setActiveAlertData] = useState(activeAlertdata)
+
+  const ActiveAlertCard = ({ activeAlertData }) => {
+    console.log('activeAlertData ', activeAlertData.shs)
+    const ShsOptions = [
+      {
+        value: 'hello',
+        label: 'hello',
+      },
+    ]
+    const [isModalOpen, setIsModalOpen] = useState(false)
+    const showModal = () => {
+      setIsModalOpen(true)
+    }
+    const handleOk = () => {
+      setIsModalOpen(false)
+    }
+    const handleCancel = () => {
+      setIsModalOpen(false)
+    }
+    return (
+      <div>
+        <span>{activeAlertData.action}</span>
+        <div onClick={showModal}>
+          <p>{activeAlertData?.shs[0]?.header}</p>
+          <p>{activeAlertData?.shs[0]?.text} </p>
+        </div>
+        <Modal
+          open={isModalOpen}
+          onOk={handleOk}
+          onCancel={handleCancel}
+          className={classes.ActiveAlert__ActiveAlertNotificationListModal}
+          width={400}
+          footer={null}
+        >
+          <div className={classes.ActiveAlert__ModalContent}>
+            <div className={classes.ActiveAlert__ModalContentInit}>
+              <div>
+                {' '}
+                <span>{activeAlertData?.fname[0]}</span>
+                <span>{activeAlertData?.lname[0]}</span>
+              </div>
+            </div>
+            <h1>{activeAlertData?.username}</h1>
+            <p>{activeAlertData?.email}</p>
+            <div>
+              <div
+                className={classes.ActiveAlert__ActiveAlertModalFilterStatus}
+              >
+                <div>
+                  <Space
+                    className={classes.ActiveAlert__ActiveAlertModalFilterInput}
+                  >
+                    <div
+                      className={
+                        classes.ActiveAlert__ActiveAlertModalFormSelectPrefix
+                      }
+                    >
+                      <BsHouse size={20} color="#5C9D48" />
+                    </div>
+                    <Select
+                      className={
+                        classes.ActiveAlert__ActiveAlertModalFormSelect
+                      }
+                      defaultValue={ShsOptions[0].value}
+                      style={{
+                        width: 150,
+                        border: 'none',
+                        color: 'white',
+                      }}
+                      onChange={handleChange}
+                      options={ShsOptions}
+                      dropdownStyle={{ background: 'white' }}
+                      showArrow={true}
+                    />
+                  </Space>
+                </div>
+                <div className={classes.ActiveAlert__ActiveAlertModalStatus}>
+                  <span>Unresolved</span>{' '}
+                  <span>
+                    <MdFilterList size={20} color="#5C9D48" />
+                  </span>
+                </div>
+              </div>
+
+              <div className={classes.ActiveAlert__ActiveAlertModalShsInfo}>
+                <span>Low panel voltage</span>
+                <span>11:58pm, 2/01/2023</span>
+                <span>Unresolved</span>
+              </div>
+            </div>
+            <div className={classes.ActiveAlert__ModalClose}>
+              <button onClick={handleOk}>Close</button>
+            </div>
+          </div>
+        </Modal>
+      </div>
+    )
+  }
   const prefix = (
     <SearchOutlined
       style={{
@@ -110,117 +344,11 @@ const ActiveAlert = () => {
     </div>
   )
 
-  const columns = [
-    {
-      title: 'Active Alert',
-      dataIndex: 'activeAlert',
-      render: (text) => (
-        <span
-          style={{
-            color: 'black',
-          }}
-        >
-          {text}
-        </span>
-      ),
-    },
-    {
-      title: 'Solar House System(SHS)',
-      dataIndex: 'shs',
-    },
-    {
-      title: 'Time',
-      dataIndex: 'time',
-    },
-
-    {
-      title: 'Status',
-      dataIndex: 'status',
-      render: (status) => {
-        const color = status === 'Resolved' ? '#5C9D48' : '#D92D20'
-        return (
-          <span
-            style={{
-              color: color,
-            }}
-          >
-            {status}
-          </span>
-        )
-      },
-    },
-    {
-      title: <span style={{ color: '#f0f7ed' }}>i</span>,
-      dataIndex: 'view',
-      render: (status) => {
-        return (
-          <span
-            style={{
-              color: '#385E2B',
-              fontWeight: '600',
-            }}
-          >
-            {status}
-          </span>
-        )
-      },
-    },
-  ]
-  const activeAlertdata = [
-    {
-      key: '1',
-      activeAlert: 'Low panel voltage',
-      time: '11:58pm  2/01/2023',
-      status: 'Unresolved',
-      shs: 'Quellax Mariot',
-      view: 'view',
-    },
-    {
-      key: '2',
-      activeAlert: 'Maintenance overdue',
-      time: '11:58pm  2/01/2023',
-      status: 'Unresolved',
-      shs: 'Candice Wu',
-      view: 'view',
-    },
-    {
-      key: '3',
-      activeAlert: 'Low panel voltage',
-      time: '11:58pm  2/01/2023',
-      status: 'Resolved',
-      shs: 'Demi Wilkinson',
-      view: 'view',
-    },
-    {
-      key: '4',
-      activeAlert: 'Low panel voltage',
-      time: '11:58pm  2/01/2023',
-      status: 'Unresolved',
-      shs: 'BeMicky washo',
-      view: 'view',
-    },
-    {
-      key: '5',
-      activeAlert: 'Low panel voltage',
-      time: '11:58pm  2/01/2023',
-      status: 'Unresolved',
-      shs: 'Makanty Rewanda',
-      view: 'view',
-    },
-    {
-      key: '6',
-      activeAlert: 'Low panel voltage',
-      time: '11:58pm  2/01/2023',
-      status: 'Unresolved',
-      shs: 'Farmilii Solar',
-      view: 'view',
-    },
-  ]
   return (
     <AdminPageLayout>
       <section className={classes.ActiveAlert}>
         <section>
-          <PageBreadcrumb title={'Active Alert'} />
+          <PageBreadcrumb title={'Active Alert'} items={['Active Alert']} />
         </section>
 
         <section className={classes.ActiveAlert__WidgetSection}>
@@ -283,7 +411,6 @@ const ActiveAlert = () => {
             </div>
           </div>
         </section>
-
         <section className={classes.ActiveAlert__ActiveAlertSection}>
           <div className={classes.ActiveAlert__ActiveAlertNotification}>
             <div className={classes.ActiveAlert__ActiveAlertNotificationHeader}>
@@ -305,33 +432,13 @@ const ActiveAlert = () => {
               </div>
             </div>
             <div className={classes.ActiveAlert__ActiveAlertNotificationList}>
-              <div>
-                <span>
-                  <BsThreeDots />
-                </span>
-                <p>Abnormal load</p>
-                <p>Reduce load on SHS </p>
-              </div>
-              <div>
-                <span>
-                  <BsThreeDots />
-                </span>
-                <p>Low panel voltage</p>
-                <p>
-                  Disconnect your solar panel from your PV system and Make sure
-                  your solar panel is getting sufficient light.{' '}
-                </p>
-              </div>
-              <div>
-                <span>
-                  <BsThreeDots />
-                </span>
-                <p>Low Battery voltage</p>
-                <p>
-                  Check for corroded/loose connections, if none found contact
-                  support.{' '}
-                </p>
-              </div>
+              {data.slice(0, 3).map((data, key) => (
+                <ActiveAlertCard
+                  key={key}
+                  id={data.key}
+                  activeAlertData={data}
+                />
+              ))}
             </div>
             <div
               className={classes.ActiveAlert__ActiveAlertNotificationViewBtn}
@@ -483,7 +590,6 @@ const ActiveAlert = () => {
             </div>
           </div>
         </section>
-
         <section className={classes.ActiveAlert__ActiveAlertTable}>
           <Table
             title={title}
