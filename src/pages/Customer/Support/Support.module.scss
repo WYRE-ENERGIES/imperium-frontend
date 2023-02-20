@@ -5,6 +5,10 @@
     justify-content: space-between;
   }
 
+  &__filters {
+    margin-bottom: 32px;
+  }
+
   &__button {
     display: flex;
     flex-direction: row;
@@ -100,6 +104,46 @@
 
   &__shsTable {
     margin-bottom: 35px;
+  }
+
+  &__nameDiv {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  &__names {
+    line-height: 20px;
+    font-size: 14px;
+    font-style: normal;
+
+    & > h3 {
+      font-weight: 500;
+      color: #18181b;
+      margin-bottom: 0;
+    }
+
+    & > h4 {
+      font-weight: 400;
+      color: #606062;
+      margin-bottom: 0;
+    }
+  }
+
+  &__Location {
+    & > * {
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 20px;
+    }
+
+    & > h3 {
+      color: #363636;
+    }
+
+    & > h4 {
+      color: #808080;
+    }
   }
 }
 
