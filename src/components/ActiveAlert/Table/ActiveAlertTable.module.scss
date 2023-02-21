@@ -1,0 +1,38 @@
+.ActiveAlertTable {
+  &__Footer {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__NavBtn {
+    display: flex;
+    justify-content: space-between;
+    width: 170px;
+    button {
+      background: #ffffff !important;
+      border: 1px solid #d0d5dd;
+      box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05);
+      border-radius: 8px;
+      color: #999999 !important;
+      padding: 5px 14px !important;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+  &__Pagination {
+    font-size: 14px;
+  }
+
+  &__Header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  &__HeaderFilter {
+    display: flex;
+    align-items: center;
+    gap: 17px;
+  }
+}

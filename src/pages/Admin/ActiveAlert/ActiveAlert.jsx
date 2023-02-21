@@ -1,4 +1,4 @@
-import { Tag, Select, Space, Table, Input, Modal } from 'antd'
+import { Tag, Select, Space, Input, Modal, Divider, Form } from 'antd'
 import React, { useState } from 'react'
 import { MdFilterList } from 'react-icons/md'
 import {
@@ -9,79 +9,111 @@ import {
   BsEyeSlash,
   BsHouse,
   BsPlus,
-  BsThreeDots,
 } from 'react-icons/bs'
 import Chart from 'react-apexcharts'
-import FormButton from '../../../components/Auth/Forms/Widgets/FormButton'
 import AdminPageLayout from '../../../components/Layout/AdminPageLayout/AdminPageLayout'
 import PageBreadcrumb from '../../../components/PageBreadcrumb/PageBreadcrumb'
 import alertCreated from '../../../assets/widget-icons/greenGraph.svg'
 import alertResolved from '../../../assets/widget-icons/yellowGraph.svg'
 import classes from './ActiveAlert.module.scss'
 import { SearchOutlined, CloudDownloadOutlined } from '@ant-design/icons'
+import { Link } from 'react-router-dom'
+import ActiveAlertTable from '../../../components/ActiveAlert/Table/ActiveAlertTable'
+import activeAlertdata from '../../../components/ActiveAlert/Data/data'
 
+const ActiveAlertDetails = (data) => {
+  console.log('data', data)
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const showModal = () => {
+    setIsModalOpen(true)
+  }
+  const handleOk = () => {
+    setIsModalOpen(false)
+  }
+  const handleCancel = () => {
+    setIsModalOpen(false)
+  }
+  const handleChange = (value) => {
+    console.log(`selected ${value}`)
+  }
+
+  return (
+    <div>
+      <div onClick={showModal}>
+        <span className={classes.ActiveAlert__DetailView}>View</span>
+      </div>
+      <Modal
+        open={isModalOpen}
+        onOk={handleOk}
+        onCancel={handleCancel}
+        className={classes.ActiveAlert__ActiveAlertNotificationListModal}
+        width={400}
+        footer={null}
+      >
+        <div className={classes.ActiveAlert__ModalContent}>
+          <div className={classes.ActiveAlert__ModalContentInit}>
+            <div>
+              {' '}
+              <span>{data?.data?.info?.fname[0]}</span>
+              <span>{data?.data?.info?.lname[0]}</span>
+            </div>
+          </div>
+          <h1>{data?.data?.info?.username}</h1>
+          <p>{data?.data?.info?.email}</p>
+          <div>
+            <div className={classes.ActiveAlert__ActiveAlertModalFilterStatus}>
+              <div>
+                <Space
+                  className={classes.ActiveAlert__ActiveAlertModalFilterInput}
+                >
+                  <div
+                    className={
+                      classes.ActiveAlert__ActiveAlertModalFormSelectPrefix
+                    }
+                  >
+                    <BsHouse size={20} color="#5C9D48" />
+                  </div>
+                  <Select
+                    className={classes.ActiveAlert__ActiveAlertModalFormSelect}
+                    defaultValue={data.data.shs[0].name}
+                    style={{
+                      width: 150,
+                      border: 'none',
+                      color: 'white',
+                    }}
+                    onChange={handleChange}
+                    options={data.data.shs.map((option) => ({
+                      label: option.name,
+                      value: option.name,
+                    }))}
+                    dropdownStyle={{ background: 'white', width: '20px' }}
+                    showArrow={true}
+                  />
+                </Space>
+              </div>
+              <div className={classes.ActiveAlert__ActiveAlertModalStatus}>
+                <span>Unresolved</span>{' '}
+                <span>
+                  <MdFilterList size={20} color="#5C9D48" />
+                </span>
+              </div>
+            </div>
+
+            <div className={classes.ActiveAlert__ActiveAlertModalShsInfo}>
+              <span>Low panel voltage</span>
+              <span>11:58pm, 2/01/2023</span>
+              <span>Unresolved</span>
+            </div>
+          </div>
+          <div className={classes.ActiveAlert__ModalClose}>
+            <button onClick={handleOk}>Close</button>
+          </div>
+        </div>
+      </Modal>
+    </div>
+  )
+}
 const ActiveAlert = () => {
-  const activeAlertdata = [
-    {
-      key: '2',
-      shs: [
-        {
-          id: '2',
-          name: 'Quellax Mariot',
-          header: 'Low panel voltage',
-          text: 'Disconnect your solar panel from your PV system.',
-          time: '11:58pm  2/01/2023',
-          status: 'Unresolved',
-          type: 'Active Alert',
-        },
-        {
-          id: '10',
-          name: 'Demi Wilkinson',
-          header: 'Abnormal load',
-          text: 'Reduce load on SHS ',
-          time: '11:58pm  2/01/2023',
-          status: 'Unresolved',
-          type: 'Active Alert',
-        },
-      ],
-      view: 'view',
-      action: <BsThreeDots />,
-      email: 'jayhard@gmail.com',
-      username: 'James Harden',
-      fname: 'James',
-      lname: 'Harden',
-    },
-    {
-      key: '1',
-      shs: [
-        {
-          id: '4',
-          name: 'Demi Wilkinson',
-          header: 'Abnormal load',
-          text: 'Reduce load on SHS ',
-          time: '11:58pm  2/01/2023',
-          status: 'Resolved',
-          type: 'Active Alert',
-        },
-        {
-          id: '19',
-          name: 'Demi Wilkinson',
-          header: 'Abnormal load',
-          text: 'Reduce load on SHS ',
-          time: '11:58pm  2/01/2023',
-          status: 'Resolved',
-          type: 'Active Alert',
-        },
-      ],
-      view: 'view',
-      action: <BsThreeDots />,
-      email: 'Arokem@gmail.com',
-      username: 'Arogbo Kemisola',
-      fname: 'Arogbo',
-      lname: 'Kemisola',
-    },
-  ]
-
   const columns = [
     {
       key: '1',
@@ -142,118 +174,22 @@ const ActiveAlert = () => {
     {
       key: '5',
       title: <span style={{ color: '#f0f7ed' }}>i</span>,
-      dataIndex: 'view',
-      render: (data) => (
-        <span
-          style={{
-            color: '#385E2B',
-          }}
-        >
-          View
-        </span>
-      ),
+      dataIndex: ['shs', 'info'],
+      render: (text, record) => <ActiveAlertDetails data={record} />,
     },
   ]
-
   const [data, setActiveAlertData] = useState(activeAlertdata)
-
-  const ActiveAlertCard = ({ activeAlertData }) => {
-    console.log('activeAlertData ', activeAlertData.shs)
-    const ShsOptions = [
-      {
-        value: 'hello',
-        label: 'hello',
-      },
-    ]
-    const [isModalOpen, setIsModalOpen] = useState(false)
-    const showModal = () => {
-      setIsModalOpen(true)
-    }
-    const handleOk = () => {
-      setIsModalOpen(false)
-    }
-    const handleCancel = () => {
-      setIsModalOpen(false)
-    }
-    return (
-      <div>
-        <span>{activeAlertData.action}</span>
-        <div onClick={showModal}>
-          <p>{activeAlertData?.shs[0]?.header}</p>
-          <p>{activeAlertData?.shs[0]?.text} </p>
-        </div>
-        <Modal
-          open={isModalOpen}
-          onOk={handleOk}
-          onCancel={handleCancel}
-          className={classes.ActiveAlert__ActiveAlertNotificationListModal}
-          width={400}
-          footer={null}
-        >
-          <div className={classes.ActiveAlert__ModalContent}>
-            <div className={classes.ActiveAlert__ModalContentInit}>
-              <div>
-                {' '}
-                <span>{activeAlertData?.fname[0]}</span>
-                <span>{activeAlertData?.lname[0]}</span>
-              </div>
-            </div>
-            <h1>{activeAlertData?.username}</h1>
-            <p>{activeAlertData?.email}</p>
-            <div>
-              <div
-                className={classes.ActiveAlert__ActiveAlertModalFilterStatus}
-              >
-                <div>
-                  <Space
-                    className={classes.ActiveAlert__ActiveAlertModalFilterInput}
-                  >
-                    <div
-                      className={
-                        classes.ActiveAlert__ActiveAlertModalFormSelectPrefix
-                      }
-                    >
-                      <BsHouse size={20} color="#5C9D48" />
-                    </div>
-                    <Select
-                      className={
-                        classes.ActiveAlert__ActiveAlertModalFormSelect
-                      }
-                      defaultValue={ShsOptions[0].value}
-                      style={{
-                        width: 150,
-                        border: 'none',
-                        color: 'white',
-                      }}
-                      onChange={handleChange}
-                      options={ShsOptions}
-                      dropdownStyle={{ background: 'white' }}
-                      showArrow={true}
-                    />
-                  </Space>
-                </div>
-                <div className={classes.ActiveAlert__ActiveAlertModalStatus}>
-                  <span>Unresolved</span>{' '}
-                  <span>
-                    <MdFilterList size={20} color="#5C9D48" />
-                  </span>
-                </div>
-              </div>
-
-              <div className={classes.ActiveAlert__ActiveAlertModalShsInfo}>
-                <span>Low panel voltage</span>
-                <span>11:58pm, 2/01/2023</span>
-                <span>Unresolved</span>
-              </div>
-            </div>
-            <div className={classes.ActiveAlert__ModalClose}>
-              <button onClick={handleOk}>Close</button>
-            </div>
-          </div>
-        </Modal>
-      </div>
-    )
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const showModal = () => {
+    setIsModalOpen(true)
   }
+  const handleOk = () => {
+    setIsModalOpen(false)
+  }
+  const handleCancel = () => {
+    setIsModalOpen(false)
+  }
+
   const prefix = (
     <SearchOutlined
       style={{
@@ -265,20 +201,8 @@ const ActiveAlert = () => {
   const handleChange = (value) => {
     console.log(`selected ${value}`)
   }
-  const footer = () => {
-    return (
-      <div className={classes.ActiveAlert__Footer}>
-        <div className={classes.ActiveAlert__NavBtn}>
-          {' '}
-          <FormButton type="button" action="Previous" />
-          <FormButton type="button" action="Next" />
-        </div>
-        <div className={classes.ActiveAlert__Pagination}>Page 1 of 10</div>
-      </div>
-    )
-  }
 
-  const title = () => (
+  const ativeAlertTableTitle = () => (
     <div className={classes.ActiveAlert__ActiveAlertTableHeader}>
       <p style={{ fontWeight: '500', fontSize: '18px' }}>Active Alerts Table</p>
       <div className={classes.ActiveAlert__ActiveAlertTableHeaderFilter}>
@@ -343,6 +267,13 @@ const ActiveAlert = () => {
       </div>
     </div>
   )
+
+  const onFinish = (values) => {
+    console.log('Success:', values)
+  }
+  const onFinishFailed = (errorInfo) => {
+    console.log('Failed:', errorInfo)
+  }
 
   return (
     <AdminPageLayout>
@@ -419,6 +350,7 @@ const ActiveAlert = () => {
               </div>
               <div>
                 <button
+                  onClick={showModal}
                   className={
                     classes.ActiveAlert__ActiveAlertNotificationHeaderBtn
                   }
@@ -429,21 +361,102 @@ const ActiveAlert = () => {
                   </span>
                   <span>Add Alert</span>
                 </button>
+                <Modal
+                  open={isModalOpen}
+                  onOk={handleOk}
+                  onCancel={handleCancel}
+                  className={
+                    classes.ActiveAlert__ActiveAlertNotificationListModal
+                  }
+                  width={688}
+                  footer={null}
+                >
+                  <div className={classes.ActiveAlert__ModalContent}>
+                    <div>
+                      <div
+                        className={
+                          classes.ActiveAlert__ActiveAlertAddAlertHeaderSection
+                        }
+                      >
+                        <div
+                          className={
+                            classes.ActiveAlert__ActiveAlertAddAlertHeader
+                          }
+                        >
+                          <BsBell />
+                        </div>
+                        <div>
+                          <p>Create Active Alert</p>
+                        </div>
+                      </div>
+                      <Divider />
+
+                      <div className={classes.ActiveAlert__ModalContentForm}>
+                        <Form
+                          name="basic"
+                          labelCol={{
+                            span: 7,
+                          }}
+                          initialValues={{
+                            remember: false,
+                          }}
+                          onFinish={onFinish}
+                          onFinishFailed={onFinishFailed}
+                          autoComplete="off"
+                          layout="horizontal"
+                          requiredMark="optional"
+                          labelAlign="left"
+                        >
+                          <Form.Item label="Title" name="title" required>
+                            <Input
+                              className={classes.ActiveAlert__AddAlertInput}
+                              style={{ marginBottom: '-5px' }}
+                              placeholder="Enter active alert title "
+                            />
+                          </Form.Item>
+
+                          <Form.Item
+                            label="Event Description"
+                            name="description"
+                            required
+                          >
+                            <Input.TextArea
+                              className={classes.ActiveAlert__AddAlertInput}
+                              style={{ marginTop: '-1px' }}
+                              placeholder="Write instruction to help resolve alert."
+                              rows={5}
+                            />
+                          </Form.Item>
+                          <Form.Item>
+                            <div className={classes.ActiveAlert__AddAlertBtn}>
+                              <button onClick={handleOk}>Cancel</button>
+                              <button onClick={handleOk}>Submit</button>
+                            </div>
+                          </Form.Item>
+                        </Form>
+                      </div>
+                    </div>
+                  </div>
+                </Modal>
               </div>
             </div>
             <div className={classes.ActiveAlert__ActiveAlertNotificationList}>
               {data.slice(0, 3).map((data, key) => (
-                <ActiveAlertCard
-                  key={key}
-                  id={data.key}
-                  activeAlertData={data}
-                />
+                <div key={key}>
+                  <span>{data.action}</span>
+                  <div>
+                    <p>{data?.shs[0]?.header}</p>
+                    <p>{data?.shs[0]?.text} </p>
+                  </div>
+                </div>
               ))}
             </div>
             <div
               className={classes.ActiveAlert__ActiveAlertNotificationViewBtn}
             >
-              <button>View Created Alert</button>
+              <Link to={'/admin/active-alerts/created-alerts'}>
+                View Created Alert
+              </Link>
             </div>
           </div>
           <div className={classes.ActiveAlert__ActiveAlertStats}>
@@ -591,14 +604,10 @@ const ActiveAlert = () => {
           </div>
         </section>
         <section className={classes.ActiveAlert__ActiveAlertTable}>
-          <Table
-            title={title}
+          <ActiveAlertTable
+            title={ativeAlertTableTitle}
             columns={columns}
             dataSource={activeAlertdata}
-            footer={footer}
-            pagination={{
-              position: ['none', 'none'],
-            }}
           />
         </section>
       </section>

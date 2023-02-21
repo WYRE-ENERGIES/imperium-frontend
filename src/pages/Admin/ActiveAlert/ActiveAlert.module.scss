@@ -220,7 +220,7 @@
   &__ActiveAlertNotificationViewBtn {
     display: flex;
     justify-content: end;
-    button {
+    a {
       background: #ffffff;
       border: 1px solid #84bb72;
       box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05);
@@ -315,27 +315,7 @@
       width: 20px;
     }
   }
-  &__Footer {
-    display: flex;
-    justify-content: space-between;
-  }
 
-  &__NavBtn {
-    display: flex;
-    justify-content: space-between;
-    width: 170px;
-    button {
-      background: #ffffff !important;
-      border: 1px solid #d0d5dd;
-      box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05);
-      border-radius: 8px;
-      color: #999999 !important;
-      padding: 5px 14px !important;
-    }
-  }
-  &__Pagination {
-    font-size: 14px;
-  }
   &__SearchAndFilter {
     font-size: 15px !important;
     padding: $formElementPadding;
@@ -423,7 +403,11 @@
       border-radius: 30px;
       font-weight: 400;
       font-size: 16px;
-      padding: 6px 11px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 40px;
+      height: 40px;
     }
   }
 
@@ -510,11 +494,129 @@
       border-radius: 8px;
       color: white;
       padding: 10px 18px;
+      font-weight: 600;
+      font-size: 16px;
 
       &:hover {
         cursor: pointer;
         background: #203d16;
       }
+    }
+  }
+
+  &__ActiveAlertAddAlertHeader {
+    background: #dcecd5;
+    border: 8px solid #f0f7ed;
+    border-radius: 28px;
+    width: 48px;
+    height: 48px;
+    padding: 9px;
+  }
+  &__ActiveAlertAddAlertHeaderSection {
+    display: flex;
+    align-items: center;
+    & > div > p {
+      font-weight: 600;
+      font-size: 18px;
+      margin: 4px 0 0 10px;
+    }
+  }
+
+  &__AddAlertInput {
+    background: #f2f2f2;
+    border: 1px solid #c4c4c4;
+    box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05);
+    border-radius: 8px;
+    padding: 10px 10px;
+
+    &:hover {
+      offset: $offset;
+      border: 1px solid $light-green !important;
+      box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05), 0px 0px 0px 4px #f0f7ed;
+    }
+    &:focus-within {
+      offset: $offset;
+      border: 1px solid $light-green !important;
+      box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05), 0px 0px 0px 4px #f0f7ed;
+    }
+  }
+  &__AddAlertBtn {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    button {
+      height: 44px;
+      flex: 1;
+      box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05);
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 16px;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+    button:nth-child(1) {
+      background: #ffffff;
+      border: 1px solid #c4c4c4;
+    }
+    button:nth-child(2) {
+      background: #385e2b;
+      border: 1px solid #385e2b;
+      color: white;
+    }
+  }
+  &__CreateActiveAlerts {
+    display: flex;
+    justify-content: space-between;
+    button {
+      margin-top: 30px;
+    }
+  }
+  &__ActiveAlertCreateTable {
+    margin-top: 30px;
+    & table > thead > tr > th {
+      background: #f0f7ed !important;
+      font-weight: 500;
+      font-size: 12px;
+      line-height: 20px;
+      color: #454545;
+    }
+    td:nth-child(2n-1) {
+      width: 200px;
+    }
+  }
+  &__ActiveAlertClient {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    gap: 10px;
+    p {
+      font-weight: 500;
+      line-height: 1px;
+      color: #363636;
+    }
+    span {
+      color: #606062;
+      line-height: 2px;
+    }
+  }
+
+  &__ActiveAlertLocationTable {
+    margin-top: 30px;
+    & table > thead > tr > th {
+      background: #f0f7ed !important;
+      font-weight: 500;
+      font-size: 12px;
+      line-height: 20px;
+      color: #454545;
+    }
+  }
+  &__DetailView {
+    position: relative;
+    z-index: 10;
+    &:hover {
+      cursor: pointer;
     }
   }
 }
