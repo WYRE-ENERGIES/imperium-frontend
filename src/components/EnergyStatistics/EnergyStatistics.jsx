@@ -30,7 +30,11 @@ const EnergyStatistics = ({ duration, chartData, areaChartData }) => {
       </ChartCard>
 
       <ChartCard title="Capacity Statistics(kW)" subTitle={duration}>
-        <AreaChart chartData={areaChartData} />
+        <AreaChart
+          chartData={areaChartData}
+          themeMode="dark"
+          optionProps={{ colors: ['#497A38'] }}
+        />
       </ChartCard>
     </div>
   )

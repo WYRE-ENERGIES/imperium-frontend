@@ -2,23 +2,24 @@ import Chart from 'react-apexcharts'
 import React from 'react'
 import { areaChartOptions } from '../data'
 
-const AreaChart = ({ chartData }) => {
+const AreaChart = ({
+  chartData,
+  themeMode = 'light',
+  chartProps,
+  optionProps,
+}) => {
   return (
-    <div>
+    <div style={{ height: '100%' }}>
       <Chart
         options={{
           ...areaChartOptions,
           theme: {
-            mode: 'dark',
-            monochrome: {
-              enabled: true,
-              color: '#497A38',
-              shadeTo: 'light',
-              shadeIntensity: 0.65,
-            },
+            mode: themeMode,
           },
+          ...optionProps,
         }}
         series={chartData}
+        {...chartProps}
       />
     </div>
   )

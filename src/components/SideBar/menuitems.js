@@ -47,7 +47,7 @@ export const userMenuItems = [
 }))
 
 export const adminMenuItems = [
-  // { icon: BarChartOutlined, title: 'Overview', linkTo: '/admin/overview' },
+  { icon: BarChartOutlined, title: 'Overview', linkTo: '/admin/overview' },
   {
     icon: ThunderboltOutlined,
     title: 'Energy Analytic',

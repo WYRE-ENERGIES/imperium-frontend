@@ -9,6 +9,7 @@ const AdminEnergyAnalytic = ({
   valueCurrency,
   duration,
   graphColor,
+  LineGraph,
 }) => {
   return (
     <div className={classes.AdminEnergyAnalytic}>
@@ -20,11 +21,17 @@ const AdminEnergyAnalytic = ({
             {valueCurrency && <span>{valueCurrency}</span>}
           </h1>
           <h4 className={classes.AdminEnergyAnalytic__duration}>
-            <Icon style={{ color: '#497A38', marginRight: '8px' }} size={20} />
+            {Icon && (
+              <Icon
+                style={{ color: '#497A38', marginRight: '8px' }}
+                size={20}
+              />
+            )}
             {duration}
           </h4>
         </div>
         {graphColor && <RxBarChart size={50} style={{ color: graphColor }} />}
+        {LineGraph && <LineGraph />}
       </div>
     </div>
   )

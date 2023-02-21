@@ -48,7 +48,7 @@ const Sidebar = ({
           justifyContent: 'space-between',
         }}
       >
-        <Link to={isAdmin ? '/admin/sign-in' : '/'}>
+        <Link to={isAdmin ? '/admin' : '/'}>
           {isAdmin ? (
             <AdminLogo
               style={{
