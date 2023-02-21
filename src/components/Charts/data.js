@@ -97,19 +97,22 @@ export const areaChartOptions = {
   },
   xaxis: {
     categories: [
-      'January',
-      'February',
-      'March',
-      'April',
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
       'May',
-      'June',
-      'July',
-      'August',
-      'September',
-      'October',
-      'November',
-      'December',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sept',
+      'Oct',
+      'Nov',
+      'Dec',
     ],
+    axisTicks: {
+      show: false,
+    },
   },
   dataLabels: {
     enabled: false,
@@ -202,9 +205,6 @@ export const barChartOptions = {
       radius: 10,
     },
   },
-  grid: {
-    show: false,
-  },
   xaxis: {
     categories: [
       'Jan',
@@ -234,5 +234,90 @@ export const barChartOptions = {
   },
   dataLabels: {
     enabled: false,
+  },
+}
+
+export const adminPieChartOptions = {
+  labels: [
+    'Agriculture',
+    'Business',
+    'Education',
+    'Finance',
+    'Health',
+    'Others',
+  ],
+  dataLabels: {
+    enabled: false,
+  },
+  colors: ['#99C78A', '#FF9C66', '#67E3F9', '#A4BCFD', '#7375FD', '#D5D9EB'],
+  plotOptions: {
+    pie: {
+      startAngle: 0,
+      endAngle: 360,
+      expandOnClick: true,
+      donut: {
+        size: '80%',
+        background: 'transparent',
+        labels: {
+          show: true,
+          name: {
+            show: true,
+          },
+          value: {
+            show: true,
+          },
+          total: {
+            show: true,
+            showAlways: true,
+            label: 'Total',
+            fontSize: '1em',
+            fontFamily: 'baloo 2',
+            fontWeight: 600,
+            color: '#28293D',
+            formatter: function (w) {
+              return w.globals.seriesTotals.reduce((a, b) => {
+                return a + b
+              }, 0)
+            },
+          },
+        },
+      },
+    },
+  },
+  legend: {
+    formatter: function (seriesName, opts) {
+      return [seriesName, ' - ', opts.w.globals.series[opts.seriesIndex]]
+    },
+  },
+}
+
+export const additionalOverviewProps = {
+  legend: {
+    position: 'top',
+    horizontalAlign: 'right',
+  },
+  yaxis: { labels: { show: false } },
+  colors: ['#385E2B', '#C9E00C'],
+}
+
+export const additionalCustomerProps = {
+  grid: {
+    show: false,
+  },
+}
+
+export const additionalOverviewBarProps = {
+  ...barChartOptions,
+  xaxis: {
+    ...barChartOptions.xaxis,
+    title: {
+      text: 'Month',
+      offsetY: 90,
+    },
+  },
+  yaxis: {
+    title: {
+      text: 'CO2 (Kg)',
+    },
   },
 }

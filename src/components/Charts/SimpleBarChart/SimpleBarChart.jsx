@@ -8,6 +8,7 @@ const SimpleBarChart = ({
   colors,
   borderRadius,
   columnWidth,
+  optionProps,
 }) => {
   return (
     <Chart
@@ -25,6 +26,7 @@ const SimpleBarChart = ({
         title: {
           text: title,
         },
+        ...optionProps,
       }}
       type="bar"
       height="100%"

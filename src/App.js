@@ -95,6 +95,7 @@ const AdminCustomer = lazy(() =>
   import('./pages/Admin/Customers/Customer/Customer'),
 )
 const AdminSHS = lazy(() => import('./pages/Admin/SHS/SHS'))
+const AdminOverview = lazy(() => import('./pages/Admin/Overview/Overview'))
 
 function App() {
   return (
@@ -131,6 +132,7 @@ function App() {
 
             {/* Admin routes */}
             <Route path="admin">
+              <Route index element={<AdminSignIn />} />
               <Route path="account" element={<AdminAccount />} />
               <Route path="active-alerts">
                 <Route index element={<AdminActiveAlert />} />
@@ -148,7 +150,6 @@ function App() {
               <Route path="energy-analytic" element={<AdminEnergyAnalytic />} />
               <Route path="users" element={<Users />} />
               <Route path="support" element={<AdminSupport />} />
-              <Route path="sign-in" element={<AdminSignIn />} />
               <Route path="forgot-password" element={<AdminForgotPassword />} />
               <Route path="new-password" element={<AdminResetPassword />} />
               <Route path="otp" element={<AdminOtp />} />
@@ -157,6 +158,7 @@ function App() {
                 <Route path=":id" element={<AdminCustomer />} />
               </Route>
               <Route path="all-shs" element={<AdminSHS />} />
+              <Route path="overview" element={<AdminOverview />} />
             </Route>
           </Route>
         </Routes>
