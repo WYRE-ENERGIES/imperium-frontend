@@ -5,8 +5,8 @@ import {
   UserOutlined,
 } from '@ant-design/icons'
 import { BsBattery, BsBell, BsSunset } from 'react-icons/bs'
+import { FiHome, FiUsers } from 'react-icons/fi'
 
-import { FiUsers } from 'react-icons/fi'
 import { HiOutlineSupport } from 'react-icons/hi'
 import { Link } from 'react-router-dom'
 import React from 'react'
@@ -69,6 +69,7 @@ export const adminMenuItems = [
     linkTo: '/admin/active-alerts',
   },
   { icon: UserOutlined, title: 'Customers', linkTo: '/admin/customers' },
+  { icon: FiHome, title: 'All SHS', linkTo: '/admin/all-shs' },
   {
     icon: FiUsers,
     title: 'Users',

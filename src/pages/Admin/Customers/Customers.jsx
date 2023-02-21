@@ -16,104 +16,9 @@ import classes from './Customers.module.scss'
 import { customersData } from '../../../utils/userData'
 
 const SHSForm = lazy(() => import('./SHSForm/SHSForm'))
-
-const columns = [
-  {
-    title: 'Client',
-    dataIndex: 'client',
-    key: 'client',
-    sorter: (a, b) => a.name.localeCompare(b.name),
-    render: (_, record) => (
-      <div className={classes.Customers__nameDiv}>
-        <Switch
-          style={{ backgroundColor: record.status ? '#385E2B' : '' }}
-          defaultChecked={record.status}
-          onChange={() => console.log('clicked')}
-        />
-        <ReactAvatar
-          size={30}
-          round={true}
-          name={record.name}
-          fgColor="#385E2B"
-          color="#F0F7ED"
-        />
-        <div className={classes.Customers__names}>
-          <h3>{record.name}</h3>
-          <h4>{record.email}</h4>
-        </div>
-      </div>
-    ),
-  },
-  {
-    title: 'Purchase Date',
-    key: 'purchaseDate',
-    dataIndex: 'purchaseDate',
-    render: (value) => value.toLocaleString(),
-  },
-  {
-    title: 'SHS',
-    key: 'noOfShs',
-    dataIndex: 'noOfShs',
-    sorter: (a, b) => a.noOfShs - b.noOfShs,
-    render: (value) => value.toLocaleString(),
-  },
-  {
-    title: 'Users',
-    key: 'noOfUsers',
-    dataIndex: 'noOfUsers',
-    sorter: (a, b) => a.noOfUsers - b.noOfUsers,
-    render: (value) => value.toLocaleString(),
-  },
-  {
-    title: 'Status',
-    key: 'status',
-    dataIndex: 'status',
-    sorter: (a, b) => a.status - b.status,
-    render: (value) => {
-      const color = value ? '#027A48' : '#B54708'
-      return (
-        <Tag
-          color={value ? 'success' : 'error'}
-          key={value}
-          style={{
-            borderRadius: '10px',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            width: 'fit-content',
-            color: color,
-          }}
-        >
-          {value ? 'Active' : 'Deactivated'}
-        </Tag>
-      )
-    },
-  },
-  {
-    title: '',
-    key: 'action',
-    align: 'center',
-    render: (_, record) => {
-      const color = record.status ? '#808080' : '#B54708'
-      return (
-        <div className={classes.Customers__actions}>
-          <ExclamationCircleOutlined style={{ color }} />
-          <Link
-            to="#"
-            style={{
-              color: record.status ? '#385E2B' : '#C4C4C4',
-              fontWeight: 600,
-              fontSize: '14px',
-              lineHeight: '20px',
-            }}
-          >
-            View
-          </Link>
-        </div>
-      )
-    },
-  },
-]
+const ActivateCustomer = lazy(() =>
+  import('./ActivateCustomer/ActivateCustomer'),
+)
 
 const Customers = () => {
   const [chartData, setChartData] = useState([
@@ -122,8 +27,130 @@ const Customers = () => {
       data: [400, 500, 350, 420, 320, 500, 410, 430, 410, 500, 570, 400],
     },
   ])
+  const [selectedUser, setSelectedUser] = useState(false)
   const [openModal, setOpenModal] = useState(false)
+  const [openActivateCustomerModal, setOpenActivateCustomerModal] =
+    useState(false)
+
   const toggleModal = () => setOpenModal(!openModal)
+  const toggleActivateCustomerModal = (record) => {
+    setSelectedUser(record)
+    setOpenActivateCustomerModal(!openActivateCustomerModal)
+  }
+
+  const columns = [
+    {
+      title: 'Client',
+      dataIndex: 'client',
+      key: 'client',
+      sorter: (a, b) => a.name.localeCompare(b.name),
+      render: (_, record) => (
+        <div className={classes.Customers__nameDiv}>
+          <Switch
+            style={{ backgroundColor: record.status ? '#385E2B' : '' }}
+            defaultChecked={record.status}
+            onChange={() => toggleActivateCustomerModal(record)}
+          />
+          <ReactAvatar
+            size={30}
+            round={true}
+            name={record.name}
+            fgColor="#385E2B"
+            color="#F0F7ED"
+          />
+          <div className={classes.Customers__names}>
+            <h3 style={{ color: record.status ? '' : '#C4C4C4' }}>
+              {record.name}
+            </h3>
+            <h4 style={{ color: record.status ? '' : '#C4C4C4' }}>
+              {record.email}
+            </h4>
+          </div>
+        </div>
+      ),
+    },
+    {
+      title: 'Purchase Date',
+      key: 'purchaseDate',
+      dataIndex: 'purchaseDate',
+      render: (value, record) => (
+        <p style={{ color: record.status ? '' : '#C4C4C4' }}>
+          {value.toLocaleString()}
+        </p>
+      ),
+    },
+    {
+      title: 'SHS',
+      key: 'noOfShs',
+      dataIndex: 'noOfShs',
+      sorter: (a, b) => a.noOfShs - b.noOfShs,
+      render: (value, record) => (
+        <p style={{ color: record.status ? '' : '#C4C4C4' }}>
+          {value.toLocaleString()}
+        </p>
+      ),
+    },
+    {
+      title: 'Users',
+      key: 'noOfUsers',
+      dataIndex: 'noOfUsers',
+      sorter: (a, b) => a.noOfUsers - b.noOfUsers,
+      render: (value, record) => (
+        <p style={{ color: record.status ? '' : '#C4C4C4' }}>
+          {value.toLocaleString()}
+        </p>
+      ),
+    },
+    {
+      title: 'Status',
+      key: 'status',
+      dataIndex: 'status',
+      sorter: (a, b) => a.status - b.status,
+      render: (value) => {
+        const color = value ? '#027A48' : '#B54708'
+        return (
+          <Tag
+            color={value ? 'success' : 'error'}
+            key={value}
+            style={{
+              borderRadius: '10px',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              width: 'fit-content',
+              color: color,
+            }}
+          >
+            {value ? 'Active' : 'Deactivated'}
+          </Tag>
+        )
+      },
+    },
+    {
+      title: '',
+      key: 'action',
+      align: 'center',
+      render: (_, record) => {
+        const color = record.status ? '#808080' : '#B54708'
+        return (
+          <div className={classes.Customers__actions}>
+            <ExclamationCircleOutlined style={{ color }} />
+            <Link
+              to={`/admin/customers/${record.id}`}
+              style={{
+                color: record.status ? '#385E2B' : '#C4C4C4',
+                fontWeight: 600,
+                fontSize: '14px',
+                lineHeight: '20px',
+              }}
+            >
+              View
+            </Link>
+          </div>
+        )
+      },
+    },
+  ]
 
   return (
     <AdminPageLayout>
@@ -175,6 +202,13 @@ const Customers = () => {
       </div>
       <Suspense fallback={<h4>Loading...</h4>}>
         {openModal && <SHSForm isOpen={openModal} toggleModal={toggleModal} />}
+        {openActivateCustomerModal && (
+          <ActivateCustomer
+            user={selectedUser}
+            isOpen={openActivateCustomerModal}
+            toggleModal={toggleActivateCustomerModal}
+          />
+        )}
       </Suspense>
     </AdminPageLayout>
   )

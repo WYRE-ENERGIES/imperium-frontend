@@ -1,6 +1,7 @@
 import { DatePicker, Radio, Select } from 'antd'
 import React, { useState } from 'react'
 
+import { CloudDownloadOutlined } from '@ant-design/icons'
 import DropDownFilter from '../DropDownFilter/DropDownFilter'
 import classes from './WidgetFilter.module.scss'
 
@@ -26,7 +27,7 @@ const radioButtonOptions = optionData.map((option, index) => (
   </Button>
 ))
 
-const WidgetFilter = () => {
+const WidgetFilter = ({ hasExportButton = false }) => {
   const [filterBy, SetFilterBy] = useState('')
 
   const filterByChange = (e) => {

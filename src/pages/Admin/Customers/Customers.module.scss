@@ -25,6 +25,17 @@
     }
   }
 
+  &__customerWidgets {
+    display: flex;
+    overflow: scroll;
+    gap: 24px;
+    width: 100%;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
   &__nameDiv {
     display: flex;
     align-items: center;
@@ -60,6 +71,22 @@
     flex: 0.6;
     display: flex;
     gap: 20px;
+  }
+
+  &__Location {
+    & > * {
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 20px;
+    }
+
+    & > h3 {
+      color: #363636;
+    }
+
+    & > h4 {
+      color: #808080;
+    }
   }
 }
 

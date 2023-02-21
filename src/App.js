@@ -89,8 +89,12 @@ const AdminBattery = lazy(() =>
 const AdminEnergyAnalytic = lazy(() =>
   import('./pages/Admin/EnergyAnalytic/EnergyAnalytic'),
 )
-const AdminCustomer = lazy(() => import('./pages/Admin/Customers/Customers'))
+const AdminCustomers = lazy(() => import('./pages/Admin/Customers/Customers'))
 const AdminSupport = lazy(() => import('./pages/Admin/Support/Support'))
+const AdminCustomer = lazy(() =>
+  import('./pages/Admin/Customers/Customer/Customer'),
+)
+const AdminSHS = lazy(() => import('./pages/Admin/SHS/SHS'))
 
 function App() {
   return (
@@ -143,12 +147,16 @@ function App() {
               <Route path="battery-analytic" element={<AdminBattery />} />
               <Route path="energy-analytic" element={<AdminEnergyAnalytic />} />
               <Route path="users" element={<Users />} />
-              <Route path="customers" element={<AdminCustomer />} />
               <Route path="support" element={<AdminSupport />} />
               <Route path="sign-in" element={<AdminSignIn />} />
               <Route path="forgot-password" element={<AdminForgotPassword />} />
               <Route path="new-password" element={<AdminResetPassword />} />
               <Route path="otp" element={<AdminOtp />} />
+              <Route path="customers">
+                <Route index element={<AdminCustomers />} />
+                <Route path=":id" element={<AdminCustomer />} />
+              </Route>
+              <Route path="all-shs" element={<AdminSHS />} />
             </Route>
           </Route>
         </Routes>
