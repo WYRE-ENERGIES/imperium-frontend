@@ -4,12 +4,14 @@ import { generalFilterOptions } from '../../../utils/data'
 import AdminPageLayout from '../../../components/Layout/AdminPageLayout/AdminPageLayout'
 import PageBreadcrumb from '../../../components/PageBreadcrumb/PageBreadcrumb'
 import Chart from 'react-apexcharts'
-import TableWithFilter from '../../../components/SHSTableWithFilter/SHSTableWithFilter'
+import SHSTableWithFilter from '../../../components/SHSTableWithFilter/SHSTableWithFilter'
 import { ReactComponent as SunWidgetIcon } from '../../../assets/widget-icons/sun.svg'
 import { ReactComponent as EnergyWidgetIcon } from '../../../assets/widget-icons/energy.svg'
 import Widget from '../../../components/Widget/Widget/Widget'
 import WidgetFilter from '../../../components/WidgetFilter/WidgetFilter'
-import classes from '../../Customer/Battery/Battery.module.scss'
+import classes from './VoltageCurrent.module.scss'
+import { SearchOutlined } from '@ant-design/icons'
+import { Input } from 'antd'
 
 export const adminVoltageCurrentTableData = [
   {
@@ -89,6 +91,27 @@ const columns = [
     render: (value) => `${value.toLocaleString()} W`,
   },
 ]
+const Footer = () => {
+  return (
+    <section className={classes.VoltageCurrent__Footer}>
+      <div className={classes.VoltageCurrent__NavBtn}>
+        {' '}
+        <button>Previous</button>
+        <button>Next</button>
+      </div>
+      <div className={classes.VoltageCurrent__Pagination}>Page 1 of 10</div>
+    </section>
+  )
+}
+
+const prefix = (
+  <SearchOutlined
+    style={{
+      fontSize: 16,
+      color: '#808080',
+    }}
+  />
+)
 
 const VoltageCurrent = () => {
   const [chartData, setChartData] = useState([
@@ -116,22 +139,34 @@ const VoltageCurrent = () => {
 
   return (
     <AdminPageLayout>
-      <div style={{ backgroundColor: '#FCFCFD' }} className={classes.Battery}>
-        <section className={classes.Battery__headerSection}>
+      <div
+        style={{ backgroundColor: '#FCFCFD' }}
+        className={classes.VoltageCurrent}
+      >
+        <section className={classes.VoltageCurrent__headerSection}>
           <PageBreadcrumb
             title="Voltage & Current Analytics"
             items={['Voltage & Current Analytics']}
           />
         </section>
-        <section className={classes.Battery__filters}>
+        <section className={classes.VoltageCurrent__filters}>
           <WidgetFilter />
         </section>
-        <div className={classes.Battery__widgets}>{widgets}</div>
+        <section>
+          <Input
+            placeholder="Search SHS"
+            size="large"
+            prefix={prefix}
+            className={classes.VoltageCurrent__search}
+          />
+        </section>
+        <div className={classes.VoltageCurrent__widgets}>{widgets}</div>
         <div
           style={{
             height: '500px',
             border: '1px solid #DCECD5',
             borderRadius: '8px',
+            paddingBottom: '20px',
           }}
         >
           <Chart
@@ -205,15 +240,14 @@ const VoltageCurrent = () => {
             width="100%"
           />
         </div>
-        <div className={classes.Battery__shsTable}>
-          <TableWithFilter
+        <div className={classes.VoltageCurrent__shsTable}>
+          <SHSTableWithFilter
             columns={columns}
             data={adminVoltageCurrentTableData}
             tableTitle="Voltage & Current Table"
             tagValue="kWh"
             filterOptions={generalFilterOptions}
-            isAdmin={true}
-            // footer = {Table}
+            footer={Footer}
           />
         </div>
       </div>
