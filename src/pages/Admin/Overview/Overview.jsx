@@ -1,3 +1,4 @@
+import { Button, List } from 'antd'
 import React, { useState } from 'react'
 import {
   additionalOverviewBarProps,
@@ -7,7 +8,6 @@ import {
 import AdminEnergyAnalytic from '../../../components/Widget/AdminEnergyAnalytic/AdminEnergyAnalytic'
 import AdminPageLayout from '../../../components/Layout/AdminPageLayout/AdminPageLayout'
 import AreaChart from '../../../components/Charts/AreaChart/AreaChart'
-import { Button } from 'antd'
 import Donut from '../../../components/Charts/Donut/Donut'
 import { ReactComponent as GraphIcon } from '../../../assets/widget-icons/Line.svg'
 import { ReactComponent as GraphIcon2 } from '../../../assets/widget-icons/overview-line-icon.svg'
@@ -17,6 +17,7 @@ import ShsDeviceMap from '../../../components/Map/ShsDeviceMap'
 import SimpleBarChart from '../../../components/Charts/SimpleBarChart/SimpleBarChart'
 import WidgetFilter from '../../../components/WidgetFilter/WidgetFilter'
 import classes from '../../Customer/Overview/Overview.module.scss'
+import { listData } from '../../../utils/data'
 
 const Overview = () => {
   const [pieChartData, setPieChartData] = useState([50, 75, 64, 35, 80, 27])
@@ -136,7 +137,26 @@ const Overview = () => {
               />
             </div>
           </div>
-          <div className={classes.Overview__alerts}>active alerts</div>
+          <div className={classes.Overview__alerts}>
+            <h1>Active Alerts</h1>
+            <div className={classes.Overview__alertList}>
+              <List
+                dataSource={listData}
+                renderItem={(item, index) => (
+                  <List.Item key={index}>
+                    <List.Item.Meta
+                      title={item.issue}
+                      description={item.name}
+                    />
+                    <p style={{ color: item.status ? '#5C9D48' : '#B42318' }}>
+                      {item.status ? 'Resolved' : 'Unresolved'}
+                    </p>
+                  </List.Item>
+                )}
+              />
+            </div>
+            <Button className={classes.Overview__alertBtn}>Show more</Button>
+          </div>
         </div>
       </div>
     </AdminPageLayout>

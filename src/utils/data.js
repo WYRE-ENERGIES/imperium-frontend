@@ -463,3 +463,14 @@ export const adminEnergyAnalyticColumns = [
     render: (value) => value,
   },
 ]
+
+export const listData = [
+  { name: 'Farmilii Solar', issue: 'Low panel voltage', status: true },
+  { name: 'Makanty Rewanda', issue: 'Maintenance overdue', status: true },
+  { name: 'Candice Wu', issue: 'Abnormal load', status: false },
+  { name: 'Makanty Rewanda', issue: 'Maintenance overdue', status: true },
+  { name: 'BeMicky washo', issue: 'Low Battery volage', status: true },
+  { name: 'Makanty Rewanda', issue: 'Maintenance overdue', status: false },
+  { name: 'BeMicky washo', issue: 'Low panel voltage', status: true },
+  { name: 'Candice Wu', issue: 'Abnormal load', status: true },
+]
