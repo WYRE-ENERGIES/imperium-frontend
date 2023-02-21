@@ -4,7 +4,13 @@ import {
   ThunderboltOutlined,
   UserOutlined,
 } from '@ant-design/icons'
-import { BsBattery, BsBell, BsSunset } from 'react-icons/bs'
+import {
+  BsBarChartFill,
+  BsBarChartLineFill,
+  BsBattery,
+  BsBell,
+  BsSunset,
+} from 'react-icons/bs'
 import { FiHome, FiUsers } from 'react-icons/fi'
 
 import { HiOutlineSupport } from 'react-icons/hi'
@@ -63,13 +69,20 @@ export const adminMenuItems = [
     title: 'Battery Analytic',
     linkTo: '/admin/battery-analytic',
   },
+
+  {
+    icon: BsBarChartFill,
+    title: 'Current & Voltage Analytics',
+    linkTo: '/admin/voltage-current-analytics',
+  },
+
+  { icon: UserOutlined, title: 'Customers', linkTo: '/admin/customers' },
+  { icon: FiHome, title: 'All SHS', linkTo: '/admin/all-shs' },
   {
     icon: BsBell,
     title: 'Active Alerts',
     linkTo: '/admin/active-alerts',
   },
-  { icon: UserOutlined, title: 'Customers', linkTo: '/admin/customers' },
-  { icon: FiHome, title: 'All SHS', linkTo: '/admin/all-shs' },
   {
     icon: FiUsers,
     title: 'Users',
