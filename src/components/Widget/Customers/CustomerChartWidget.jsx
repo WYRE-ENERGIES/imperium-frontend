@@ -1,5 +1,6 @@
 import React from 'react'
 import SimpleBarChart from '../../Charts/SimpleBarChart/SimpleBarChart'
+import { additionalCustomerProps } from '../../Charts/data'
 import classes from './CustomersWidget.module.scss'
 
 const CustomerChartWidget = ({
@@ -16,6 +17,7 @@ const CustomerChartWidget = ({
         colors={colors}
         borderRadius={borderRadius}
         columnWidth={columnWidth}
+        optionProps={additionalCustomerProps}
       />
     </div>
   )
