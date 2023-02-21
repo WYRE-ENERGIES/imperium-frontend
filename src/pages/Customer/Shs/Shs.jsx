@@ -1,5 +1,6 @@
 import { CloseOutlined, ThunderboltOutlined } from '@ant-design/icons'
 import { Col, Divider, Dropdown, Modal, Row, Tag } from 'antd'
+
 import React, { useState } from 'react'
 
 import { BiTrendingUp } from 'react-icons/bi'
