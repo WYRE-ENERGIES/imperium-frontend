@@ -22,7 +22,6 @@ import ActiveAlertTable from '../../../components/ActiveAlert/Table/ActiveAlertT
 import activeAlertdata from '../../../components/ActiveAlert/Data/data'
 
 const ActiveAlertDetails = (data) => {
-  console.log('data', data)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const showModal = () => {
     setIsModalOpen(true)
