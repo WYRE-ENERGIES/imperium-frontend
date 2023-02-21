@@ -1,123 +1,92 @@
 import React, { useState } from 'react'
-import {
-  adminBatteryTableData,
-  generalFilterOptions,
-} from '../../../utils/data'
+import { generalFilterOptions } from '../../../utils/data'
 
 import AdminPageLayout from '../../../components/Layout/AdminPageLayout/AdminPageLayout'
-import { BsDot } from 'react-icons/bs'
 import PageBreadcrumb from '../../../components/PageBreadcrumb/PageBreadcrumb'
-import { RiBattery2ChargeLine } from 'react-icons/ri'
-import StackedBarChart from '../../../components/Charts/StackedBarChart/StackedBarChart'
+import Chart from 'react-apexcharts'
 import TableWithFilter from '../../../components/SHSTableWithFilter/SHSTableWithFilter'
-import { Tag } from 'antd'
+import { ReactComponent as SunWidgetIcon } from '../../../assets/widget-icons/sun.svg'
+import { ReactComponent as EnergyWidgetIcon } from '../../../assets/widget-icons/energy.svg'
 import Widget from '../../../components/Widget/Widget/Widget'
 import WidgetFilter from '../../../components/WidgetFilter/WidgetFilter'
 import classes from '../../Customer/Battery/Battery.module.scss'
 
-const adminVolatgeCurrentWidgetsData = [
+export const adminVoltageCurrentTableData = [
   {
     id: 1,
-    icon: EnergyWidgetIcon,
-    title: 'Voltage',
-    range: 'For the year',
-    value: 6834,
+    key: 1,
+    name: 'January, 2023',
+    panelVoltage: 6.35,
+    panelCurrent: 14.36,
+    panelEnergy: 91.19,
   },
   {
     id: 2,
-    icon: GoodBatteryWidgetIcon,
-    title: 'Good SHS Battery',
-    range: 'For the year',
-    value: 6619,
+    key: 2,
+    name: 'January, 2023',
+    panelVoltage: 6.35,
+    panelCurrent: 14.36,
+    panelEnergy: 91.19,
   },
   {
     id: 3,
-    icon: BadBatteryWidgetIcon,
-    title: 'Bad SHS Battery',
+    key: 3,
+    name: 'January, 2023',
+    panelVoltage: 6.35,
+    panelCurrent: 14.36,
+    panelEnergy: 91.19,
+  },
+]
+const adminVolatgeCurrentWidgetsData = [
+  {
+    id: 1,
+    icon: SunWidgetIcon,
+    title: 'Voltage',
     range: 'For the year',
-    value: 215,
+    value: 284.67,
+    valueCurrency: 'V',
+  },
+  {
+    id: 2,
+    icon: SunWidgetIcon,
+    title: 'Current',
+    range: 'For the year',
+    value: 919.98,
+    valueCurrency: 'V',
+  },
+  {
+    id: 3,
+    icon: EnergyWidgetIcon,
+    title: 'Energy',
+    range: 'For the year',
+    value: 209848.71,
+    valueCurrency: 'KWh',
   },
 ]
 const columns = [
   {
-    title: 'Monthly',
+    title: 'Date',
     dataIndex: 'name',
     key: 'name',
   },
   {
-    title: 'Battery Voltage',
-    key: 'batteryVoltage',
-    dataIndex: 'batteryVoltage',
+    title: ' Voltage',
+    key: 'panelVoltage',
+    dataIndex: 'panelVoltage',
     render: (value) => `${value.toLocaleString()} V`,
   },
 
   {
-    title: 'Battery Current',
-    key: 'batteryCurrent',
-    dataIndex: 'batteryCurrent',
+    title: ' Current',
+    key: 'panelCurrent',
+    dataIndex: 'panelCurrent',
     render: (value) => `${value.toLocaleString()} A`,
   },
   {
-    title: 'Battery Health',
-    key: 'batteryHealth',
-    dataIndex: 'batteryHealth',
-    render: (value) => {
-      const color = value ? '#027A48' : '#B42318'
-      return (
-        <Tag
-          color={value ? 'success' : 'error'}
-          key={value}
-          style={{
-            borderRadius: '10px',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            width: 'fit-content',
-            color: color,
-          }}
-        >
-          {value ? 'Good' : 'Bad'}
-        </Tag>
-      )
-    },
-  },
-  {
-    title: 'Charging Source',
-    key: 'chargingSource',
-    dataIndex: 'chargingSource',
-    render: (value) => value.toLocaleString(),
-  },
-  {
-    title: 'Status',
-    key: 'status',
-    dataIndex: 'status',
-    width: '12%',
-    render: (value) => {
-      return (
-        <div className={classes.Battery__status}>
-          <RiBattery2ChargeLine
-            color={value.isCharging ? '#84BB72' : '#B42318'}
-            size={20}
-          />
-          <section className={classes.Battery__statusSection}>
-            <h3 className={classes.Battery__statusText}>Charging Status</h3>
-            <div className={classes.Battery__statusResultSection}>
-              <h4 style={{ color: value.isCharging ? '#84BB72' : '#B42318' }}>
-                <BsDot
-                  color={value.isCharging ? '#84BB72' : '#B42318'}
-                  size={20}
-                  style={{ marginLeft: 0 }}
-                />
-                {value.percentage}%
-              </h4>
-              <h5 className={classes.Battery__statusResult}>
-                {value.isCharging ? 'Charging' : 'Not Charging'}
-              </h5>
-            </div>
-          </section>
-        </div>
-      )
-    },
+    title: ' Energy',
+    key: 'panelEnergy',
+    dataIndex: 'panelEnergy',
+    render: (value) => `${value.toLocaleString()} W`,
   },
 ]
 
@@ -125,11 +94,11 @@ const VoltageCurrent = () => {
   const [chartData, setChartData] = useState([
     {
       name: 'Current',
-      data: [400, 500, 350, 420, 320, 500, 410, 430, 410, 500, 570, 400],
+      data: [1400, 1800, 2000, 100, 800, 1000, 400, 600, 1200, 200, 2300, 2400],
     },
     {
       name: 'Voltage',
-      data: [400, 500, 230, 430, 260, 430, 390, 380, 390, 330, 430, 310],
+      data: [200, 1985, 1700, 1900, 400, 600, 700, 890, 1500, 2400, 2300, 2400],
     },
   ])
 
@@ -149,31 +118,102 @@ const VoltageCurrent = () => {
     <AdminPageLayout>
       <div style={{ backgroundColor: '#FCFCFD' }} className={classes.Battery}>
         <section className={classes.Battery__headerSection}>
-          <PageBreadcrumb title="Battery" items={['Battery']} />
+          <PageBreadcrumb
+            title="Voltage & Current Analytics"
+            items={['Voltage & Current Analytics']}
+          />
         </section>
         <section className={classes.Battery__filters}>
           <WidgetFilter />
         </section>
         <div className={classes.Battery__widgets}>{widgets}</div>
-        <div className={classes.Battery__chart}>
-          <StackedBarChart
-            title="Battery Statistical Representation"
-            chartData={chartData}
-            colors={['#C9E00C', '#65AA4F']}
-            borderRadius={2}
-            columnWidth={15}
-            legendPosition="bottom"
-            legendHorizontalAlign="center"
+        <div
+          style={{
+            height: '500px',
+            border: '1px solid #DCECD5',
+            borderRadius: '8px',
+          }}
+        >
+          <Chart
+            height="100%"
+            options={{
+              title: {
+                text: 'Energy Consumed VS Energy Generated',
+                align: 'left',
+                margin: 50,
+                offsetX: 10,
+                offsetY: 20,
+                floating: false,
+                style: {
+                  fontSize: '18px',
+                  fontWeight: '500',
+                  fontFamily: undefined,
+                  color: '#263238',
+                },
+              },
+              legend: {
+                fontSize: '14px',
+                position: 'bottom',
+                horizontalAlign: 'center',
+              },
+              fill: {
+                opacity: 0.1,
+                gradient: {
+                  shadeIntensity: 1,
+                  inverseColors: false,
+                  opacityFrom: 0.45,
+                  opacityTo: 0.05,
+                  stops: [20, 100, 100, 100],
+                },
+              },
+
+              chart: {
+                id: 'VoltageCurrent-bar',
+                fontFamily: 'baloo 2',
+                stacked: true,
+                toolbar: {
+                  show: false,
+                },
+                type: 'area',
+              },
+              stroke: {
+                curve: 'smooth',
+              },
+              colors: ['#C9E00C', '#5C9D48'],
+              xaxis: {
+                categories: [
+                  'Jan',
+                  'Feb',
+                  'Mar',
+                  'Apr',
+                  'May',
+                  'Jun',
+                  'Jul',
+                  'Aug',
+                  'Sep',
+                  'Oct',
+                  'Nov',
+                  'Dec',
+                ],
+              },
+              dataLabels: {
+                enabled: false,
+              },
+            }}
+            type="area"
+            series={chartData}
+            width="100%"
           />
         </div>
         <div className={classes.Battery__shsTable}>
           <TableWithFilter
             columns={columns}
-            data={adminBatteryTableData}
-            tableTitle="Battery Table"
+            data={adminVoltageCurrentTableData}
+            tableTitle="Voltage & Current Table"
             tagValue="kWh"
             filterOptions={generalFilterOptions}
             isAdmin={true}
+            // footer = {Table}
           />
         </div>
       </div>
