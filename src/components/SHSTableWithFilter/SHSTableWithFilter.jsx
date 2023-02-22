@@ -15,6 +15,7 @@ const SHSTableWithFilter = ({
   btnText,
   BtnIcon,
   btnAction,
+  footer = '',
 }) => {
   return (
     <div className={classes.SHSTable}>
@@ -58,6 +59,7 @@ const SHSTableWithFilter = ({
         pagination={{
           hideOnSinglePage: true,
         }}
+        footer={footer}
       />
     </div>
   )

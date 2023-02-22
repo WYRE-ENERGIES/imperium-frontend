@@ -86,7 +86,9 @@ const AdminCustomer = lazy(() =>
 )
 const AdminSHS = lazy(() => import('./pages/Admin/SHS/SHS'))
 const AdminOverview = lazy(() => import('./pages/Admin/Overview/Overview'))
-
+const AdminVoltageCurrent = lazy(() =>
+  import('./pages/Admin/VoltageCurrent/VoltageCurrent'),
+)
 function App() {
   return (
     <Router>
@@ -138,6 +140,10 @@ function App() {
               </Route>
               <Route path="all-shs" element={<AdminSHS />} />
               <Route path="overview" element={<AdminOverview />} />
+              <Route
+                path="voltage-current-analytics"
+                element={<AdminVoltageCurrent />}
+              />
             </Route>
           </Route>
         </Routes>

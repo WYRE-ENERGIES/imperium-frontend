@@ -12,7 +12,7 @@ const optionData = [
   { name: '12 months', value: '12' },
   { name: '30 days', value: '30' },
   { name: '7 days', value: '7' },
-  { name: '24 days', value: '24' },
+  { name: '24 hours', value: '24' },
 ]
 
 const options = optionData.map((option, index) => (
