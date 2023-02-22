@@ -1,5 +1,6 @@
 import { CloseOutlined, ThunderboltOutlined } from '@ant-design/icons'
 import { Col, Divider, Dropdown, Modal, Row, Tag } from 'antd'
+
 import React, { useState } from 'react'
 
 import { BiTrendingUp } from 'react-icons/bi'
@@ -260,8 +261,26 @@ const Shs = () => {
                 <Chart
                   type="bar"
                   options={{
+                    dataLabels: {
+                      enabled: true,
+                      position: 'top',
+                      style: {
+                        fontSize: '12px',
+                        fontWeight: 'bold',
+                      },
+                      background: {
+                        enabled: true,
+                        foreColor: '#497A38',
+                        padding: 4,
+                        opacity: 1,
+                        borderColor: '#fff',
+                        borderRadius: '10px',
+                      },
+                    },
                     fill: {
-                      opacity: 1,
+                      colors: undefined,
+                      opacity: 0.9,
+                      type: 'solid',
                     },
                     grid: {
                       show: true,
@@ -274,9 +293,12 @@ const Shs = () => {
                     },
                     plotOptions: {
                       bar: {
+                        barHeight: '7%',
                         borderRadius: 7,
                         borderRadiusApplication: 'end',
+                        columnWidth: '70px',
                         dataLabels: {
+                          enabled: false,
                           position: 'top',
                         },
                       },

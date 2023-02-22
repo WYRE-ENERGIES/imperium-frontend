@@ -1,4 +1,4 @@
-import { Form, Input, InputNumber } from 'antd'
+import { Form, Input } from 'antd'
 import { useNavigate } from 'react-router-dom'
 
 import FormButton from '../Widgets/FormButton'

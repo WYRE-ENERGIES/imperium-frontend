@@ -57,6 +57,16 @@ const UserInvitePage = lazy(() =>
 
 // Admin Routes
 
+const AdminActiveAlert = lazy(() =>
+  import('./pages/Admin/ActiveAlert/ActiveAlert'),
+)
+const AdminActiveAlertCreated = lazy(() =>
+  import('./pages/Admin/ActiveAlert/CreatedAlerts'),
+)
+const AdminActiveAlertLocation = lazy(() =>
+  import('./pages/Admin/ActiveAlert/LocationAlerts'),
+)
+
 const AdminForgotPassword = lazy(() =>
   import('./pages/Admin/Auth/ForgotPassword/AdminForgotPassword'),
 )
@@ -126,6 +136,17 @@ function App() {
             <Route path="admin">
               <Route index element={<AdminSignIn />} />
               <Route path="account" element={<AdminAccount />} />
+              <Route path="active-alerts">
+                <Route index element={<AdminActiveAlert />} />
+                <Route
+                  path="created-alerts"
+                  element={<AdminActiveAlertCreated />}
+                />
+                <Route
+                  path="location-alerts"
+                  element={<AdminActiveAlertLocation />}
+                />
+              </Route>
               <Route path="panel-analytic" element={<AdminPanelAnalytic />} />
               <Route path="battery-analytic" element={<AdminBattery />} />
               <Route path="energy-analytic" element={<AdminEnergyAnalytic />} />

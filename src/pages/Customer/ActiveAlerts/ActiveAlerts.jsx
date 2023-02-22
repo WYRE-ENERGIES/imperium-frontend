@@ -172,6 +172,9 @@ const ActiveAlerts = () => {
             footer={footer}
             columns={columns}
             dataSource={activeAlertdata}
+            pagination={{
+              position: ['none', 'none'],
+            }}
           />
         </section>
       </section>

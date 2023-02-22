@@ -1,0 +1,621 @@
+@import '../../../components/Auth/Forms/variables.module';
+
+.Widget {
+  background: white;
+  border: 1px solid #dcecd5;
+  border-radius: 8px;
+  padding: 24px;
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+  gap: 10px;
+  width: auto;
+  height: 147px;
+}
+
+.Widget-Icon {
+  width: 40px;
+  height: 40px;
+  background: #f0f7ed;
+  border: 1px solid #cee5c8;
+  border-radius: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.Widget-Text {
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 24px;
+  letter-spacing: -0.02em;
+  color: #363636;
+  flex: none;
+  order: 0;
+  flex-grow: 2;
+  width: 155px;
+  height: 24px;
+  margin-top: 8px;
+}
+.Widget-Graph {
+  width: 67px;
+  height: 26px;
+}
+.Widget-Value {
+  width: 23px;
+  height: 44px;
+  font-weight: 600;
+  font-size: 36px;
+  line-height: 44px;
+  letter-spacing: -0.02em;
+  color: #363636;
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+}
+.Widget-Header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.Widget-h1 {
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 28px;
+  color: #18181b;
+}
+
+.Widget-Card {
+  height: auto;
+  background: #ffffff;
+  border: 1px solid #dcecd5;
+  border-radius: 8px;
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+  flex: 1;
+  padding: 20px;
+}
+.ActiveAlert {
+  &__WidgetSection {
+    margin-top: 30px;
+    display: flex;
+    gap: 15px;
+    width: auto;
+  }
+  &__WidgetLeftContent {
+    @extend .Widget;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    box-sizing: border-box;
+  }
+  &__WidgetRightContent {
+    @extend .Widget;
+    display: flex;
+    flex: 2;
+    gap: 40px;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    box-sizing: border-box;
+  }
+  &__WidgetIcon {
+    @extend .Widget-Icon;
+  }
+  &__WidgetText {
+    @extend .Widget-Text;
+  }
+  &__WidgetGraphOne {
+    @extend .Widget-Graph;
+    margin-top: 60px;
+  }
+  &__WidgetValue {
+    @extend .Widget-Value;
+  }
+
+  &__WidgetCenter {
+    gap: 15px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    box-sizing: border-box;
+    flex: 1;
+  }
+
+  &__WidgetExtra {
+    & > div:nth-child(1) {
+      margin-left: 35px;
+      margin-top: 10px;
+    }
+    & > div:nth-child(2) {
+      margin-top: 40px;
+    }
+  }
+
+  &__WidgetRight {
+    gap: 15px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    box-sizing: border-box;
+    flex: 1;
+    p {
+      width: 227px;
+    }
+  }
+  &__WidgetVal {
+    display: flex;
+    justify-content: space-between;
+    img {
+      margin-left: 135px;
+      margin-top: 10px;
+    }
+  }
+
+  &__ActiveAlertSection {
+    display: flex;
+    margin-top: 22px;
+    justify-content: space-between;
+    gap: 24px;
+  }
+  &__ActiveAlertNotification {
+    @extend .Widget-Card;
+  }
+  &__ActiveAlertNotificationHeader {
+    @extend .Widget-Header;
+    h1 {
+      @extend .Widget-h1;
+    }
+    button {
+      display: flex;
+      align-items: center;
+      width: 114px;
+      height: 36px;
+      background: #385e2b;
+      border: 1px solid #385e2b;
+      box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05);
+      border-radius: 8px;
+      color: white;
+      font-weight: 600;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+
+  &__ActiveAlertNotificationList {
+    margin-top: 20px;
+  }
+
+  &__ActiveAlertNotificationList > div {
+    background: #fef3f2;
+    border: 1px solid #dcecd5;
+    border-radius: 16px;
+    padding: 15px 20px 10px 20px;
+    height: auto;
+    margin: 15px 0;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    p:nth-child(2n-1) {
+      font-weight: 500;
+      font-size: 16px;
+    }
+    p:nth-child(2n) {
+      font-weight: 400;
+      font-size: 14px;
+      color: #454545;
+      line-height: 20px;
+    }
+  }
+
+  &__ActiveAlertNotificationList > div > span {
+    float: right;
+  }
+  &__ActiveAlertNotificationViewBtn {
+    display: flex;
+    justify-content: end;
+    a {
+      background: #ffffff;
+      border: 1px solid #84bb72;
+      box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05);
+      border-radius: 8px;
+      padding: 8px 14px;
+      color: #84bb72;
+      &:hover {
+        background: #385e2b;
+        color: white;
+        transition: 0.5s all;
+        cursor: pointer;
+      }
+    }
+  }
+
+  &__ActiveAlertStatsFilterInput {
+    background: #ffffff;
+    border: 1px solid #d0d5dd;
+    box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05);
+    border-radius: 8px;
+    &:hover {
+      border: 1px solid #c4c4c4 !important;
+    }
+    &:focus-within {
+      offset: $offset;
+      border: 1px solid $light-green !important;
+      box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05), 0px 0px 0px 4px #f0f7ed;
+    }
+  }
+
+  &__ActiveAlertStats {
+    @extend .Widget-Card;
+  }
+  &__ActiveAlertStatsHeader {
+    @extend .Widget-Header;
+    h1 {
+      @extend .Widget-h1;
+    }
+  }
+
+  &__ActiveAlertStatsFormSelect {
+    font-size: 16px !important;
+    padding: 5px 0;
+    font-family: $font-family !important;
+    border: 1px solid #c4c4c4;
+    position: relative;
+    border-radius: 8px;
+
+    &:hover {
+      border: none !important;
+    }
+    &:focus-within {
+      offset: none;
+      border: none !important;
+      box-shadow: none;
+    }
+
+    div[class='ant-select-selector'] {
+      border: none !important;
+      outline: none !important;
+      box-shadow: none !important;
+      font-size: 16px;
+      color: #497a38 !important;
+    }
+  }
+
+  &__ActiveAlertStatsFormSelectPrefix {
+    position: relative;
+    left: 10px;
+  }
+  &__ActiveAlertStatsGraph {
+    margin-top: 18px;
+  }
+  &__ActiveAlertTable {
+    margin-top: 20px;
+    background: white;
+    border: 1px solid #dcecd5;
+    border-radius: 8px;
+    padding: 24px 0;
+
+    & table > thead > tr > th {
+      background: #f0f7ed !important;
+      font-weight: 500;
+      font-size: 12px;
+      line-height: 20px;
+      color: #454545;
+    }
+    td {
+      width: 200px;
+    }
+    td:nth-child(5) {
+      width: 20px;
+    }
+  }
+
+  &__SearchAndFilter {
+    font-size: 15px !important;
+    padding: $formElementPadding;
+    offset: 10px 30px;
+    font-family: $font-family;
+    border: 1px solid #c4c4c4;
+    box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05);
+    width: 320px;
+
+    &:hover {
+      border: 1px solid $light-green !important;
+    }
+
+    &:focus-within {
+      offset: $offset;
+      border: 1px solid $light-green;
+      box-shadow: $box-shadow-input;
+    }
+  }
+  &__ActiveAlertTablePrefixFilter {
+    display: flex;
+    align-items: center;
+
+    p {
+      margin-bottom: -2px;
+      font-weight: 400;
+      font-size: 16px;
+      margin: 0 3px;
+    }
+  }
+  &__ActiveAlertTableHeader {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  &__ActiveAlertTableHeaderFilter {
+    display: flex;
+    align-items: center;
+    gap: 17px;
+  }
+  &__ActiveAlertTableFilter {
+    background: #ffffff;
+    border: 1px solid #d0d5dd;
+    box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05);
+    border-radius: 8px;
+    padding: 0 10px;
+  }
+
+  &__ActiveAlertTableFilterExport {
+    button {
+      width: 105px;
+      height: 44px;
+      background: #ffffff;
+      border: 1px solid #c4c4c4;
+      box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05);
+      border-radius: 8px;
+    }
+  }
+
+  &__ActiveAlertNotificationListModal {
+    margin-top: 7%;
+    h1,
+    p {
+      text-align: center;
+      line-height: 20px;
+    }
+    h1 {
+      font-weight: 600;
+      font-size: 18px;
+      margin-top: 20px;
+    }
+    p {
+      font-weight: 400;
+      font-size: 14px;
+    }
+  }
+
+  &__ModalContentInit {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    & > div {
+      background: #dcecd5;
+      border-radius: 30px;
+      font-weight: 400;
+      font-size: 16px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 40px;
+      height: 40px;
+    }
+  }
+
+  &__ActiveAlertModalFilterInput {
+    background: #f5f5f5;
+    box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05);
+    border-radius: 8px;
+
+    &:focus-within {
+      offset: $offset;
+      border: 1px solid $light-green !important;
+      box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05), 0px 0px 0px 4px #f0f7ed;
+    }
+  }
+  &__ActiveAlertModalFormSelectPrefix {
+    position: relative;
+    left: 12px;
+    z-index: 2;
+    top: 2px;
+  }
+  &__ActiveAlertModalFormSelect {
+    font-size: 16px !important;
+    padding: 5px 0;
+    font-family: $font-family !important;
+    position: relative;
+    border-radius: 8px;
+
+    &:hover {
+      border: none !important;
+    }
+    &:focus-within {
+      offset: none;
+      border: none !important;
+      box-shadow: none;
+    }
+
+    div[class='ant-select-selector'] {
+      border: none !important;
+      outline: none !important;
+      box-shadow: none !important;
+      font-size: 16px;
+      color: #000000 !important;
+      background: #f5f5f5 !important;
+    }
+  }
+
+  &__ActiveAlertModalFilterStatus {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+  }
+  &__ActiveAlertModalStatus {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    background: #f5f5f5;
+    box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05);
+    border-radius: 8px;
+    padding: 0 10px;
+    span {
+      font-weight: 400;
+      font-size: 16px;
+    }
+  }
+  &__ActiveAlertModalShsInfo {
+    text-align: center;
+    margin-top: 20px;
+    justify-content: space-between;
+    span {
+      margin: 0 7px;
+    }
+    span:nth-child(2) {
+      color: #808080;
+    }
+  }
+
+  &__ModalClose {
+    padding: 20px;
+    button {
+      width: 100%;
+      background: #385e2b;
+      border: 1px solid #385e2b;
+      box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05);
+      border-radius: 8px;
+      color: white;
+      padding: 10px 18px;
+      font-weight: 600;
+      font-size: 16px;
+
+      &:hover {
+        cursor: pointer;
+        background: #203d16;
+      }
+    }
+  }
+
+  &__ActiveAlertAddAlertHeader {
+    background: #dcecd5;
+    border: 8px solid #f0f7ed;
+    border-radius: 28px;
+    width: 48px;
+    height: 48px;
+    padding: 9px;
+  }
+  &__ActiveAlertAddAlertHeaderSection {
+    display: flex;
+    align-items: center;
+    & > div > p {
+      font-weight: 600;
+      font-size: 18px;
+      margin: 4px 0 0 10px;
+    }
+  }
+
+  &__AddAlertInput {
+    background: #f2f2f2;
+    border: 1px solid #c4c4c4;
+    box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05);
+    border-radius: 8px;
+    padding: 10px 10px;
+
+    &:hover {
+      offset: $offset;
+      border: 1px solid $light-green !important;
+      box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05), 0px 0px 0px 4px #f0f7ed;
+    }
+    &:focus-within {
+      offset: $offset;
+      border: 1px solid $light-green !important;
+      box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05), 0px 0px 0px 4px #f0f7ed;
+    }
+  }
+  &__AddAlertBtn {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    button {
+      height: 44px;
+      flex: 1;
+      box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05);
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 16px;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+    button:nth-child(1) {
+      background: #ffffff;
+      border: 1px solid #c4c4c4;
+    }
+    button:nth-child(2) {
+      background: #385e2b;
+      border: 1px solid #385e2b;
+      color: white;
+    }
+  }
+  &__CreateActiveAlerts {
+    display: flex;
+    justify-content: space-between;
+    button {
+      margin-top: 30px;
+    }
+  }
+  &__ActiveAlertCreateTable {
+    margin-top: 30px;
+    & table > thead > tr > th {
+      background: #f0f7ed !important;
+      font-weight: 500;
+      font-size: 12px;
+      line-height: 20px;
+      color: #454545;
+    }
+    td:nth-child(2n-1) {
+      width: 200px;
+    }
+  }
+  &__ActiveAlertClient {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    gap: 10px;
+    p {
+      font-weight: 500;
+      margin-bottom: -5px;
+      color: #363636;
+    }
+    span {
+      color: #606062;
+    }
+  }
+
+  &__ActiveAlertLocationTable {
+    margin-top: 30px;
+    & table > thead > tr > th {
+      background: #f0f7ed !important;
+      font-weight: 500;
+      font-size: 12px;
+      line-height: 20px;
+      color: #454545;
+    }
+  }
+  &__DetailView {
+    position: relative;
+    z-index: 10;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}

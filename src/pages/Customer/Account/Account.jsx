@@ -6,7 +6,7 @@ import { React } from 'react'
 import classes from './Account.module.scss'
 
 const Account = ({ children, props }) => {
-  const ShsInfo = {
+  const AcctInfo = {
     firstName: 'John',
     lastName: 'Kahan',
     email: 'JonniKahan@gmail.com',
@@ -47,7 +47,7 @@ const Account = ({ children, props }) => {
           ))}
         </div>
         <div>
-          <AccountInfo ShsInfo={ShsInfo} type={props} />
+          <AccountInfo AcctInfo={AcctInfo} type={props} />
         </div>
         {children}
       </PageLayout>
