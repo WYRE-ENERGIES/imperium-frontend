@@ -1,3 +1,4 @@
+@import '../../../variables.module';
 .Layout {
   background: #f0f7ed;
   width: 100%;
@@ -5,4 +6,78 @@
   position: relative;
   display: block;
   padding: 25px 40px;
+
+  &__FormContentDisplay {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 6%;
+  }
+  &__FormContent {
+    background: white;
+    width: 350px;
+    margin-top: 2rem;
+    border-radius: 24px;
+    offset: 1px 1px rgba(101, 170, 79, 0.04);
+    box-shadow: 1px 1px 8px 0px #65aa4f0a;
+    padding: 27px;
+  }
+  &__FormHeader {
+    display: flex;
+    margin-top: 35px;
+    margin-bottom: 12px;
+
+    h1 {
+      font-size: 16px !important;
+      line-height: 24px !important;
+      margin-top: -6px !important;
+    }
+
+    p {
+      font-size: 14px;
+      color: #18181b;
+    }
+  }
+  &__FormHeaderText {
+    margin-left: 12px;
+  }
+
+  &__LegendHeader {
+    color: black;
+    font-size: 28px;
+    font-weight: 600;
+    text-align: center;
+    line-height: 36px;
+    margin: 1rem 0;
+  }
+  &__Password {
+    font-family: $font-family;
+    font-size: 15px;
+    background: white;
+    padding: 10px;
+    border: 1px solid #c4c4c4;
+    box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05);
+
+    &:hover {
+      border: 1px solid #c4c4c4 !important;
+    }
+
+    &:focus-within {
+      border-color: $light-green !important;
+      offset: $offset;
+      box-shadow: $box-shadow-input;
+    }
+
+    & [id='basic_password']:not(:placeholder-shown) {
+      font-size: 18px !important;
+      font-family: verdana !important;
+      font-weight: bolder !important;
+    }
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .Layout {
+    height: 100vh;
+  }
 }

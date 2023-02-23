@@ -1,12 +1,12 @@
 import { Row } from 'antd'
 import React from 'react'
 import FormDescription from '../../../../components/Auth/Forms/Widgets/FormDescription'
-import SignUpForm from '../../../../components/Auth/Forms/AuthForm/SignUp/SignUp'
 import LeftLayout from '../../../../components/Auth/Layout/LeftLayout/LeftLayout'
 import RightLayout from '../../../../components/Auth/Layout/RightLayout/RightLayout'
 import imageDesc from '../../../../../src/assets/Auth/Multi-device targeting-pana 1.svg'
 import classes from './SignUp.module.scss'
 import PageIndicator from '../../../../components/Auth/Forms/Widgets/FormPageIndicator'
+import AuthForm from '../../../../components/Auth/Forms/AuthForm/AuthForm'
 
 const SignUp = () => {
   const formDescription = {
@@ -20,7 +20,14 @@ const SignUp = () => {
     <div className={classes.SignUp}>
       <Row>
         <LeftLayout>
-          <SignUpForm />
+          <AuthForm authContentSelection={'signup'}>
+            <div className={classes.SignUp__FooterNote}>
+              <p>
+                By selecting <strong>Create account</strong>. I agree to
+                imperium’s <span>privacy policy & terms </span>
+              </p>
+            </div>
+          </AuthForm>
         </LeftLayout>
         <RightLayout>
           <div className={classes.SignUp__content}>

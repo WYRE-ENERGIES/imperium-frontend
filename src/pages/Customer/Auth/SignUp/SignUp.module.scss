@@ -24,4 +24,19 @@
       padding: 0 22px;
     }
   }
+
+  &__FooterNote {
+    margin-top: 2rem;
+    p {
+      color: #556275;
+      font-size: 15px;
+      font-weight: 600;
+    }
+    span {
+      color: #5c9d48;
+    }
+    strong {
+      color: #363636;
+    }
+  }
 }

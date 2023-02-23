@@ -2,15 +2,12 @@ import { Link } from 'react-router-dom'
 import { message, Form, Input, Upload } from 'antd'
 
 import uploadImg from '../../../../assets/Auth/Featured icon.svg'
-import { useNavigate } from 'react-router-dom'
-import FormHeader from '../Widgets/FormHeader'
-import FormButton from '../Widgets/FormButton'
 import classes from './BusinessForm.module.scss'
 import { useState } from 'react'
 import FormFileUpload from '../Widgets/FormFileUpload'
+import UserForm from '../AuthForm/UserForm'
 
 const BusinessForm = () => {
-  const nextPage = useNavigate()
   const [fileUpload, setFileUpload] = useState(false)
   const [fileUploadingProgress, setfileUploadingProgress] = useState(0)
   const [fileName, setfileName] = useState('')
@@ -44,17 +41,6 @@ const BusinessForm = () => {
     },
   }
 
-  const handleOnCreateAccountBtn = () => {
-    console.log(nextPage)
-    nextPage('/')
-  }
-  const onFinish = (values) => {
-    console.log('Success:', values)
-    handleOnCreateAccountBtn()
-  }
-  const onFinishFailed = (errorInfo) => {
-    console.log('Failed:', errorInfo)
-  }
   const normFile = (e) => {
     console.log('Upload event:', e)
     if (Array.isArray(e)) {
@@ -65,29 +51,22 @@ const BusinessForm = () => {
 
   return (
     <div className={classes.BusinessForm}>
-      <FormHeader
-        header={' Are you are business'}
-        tagline={'Please fill in your company details'}
-      />
-
-      <div className={classes.BusinessForm__form}>
-        <Form
-          name="basic"
-          labelCol={{
-            span: 16,
-          }}
-          wrapperCol={{
-            span: 32,
-          }}
-          initialValues={{
-            remember: false,
-          }}
-          onFinish={onFinish}
-          onFinishFailed={onFinishFailed}
-          autoComplete="off"
-          layout="vertical"
-          requiredMark="optional"
-        >
+      <UserForm
+        formContent={{
+          header: 'Do you have a business',
+          tag: 'Please fill in your company details',
+          action: 'Submit',
+        }}
+        labelCol={16}
+        wrapperCol={32}
+        name={'business'}
+        extras={
+          <div style={{ fontSize: '18px', textAlign: 'center' }}>
+            <Link style={{ color: '#808080', fontWeight: '600' }}>Skip</Link>
+          </div>
+        }
+      >
+        <div className={classes.BusinessForm__form}>
           <Form.Item
             label={<p style={{ marginBottom: '-30px' }}>Business Name</p>}
             name="firstname"
@@ -176,14 +155,8 @@ const BusinessForm = () => {
               </Dragger>
             </Form.Item>
           </Form.Item>
-          <Form.Item>
-            <FormButton type={'submit'} action={'Continue'} />
-          </Form.Item>
-        </Form>
-      </div>
-      <div className={classes.BusinessForm__Skip}>
-        <Link>Skip</Link>
-      </div>
+        </div>
+      </UserForm>
     </div>
   )
 }

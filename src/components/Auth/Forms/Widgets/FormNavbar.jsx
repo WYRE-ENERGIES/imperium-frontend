@@ -19,7 +19,7 @@ const FormNavbar = ({
         <div className={classes.Navbar__btn}>
           <Link
             style={{ background: btnColor1, color: txtColor1 }}
-            to={'/signup'}
+            to={'/sign-up'}
           >
             Sign Up
           </Link>

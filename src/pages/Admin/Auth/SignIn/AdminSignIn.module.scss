@@ -1,6 +1,5 @@
 .AdminSignPage {
   height: 100vh;
-  box-sizing: border-box;
   &__RightLayOut {
     background: linear-gradient(0deg, rgba(0, 0, 0, 0.39), rgba(0, 0, 0, 0.39)),
       url('../../../../../public/adminSignIn.jpg');
@@ -18,16 +17,24 @@
       line-height: 24px;
       margin-bottom: 100px;
     }
+    div > h1 {
+      margin-top: 0% !important;
+    }
   }
 
-  &__LeftLayOu {
-    height: 100%;
+  h1 {
+    margin-top: 20%;
   }
 }
 @media only screen and (max-width: 768px) {
-  .SignPage {
-    &__Layout {
+  .AdminSignPage {
+    &__RightLayOut {
+      display: none;
+    }
+    &__LeftLayOut > div {
+      padding-top: 20%;
       display: block;
+      padding: 0;
     }
   }
 }
