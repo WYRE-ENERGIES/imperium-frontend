@@ -16,7 +16,7 @@ import { LoadingOutlined } from '@ant-design/icons'
 import { ReactComponent as TicketIcon } from '../../../../assets/ticket-icon.svg'
 import classes from './TicketForm.module.scss'
 import { supportStatusEnums } from '../../../../utils/enums'
-import { useResolveTicketMutation } from '../../../../features/support/supportSlice'
+import { useResolveTicketMutation } from '../../../../features/slices/supportSlice'
 
 const { Option } = Select
 const { TextArea } = Input

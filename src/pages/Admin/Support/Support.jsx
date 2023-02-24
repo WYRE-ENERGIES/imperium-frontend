@@ -5,7 +5,7 @@ import { supportPriorityEnums, supportStatusEnums } from '../../../utils/enums'
 import {
   useGetAdminSupportTicketsQuery,
   useGetSupportPageAnalyticsQuery,
-} from '../../../features/support/supportSlice'
+} from '../../../features/slices/supportSlice'
 
 import AdminPageLayout from '../../../components/Layout/AdminPageLayout/AdminPageLayout'
 import { BsDot } from 'react-icons/bs'
