@@ -23,6 +23,8 @@ const SearchAndFilter = ({
   btnText,
   BtnIcon,
   btnAction,
+  handleSearch,
+  onFilterChanged,
 }) => {
   const options = filterOptions?.map((option, index) => (
     <Option key={index} value={option.value}>
@@ -37,9 +39,12 @@ const SearchAndFilter = ({
         size="large"
         prefix={prefix}
         className={classes.SearchAndFilter__search}
+        onChange={handleSearch}
       />
       <Suspense fallback={<h4>loading</h4>}>
-        {filterOptions && <DropDownFilter options={options} />}
+        {filterOptions && (
+          <DropDownFilter onFilterChanged={onFilterChanged} options={options} />
+        )}
       </Suspense>
       {isAdmin && (
         <Button className={classes.SearchAndFilter__exportBtn}>

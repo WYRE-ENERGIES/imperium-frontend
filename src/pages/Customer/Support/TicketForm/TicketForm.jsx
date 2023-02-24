@@ -5,14 +5,18 @@ import {
   Input,
   Modal,
   Select,
+  Spin,
   Switch,
   Typography,
 } from 'antd'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { ToastContainer, toast } from 'react-toastify'
+import { requestStatusEnum, supportStatusEnums } from '../../../../utils/enums'
+import { useDispatch, useSelector } from 'react-redux'
 
 import { ReactComponent as TicketIcon } from '../../../../assets/ticket-icon.svg'
 import classes from './TicketForm.module.scss'
+import { resolveTicket } from '../../../../features/slices/supportSlice'
 
 const { Option } = Select
 const { TextArea } = Input
@@ -28,13 +32,29 @@ const layout = {
 }
 
 const ModalForm = ({ toggleModal, ticketData, isAdmin }) => {
+  const [isResolved, setIsResolved] = useState(ticketData.status)
+
+  const dispatch = useDispatch()
+  let { status, message } = useSelector((state) => state.support)
+
   const [form] = Form.useForm()
   const onFinish = (values) => {
-    toast.success('Ticket submitted', {
-      hideProgressBar: true,
-      autoClose: 3000,
-      theme: 'colored',
-    })
+    dispatch(
+      resolveTicket({
+        ticket_id: ticketData.id,
+        resolve: isResolved === supportStatusEnums.RESOLVED,
+      }),
+    )
+
+    if (status === requestStatusEnum.SUCCESS) {
+      toast.success('Ticket submitted', {
+        hideProgressBar: true,
+        autoClose: 3000,
+        theme: 'colored',
+      })
+    }
+
+    toggleModal()
   }
 
   useEffect(() => form.resetFields(), [ticketData])
@@ -109,7 +129,12 @@ const ModalForm = ({ toggleModal, ticketData, isAdmin }) => {
           <div className={classes.TicketForm__switch}>
             <Switch
               style={{ backgroundColor: '#385E2B' }}
-              onChange={() => console.log('clicked')}
+              onChange={(e) =>
+                setIsResolved(
+                  e ? supportStatusEnums.RESOLVED : supportStatusEnums.PENDING,
+                )
+              }
+              defaultChecked={isResolved !== supportStatusEnums.PENDING}
             />
             Resolve ticket
           </div>
@@ -124,8 +149,12 @@ const ModalForm = ({ toggleModal, ticketData, isAdmin }) => {
         >
           Cancel
         </Button>
-        <Button className={classes.TicketForm__submitBtn} htmlType="submit">
-          Submit
+        <Button
+          className={classes.TicketForm__submitBtn}
+          htmlType="submit"
+          disabled={isResolved === ticketData.status}
+        >
+          {status === requestStatusEnum.LOADING ? <Spin /> : 'Submit'}
         </Button>
       </div>
       <ToastContainer />
