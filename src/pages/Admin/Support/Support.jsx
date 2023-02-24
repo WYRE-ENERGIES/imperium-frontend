@@ -1,5 +1,11 @@
 import React, { Suspense, lazy, useState, useTransition } from 'react'
-import { Tag, Tooltip } from 'antd'
+import { Spin, Tag, Tooltip } from 'antd'
+import { ToastContainer, toast } from 'react-toastify'
+import { supportPriorityEnums, supportStatusEnums } from '../../../utils/enums'
+import {
+  useGetAdminSupportTicketsQuery,
+  useGetSupportPageAnalyticsQuery,
+} from '../../../features/support/supportSlice'
 
 import AdminPageLayout from '../../../components/Layout/AdminPageLayout/AdminPageLayout'
 import { BsDot } from 'react-icons/bs'
@@ -7,6 +13,7 @@ import { FaRegQuestionCircle } from 'react-icons/fa'
 import PageBreadcrumb from '../../../components/PageBreadcrumb/PageBreadcrumb'
 import { ReactComponent as ResolvedIcon } from '../../../assets/widget-icons/resolved-icon.svg'
 import SupportWidget from '../../../components/Widget/Support/SupportWidget'
+import TableFooter from '../../../components/TableFooter/TableFooter'
 import TableWithFilter from '../../../components/SHSTableWithFilter/SHSTableWithFilter'
 import { ReactComponent as TicketIcon } from '../../../assets/widget-icons/ticket-icon.svg'
 import { ReactComponent as UnResolvedIcon } from '../../../assets/widget-icons/unresolved-icon.svg'
@@ -20,10 +27,10 @@ const getColor = (name) => {
   let color = ''
 
   switch (name) {
-    case 'Pending':
+    case supportStatusEnums.PENDING:
       color = 'warning'
       break
-    case 'Resolved':
+    case supportStatusEnums.RESOLVED:
       color = 'success'
       break
     default:
@@ -38,10 +45,10 @@ const getPriorityColor = (name) => {
   let color = ''
 
   switch (name) {
-    case 'Urgent':
+    case supportPriorityEnums.URGENT:
       color = '#B42318'
       break
-    case 'Normal':
+    case supportPriorityEnums.NORMAL:
       color = '#363F72'
       break
   }
@@ -49,57 +56,17 @@ const getPriorityColor = (name) => {
   return color
 }
 
-const data = [
-  {
-    id: 1,
-    subject: 'Missing SHS',
-    description: 'Missing SHS description',
-    priority: 'Urgent',
-    status: 'Pending',
-    key: 1,
-  },
-  {
-    id: 2,
-    subject: 'TDS is missing',
-    description: 'TDS is missing description',
-    priority: 'Urgent',
-    status: 'Pending',
-    key: 2,
-  },
-  {
-    id: 3,
-    subject: 'Tags • Applications & Uses is missing',
-    description: 'Tags • Applications & Uses is missing description',
-    priority: 'Normal',
-    status: 'Resolved',
-    key: 3,
-  },
-  {
-    id: 4,
-    subject: 'Image is missing',
-    description: 'Image is missing description',
-    priority: 'Urgent',
-    status: 'Resolved',
-    key: 4,
-  },
-  {
-    id: 5,
-    subject: 'Failing SHS',
-    description: 'Failing SHS description',
-    priority: 'Normal',
-    status: 'Resolved',
-    key: 5,
-  },
-]
-
 const Support = () => {
   const [openModal, setOpenModal] = useState(false)
   const [ticketData, setTicketData] = useState({})
   const [ticketTitle, setTicketTitle] = useState('')
   const [isPending, startTransition] = useTransition()
+  const [search, setSearch] = useState('')
+  const [page, setPage] = useState(1)
+  const [ordering, setOrdering] = useState('')
 
   const toggleModal = () => setOpenModal(!openModal)
-
+  const handleSearch = (e) => setSearch(e.target.value)
   const columns = [
     {
       title: 'ID',
@@ -194,20 +161,6 @@ const Support = () => {
       ),
     },
   ]
-
-  const widgets = [
-    { icon: TicketIcon, name: 'All Tickets', value: 300 },
-    { icon: UnResolvedIcon, name: 'Unresolved Tickets', value: 24 },
-    { icon: ResolvedIcon, name: 'Resolved Tickets', value: 276 },
-  ].map((ticket, index) => (
-    <SupportWidget
-      key={index}
-      Icon={ticket.icon}
-      name={ticket.name}
-      value={ticket.value}
-    />
-  ))
-
   const handleEditTicket = (data) => {
     startTransition(() => {
       setTicketTitle(`Ticket #${data.id}`)
@@ -216,19 +169,84 @@ const Support = () => {
     })
   }
 
+  const { isLoading, isError, error, data, isFetching } =
+    useGetAdminSupportTicketsQuery({
+      page,
+      search,
+      ordering,
+    })
+
+  const {
+    isLoading: isAnalyticsLoading,
+    isError: isAnalyticsError,
+    error: analyticsError,
+    data: analyticsData,
+  } = useGetSupportPageAnalyticsQuery()
+
+  let widgets = []
+  if (!isAnalyticsLoading) {
+    widgets = [
+      {
+        icon: TicketIcon,
+        name: 'All Tickets',
+        value: analyticsData?.all || 0,
+      },
+      {
+        icon: UnResolvedIcon,
+        name: 'Unresolved Tickets',
+        value: analyticsData?.unresolved || 0,
+      },
+      {
+        icon: ResolvedIcon,
+        name: 'Resolved Tickets',
+        value: analyticsData?.resolved || 0,
+      },
+    ].map((ticket, index) => (
+      <SupportWidget
+        key={index}
+        Icon={ticket.icon}
+        name={ticket.name}
+        value={ticket.value}
+      />
+    ))
+  }
+
   return (
     <AdminPageLayout>
       <div className={classes.Support}>
         <section className={classes.Support__headerSection}>
           <PageBreadcrumb title="Support Ticket" items={['Support Ticket']} />
         </section>
-        <div className={classes.Support__widgets}>{widgets}</div>
+        <div className={classes.Support__widgets}>
+          {isAnalyticsLoading ? <Spin size="large" /> : widgets}
+        </div>
         <div className={classes.Support__shsTable}>
           <TableWithFilter
             columns={columns}
-            data={data}
+            data={data?.results}
             tableTitle="User Issues Ticket"
-            filterOptions={[]}
+            filterOptions={[
+              {
+                value: 'created_at',
+                name: 'Date',
+              },
+              {
+                value: 'priority',
+                name: 'Priority',
+              },
+            ]}
+            handleSearch={handleSearch}
+            onFilterChanged={(value) => setOrdering(value)}
+            isLoading={isFetching}
+            footer={() => (
+              <TableFooter
+                pageNo={data?.page}
+                totalPages={data?.total_pages}
+                handleClick={setPage}
+                hasNext={data?.page === data?.total_pages}
+                hasPrev={data?.page === 1}
+              />
+            )}
           />
         </div>
       </div>
@@ -243,6 +261,7 @@ const Support = () => {
           />
         )}
       </Suspense>
+      <ToastContainer />
     </AdminPageLayout>
   )
 }
