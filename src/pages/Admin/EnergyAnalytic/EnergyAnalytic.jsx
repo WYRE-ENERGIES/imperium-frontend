@@ -29,7 +29,7 @@ const EnergyAnalytic = () => {
 
   const [areaChartData, setAreaChartData] = useState([
     {
-      name: 'Energy Consumed',
+      name: 'Energy Difference',
       data: [350, 400, 500, 420, 500, 570, 410, 430, 410, 500, 400, 320],
     },
   ])
@@ -56,8 +56,9 @@ const EnergyAnalytic = () => {
     {
       id: 3,
       icon: RiseOutlined,
-      title: 'Capacity',
+      title: 'Energy Difference',
       duration: 'For the last 12 months',
+      valueCurrency: 'kWh',
       value: '654.14',
     },
   ].map((widget) => (

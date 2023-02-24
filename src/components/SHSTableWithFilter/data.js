@@ -64,7 +64,7 @@ export const adminTableData = [
     SHS: 'Farmilii Solar',
     energyConsumed: 6.35,
     energyGenerated: 14.36,
-    capacity: '380 kVA/4.7 kW',
+    energyDifference: '380',
   },
   {
     id: 2,
@@ -72,7 +72,7 @@ export const adminTableData = [
     SHS: 'Makanty Rewanda',
     energyConsumed: 9.52,
     energyGenerated: 21.52,
-    capacity: '380 kVA/4.7 kW',
+    energyDifference: '380',
   },
   {
     id: 3,
@@ -80,7 +80,7 @@ export const adminTableData = [
     SHS: 'BeMicky washo',
     energyConsumed: 3.18,
     energyGenerated: 7.18,
-    capacity: '380 kVA/4.7 kW',
+    energyDifference: '380',
   },
   {
     id: 4,
@@ -88,7 +88,7 @@ export const adminTableData = [
     SHS: 'Demi Wilkinson',
     energyConsumed: 4.67,
     energyGenerated: 9.01,
-    capacity: '380 kVA/4.7 kW',
+    energyDifference: '380',
   },
   {
     id: 5,
@@ -96,7 +96,7 @@ export const adminTableData = [
     SHS: 'Candice Wu',
     energyConsumed: 6.82,
     energyGenerated: 14.74,
-    capacity: '380 kVA/4.7 kW',
+    energyDifference: '380',
   },
   {
     id: 6,
@@ -104,7 +104,7 @@ export const adminTableData = [
     SHS: 'Quellax Mariot',
     energyConsumed: 3.18,
     energyGenerated: 7.18,
-    capacity: '380 kVA/4.7 kW',
+    energyDifference: '380',
   },
   {
     id: 7,
@@ -112,7 +112,7 @@ export const adminTableData = [
     SHS: 'Bluu Sky',
     energyConsumed: 4.67,
     energyGenerated: 9.01,
-    capacity: '380 kVA/4.7 kW',
+    energyDifference: '380',
   },
   {
     id: 8,
@@ -120,6 +120,6 @@ export const adminTableData = [
     SHS: 'Radonna Volt',
     energyConsumed: 6.82,
     energyGenerated: 14.74,
-    capacity: '380 kVA/4.7 kW',
+    energyDifference: '380',
   },
 ]
