@@ -1,5 +1,5 @@
 import { Button, Form, Input, Modal, Select, Typography } from 'antd'
-import React, { useEffect, useState } from 'react'
+import React, { Suspense, lazy, useEffect, useState } from 'react'
 import { ToastContainer, toast } from 'react-toastify'
 import {
   useGetUsersRolesQuery,
@@ -8,6 +8,10 @@ import {
 
 import { ReactComponent as TicketIcon } from '../../../../assets/user-icon.svg'
 import classes from './NewUserForm.module.scss'
+
+const ButtonLoader = lazy(() =>
+  import('../../../../components/ButtonLoader/ButtonLoader'),
+)
 
 const { Option } = Select
 const { Text, Title } = Typography
@@ -27,18 +31,14 @@ const ModalForm = ({ toggleModal }) => {
   const [inviteUser, { isLoading, isSuccess }] = useInviteUserMutation()
 
   const [form] = Form.useForm()
-  const onFinish = (values) => {
-    inviteUser(values)
+  const onFinish = ({ invitee_email, role }) => {
+    let choice = JSON.parse(role)
+    inviteUser({ invitee_email, role: choice.value })
   }
 
   const handleRoleChange = (role) => {
-    setRoleDescription((prev) => {
-      return role === 'admin'
-        ? "Admin can view all the statistics as well as shutdown SHS's if needed"
-        : role === 'client_viewer'
-        ? "Viewer have access to all statistics but can't shut down the SHS systems if necessary."
-        : ''
-    })
+    let choice = JSON.parse(role)
+    setRoleDescription(choice.description)
   }
 
   useEffect(() => {
@@ -100,7 +100,7 @@ const ModalForm = ({ toggleModal }) => {
           allowClear
         >
           {data?.map((role, index) => (
-            <Option key={`${role.name}-${index}`} value={role.name}>
+            <Option key={`${role.name}-${index}`} value={JSON.stringify(role)}>
               {role.name}
             </Option>
           ))}
@@ -126,9 +126,11 @@ const ModalForm = ({ toggleModal }) => {
         >
           Cancel
         </Button>
-        <Button className={classes.NewUserForm__submitBtn} htmlType="submit">
-          Proceed
-        </Button>
+        <Suspense>
+          <Button className={classes.NewUserForm__submitBtn} htmlType="submit">
+            {isLoading ? <ButtonLoader color="#fff" /> : 'Proceed'}
+          </Button>
+        </Suspense>
       </div>
       <ToastContainer />
     </Form>

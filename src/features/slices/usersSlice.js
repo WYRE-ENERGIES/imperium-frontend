@@ -20,12 +20,10 @@ export const usersApiSlice = apiSlice.injectEndpoints({
         }
       },
       transformResponse: (response) => {
-        response.results = response.results
-          .map((user) => ({
-            ...user,
-            key: user.id,
-          }))
-          .sort((a, b) => b.id - a.id)
+        response.results = response.results.map((user) => ({
+          ...user,
+          key: user.id,
+        }))
 
         return response
       },
