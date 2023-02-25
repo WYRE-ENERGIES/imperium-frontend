@@ -11,7 +11,7 @@ import PanelWidgets from '../../../components/Widget/Panel/Panel'
 import React from 'react'
 import WidgetFilter from '../../../components/WidgetFilter/WidgetFilter'
 import classes from '../../Customer/PanelAnalytic/PanelAnalytic.module.scss'
-import { useWeather } from '../../../hooks/useWeather'
+import useWeather from '../../../hooks/useWeather'
 
 const PanelAnalytic = () => {
   const [coord, weatherResult, isLoading, error] = useWeather()

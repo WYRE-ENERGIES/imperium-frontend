@@ -1,17 +1,24 @@
 import { apiSlice } from '../api/apiSlice'
 
 const token = process.env.REACT_APP_ADMIN_TOKEN
-const BASE_USERS_URL = '/imperium-admin/'
+const ADMIN_URL_PATH = '/imperium-admin/'
 
 export const usersApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getUsersList: builder.query({
-      query: () => ({
-        url: `${BASE_USERS_URL}list-users/`,
-        headers: {
-          authorization: `Bearer ${token}`,
-        },
-      }),
+      query: ({ page, search }) => {
+        let url = `${ADMIN_URL_PATH}list-users/?page=${page}`
+        if (search) {
+          url += `&search=${search}`
+        }
+
+        return {
+          url,
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
+      },
       transformResponse: (response) => {
         response.results = response.results.map((user) => ({
           ...user,
@@ -24,7 +31,7 @@ export const usersApiSlice = apiSlice.injectEndpoints({
     }),
     getUsersRoles: builder.query({
       query: () => ({
-        url: `${BASE_USERS_URL}list-user-roles/`,
+        url: `${ADMIN_URL_PATH}list-user-roles/`,
         headers: {
           authorization: `Bearer ${token}`,
         },
@@ -32,7 +39,7 @@ export const usersApiSlice = apiSlice.injectEndpoints({
     }),
     inviteUser: builder.mutation({
       query: (data) => ({
-        url: `${BASE_USERS_URL}invite-user/`,
+        url: `${ADMIN_URL_PATH}invite-user/`,
         method: 'POST',
         body: data,
         headers: {

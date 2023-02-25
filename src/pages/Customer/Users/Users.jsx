@@ -11,6 +11,7 @@ import Swal from 'sweetalert2'
 import TableFooter from '../../../components/TableFooter/TableFooter'
 import TableWithFilter from '../../../components/SHSTableWithFilter/SHSTableWithFilter'
 import classes from './Users.module.scss'
+import useDebounce from '../../../hooks/useDebounce'
 import { useGetUsersListQuery } from '../../../features/slices/usersSlice'
 import { useLocation } from 'react-router-dom'
 import { userData } from '../../../utils/userData'
@@ -126,12 +127,16 @@ const Users = () => {
 
   const toggleModal = () => setOpenModal(!openModal)
   const handleSearch = (e) => setSearch(e.target.value)
+  const debounceValue = useDebounce(search, 1000)
 
   const DefaultLayout = pathname.includes('admin')
     ? AdminPageLayout
     : PageLayout
 
-  const { data, isFetching } = useGetUsersListQuery()
+  const { data, isFetching } = useGetUsersListQuery({
+    page,
+    search: debounceValue,
+  })
 
   return (
     <DefaultLayout>

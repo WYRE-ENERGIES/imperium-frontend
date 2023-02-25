@@ -18,6 +18,7 @@ import TableWithFilter from '../../../components/SHSTableWithFilter/SHSTableWith
 import { ReactComponent as TicketIcon } from '../../../assets/widget-icons/ticket-icon.svg'
 import { ReactComponent as UnResolvedIcon } from '../../../assets/widget-icons/unresolved-icon.svg'
 import classes from '../../Customer/Support/Support.module.scss'
+import useDebounce from '../../../hooks/useDebounce'
 
 const TicketForm = lazy(() =>
   import('../../Customer/Support/TicketForm/TicketForm'),
@@ -67,6 +68,8 @@ const Support = () => {
 
   const toggleModal = () => setOpenModal(!openModal)
   const handleSearch = (e) => setSearch(e.target.value)
+  const debounceValue = useDebounce(search, 1000)
+
   const columns = [
     {
       title: 'ID',
@@ -172,7 +175,7 @@ const Support = () => {
   const { isLoading, isError, error, data, isFetching } =
     useGetAdminSupportTicketsQuery({
       page,
-      search,
+      search: debounceValue,
       ordering,
     })
 

@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react'
 
 import axios from 'axios'
 
-export const useWeather = () => {
+const useWeather = () => {
   const [coord, setCoord] = useState({
     lat: null,
     long: null,
@@ -57,3 +57,5 @@ export const useWeather = () => {
 
   return [coord, weatherResult, isLoading, error]
 }
+
+export default useWeather
