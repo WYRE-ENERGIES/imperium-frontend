@@ -29,7 +29,7 @@ const EnergyStatistics = ({ duration, chartData, areaChartData }) => {
         />
       </ChartCard>
 
-      <ChartCard title="Capacity Statistics(kW)" subTitle={duration}>
+      <ChartCard title="Energy Difference(kWh)" subTitle={duration}>
         <AreaChart
           chartData={areaChartData}
           themeMode="dark"
