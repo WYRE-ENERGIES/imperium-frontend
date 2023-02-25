@@ -20,10 +20,12 @@ export const usersApiSlice = apiSlice.injectEndpoints({
         }
       },
       transformResponse: (response) => {
-        response.results = response.results.map((user) => ({
-          ...user,
-          key: user.id,
-        }))
+        response.results = response.results
+          .map((user) => ({
+            ...user,
+            key: user.id,
+          }))
+          .sort((a, b) => b.id - a.id)
 
         return response
       },
@@ -48,6 +50,16 @@ export const usersApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ['Users'],
     }),
+    removeUser: builder.mutation({
+      query: (email) => ({
+        url: `${ADMIN_URL_PATH}remove-user/${email}`,
+        method: 'DELETE',
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      }),
+      invalidatesTags: ['Users'],
+    }),
   }),
 })
 
@@ -55,4 +67,5 @@ export const {
   useGetUsersListQuery,
   useGetUsersRolesQuery,
   useInviteUserMutation,
+  useRemoveUserMutation,
 } = usersApiSlice

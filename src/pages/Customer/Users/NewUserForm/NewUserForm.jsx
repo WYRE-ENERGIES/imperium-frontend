@@ -69,7 +69,7 @@ const ModalForm = ({ toggleModal }) => {
       }}
     >
       <Form.Item
-        name="email"
+        name="invitee_email"
         label="Email"
         rules={[
           {
