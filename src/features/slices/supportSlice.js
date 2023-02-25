@@ -17,7 +17,7 @@ const transformError = (error) => {
   return message
 }
 
-export const extendedApiSlice = apiSlice.injectEndpoints({
+export const supportApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getAdminSupportTickets: builder.query({
       query: ({ page, search, ordering }) => {
@@ -76,4 +76,4 @@ export const {
   useGetAdminSupportTicketsQuery,
   useGetSupportPageAnalyticsQuery,
   useResolveTicketMutation,
-} = extendedApiSlice
+} = supportApiSlice

@@ -244,7 +244,7 @@ const Support = () => {
                 totalPages={data?.total_pages}
                 handleClick={setPage}
                 hasNext={data?.page === data?.total_pages}
-                hasPrev={data?.page === 1}
+                hasPrev={!data?.total_pages || data?.page === 1}
               />
             )}
           />

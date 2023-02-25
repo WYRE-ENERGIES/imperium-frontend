@@ -14,7 +14,7 @@ const TableFooter = ({ handleClick, pageNo, totalPages, hasNext, hasPrev }) => {
         </Button>
       </div>
       <div className={classes.TableFooter__Pagination}>
-        Page {pageNo} of {totalPages}
+        {totalPages ? `Page ${pageNo} of ${totalPages}` : ''}
       </div>
     </section>
   )
