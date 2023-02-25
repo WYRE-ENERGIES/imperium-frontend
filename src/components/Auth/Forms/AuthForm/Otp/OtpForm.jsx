@@ -7,7 +7,7 @@ const Otp = () => {
   return (
     <div className={classes.Otp}>
       <div>
-        <UserForm formcontentprops={{ action: 'Submit' }}></UserForm>
+        <UserForm formContent={{ btnText: 'Continue' }}></UserForm>
       </div>
       <div></div>
     </div>

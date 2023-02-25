@@ -34,6 +34,13 @@
 
 @media only screen and (max-width: 768px) {
   .DetailsForm {
-    margin-top: 35%;
+    margin-top: 10% !important;
+    width: 550px !important;
+    height: 680px;
+  }
+}
+@media only screen and (max-width: 320px) {
+  .DetailsForm {
+    margin-top: 20% !important;
   }
 }

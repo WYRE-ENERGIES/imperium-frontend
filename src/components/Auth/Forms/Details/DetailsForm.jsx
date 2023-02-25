@@ -8,7 +8,7 @@ const DetailsForm = () => {
         formContent={{
           header: 'Details',
           tag: 'Please fill in some details',
-          action: 'Submit',
+          btnText: 'Continue',
         }}
         labelCol={16}
         wrapperCol={32}

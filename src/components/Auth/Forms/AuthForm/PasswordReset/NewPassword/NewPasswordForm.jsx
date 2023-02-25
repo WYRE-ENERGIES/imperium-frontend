@@ -6,7 +6,7 @@ const NewPasswordForm = () => {
   return (
     <div className={classes.NewPassword}>
       <div>
-        <UserForm formcontentprops={{ action: 'Submit' }}>
+        <UserForm formContent={{ btnText: 'Continue' }}>
           <Form.Item label="Password" name="password-1" required>
             <Input.Password
               className={classes.NewPassword__Password}

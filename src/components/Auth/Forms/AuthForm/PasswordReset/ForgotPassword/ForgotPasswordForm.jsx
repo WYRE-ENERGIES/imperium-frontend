@@ -6,7 +6,7 @@ const ForgotPasswordForm = () => {
   return (
     <div className={classes.ForgotPassword}>
       <div>
-        <UserForm formcontentprops={{ action: 'Submit' }}>
+        <UserForm formContent={{ btnText: 'Continue' }}>
           <Form.Item label="" name="email" required>
             <Input
               className={classes.ForgotPassword__Input}

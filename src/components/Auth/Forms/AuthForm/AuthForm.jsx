@@ -22,6 +22,7 @@ const AuthForm = ({ children, authContentSelection, client }) => {
       footer: 'Don’t have an account?',
       action: 'Sign Up',
       helpertext: 'Can’t remember password ?',
+      btnText: 'Log In',
       footerlink: '/sign-up',
     },
   ]
@@ -53,7 +54,7 @@ const AuthForm = ({ children, authContentSelection, client }) => {
                   Email
                 </p>
               }
-              name="Email"
+              name="email"
               required
             >
               <Input

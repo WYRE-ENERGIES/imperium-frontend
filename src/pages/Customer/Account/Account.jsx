@@ -33,17 +33,18 @@ const Account = ({ children, props }) => {
         <PageBreadcrumb title="My Account" items={['My Account']} />
         <div className={classes.Account__NavBar}>
           {userAccountLink.map((display, index) => (
-            <NavLink
-              key={index}
-              to={display.link}
-              className={classes.Account__NavLinks}
-              style={({ isActive }) => ({
-                color: isActive ? '#18181b' : '#737373',
-                borderBottom: isActive ? '3px solid #5c9d48' : 'white',
-              })}
-            >
-              {display.page}
-            </NavLink>
+            <div key={index}>
+              <NavLink
+                to={display.link}
+                className={classes.Account__NavLinks}
+                style={({ isActive }) => ({
+                  color: isActive ? '#18181b' : '#737373',
+                  borderBottom: isActive ? '3px solid #5c9d48' : 'white',
+                })}
+              >
+                {display.page}
+              </NavLink>
+            </div>
           ))}
         </div>
         <div>

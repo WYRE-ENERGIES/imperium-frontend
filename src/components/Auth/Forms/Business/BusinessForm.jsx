@@ -55,7 +55,7 @@ const BusinessForm = () => {
         formContent={{
           header: 'Do you have a business',
           tag: 'Please fill in your company details',
-          action: 'Submit',
+          btnText: 'Continue',
         }}
         labelCol={16}
         wrapperCol={32}

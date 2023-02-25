@@ -1,4 +1,6 @@
 import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { loginUser } from '../../../../features/slices/authSlice'
 import { Form } from 'antd'
 import FormButton from '../Widgets/FormButton'
 import FormFooter from '../Widgets/FormFooter'
@@ -12,8 +14,14 @@ const UserForm = ({
   name,
   extras,
 }) => {
+  const dispatch = useDispatch()
+  const { isLoading, isLoggedIn, token, msg } = useSelector(
+    (state) => state.auth,
+  )
+  console.log(isLoading, isLoggedIn, token, msg)
   const onFinish = (values) => {
     console.log('Success:', values)
+    dispatch(loginUser(values))
   }
   const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo)
@@ -21,7 +29,7 @@ const UserForm = ({
 
   return (
     <section>
-      <FormHeader header={formContent.header} tagline={formContent.tag} />
+      <FormHeader header={formContent?.header} tagline={formContent?.tag} />
       <Form
         name={name}
         labelCol={{ span: labelCol }}
@@ -38,13 +46,13 @@ const UserForm = ({
         {children}
 
         <Form.Item>
-          <FormButton action={formContent.header} />
+          <FormButton action={formContent?.btnText} />
         </Form.Item>
         {extras && <div>{extras}</div>}
         <FormFooter
-          footer={formContent.footer}
-          action={formContent.action}
-          footerlink={formContent.footerlink}
+          footer={formContent?.footer}
+          action={formContent?.action}
+          footerlink={formContent?.footerlink}
         />
       </Form>
     </section>

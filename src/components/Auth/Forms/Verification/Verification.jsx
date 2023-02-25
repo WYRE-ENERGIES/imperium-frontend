@@ -16,7 +16,7 @@ const VerificationForm = () => {
               <strong>emeka@gmail.com</strong>. Please check your inbox!
             </p>
           ),
-          action: 'Submit',
+          btnText: 'Continue',
         }}
         name="verification"
       >

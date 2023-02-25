@@ -140,7 +140,9 @@ $buttonPadding: 14px 48px;
     display: flex;
     justify-content: space-between;
   }
-
+  &__Menubtn {
+    display: none;
+  }
   &__btn {
     margin-top: 5px;
     a {
@@ -209,6 +211,23 @@ $buttonPadding: 14px 48px;
     &__FileUploadProgress {
       width: 100%;
       margin-top: 10px;
+    }
+  }
+}
+
+@media only screen and (max-width: 320px) {
+  .Navbar {
+    &__Menubtn {
+      display: block;
+      border: 1px solid #66ab4f;
+      padding: 13px 10px;
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+    }
+
+    &__btn {
+      display: none;
     }
   }
 }

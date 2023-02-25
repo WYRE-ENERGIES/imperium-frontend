@@ -59,6 +59,12 @@
 
 @media only screen and (max-width: 768px) {
   .authForm {
+    margin-top: 10%;
+    width: 450px;
+  }
+}
+@media only screen and (max-width: 320px) {
+  .authForm {
     margin-top: 30%;
   }
 }
