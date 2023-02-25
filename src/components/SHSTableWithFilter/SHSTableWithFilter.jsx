@@ -15,7 +15,10 @@ const SHSTableWithFilter = ({
   btnText,
   BtnIcon,
   btnAction,
-  footer = '',
+  footer = null,
+  isLoading = false,
+  handleSearch,
+  onFilterChanged,
 }) => {
   return (
     <div className={classes.SHSTable}>
@@ -49,6 +52,8 @@ const SHSTableWithFilter = ({
           btnText={btnText}
           BtnIcon={BtnIcon}
           btnAction={btnAction}
+          handleSearch={handleSearch}
+          onFilterChanged={onFilterChanged}
         />
       </section>
       <Table
@@ -60,6 +65,7 @@ const SHSTableWithFilter = ({
           hideOnSinglePage: true,
         }}
         footer={footer}
+        loading={isLoading}
       />
     </div>
   )

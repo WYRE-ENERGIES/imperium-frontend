@@ -3,13 +3,13 @@ import React from 'react'
 import { Select } from 'antd'
 import classes from './DropDownFilter.module.scss'
 
-const DropDownFilter = ({ options }) => {
+const DropDownFilter = ({ options, onFilterChanged }) => {
   return (
     <section className={classes.DropDownFilter}>
       <MdFilterList />
       <Select
         placeholder="Filter by"
-        onChange={() => {}}
+        onChange={onFilterChanged}
         size="large"
         allowClear
         dropdownStyle={{

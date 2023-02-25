@@ -451,16 +451,16 @@ export const adminEnergyAnalyticColumns = [
           alignItems: 'center',
         }}
       >
-        Capacity
+        Energy Difference
         <RiseOutlined
           style={{ marginLeft: '5px', color: '#497A38' }}
           size={18}
         />
       </span>
     ),
-    key: 'capacity',
-    dataIndex: 'capacity',
-    render: (value) => value,
+    key: 'energyDifference',
+    dataIndex: 'energyDifference',
+    render: (value) => `${value.toLocaleString()} kwh`,
   },
 ]
 
