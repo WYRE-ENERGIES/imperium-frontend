@@ -34,9 +34,6 @@ const UserForm = ({
       }
     }
   }
-  const onFinishFailed = (errorInfo) => {
-    console.log('Failed:', errorInfo)
-  }
 
   useEffect(() => {
     if (token) {
@@ -55,7 +52,6 @@ const UserForm = ({
           remember: false,
         }}
         onFinish={onFinish}
-        onFinishFailed={onFinishFailed}
         autoComplete="off"
         layout="vertical"
         requiredMark="optional"

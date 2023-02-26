@@ -18,7 +18,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
           localStorage.setItem('token', JSON.stringify(data?.access))
           localStorage.setItem('refresh', JSON.stringify(data?.refresh))
         } catch (error) {
-          console.log('APIslice error: ', error)
+          return error
         }
       },
     }),
