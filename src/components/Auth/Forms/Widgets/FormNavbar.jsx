@@ -2,6 +2,7 @@ import React from 'react'
 import classes from './Widget.module.scss'
 import CustomerLogo from '../../../../assets/Auth/Logo.svg'
 import AdminLogo from '../../../../assets/Auth/admin.svg'
+import { ReactComponent as MenuBar } from '../../../../assets/Auth/menubar.svg'
 import { Link } from 'react-router-dom'
 const FormNavbar = ({
   txtColor1 = '#385e2b',
@@ -19,13 +20,17 @@ const FormNavbar = ({
         <div className={classes.Navbar__btn}>
           <Link
             style={{ background: btnColor1, color: txtColor1 }}
-            to={'/signup'}
+            to={'/sign-up'}
           >
             Sign Up
           </Link>
           <Link style={{ background: btnColor2, color: txtColor2 }} to={'/'}>
             Sign In{' '}
           </Link>
+        </div>
+        <div className={classes.Navbar__Menubtn}>
+          {' '}
+          <MenuBar />
         </div>
       </div>
     </div>

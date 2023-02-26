@@ -1,6 +1,6 @@
 @import '../variables.module';
 .BusinessForm {
-  margin-top: 23.5%;
+  margin-top: 10%;
   width: 420px;
 
   &__Input {
@@ -72,6 +72,12 @@
 
 @media only screen and (max-width: 768px) {
   .BusinessForm {
-    margin-top: 35%;
+    margin-top: 10%;
+    height: 680px;
+  }
+}
+@media only screen and (max-width: 320px) {
+  .BusinessForm {
+    margin-top: 20% !important;
   }
 }

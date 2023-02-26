@@ -4,9 +4,9 @@ import FormDescription from '../../../../components/Auth/Forms/Widgets/FormDescr
 import LeftLayout from '../../../../components/Auth/Layout/LeftLayout/LeftLayout'
 import React from 'react'
 import RightLayout from '../../../../components/Auth/Layout/RightLayout/RightLayout'
-import SignInForm from '../../../../components/Auth/Forms/AuthForm/SignInForm/SignInForm'
 import classes from './AdminSignIn.module.scss'
 import imageDesc from '../../../../../src/assets/Auth/adminlogo.svg'
+import AuthForm from '../../../../components/Auth/Forms/AuthForm/AuthForm'
 
 const AdminSignIn = () => {
   const formDescription = {
@@ -14,13 +14,12 @@ const AdminSignIn = () => {
     header: '',
     tagline:
       'As an admin, you can view energy analytics and panel data through charts and graphs, set shut down and turn on timers, and access battery information on our platform.',
-    ImgHeight: '3px',
   }
   return (
-    <div className={classes.AdminSignPage}>
+    <section className={classes.AdminSignPage}>
       <Row className={classes.AdminSignPage__Layout}>
-        <LeftLayout className={classes.AdminSignPage__LeftLayOut}>
-          <SignInForm isAdmin={true} />
+        <LeftLayout>
+          <AuthForm authContentSelection={'signin'} client={'admin'} />
         </LeftLayout>
 
         <Col span={12} className={classes.AdminSignPage__RightLayOut}>
@@ -29,7 +28,7 @@ const AdminSignIn = () => {
           </RightLayout>
         </Col>
       </Row>
-    </div>
+    </section>
   )
 }
 

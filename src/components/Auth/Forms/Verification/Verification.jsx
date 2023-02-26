@@ -1,54 +1,27 @@
 import { Form, Input } from 'antd'
-import { useNavigate } from 'react-router-dom'
 
-import FormButton from '../Widgets/FormButton'
-import FormHeader from '../Widgets/FormHeader'
 import classes from './VerificationForm.module.scss'
-
+import UserForm from '../AuthForm/UserForm'
 const VerificationForm = () => {
-  const nextPage = useNavigate()
-  const handleOnCreateAccountBtn = () => {
-    console.log(nextPage)
-    nextPage('/details')
-  }
-  const onFinish = (values) => {
-    console.log('Success:', values)
-    handleOnCreateAccountBtn()
-  }
-
-  const onFinishFailed = (errorInfo) => {
-    console.log('Failed:', errorInfo)
-  }
-
   return (
-    <div className={classes.VerificationForm}>
-      <FormHeader
-        header={'Verification Code Sent'}
-        tagline={
-          <p style={{ width: '400px' }}>
-            We just sent you a temporary one time pin to{' '}
-            <span>emeka@gmail.com</span>. Please check your inbox!
-          </p>
-        }
-      />
-      <div className="Form">
-        <Form
-          name="basic"
-          labelCol={{
-            span: 8,
-          }}
-          wrapperCol={{
-            span: 32,
-          }}
-          initialValues={{
-            remember: false,
-          }}
-          onFinish={onFinish}
-          onFinishFailed={onFinishFailed}
-          autoComplete="off"
-          layout="vertical"
-          requiredMark="optional"
-        >
+    <section className={classes.VerificationForm}>
+      <UserForm
+        labelCol={8}
+        wrapperCol={32}
+        formContent={{
+          header: 'Verification Code Sent',
+          tag: (
+            <p className={classes.VerificationForm__InboxCheck}>
+              We just sent you a temporary one time pin to{' '}
+              <strong>emeka@gmail.com</strong>. Please check your inbox!
+            </p>
+          ),
+          btnText: 'Continue',
+          endpoint: 'activate-with-otp',
+        }}
+        name="verification"
+      >
+        <div>
           <Form.Item
             label={
               <p style={{ fontWeight: 'bold', marginBottom: '-30px' }}>
@@ -63,13 +36,9 @@ const VerificationForm = () => {
               placeholder="Enter code"
             />
           </Form.Item>
-
-          <Form.Item>
-            <FormButton type={'submit'} action={'Continue'} icon={''} />
-          </Form.Item>
-        </Form>
-      </div>
-    </div>
+        </div>
+      </UserForm>
+    </section>
   )
 }
 export default VerificationForm

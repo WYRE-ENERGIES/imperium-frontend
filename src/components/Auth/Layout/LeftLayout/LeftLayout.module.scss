@@ -1,5 +1,5 @@
 .Layout {
-  height: 100%;
+  height: 100vh !important;
   padding: 28px 48px;
   position: relative;
 
@@ -13,8 +13,14 @@
 @media only screen and (max-width: 768px) {
   .Layout {
     display: block;
-    width: 100vw;
-    height: 950px;
-    padding: 20px;
+    width: 100vw !important;
+    padding: 28px 40px !important;
+  }
+}
+
+@media only screen and (max-width: 320px) {
+  .Layout {
+    display: block;
+    padding: 20px !important;
   }
 }

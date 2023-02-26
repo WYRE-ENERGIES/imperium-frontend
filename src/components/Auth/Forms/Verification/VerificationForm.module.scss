@@ -33,16 +33,33 @@
       box-shadow: $box-shadow-input;
     }
   }
+  &__InboxCheck {
+    width: 400px;
+  }
 }
 
 @media only screen and (max-width: 768px) {
   .VerificationForm {
-    margin-top: 65%;
-    width: 100vw;
+    margin-top: 18%;
+    width: 550px;
     padding: 0 20px;
+    height: 100%;
 
-    p {
-      width: 100px;
+    &__InboxCheck {
+      width: 100%;
+    }
+  }
+}
+@media only screen and (max-width: 320px) {
+  .VerificationForm {
+    margin-top: 30%;
+    width: 550px !important;
+    padding: 0 20px;
+    height: 100%;
+    padding: 0;
+
+    &__InboxCheck {
+      width: 100%;
     }
   }
 }

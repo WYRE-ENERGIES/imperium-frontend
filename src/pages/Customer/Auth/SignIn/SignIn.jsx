@@ -8,6 +8,7 @@ import RightLayout from '../../../../components/Auth/Layout/RightLayout/RightLay
 import '../../../../components/Auth/Forms/global.module.scss'
 import imageDesc from '../../../../../src/assets/Auth/Sun energy-amico 1.svg'
 import classes from './SignIn.module.scss'
+import AuthForm from '../../../../components/Auth/Forms/AuthForm/AuthForm'
 
 const SignIn = () => {
   const formDescription = {
@@ -20,7 +21,7 @@ const SignIn = () => {
     <div className={classes.SignPage}>
       <Row className={classes.SignPage__Layout}>
         <LeftLayout className={classes.SignPage__LeftLayOut}>
-          <SignInForm />
+          <AuthForm authContentSelection={'signin'} client="customer" />
         </LeftLayout>
         <RightLayout className={classes.SignPage__RightLayOut}>
           <FormDescription content={formDescription} />

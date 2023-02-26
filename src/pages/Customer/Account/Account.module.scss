@@ -16,7 +16,7 @@
     color: #737373;
     font-weight: 400;
     font-size: 16px;
-    padding: 15px;
+    padding: 9px 15px;
 
     &:hover {
       color: #18181b;
@@ -75,6 +75,15 @@
       color: #18181b;
       font-weight: 500;
       font-size: 24px;
+    }
+  }
+}
+
+@media only screen and (max-width: 320px) {
+  .Account {
+    display: flex;
+    &__NavBar {
+      display: none;
     }
   }
 }
