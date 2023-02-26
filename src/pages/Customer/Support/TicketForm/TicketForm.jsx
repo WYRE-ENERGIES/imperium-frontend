@@ -5,19 +5,20 @@ import {
   Input,
   Modal,
   Select,
-  Spin,
   Switch,
   Typography,
 } from 'antd'
-import React, { useEffect, useState } from 'react'
+import React, { Suspense, lazy, useEffect, useState } from 'react'
 import { ToastContainer, toast } from 'react-toastify'
 
-import { LoadingOutlined } from '@ant-design/icons'
 import { ReactComponent as TicketIcon } from '../../../../assets/ticket-icon.svg'
 import classes from './TicketForm.module.scss'
 import { supportStatusEnums } from '../../../../utils/enums'
 import { useResolveTicketMutation } from '../../../../features/slices/supportSlice'
 
+const ButtonLoader = lazy(() =>
+  import('../../../../components/ButtonLoader/ButtonLoader'),
+)
 const { Option } = Select
 const { TextArea } = Input
 const { Text, Title } = Typography
@@ -30,15 +31,6 @@ const layout = {
     span: 16,
   },
 }
-
-const antIcon = (
-  <LoadingOutlined
-    style={{
-      fontSize: 24,
-    }}
-    spin
-  />
-)
 
 const ModalForm = ({ toggleModal, ticketData, isAdmin }) => {
   const [isResolved, setIsResolved] = useState(ticketData.status)
@@ -164,22 +156,21 @@ const ModalForm = ({ toggleModal, ticketData, isAdmin }) => {
         >
           Cancel
         </Button>
-        <Button
-          className={classes.TicketForm__submitBtn}
-          htmlType="submit"
-          disabled={isResolved === ticketData.status}
-        >
-          {isLoading ? (
-            <Spin
-              indicator={antIcon}
-              style={{
-                color: isResolved === ticketData.status ? '#385E2B' : '#fff',
-              }}
-            />
-          ) : (
-            'Submit'
-          )}
-        </Button>
+        <Suspense>
+          <Button
+            className={classes.TicketForm__submitBtn}
+            htmlType="submit"
+            disabled={isResolved === ticketData.status}
+          >
+            {isLoading ? (
+              <ButtonLoader
+                color={isResolved === ticketData.status ? '#385E2B' : '#fff'}
+              />
+            ) : (
+              'Submit'
+            )}
+          </Button>
+        </Suspense>
       </div>
       <ToastContainer />
     </Form>
