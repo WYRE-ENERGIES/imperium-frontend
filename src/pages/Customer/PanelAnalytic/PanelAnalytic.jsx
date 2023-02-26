@@ -12,7 +12,7 @@ import React from 'react'
 import ShsCapacityDropdown from '../../../components/ShsCapacityDropdown/ShsCapacityDropdown'
 import WidgetFilter from '../../../components/WidgetFilter/WidgetFilter'
 import classes from './PanelAnalytic.module.scss'
-import { useWeather } from '../../../hooks/useWeather'
+import useWeather from '../../../hooks/useWeather'
 
 const PanelAnalytic = () => {
   const [coord, weatherResult, isLoading, error] = useWeather()
