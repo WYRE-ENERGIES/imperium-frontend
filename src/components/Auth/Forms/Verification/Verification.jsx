@@ -17,6 +17,7 @@ const VerificationForm = () => {
             </p>
           ),
           btnText: 'Continue',
+          endpoint: 'activate-with-otp',
         }}
         name="verification"
       >

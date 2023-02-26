@@ -15,6 +15,7 @@ const AuthForm = ({ children, authContentSelection, client }) => {
       helpertext: 'Must be at least 8 characters.',
       btnText: 'Create account',
       footerlink: '/',
+      endpoint: 'register',
     },
     {
       header: 'Log In',
@@ -24,6 +25,7 @@ const AuthForm = ({ children, authContentSelection, client }) => {
       helpertext: 'Can’t remember password ?',
       btnText: 'Log In',
       footerlink: '/sign-up',
+      endpoint: 'login',
     },
   ]
   const formContent =
@@ -41,7 +43,6 @@ const AuthForm = ({ children, authContentSelection, client }) => {
         {client === 'admin' ? '' : <ThirdPartyAuth />}
         <section>
           <section>
-            {' '}
             <Form.Item
               label={
                 <p
@@ -55,7 +56,12 @@ const AuthForm = ({ children, authContentSelection, client }) => {
                 </p>
               }
               name="email"
-              required
+              rules={[
+                {
+                  required: true,
+                  message: 'This field is required.',
+                },
+              ]}
             >
               <Input
                 className={classes.authForm__Input}
@@ -78,7 +84,12 @@ const AuthForm = ({ children, authContentSelection, client }) => {
               extra={formContent.helpertext}
               name="password"
               style={{ marginTop: '-1rem' }}
-              required
+              rules={[
+                {
+                  required: true,
+                  message: 'This field is required.',
+                },
+              ]}
             >
               <Input.Password
                 className={classes.authForm__Password}
