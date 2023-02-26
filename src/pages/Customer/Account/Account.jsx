@@ -1,9 +1,12 @@
 import AccountInfo from './AccountProfile'
 import { NavLink } from 'react-router-dom'
+
 import PageBreadcrumb from '../../../components/PageBreadcrumb/PageBreadcrumb'
 import PageLayout from '../../../components/Layout/PageLayout'
 import { React } from 'react'
 import classes from './Account.module.scss'
+import FormButton from '../../../components/Auth/Forms/Widgets/FormButton'
+import { Row, Form, Col } from 'antd'
 
 const Account = ({ children, props }) => {
   const AcctInfo = {
@@ -51,6 +54,14 @@ const Account = ({ children, props }) => {
           <AccountInfo AcctInfo={AcctInfo} type={props} />
         </div>
         {children}
+        <Form.Item>
+          <Row justify={'end'} gutter={20}>
+            <Col span={8}>
+              {' '}
+              <FormButton type={'submit'} action={'Save changes'} />
+            </Col>{' '}
+          </Row>
+        </Form.Item>
       </PageLayout>
     </div>
   )

@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Form } from 'antd'
 import FormButton from '../Widgets/FormButton'
 import FormFooter from '../Widgets/FormFooter'
 import FormHeader from '../Widgets/FormHeader'
-import { useAuthMutation } from '../../../../features/slices/authSlice'
+import { useLogInMutation } from '../../../../features/slices/auth/authApiSlice'
 import classes from './AuthForm.module.scss'
+import { useNavigate } from 'react-router-dom'
 
 const UserForm = ({
   children,
@@ -14,8 +15,10 @@ const UserForm = ({
   name,
   extras,
 }) => {
-  const [auth, { isLoading, error }] = useAuthMutation()
-
+  const token = localStorage.getItem('token')
+  const [errMsg, setErrMsg] = useState('')
+  const [login, { isLoading, error, isError }] = useLogInMutation()
+  const navigate = useNavigate()
   const onFinish = async (values) => {
     const data = {
       credentials: values,
@@ -23,14 +26,23 @@ const UserForm = ({
     }
 
     try {
-      await auth(data).unwrap()
-    } catch (error) {
-      console.log(error.status)
+      await login(data).unwrap()
+      navigate('/admin/overview')
+    } catch (err) {
+      if (isError || error) {
+        setErrMsg(error?.data?.details)
+      }
     }
   }
   const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo)
   }
+
+  useEffect(() => {
+    if (token) {
+      navigate('/admin/overview')
+    }
+  })
 
   return (
     <section>
@@ -50,11 +62,7 @@ const UserForm = ({
       >
         {children}
 
-        {error && (
-          <small className={classes.UserForm__Message}>
-            {error.data?.detail}
-          </small>
-        )}
+        {error && <small className={classes.UserForm__Message}>{errMsg}</small>}
         <Form.Item>
           <FormButton action={formContent?.btnText} isLoading={isLoading} />
         </Form.Item>
