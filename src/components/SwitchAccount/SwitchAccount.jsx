@@ -62,7 +62,7 @@ const SwitchAccountContent = ({ toggleModal, isAdmin }) => {
       ) : (
         <>
           <Radio.Group onChange={handleChange}>
-            {data.map((option) => (
+            {data?.map((option) => (
               <Options
                 key={option.id}
                 name={option.fullname}
