@@ -3,7 +3,7 @@ import { loginUser } from './authSlice'
 
 export const authApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    logIn: builder.mutation({
+    login: builder.mutation({
       query: ({ credentials, endpoint }) => {
         return {
           url: `auth/${endpoint}/`,
@@ -15,8 +15,6 @@ export const authApiSlice = apiSlice.injectEndpoints({
         try {
           const { data } = await queryFulfilled
           dispatch(loginUser({ ...data }))
-          localStorage.setItem('token', JSON.stringify(data?.access))
-          localStorage.setItem('refresh', JSON.stringify(data?.refresh))
         } catch (error) {
           return error
         }
@@ -25,4 +23,4 @@ export const authApiSlice = apiSlice.injectEndpoints({
   }),
 })
 
-export const { useLogInMutation } = authApiSlice
+export const { useLoginMutation } = authApiSlice
