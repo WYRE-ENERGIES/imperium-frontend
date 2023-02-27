@@ -5,6 +5,7 @@ import FormButton from '../Widgets/FormButton'
 import FormFooter from '../Widgets/FormFooter'
 import FormHeader from '../Widgets/FormHeader'
 import classes from './AuthForm.module.scss'
+import { getItemFromLocalStorage } from '../../../../utils/helpers'
 import { useLoginMutation } from '../../../../features/slices/auth/authApiSlice'
 import { useNavigate } from 'react-router-dom'
 
@@ -20,8 +21,7 @@ const UserForm = ({
   const [login, { isLoading }] = useLoginMutation()
   const navigate = useNavigate()
 
-  const accesstoken = localStorage.getItem('access')
-  console.log({ accesstoken })
+  const accessToken = getItemFromLocalStorage('access')
 
   const onFinish = async (values) => {
     const credentials = {
@@ -46,7 +46,7 @@ const UserForm = ({
   }
 
   useEffect(() => {
-    if (accesstoken) {
+    if (accessToken) {
       navigate(formContent.navigate)
     }
   })

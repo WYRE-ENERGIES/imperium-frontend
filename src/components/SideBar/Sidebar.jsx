@@ -5,6 +5,7 @@ import React, { Suspense, lazy, useState } from 'react'
 import { ReactComponent as AdminLogo } from '../../assets/Auth/adminlogo.svg'
 import Footer from './Footer/Footer'
 import { ReactComponent as Logo } from '../../assets/logo.svg'
+import { getItemFromLocalStorage } from '../../utils/helpers'
 import styles from './Sidebar.module.scss'
 
 const { Sider } = Layout
@@ -20,9 +21,21 @@ const Sidebar = ({
   const location = useLocation()
   const [showSwitchAccount, setShowSwitchAccount] = useState(false)
 
+  const accessToken = getItemFromLocalStorage('access')
   const toggleActivateShsModal = () => {
     setShowSwitchAccount(!showSwitchAccount)
   }
+
+  const redirectTo = () => {
+    let path = '/'
+    if (accessToken) {
+      path = isAdmin ? '/admin/overview' : '/overview'
+    } else {
+      path = isAdmin ? '/admin' : '/'
+    }
+    return path
+  }
+
   return (
     <Sider
       style={{
@@ -48,7 +61,7 @@ const Sidebar = ({
           justifyContent: 'space-between',
         }}
       >
-        <Link to={isAdmin ? '/admin' : '/'}>
+        <Link to={redirectTo()}>
           {isAdmin ? (
             <AdminLogo
               style={{

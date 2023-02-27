@@ -56,7 +56,6 @@ const UserInvitePage = lazy(() =>
 )
 
 // Admin Routes
-
 const AdminActiveAlert = lazy(() =>
   import('./pages/Admin/ActiveAlert/ActiveAlert'),
 )
@@ -99,6 +98,8 @@ const AdminOverview = lazy(() => import('./pages/Admin/Overview/Overview'))
 const AdminVoltageCurrent = lazy(() =>
   import('./pages/Admin/VoltageCurrent/VoltageCurrent'),
 )
+const PrivateRoute = lazy(() => import('./utils/PrivateRoute'))
+
 function App() {
   return (
     <Router>
@@ -135,36 +136,44 @@ function App() {
             {/* Admin routes */}
             <Route path="admin">
               <Route index element={<AdminSignIn />} />
-              <Route path="account" element={<AdminAccount />} />
-              <Route path="active-alerts">
-                <Route index element={<AdminActiveAlert />} />
+              <Route element={<PrivateRoute pathTo="admin" />}>
+                <Route path="account" element={<AdminAccount />} />
+                <Route path="active-alerts">
+                  <Route index element={<AdminActiveAlert />} />
+                  <Route
+                    path="created-alerts"
+                    element={<AdminActiveAlertCreated />}
+                  />
+                  <Route
+                    path="location-alerts"
+                    element={<AdminActiveAlertLocation />}
+                  />
+                </Route>
+                <Route path="panel-analytic" element={<AdminPanelAnalytic />} />
+                <Route path="battery-analytic" element={<AdminBattery />} />
                 <Route
-                  path="created-alerts"
-                  element={<AdminActiveAlertCreated />}
+                  path="energy-analytic"
+                  element={<AdminEnergyAnalytic />}
                 />
+                <Route path="users" element={<Users />} />
+                <Route path="support" element={<AdminSupport />} />
                 <Route
-                  path="location-alerts"
-                  element={<AdminActiveAlertLocation />}
+                  path="forgot-password"
+                  element={<AdminForgotPassword />}
+                />
+                <Route path="new-password" element={<AdminResetPassword />} />
+                <Route path="otp" element={<AdminOtp />} />
+                <Route path="customers">
+                  <Route index element={<AdminCustomers />} />
+                  <Route path=":id" element={<AdminCustomer />} />
+                </Route>
+                <Route path="all-shs" element={<AdminSHS />} />
+                <Route path="overview" element={<AdminOverview />} />
+                <Route
+                  path="voltage-current-analytics"
+                  element={<AdminVoltageCurrent />}
                 />
               </Route>
-              <Route path="panel-analytic" element={<AdminPanelAnalytic />} />
-              <Route path="battery-analytic" element={<AdminBattery />} />
-              <Route path="energy-analytic" element={<AdminEnergyAnalytic />} />
-              <Route path="users" element={<Users />} />
-              <Route path="support" element={<AdminSupport />} />
-              <Route path="forgot-password" element={<AdminForgotPassword />} />
-              <Route path="new-password" element={<AdminResetPassword />} />
-              <Route path="otp" element={<AdminOtp />} />
-              <Route path="customers">
-                <Route index element={<AdminCustomers />} />
-                <Route path=":id" element={<AdminCustomer />} />
-              </Route>
-              <Route path="all-shs" element={<AdminSHS />} />
-              <Route path="overview" element={<AdminOverview />} />
-              <Route
-                path="voltage-current-analytics"
-                element={<AdminVoltageCurrent />}
-              />
             </Route>
           </Route>
         </Routes>

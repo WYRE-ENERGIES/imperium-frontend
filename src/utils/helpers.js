@@ -22,9 +22,15 @@ export const getItemFromLocalStorage = (key, ttl) => {
   const item = JSON.parse(localStorage.getItem(key))
 
   if (!item || (ttl && ttl !== item?.ttl)) {
-    localStorage.removeItem(key)
+    removeItemFromLocalStorage(key)
     return null
   }
-
   return item
+}
+
+export const removeItemFromLocalStorage = (key) => localStorage.removeItem(key)
+
+export const isAuthenticated = () => {
+  const token = getItemFromLocalStorage('access')
+  return !!token
 }
