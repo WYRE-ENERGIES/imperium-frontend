@@ -1,3 +1,8 @@
+import {
+  removeItemFromLocalStorage,
+  saveToLocalStorage,
+} from '../../../utils/helpers'
+
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
@@ -12,12 +17,14 @@ const authSlice = createSlice({
       const { access, refresh } = action.payload
       state.isLoggedIn = true
       state.token = access
-      localStorage.setItem('access', JSON.stringify(access))
-      localStorage.setItem('refresh', JSON.stringify(refresh))
+      saveToLocalStorage('access', access)
+      saveToLocalStorage('refresh', refresh)
     },
     logOutUser: (state) => {
       state.isLoggedIn = false
       state.token = null
+      removeItemFromLocalStorage('access')
+      removeItemFromLocalStorage('refresh')
     },
   },
 })

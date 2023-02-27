@@ -75,6 +75,7 @@ const ModalForm = ({ toggleModal }) => {
           {
             required: true,
             type: 'email',
+            message: 'Email is required',
           },
         ]}
       >
@@ -89,6 +90,7 @@ const ModalForm = ({ toggleModal }) => {
         rules={[
           {
             required: true,
+            message: 'Role is required',
           },
         ]}
         style={{ marginBottom: '8px' }}

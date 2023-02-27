@@ -1,6 +1,5 @@
 import { apiSlice } from '../api/apiSlice'
 
-const token = process.env.REACT_APP_ADMIN_TOKEN
 const BASE_SUPPORT_URL = '/imperium-admin/list-support-tickets/'
 
 const transformError = (error) => {
@@ -30,12 +29,7 @@ export const supportApiSlice = apiSlice.injectEndpoints({
           url += `&ordering=${ordering}`
         }
 
-        return {
-          url,
-          headers: {
-            authorization: `Bearer ${token}`,
-          },
-        }
+        return { url }
       },
       transformResponse: (response) => {
         response.results = response.results.map((ticket) => ({
@@ -49,12 +43,7 @@ export const supportApiSlice = apiSlice.injectEndpoints({
       providesTags: ['Support'],
     }),
     getSupportPageAnalytics: builder.query({
-      query: () => ({
-        url: `${BASE_SUPPORT_URL}analytics/`,
-        headers: {
-          authorization: `Bearer ${token}`,
-        },
-      }),
+      query: () => ({ url: `${BASE_SUPPORT_URL}analytics/` }),
       transformErrorResponse: (error) => transformError(error),
       providesTags: ['SupportAnalytics'],
     }),
@@ -63,9 +52,6 @@ export const supportApiSlice = apiSlice.injectEndpoints({
         url: `${BASE_SUPPORT_URL}resolve/`,
         method: 'POST',
         body: data,
-        headers: {
-          authorization: `Bearer ${token}`,
-        },
       }),
       invalidatesTags: ['Support', 'SupportAnalytics'],
     }),
