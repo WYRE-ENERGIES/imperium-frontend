@@ -9,8 +9,11 @@ const authSlice = createSlice({
   initialState: initialState,
   reducers: {
     loginUser: (state, action) => {
+      const { access, refresh } = action.payload
       state.isLoggedIn = true
-      state.token = action.payload.data.access
+      state.token = access
+      localStorage.setItem('access', JSON.stringify(access))
+      localStorage.setItem('refresh', JSON.stringify(refresh))
     },
     logOutUser: (state) => {
       state.isLoggedIn = false

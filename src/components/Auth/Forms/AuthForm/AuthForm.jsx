@@ -26,6 +26,7 @@ const AuthForm = ({ children, authContentSelection, client }) => {
       btnText: 'Log In',
       footerlink: '/sign-up',
       endpoint: 'login',
+      navigate: client === 'admin' ? '/admin/overview' : '/overview',
     },
   ]
   const formContent =
