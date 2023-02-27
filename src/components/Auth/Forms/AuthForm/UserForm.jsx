@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react'
+
 import { Form } from 'antd'
 import FormButton from '../Widgets/FormButton'
 import FormFooter from '../Widgets/FormFooter'
 import FormHeader from '../Widgets/FormHeader'
-import { useAuthUserMutation } from '../../../../features/slices/auth/authApiSlice'
 import classes from './AuthForm.module.scss'
+import { useLoginMutation } from '../../../../features/slices/auth/authApiSlice'
 import { useNavigate } from 'react-router-dom'
 
 const UserForm = ({
@@ -16,10 +17,11 @@ const UserForm = ({
   extras,
 }) => {
   const [errMsg, setErrMsg] = useState('')
-  const [authUser, { isLoading }] = useAuthUserMutation()
+  const [login, { isLoading }] = useLoginMutation()
   const navigate = useNavigate()
 
   const accesstoken = localStorage.getItem('access')
+  console.log({ accesstoken })
 
   const onFinish = async (values) => {
     const credentials = {
@@ -28,7 +30,7 @@ const UserForm = ({
     }
 
     try {
-      await authUser(credentials).unwrap()
+      await login(credentials).unwrap()
       navigate(formContent.navigate)
     } catch (err) {
       let errorMsg = ''
