@@ -9,10 +9,10 @@ const { Option } = Select
 const { Group, Button } = Radio
 
 const optionData = [
-  { name: '12 months', value: '12' },
-  { name: '30 days', value: '30' },
-  { name: '7 days', value: '7' },
-  { name: '24 hours', value: '24' },
+  { name: '12 months', value: 'yearly' },
+  { name: '30 days', value: 'monthly' },
+  { name: '7 days', value: 'weekly' },
+  { name: '24 hours', value: 'daily' },
 ]
 
 const options = optionData.map((option, index) => (
@@ -27,18 +27,17 @@ const radioButtonOptions = optionData.map((option, index) => (
   </Button>
 ))
 
-const WidgetFilter = ({ hasExportButton = false }) => {
-  const [filterBy, SetFilterBy] = useState('')
-
-  const filterByChange = (e) => {
-    SetFilterBy(e.target.value)
-  }
+const WidgetFilter = ({
+  hasExportButton = false,
+  selectFilterBy,
+  filterBy,
+}) => {
   return (
     <div className={classes.WidgetFilter}>
       <div className={classes.WidgetFilter__btnSection}>
         <Group
           value={filterBy}
-          onChange={filterByChange}
+          onChange={selectFilterBy}
           className={classes.WidgetFilter__btn}
         >
           {radioButtonOptions}
