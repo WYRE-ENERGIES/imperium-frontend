@@ -25,9 +25,11 @@ const TotalClientWidget = ({
           {Icon && <Icon />}
           {loading ? <Spin /> : count}
         </h1>
-        <Link to={linkTo} className={classes.CustomersWidget__btn}>
-          <BsDot size={20} /> {Icon ? 'Add User' : 'Add Client'}
-        </Link>
+        {Icon ? (
+          <Link to={linkTo} className={classes.CustomersWidget__btn}>
+            <BsDot size={20} /> {Icon ? 'Add User' : 'Add Client'}
+          </Link>
+        ) : null}
       </div>
     </div>
   )

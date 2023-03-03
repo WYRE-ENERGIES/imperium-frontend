@@ -37,7 +37,7 @@ const WidgetFilter = ({
       <div className={classes.WidgetFilter__btnSection}>
         <Group
           value={filterBy}
-          onChange={selectFilterBy}
+          onChange={(e) => selectFilterBy(e.target.value)}
           className={classes.WidgetFilter__btn}
         >
           {radioButtonOptions}
@@ -45,7 +45,11 @@ const WidgetFilter = ({
       </div>
 
       <div className={classes.WidgetFilter__btnSectionMobile}>
-        <DropDownFilter options={options} />
+        <DropDownFilter
+          options={options}
+          onFilterChanged={selectFilterBy}
+          value={filterBy}
+        />
       </div>
 
       <DatePicker />

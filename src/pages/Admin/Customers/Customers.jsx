@@ -26,6 +26,28 @@ const ActivateCustomer = lazy(() =>
   import('./ActivateCustomer/ActivateCustomer'),
 )
 
+const formatLabel = (value) => {
+  let label = ''
+  switch (value) {
+    case 'yearly':
+      label = 'For the last 12 months'
+      break
+    case 'monthly':
+      label = 'For the last month'
+      break
+    case 'weekly':
+      label = 'For the last 7 days'
+      break
+    case 'daily':
+      label = 'For the last 12 hours'
+      break
+    default:
+      label = 'For the last 12 months'
+      break
+  }
+  return label
+}
+
 const Customers = () => {
   const [chartData, setChartData] = useState([
     {
@@ -76,7 +98,7 @@ const Customers = () => {
   useEffect(() => {
     const cData = chartData[0]
     if (!isStatisticsLoading && statisticsData.length) {
-      cData.data = Object.values(statisticsData[0])
+      cData.data = statisticsData
     }
 
     setChartData([cData])
@@ -206,7 +228,7 @@ const Customers = () => {
         </section>
         <section className={classes.Customers__filters}>
           <WidgetFilter
-            selectFilterBy={(e) => setGlobalFilter(e.target.value)}
+            selectFilterBy={(value) => setGlobalFilter(value)}
             filterBy={globalFilter}
           />
         </section>
@@ -223,14 +245,14 @@ const Customers = () => {
               title="All Added Users"
               Icon={UsersIcon}
               count={analyticsData?.users || 0}
-              duration="For the last 12 months"
+              duration={formatLabel(globalFilter)}
               linkTo="/admin/users"
               loading={isAnalyticsLoading || isAnalyticsFetching}
             />
             <TotalClientWidget
               title="Total Imperium Client"
               count={analyticsData?.clients || 0}
-              duration="For the last 12 months"
+              duration={formatLabel(globalFilter)}
               loading={isAnalyticsLoading || isAnalyticsFetching}
             />
           </div>

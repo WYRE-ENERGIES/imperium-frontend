@@ -1,28 +1,46 @@
-import { Button, Form, Input, Modal, Typography } from 'antd'
-import React, { useState } from 'react'
+import {
+  Button,
+  DatePicker,
+  Form,
+  Input,
+  Modal,
+  Select,
+  Typography,
+} from 'antd'
+import React, { useEffect, useState } from 'react'
 import { ToastContainer, toast } from 'react-toastify'
 
 import { PlusOutlined } from '@ant-design/icons'
 import { ReactComponent as TicketIcon } from '../../../../assets/widget-icons/home-icon.svg'
 import classes from './SHSForm.module.scss'
+import { useAssignShsMutation } from '../../../../features/slices/customersSlice'
 
 const { Text, Title } = Typography
+const { Option } = Select
 
 const AddSHSForm = ({ toggleModal }) => {
   const [form] = Form.useForm()
-  const [inputs, setInputs] = useState(['uid1'])
+  const [inputs, setInputs] = useState(['uid-1'])
+
+  const [assignShs, { isLoading, isSuccess }] = useAssignShsMutation()
 
   const onFinish = (values) => {
-    toast.success('SHS Added', {
-      hideProgressBar: true,
-      autoClose: 3000,
-      theme: 'colored',
-    })
+    // assignShs(values)
   }
 
+  useEffect(() => {
+    if (!isLoading && isSuccess) {
+      toast.success('SHS Added', {
+        hideProgressBar: true,
+        autoClose: 3000,
+        theme: 'colored',
+      })
+      toggleModal()
+    }
+  }, [isLoading, isSuccess])
+
   const addNewInput = () => {
-    const nextField = `ueid ${inputs.length + 1}`
-    setInputs((prev) => [...prev, nextField])
+    setInputs((prev) => [...prev, `uid-${inputs.length + 1}`])
   }
 
   return (
@@ -40,25 +58,116 @@ const AddSHSForm = ({ toggleModal }) => {
         span: 32,
       }}
     >
+      <div className="inputGroupField">
+        <Form.Item
+          name="email"
+          label="Customer Email"
+          style={{ marginBottom: '12px', flex: 1 }}
+          rules={[
+            {
+              required: true,
+              type: 'email',
+            },
+          ]}
+        >
+          <Input
+            placeholder="Enter users email"
+            className={classes.AddSHSForm__input}
+          />
+        </Form.Item>
+
+        <Form.Item
+          name="sector"
+          label="Select Sector"
+          rules={[
+            {
+              required: true,
+            },
+          ]}
+          style={{ marginBottom: '8px', flex: 1 }}
+        >
+          <Select
+            className={classes.AddSHSForm__select}
+            placeholder="Select Sector"
+            onChange={() => {}}
+            allowClear
+          >
+            <Option value="Payment">Payment</Option>
+          </Select>
+        </Form.Item>
+      </div>
+
+      <div className="inputGroupField">
+        <Form.Item
+          name="region"
+          label="Select Region"
+          rules={[
+            {
+              required: true,
+            },
+          ]}
+          style={{ marginBottom: '8px', flex: 1 }}
+        >
+          <Select
+            className={classes.AddSHSForm__select}
+            placeholder="Select Region"
+            onChange={() => {}}
+            allowClear
+          >
+            <Option value="Payment">Payment</Option>
+          </Select>
+        </Form.Item>
+
+        <Form.Item
+          name="state"
+          label="Select State"
+          rules={[
+            {
+              required: true,
+            },
+          ]}
+          style={{ marginBottom: '8px', flex: 1 }}
+        >
+          <Select
+            className={classes.AddSHSForm__select}
+            placeholder="Select State"
+            onChange={() => {}}
+            allowClear
+          >
+            <Option value="Payment">Payment</Option>
+          </Select>
+        </Form.Item>
+      </div>
+
       <Form.Item
-        name="email"
-        label="Customer Email"
-        style={{ marginBottom: '12px' }}
+        name="vendor"
+        label="Select Vendor"
         rules={[
           {
             required: true,
-            type: 'email',
           },
         ]}
+        style={{ marginBottom: '8px' }}
       >
-        <Input
-          placeholder="Enter users email"
-          className={classes.AddSHSForm__input}
-        />
+        <Select
+          className={classes.AddSHSForm__select}
+          placeholder="Select Vendor"
+          onChange={() => {}}
+          allowClear
+        >
+          <Option value="Payment">Payment</Option>
+        </Select>
       </Form.Item>
+
       <Form.Item
         label="Unique Equipment Identifier"
         style={{ marginBottom: 0 }}
+        wrapperCol={{
+          span: 10,
+        }}
+        labelCol={{
+          span: 10,
+        }}
         rules={[
           {
             required: true,
@@ -138,7 +247,7 @@ const SHSForm = ({ isOpen, toggleModal }) => {
       open={isOpen}
       onOk={toggleModal}
       onCancel={toggleModal}
-      width={400}
+      width={705}
       footer={null}
     >
       <AddSHSForm toggleModal={toggleModal} />
