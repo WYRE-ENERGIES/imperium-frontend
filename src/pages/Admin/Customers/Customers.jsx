@@ -19,7 +19,6 @@ import TotalClientWidget from '../../../components/Widget/Customers/TotalClientW
 import { ReactComponent as UsersIcon } from '../../../assets/widget-icons/users-icon.svg'
 import WidgetFilter from '../../../components/WidgetFilter/WidgetFilter'
 import classes from './Customers.module.scss'
-import { customersData } from '../../../utils/userData'
 import useDebounce from '../../../hooks/useDebounce'
 
 const SHSForm = lazy(() => import('./SHSForm/SHSForm'))
@@ -40,6 +39,7 @@ const Customers = () => {
     useState(false)
   const [search, setSearch] = useState('')
   const [page, setPage] = useState(1)
+  const [globalFilter, setGlobalFilter] = useState('yearly')
 
   const toggleModal = () => setOpenModal(!openModal)
   const toggleActivateCustomerModal = (record) => {
@@ -54,21 +54,24 @@ const Customers = () => {
     useGetAdminCustomersListQuery({
       page,
       search: debounceValue,
+      filterBy: globalFilter,
     })
 
   const {
     isLoading: isAnalyticsLoading,
+    isFetching: isAnalyticsFetching,
     isError: isAnalyticsError,
     error: analyticsError,
     data: analyticsData,
-  } = useGetCustomerPageAnalyticsQuery()
+  } = useGetCustomerPageAnalyticsQuery({ filterBy: globalFilter })
 
   const {
     isLoading: isStatisticsLoading,
+    isFetching: isStatisticsFetching,
     isError: isStatisticsError,
     error: statisticsError,
     data: statisticsData,
-  } = useGetCustomerPageStatisticsQuery()
+  } = useGetCustomerPageStatisticsQuery({ filterBy: globalFilter })
 
   useEffect(() => {
     const cData = chartData[0]
@@ -202,7 +205,10 @@ const Customers = () => {
           />
         </section>
         <section className={classes.Customers__filters}>
-          <WidgetFilter />
+          <WidgetFilter
+            selectFilterBy={(e) => setGlobalFilter(e.target.value)}
+            filterBy={globalFilter}
+          />
         </section>
         <div className={classes.Customers__widgets}>
           <CustomerChartWidget
@@ -210,7 +216,7 @@ const Customers = () => {
             colors="#497A38"
             borderRadius={5}
             columnWidth={30}
-            loading={isStatisticsLoading}
+            loading={isStatisticsLoading || isStatisticsFetching}
           />
           <div className={classes.Customers__innerWidgets}>
             <TotalClientWidget
@@ -219,13 +225,13 @@ const Customers = () => {
               count={analyticsData?.users || 0}
               duration="For the last 12 months"
               linkTo="/admin/users"
-              loading={isAnalyticsLoading}
+              loading={isAnalyticsLoading || isAnalyticsFetching}
             />
             <TotalClientWidget
               title="Total Imperium Client"
               count={analyticsData?.clients || 0}
               duration="For the last 12 months"
-              loading={isAnalyticsLoading}
+              loading={isAnalyticsLoading || isAnalyticsFetching}
             />
           </div>
         </div>

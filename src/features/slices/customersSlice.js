@@ -5,8 +5,8 @@ const BASE_CUSTOMERS_URL = '/imperium-admin/list-customers/'
 export const customerApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getAdminCustomersList: builder.query({
-      query: ({ page, search, ordering }) => {
-        let url = `${BASE_CUSTOMERS_URL}?page=${page}`
+      query: ({ page, search, filterBy }) => {
+        let url = `${BASE_CUSTOMERS_URL}?page=${page}&order_by=${filterBy}`
         if (search) {
           url += `&search=${search}`
         }
@@ -24,11 +24,15 @@ export const customerApiSlice = apiSlice.injectEndpoints({
       providesTags: ['Customers'],
     }),
     getCustomerPageAnalytics: builder.query({
-      query: () => ({ url: `${BASE_CUSTOMERS_URL}analytics/` }),
+      query: ({ filterBy }) => ({
+        url: `${BASE_CUSTOMERS_URL}analytics/?order_by=${filterBy}`,
+      }),
       providesTags: ['CustomersAnalytics'],
     }),
     getCustomerPageStatistics: builder.query({
-      query: () => ({ url: `${BASE_CUSTOMERS_URL}statistics/` }),
+      query: ({ filterBy }) => ({
+        url: `${BASE_CUSTOMERS_URL}statistics/?order_by=${filterBy}`,
+      }),
     }),
     activateCustomer: builder.mutation({
       query: (data) => ({

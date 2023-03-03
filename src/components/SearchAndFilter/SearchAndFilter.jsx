@@ -42,9 +42,9 @@ const SearchAndFilter = ({
         onChange={handleSearch}
       />
       <Suspense fallback={<h4>loading</h4>}>
-        {filterOptions && (
+        {filterOptions.length ? (
           <DropDownFilter onFilterChanged={onFilterChanged} options={options} />
-        )}
+        ) : null}
       </Suspense>
       {isAdmin && (
         <Button className={classes.SearchAndFilter__exportBtn}>

@@ -19,8 +19,8 @@ const layout = {
 }
 
 const ActivateContent = ({ user, toggleModal, toggleForm }) => {
-  const title = user?.isActive ? 'Activate Client' : 'Disabled Client'
-  const TIcon = user?.isActive ? TicketIcon : DisableTicketIcon
+  const title = !user?.status ? 'Activate Client' : 'Disabled Client'
+  const TIcon = !user?.status ? TicketIcon : DisableTicketIcon
 
   return (
     <div>
@@ -35,7 +35,7 @@ const ActivateContent = ({ user, toggleModal, toggleForm }) => {
         </Title>
         <Text type="secondary" className={classes.SHSForm__subTitle}>
           {`If you proceed with this ensure the client and their users can ${
-            !user.isActive ? 'not' : ''
+            !user.status ? 'not' : ''
           } have
           access the platform, the power supply from all the Imperium Solar
           Housing System will be shut down`}
@@ -166,6 +166,7 @@ const DisableClientForm = ({ user, toggleModal }) => {
 }
 
 const ActivateCustomer = ({ user, isOpen, toggleModal }) => {
+  console.log(user)
   const [showForm, setShowForm] = useState(false)
   const toggleForm = () => setShowForm(!showForm)
 
