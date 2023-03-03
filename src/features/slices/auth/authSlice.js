@@ -14,7 +14,10 @@ const authSlice = createSlice({
   initialState: initialState,
   reducers: {
     loginUser: (state, action) => {
-      const { access, refresh } = action.payload
+      const {
+        email,
+        tokens: { access, refresh },
+      } = action.payload
       state.isLoggedIn = true
       state.token = access
       saveToLocalStorage('access', access)

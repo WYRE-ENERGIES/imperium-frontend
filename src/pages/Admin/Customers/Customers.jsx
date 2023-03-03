@@ -1,5 +1,10 @@
-import React, { Suspense, lazy, useState } from 'react'
+import React, { Suspense, lazy, useEffect, useState } from 'react'
 import { Switch, Tag } from 'antd'
+import {
+  useGetAdminCustomersListQuery,
+  useGetCustomerPageAnalyticsQuery,
+  useGetCustomerPageStatisticsQuery,
+} from '../../../features/slices/customersSlice'
 
 import AdminPageLayout from '../../../components/Layout/AdminPageLayout/AdminPageLayout'
 import CustomerChartWidget from '../../../components/Widget/Customers/CustomerChartWidget'
@@ -8,12 +13,14 @@ import { FiHome } from 'react-icons/fi'
 import { Link } from 'react-router-dom'
 import PageBreadcrumb from '../../../components/PageBreadcrumb/PageBreadcrumb'
 import ReactAvatar from 'react-avatar'
+import TableFooter from '../../../components/TableFooter/TableFooter'
 import TableWithFilter from '../../../components/SHSTableWithFilter/SHSTableWithFilter'
 import TotalClientWidget from '../../../components/Widget/Customers/TotalClientWidget'
 import { ReactComponent as UsersIcon } from '../../../assets/widget-icons/users-icon.svg'
 import WidgetFilter from '../../../components/WidgetFilter/WidgetFilter'
 import classes from './Customers.module.scss'
 import { customersData } from '../../../utils/userData'
+import useDebounce from '../../../hooks/useDebounce'
 
 const SHSForm = lazy(() => import('./SHSForm/SHSForm'))
 const ActivateCustomer = lazy(() =>
@@ -24,19 +31,53 @@ const Customers = () => {
   const [chartData, setChartData] = useState([
     {
       name: 'users',
-      data: [400, 500, 350, 420, 320, 500, 410, 430, 410, 500, 570, 400],
+      data: [],
     },
   ])
   const [selectedUser, setSelectedUser] = useState(false)
   const [openModal, setOpenModal] = useState(false)
   const [openActivateCustomerModal, setOpenActivateCustomerModal] =
     useState(false)
+  const [search, setSearch] = useState('')
+  const [page, setPage] = useState(1)
 
   const toggleModal = () => setOpenModal(!openModal)
   const toggleActivateCustomerModal = (record) => {
     setSelectedUser(record)
     setOpenActivateCustomerModal(!openActivateCustomerModal)
   }
+
+  const handleSearch = (e) => setSearch(e.target.value)
+  const debounceValue = useDebounce(search, 1000)
+
+  const { isLoading, isError, error, data, isFetching } =
+    useGetAdminCustomersListQuery({
+      page,
+      search: debounceValue,
+    })
+
+  const {
+    isLoading: isAnalyticsLoading,
+    isError: isAnalyticsError,
+    error: analyticsError,
+    data: analyticsData,
+  } = useGetCustomerPageAnalyticsQuery()
+
+  const {
+    isLoading: isStatisticsLoading,
+    isError: isStatisticsError,
+    error: statisticsError,
+    data: statisticsData,
+  } = useGetCustomerPageStatisticsQuery()
+
+  useEffect(() => {
+    const cData = chartData[0]
+    if (!isStatisticsLoading && statisticsData.length) {
+      cData.data = Object.values(statisticsData[0])
+    }
+
+    setChartData([cData])
+  }, [statisticsData])
 
   const columns = [
     {
@@ -54,16 +95,16 @@ const Customers = () => {
           <ReactAvatar
             size={30}
             round={true}
-            name={record.name}
+            name={record.customer_fullname || record.customer_email}
             fgColor="#385E2B"
             color="#F0F7ED"
           />
           <div className={classes.Customers__names}>
             <h3 style={{ color: record.status ? '' : '#C4C4C4' }}>
-              {record.name}
+              {record.customer_fullname}
             </h3>
             <h4 style={{ color: record.status ? '' : '#C4C4C4' }}>
-              {record.email}
+              {record.customer_email}
             </h4>
           </div>
         </div>
@@ -71,19 +112,20 @@ const Customers = () => {
     },
     {
       title: 'Purchase Date',
-      key: 'purchaseDate',
-      dataIndex: 'purchaseDate',
+      key: 'purchased_date',
+      dataIndex: 'purchased_date',
+      sorter: (a, b) => a.purchased_date.localeCompare(b.purchased_date),
       render: (value, record) => (
         <p style={{ color: record.status ? '' : '#C4C4C4' }}>
-          {value.toLocaleString()}
+          {new Date(value).toLocaleDateString()}
         </p>
       ),
     },
     {
       title: 'SHS',
-      key: 'noOfShs',
-      dataIndex: 'noOfShs',
-      sorter: (a, b) => a.noOfShs - b.noOfShs,
+      key: 'shs_count',
+      dataIndex: 'shs_count',
+      sorter: (a, b) => a.shs_count - b.shs_count,
       render: (value, record) => (
         <p style={{ color: record.status ? '' : '#C4C4C4' }}>
           {value.toLocaleString()}
@@ -92,13 +134,11 @@ const Customers = () => {
     },
     {
       title: 'Users',
-      key: 'noOfUsers',
-      dataIndex: 'noOfUsers',
-      sorter: (a, b) => a.noOfUsers - b.noOfUsers,
+      key: 'users_count',
+      dataIndex: 'users_count',
+      sorter: (a, b) => a.users_count - b.users_count,
       render: (value, record) => (
-        <p style={{ color: record.status ? '' : '#C4C4C4' }}>
-          {value.toLocaleString()}
-        </p>
+        <p style={{ color: record.status ? '' : '#C4C4C4' }}>{value}</p>
       ),
     },
     {
@@ -170,26 +210,29 @@ const Customers = () => {
             colors="#497A38"
             borderRadius={5}
             columnWidth={30}
+            loading={isStatisticsLoading}
           />
           <div className={classes.Customers__innerWidgets}>
             <TotalClientWidget
               title="All Added Users"
               Icon={UsersIcon}
-              count={598}
+              count={analyticsData?.users || 0}
               duration="For the last 12 months"
               linkTo="/admin/users"
+              loading={isAnalyticsLoading}
             />
             <TotalClientWidget
               title="Total Imperium Client"
-              count={214}
+              count={analyticsData?.clients || 0}
               duration="For the last 12 months"
+              loading={isAnalyticsLoading}
             />
           </div>
         </div>
         <div className={classes.Customers__shsTable}>
           <TableWithFilter
             columns={columns}
-            data={customersData}
+            data={data?.results}
             tableTitle="All Customers"
             filterOptions={[]}
             isAdmin={true}
@@ -197,6 +240,17 @@ const Customers = () => {
             btnText="Add SHS"
             BtnIcon={FiHome}
             btnAction={toggleModal}
+            handleSearch={handleSearch}
+            isLoading={isFetching}
+            footer={() => (
+              <TableFooter
+                pageNo={data?.page}
+                totalPages={data?.total_pages}
+                handleClick={setPage}
+                hasNext={data?.page === data?.total_pages}
+                hasPrev={!data?.total_pages || data?.page === 1}
+              />
+            )}
           />
         </div>
       </div>
