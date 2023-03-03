@@ -2,8 +2,20 @@ import { HiOutlineRefresh } from 'react-icons/hi'
 import { MdLogout } from 'react-icons/md'
 import React from 'react'
 import ReactAvatar from 'react-avatar'
+import { logOutUser } from '../../../features/slices/auth/authSlice'
+import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 
-const Footer = ({ userName, toggleActivateShsModal }) => {
+const Footer = ({ userName, toggleActivateShsModal, isAdmin }) => {
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+
+  const onLogout = () => {
+    const navigateTo = isAdmin ? '/admin' : '/'
+    dispatch(logOutUser())
+    navigate(navigateTo)
+  }
+
   return (
     <div
       style={{
@@ -15,12 +27,14 @@ const Footer = ({ userName, toggleActivateShsModal }) => {
     >
       <ReactAvatar size={30} round={true} name={userName} color="#C4C4C4" />
       <span>{userName}</span>
-      <HiOutlineRefresh
-        style={{ cursor: 'pointer' }}
-        color="C4C4C4"
-        onClick={toggleActivateShsModal}
-      />
-      <MdLogout />
+      {!isAdmin ? (
+        <HiOutlineRefresh
+          style={{ cursor: 'pointer' }}
+          color="C4C4C4"
+          onClick={toggleActivateShsModal}
+        />
+      ) : null}
+      <MdLogout style={{ cursor: 'pointer' }} onClick={onLogout} />
     </div>
   )
 }

@@ -100,6 +100,7 @@ const Sidebar = ({
           <Footer
             userName="Emeka Isokun"
             toggleActivateShsModal={toggleActivateShsModal}
+            isAdmin={isAdmin}
           />
         </div>
       </div>
