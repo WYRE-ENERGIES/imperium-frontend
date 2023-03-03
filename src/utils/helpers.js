@@ -34,3 +34,25 @@ export const isAuthenticated = () => {
   const token = getItemFromLocalStorage('access')
   return !!token
 }
+
+export const formatLabel = (value) => {
+  let label = ''
+  switch (value) {
+    case 'yearly':
+      label = 'For the last 12 months'
+      break
+    case 'monthly':
+      label = 'For the last month'
+      break
+    case 'weekly':
+      label = 'For the last 7 days'
+      break
+    case 'daily':
+      label = 'For the last 12 hours'
+      break
+    default:
+      label = 'For the last 12 months'
+      break
+  }
+  return label
+}

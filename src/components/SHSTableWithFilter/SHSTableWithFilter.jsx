@@ -54,7 +54,6 @@ const SHSTableWithFilter = ({
           btnAction={btnAction}
           handleSearch={handleSearch}
           onFilterChanged={onFilterChanged}
-          disableSearch={!data?.length}
         />
       </section>
       <Table
