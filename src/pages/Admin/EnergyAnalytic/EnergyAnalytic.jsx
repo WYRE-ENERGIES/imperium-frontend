@@ -1,11 +1,8 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { TbActivityHeartbeat, TbBoltOff } from 'react-icons/tb'
 import {
-  adminEnergyAnalyticColumns,
-  energyFilterOptions,
-} from '../../../utils/data'
-import {
   useGetEnergyPageAnalyticsQuery,
+  useGetEnergyStatisticsQuery,
   useGetEnergyTableDataQuery,
 } from '../../../features/slices/energySlice'
 
@@ -18,7 +15,7 @@ import SHSTableWithFilter from '../../../components/SHSTableWithFilter/SHSTableW
 import { Spin } from 'antd'
 import TableFooter from '../../../components/TableFooter/TableFooter'
 import WidgetFilter from '../../../components/WidgetFilter/WidgetFilter'
-import { adminTableData } from '../../../components/SHSTableWithFilter/data'
+import { adminEnergyAnalyticColumns } from '../../../utils/data'
 import classes from '../../Customer/EnergyAnalytic/EnergyAnalytic.module.scss'
 import { formatLabel } from '../../../utils/helpers'
 import useDebounce from '../../../hooks/useDebounce'
@@ -27,18 +24,18 @@ const EnergyAnalytic = () => {
   const [chartData, setChartData] = useState([
     {
       name: 'Energy Consumed',
-      data: [400, 500, 350, 420, 320, 500, 410, 430, 410, 500, 570, 400],
+      data: [],
     },
     {
       name: 'Energy Generated',
-      data: [400, 500, 230, 430, 260, 430, 390, 380, 390, 330, 430, 310],
+      data: [],
     },
   ])
 
   const [areaChartData, setAreaChartData] = useState([
     {
       name: 'Energy Difference',
-      data: [350, 400, 500, 420, 500, 570, 410, 430, 410, 500, 400, 320],
+      data: [],
     },
   ])
 
@@ -67,7 +64,14 @@ const EnergyAnalytic = () => {
     isError: isCapacityError,
     error: capacityError,
     data: capacityData,
-  } = useGetEnergyPageAnalyticsQuery({ filterBy: globalFilter })
+  } = useGetEnergyStatisticsQuery({ filterBy: globalFilter })
+
+  useEffect(() => {
+    if (!isCapacityFetching && capacityData?.energyConsumed) {
+      setAreaChartData([capacityData.energyDifference])
+      setChartData([capacityData.energyConsumed, capacityData.energyGenerated])
+    }
+  }, [capacityData])
 
   let widgets = []
   if (!isAnalyticsFetching) {
@@ -160,11 +164,15 @@ const EnergyAnalytic = () => {
               />
             )}
           />
-          <EnergyStatistics
-            duration="For the last 12 months"
-            chartData={chartData}
-            areaChartData={areaChartData}
-          />
+          {isCapacityFetching ? (
+            <Spin />
+          ) : (
+            <EnergyStatistics
+              duration="For the last 12 months"
+              chartData={chartData}
+              areaChartData={areaChartData}
+            />
+          )}
         </div>
       </div>
     </AdminPageLayout>

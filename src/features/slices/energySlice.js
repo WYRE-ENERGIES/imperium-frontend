@@ -31,7 +31,34 @@ export const energyApiSlice = apiSlice.injectEndpoints({
       query: ({ filterBy }) => ({
         url: `${BASE_ENERGY_URL}capacity-statistics/?order_by=${filterBy}`,
       }),
-      //   transformResponse: (response) => Object.values(response[0]),
+      transformResponse: (response) => {
+        const [res] = response
+        const energyConsumed = {
+          name: 'Energy Consumed',
+          data: [],
+        }
+        const energyGenerated = {
+          name: 'Energy Generated',
+          data: [],
+        }
+        const energyDifference = {
+          name: 'Energy Difference',
+          data: [],
+        }
+
+        Object.values(res).forEach((result) => {
+          const { energy_consumed, energy_generated, capacity } = result
+          energyConsumed.data.push(Math.round(energy_consumed) ?? 0)
+          energyGenerated.data.push(Math.round(energy_generated) ?? 0)
+          energyDifference.data.push(capacity ?? 0)
+        })
+
+        return {
+          energyConsumed,
+          energyGenerated,
+          energyDifference,
+        }
+      },
     }),
   }),
 })

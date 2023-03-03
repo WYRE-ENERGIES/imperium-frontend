@@ -76,7 +76,7 @@ const Customers = () => {
 
   useEffect(() => {
     const cData = chartData[0]
-    if (!isStatisticsLoading && statisticsData.length) {
+    if (!isStatisticsLoading && statisticsData?.length) {
       cData.data = statisticsData
     }
 
