@@ -33,6 +33,7 @@ export const customerApiSlice = apiSlice.injectEndpoints({
       query: ({ filterBy }) => ({
         url: `${BASE_CUSTOMERS_URL}statistics/?order_by=${filterBy}`,
       }),
+      transformResponse: (response) => Object.values(response[0]),
     }),
     activateCustomer: builder.mutation({
       query: (data) => ({
@@ -42,6 +43,14 @@ export const customerApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ['Customers', 'CustomersAnalytics'],
     }),
+    assignShs: builder.mutation({
+      query: (data) => ({
+        url: `${BASE_CUSTOMERS_URL}assign-shs/`,
+        method: 'POST',
+        body: data,
+      }),
+      invalidatesTags: ['Customers'],
+    }),
   }),
 })
 
@@ -50,4 +59,5 @@ export const {
   useGetCustomerPageAnalyticsQuery,
   useGetCustomerPageStatisticsQuery,
   useActivateCustomerMutation,
+  useAssignShsMutation,
 } = customerApiSlice
