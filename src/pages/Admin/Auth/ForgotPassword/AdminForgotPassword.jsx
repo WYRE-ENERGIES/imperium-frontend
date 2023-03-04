@@ -8,8 +8,7 @@ import icon from '../../../../assets/Auth/Group 18.svg'
 import FormButton from '../../../../components/Auth/Forms/Widgets/FormButton'
 const ForgotPasswordPage = () => {
   const [errMsg, setErrMsg] = useState('')
-  const [adminforgotPassword, { data, isLoading, isSuccess }] =
-    useAdminforgotPasswordMutation()
+  const [adminforgotPassword, { isLoading }] = useAdminforgotPasswordMutation()
   const openNotification = (email) => {
     notification.success({
       message: 'OTP sent!',
