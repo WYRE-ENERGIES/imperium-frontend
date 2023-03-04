@@ -18,7 +18,24 @@ export const authApiSlice = apiSlice.injectEndpoints({
         }
       },
     }),
+    adminOtp: builder.mutation({
+      query: (otp) => {
+        return {
+          url: '/imperium-admin/auth/otp/',
+          method: 'POST',
+          body: otp,
+        }
+      },
+      async onQueryStarted(otp, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled
+        } catch (error) {
+          return error
+        }
+      },
+    }),
   }),
 })
 
-export const { useAdminforgotPasswordMutation } = authApiSlice
+export const { useAdminforgotPasswordMutation, useAdminOtpMutation } =
+  authApiSlice
