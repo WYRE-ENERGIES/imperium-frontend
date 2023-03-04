@@ -1,9 +1,12 @@
 import { Button, Space, Typography } from 'antd'
+import React, { useEffect } from 'react'
+import { ToastContainer, toast } from 'react-toastify'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 
+import ButtonLoader from '../../../components/ButtonLoader/ButtonLoader'
 import { ReactComponent as Logo } from '../../../assets/logo.svg'
-import React from 'react'
 import classes from './UserInvite.module.scss'
-import { useNavigate } from 'react-router-dom'
+import { useAcceptInviteMutation } from '../../../features/slices/usersSlice'
 
 const { Text, Title } = Typography
 
@@ -26,10 +29,29 @@ const message = (username, role) => {
 
 const UserInvite = () => {
   const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
+
+  const token = searchParams.get('invite-token')
+  const [acceptInvite, { isLoading, isSuccess, isError, error }] =
+    useAcceptInviteMutation()
 
   const handleAccept = () => {
-    navigate('/signup')
+    acceptInvite({ token })
   }
+
+  useEffect(() => {
+    if (!isLoading && isSuccess) {
+      navigate('/signup')
+    }
+
+    if (isError) {
+      toast.error('Internal Error', {
+        hideProgressBar: true,
+        autoClose: 3000,
+        theme: 'colored',
+      })
+    }
+  }, [isLoading, isSuccess, isError])
 
   return (
     <div className={classes.UserInvite}>
@@ -42,9 +64,10 @@ const UserInvite = () => {
           <Text>{message('Emeka', 'admin')}</Text>
         </div>
         <Button onClick={handleAccept} className={classes.UserInvite__btn}>
-          Accept Invitation
+          {isLoading ? <ButtonLoader color="#fff" /> : 'Accept Invitation'}
         </Button>
       </div>
+      <ToastContainer />
     </div>
   )
 }

@@ -43,7 +43,7 @@ const ModalForm = ({ toggleModal }) => {
 
   useEffect(() => {
     if (!isLoading && isSuccess) {
-      toast.success('User Added', {
+      toast.success('Invite sent', {
         hideProgressBar: true,
         autoClose: 3000,
         theme: 'colored',
