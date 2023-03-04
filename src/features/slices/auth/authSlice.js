@@ -14,14 +14,12 @@ const authSlice = createSlice({
   initialState: initialState,
   reducers: {
     loginUser: (state, action) => {
-      const {
-        email,
-        tokens: { access, refresh },
-      } = action.payload
+      const { user_info, token } = action.payload
       state.isLoggedIn = true
-      state.token = access
-      saveToLocalStorage('access', access)
-      saveToLocalStorage('refresh', refresh)
+      state.token = token
+      saveToLocalStorage('access', token)
+      // There's no refresh token from the swagger doc and the response object keys were changed
+      // saveToLocalStorage('refresh', refresh)
     },
     logOutUser: (state) => {
       state.isLoggedIn = false
