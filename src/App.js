@@ -136,6 +136,9 @@ function App() {
             {/* Admin routes */}
             <Route path="admin">
               <Route index element={<AdminSignIn />} />
+              <Route path="forgot-password" element={<AdminForgotPassword />} />
+              <Route path="new-password" element={<AdminResetPassword />} />
+              <Route path="otp" element={<AdminOtp />} />
               <Route element={<PrivateRoute pathTo="admin" />}>
                 <Route path="account" element={<AdminAccount />} />
                 <Route path="active-alerts">
@@ -157,12 +160,7 @@ function App() {
                 />
                 <Route path="users" element={<Users />} />
                 <Route path="support" element={<AdminSupport />} />
-                <Route
-                  path="forgot-password"
-                  element={<AdminForgotPassword />}
-                />
-                <Route path="new-password" element={<AdminResetPassword />} />
-                <Route path="otp" element={<AdminOtp />} />
+
                 <Route path="customers">
                   <Route index element={<AdminCustomers />} />
                   <Route path=":id" element={<AdminCustomer />} />
