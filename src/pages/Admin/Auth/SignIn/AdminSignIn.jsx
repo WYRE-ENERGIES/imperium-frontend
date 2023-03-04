@@ -29,13 +29,11 @@ const AdminSignIn = () => {
   const accessToken = getItemFromLocalStorage('access')
 
   const onFinish = async (values) => {
-    const credentials = {
-      credentials: values,
-      endpoint: 'imperium-admin/auth/login',
-    }
-
     try {
-      await login(credentials).unwrap()
+      await login({
+        credentials: values,
+        endpoint: 'imperium-admin/auth/login/',
+      }).unwrap()
       navigate('/admin/overview')
     } catch (err) {
       let errorMsg = ''
@@ -44,6 +42,8 @@ const AdminSignIn = () => {
         setErrMsg(errorMsg)
       } else if (err.status === 400) {
         setErrMsg('Missing username or password')
+      } else if (err.status === 500) {
+        setErrMsg('Cannot connect to server.')
       } else {
         setErrMsg('Check your internet connection')
       }
@@ -138,7 +138,7 @@ const AdminSignIn = () => {
               >
                 <Input.Password
                   className={classes.AdminSignPage__Password}
-                  placeholder="Create a password"
+                  placeholder="Enter a password"
                   style={{ marginTop: '-1px' }}
                 />
               </Form.Item>
