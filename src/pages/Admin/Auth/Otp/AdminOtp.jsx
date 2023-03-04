@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { Form } from 'antd'
 import OTPInput from 'otp-input-react'
 import { useAdminOtpMutation } from '../../../../features/slices/auth/admin/adminAuthApiSlice'
@@ -75,16 +75,18 @@ const AdminOTP = () => {
           style={{ textAlign: 'center', marginTop: '10px' }}
         >
           {`Didn't get Code ?`}
-          <Link
+          <button
             style={{
               color: '#385E2B',
               fontWeight: 'bold',
               textDecoration: 'none',
               marginLeft: '5px',
+              background: 'none',
+              border: 'none',
             }}
           >
             Resend
-          </Link>
+          </button>
         </section>
       </Layout>
     </div>

@@ -36,7 +36,6 @@ const AdminSignIn = () => {
       }).unwrap()
       navigate('/admin/overview')
     } catch (err) {
-      console.log(err)
       let errorMsg = ''
       if (err.status === 401) {
         errorMsg += err?.data?.detail
