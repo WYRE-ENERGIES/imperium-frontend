@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { Form } from 'antd'
 import OTPInput from 'otp-input-react'
 import { useAdminOtpMutation } from '../../../../features/slices/auth/admin/adminAuthApiSlice'
@@ -12,6 +12,7 @@ const AdminOTP = () => {
   const [errMsg, setErrMsg] = useState('')
   const [adminOtp, { isLoading }] = useAdminOtpMutation()
   const navigate = useNavigate()
+  const email = useLocation()
   const onFinish = async (values) => {
     try {
       await adminOtp({
@@ -38,7 +39,7 @@ const AdminOTP = () => {
         background="#294620"
         widgets={{
           header: 'OTP Verification',
-          tag: 'Enter OTP sent to nisha@uitrend.com',
+          tag: `Enter OTP sent to ${email.state.email}`,
           icon: icon,
         }}
         admin={true}

@@ -22,7 +22,7 @@ const ForgotPasswordPage = () => {
         email: values.email,
       }).unwrap()
       openNotification(values.email)
-      navigate('/admin/otp')
+      navigate('/admin/otp', { state: { email: values.email } })
     } catch (err) {
       let errorMsg = ''
       if (err.status === 401) {
