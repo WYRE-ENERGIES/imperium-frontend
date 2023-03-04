@@ -16,16 +16,17 @@ const AdminOTP = () => {
   const onFinish = async (values) => {
     try {
       await adminOtp({
-        otp: OTP,
+        email: email.state.email,
+        otp_code: OTP,
       }).unwrap()
       navigate('/admin/otp')
     } catch (err) {
       let errorMsg = ''
       if (err.status === 401) {
-        errorMsg += err?.data?.email?.message || err?.data?.email
+        errorMsg += err?.data?.message
         setErrMsg(errorMsg)
       } else if (err.status === 400) {
-        setErrMsg(err?.data?.email?.message || err?.data?.email)
+        setErrMsg(err?.data?.message)
       } else if (err.status === 500) {
         setErrMsg('Server could not be reached. Try later!')
       } else {

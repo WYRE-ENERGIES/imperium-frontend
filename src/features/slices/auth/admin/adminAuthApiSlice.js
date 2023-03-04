@@ -19,14 +19,14 @@ export const authApiSlice = apiSlice.injectEndpoints({
       },
     }),
     adminOtp: builder.mutation({
-      query: (otp) => {
+      query: (credentials) => {
         return {
-          url: '/imperium-admin/auth/otp/',
+          url: '/imperium-admin/auth/forgot-password/confirm/',
           method: 'POST',
-          body: otp,
+          body: credentials,
         }
       },
-      async onQueryStarted(otp, { dispatch, queryFulfilled }) {
+      async onQueryStarted(credentials, { dispatch, queryFulfilled }) {
         try {
           const { data } = await queryFulfilled
         } catch (error) {
