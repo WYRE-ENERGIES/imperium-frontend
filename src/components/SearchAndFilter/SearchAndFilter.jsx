@@ -25,7 +25,6 @@ const SearchAndFilter = ({
   btnAction,
   handleSearch,
   onFilterChanged,
-  disableSearch,
 }) => {
   const options = filterOptions?.map((option, index) => (
     <Option key={index} value={option.value}>
@@ -41,7 +40,6 @@ const SearchAndFilter = ({
         prefix={prefix}
         className={classes.SearchAndFilter__search}
         onChange={handleSearch}
-        disabled={disableSearch}
       />
       <Suspense fallback={<h4>loading</h4>}>
         {filterOptions?.length ? (

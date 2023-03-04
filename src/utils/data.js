@@ -405,8 +405,8 @@ export const adminEnergyAnalyticColumns = [
         <TbBolt style={{ marginLeft: '5px', color: '#497A38' }} size={18} />
       </span>
     ),
-    dataIndex: 'SHS',
-    key: 'SHS',
+    dataIndex: 'shs_name',
+    key: 'shs_name',
   },
   {
     title: (
@@ -420,8 +420,8 @@ export const adminEnergyAnalyticColumns = [
         <TbBoltOff style={{ marginLeft: '5px', color: '#497A38' }} size={18} />
       </span>
     ),
-    key: 'energyConsumed',
-    dataIndex: 'energyConsumed',
+    key: 'energy_consumed',
+    dataIndex: 'energy_consumed',
     render: (value) => `${value.toLocaleString()} kwh`,
   },
   {
@@ -439,8 +439,8 @@ export const adminEnergyAnalyticColumns = [
         />
       </span>
     ),
-    key: 'energyGenerated',
-    dataIndex: 'energyGenerated',
+    key: 'energy_generated',
+    dataIndex: 'energy_generated',
     render: (value) => `${value.toLocaleString()} kwh`,
   },
   {
@@ -458,8 +458,8 @@ export const adminEnergyAnalyticColumns = [
         />
       </span>
     ),
-    key: 'energyDifference',
-    dataIndex: 'energyDifference',
+    key: 'shs_capacity',
+    dataIndex: 'shs_capacity',
     render: (value) => `${value.toLocaleString()} kwh`,
   },
 ]

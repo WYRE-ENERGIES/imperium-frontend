@@ -19,34 +19,13 @@ import TotalClientWidget from '../../../components/Widget/Customers/TotalClientW
 import { ReactComponent as UsersIcon } from '../../../assets/widget-icons/users-icon.svg'
 import WidgetFilter from '../../../components/WidgetFilter/WidgetFilter'
 import classes from './Customers.module.scss'
+import { formatLabel } from '../../../utils/helpers'
 import useDebounce from '../../../hooks/useDebounce'
 
 const SHSForm = lazy(() => import('./SHSForm/SHSForm'))
 const ActivateCustomer = lazy(() =>
   import('./ActivateCustomer/ActivateCustomer'),
 )
-
-const formatLabel = (value) => {
-  let label = ''
-  switch (value) {
-    case 'yearly':
-      label = 'For the last 12 months'
-      break
-    case 'monthly':
-      label = 'For the last month'
-      break
-    case 'weekly':
-      label = 'For the last 7 days'
-      break
-    case 'daily':
-      label = 'For the last 12 hours'
-      break
-    default:
-      label = 'For the last 12 months'
-      break
-  }
-  return label
-}
 
 const Customers = () => {
   const [chartData, setChartData] = useState([
@@ -97,7 +76,7 @@ const Customers = () => {
 
   useEffect(() => {
     const cData = chartData[0]
-    if (!isStatisticsLoading && statisticsData.length) {
+    if (!isStatisticsLoading && statisticsData?.length) {
       cData.data = statisticsData
     }
 
