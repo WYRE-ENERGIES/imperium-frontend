@@ -22,14 +22,12 @@ const ForgotPasswordPage = () => {
     const email = {
       email: values.email,
     }
-    console.log(email)
     try {
       await adminforgotPassword(email).unwrap()
       openNotification(values.email)
       setSuccessMsg(data?.message)
       navigate('/admin/otp')
     } catch (err) {
-      console.log('err is:', err)
       let errorMsg = ''
       if (err.status === 401) {
         errorMsg += err?.data?.email?.message || err?.data?.email
