@@ -8,24 +8,21 @@ import icon from '../../../../assets/Auth/Group 18.svg'
 import FormButton from '../../../../components/Auth/Forms/Widgets/FormButton'
 const ForgotPasswordPage = () => {
   const [errMsg, setErrMsg] = useState('')
-  const [successMsg, setSuccessMsg] = useState('')
-  const [adminforgotPassword, { data, isLoading }] =
+  const [adminforgotPassword, { data, isLoading, isSuccess }] =
     useAdminforgotPasswordMutation()
   const openNotification = (email) => {
     notification.success({
-      message: successMsg,
+      message: 'OTP sent!',
       description: `OPT has been sent to ${email}`,
     })
   }
   const navigate = useNavigate()
   const onFinish = async (values) => {
-    const email = {
-      email: values.email,
-    }
     try {
-      await adminforgotPassword(email).unwrap()
+      await adminforgotPassword({
+        email: values.email,
+      }).unwrap()
       openNotification(values.email)
-      setSuccessMsg(data?.message)
       navigate('/admin/otp')
     } catch (err) {
       let errorMsg = ''
