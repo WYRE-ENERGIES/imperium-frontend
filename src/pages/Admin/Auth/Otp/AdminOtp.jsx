@@ -13,13 +13,14 @@ const AdminOTP = () => {
   const [adminOtp, { isLoading }] = useAdminOtpMutation()
   const navigate = useNavigate()
   const email = useLocation()
+
   const onFinish = async (values) => {
     try {
       await adminOtp({
         email: email.state.email,
         otp_code: OTP,
       }).unwrap()
-      navigate('/admin/otp')
+      navigate('/admin/new-password', { state: { email: email.state.email } })
     } catch (err) {
       let errorMsg = ''
       if (err.status === 401) {

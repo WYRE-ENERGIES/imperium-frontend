@@ -34,8 +34,27 @@ export const authApiSlice = apiSlice.injectEndpoints({
         }
       },
     }),
+    adminNewPassword: builder.mutation({
+      query: (credentials) => {
+        return {
+          url: '/imperium-admin/auth/forgot-password/complete/',
+          method: 'POST',
+          body: credentials,
+        }
+      },
+      async onQueryStarted(credentials, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled
+        } catch (error) {
+          return error
+        }
+      },
+    }),
   }),
 })
 
-export const { useAdminforgotPasswordMutation, useAdminOtpMutation } =
-  authApiSlice
+export const {
+  useAdminforgotPasswordMutation,
+  useAdminOtpMutation,
+  useAdminNewPasswordMutation,
+} = authApiSlice
