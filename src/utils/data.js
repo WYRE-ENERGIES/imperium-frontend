@@ -422,7 +422,7 @@ export const adminEnergyAnalyticColumns = [
     ),
     key: 'energy_consumed',
     dataIndex: 'energy_consumed',
-    render: (value) => `${value.toLocaleString()} kwh`,
+    render: (value) => `${parseFloat(value.toLocaleString()).toFixed(1)} kwh`,
   },
   {
     title: (
@@ -441,7 +441,7 @@ export const adminEnergyAnalyticColumns = [
     ),
     key: 'energy_generated',
     dataIndex: 'energy_generated',
-    render: (value) => `${value.toLocaleString()} kwh`,
+    render: (value) => `${parseFloat(value.toLocaleString()).toFixed(1)} kwh`,
   },
   {
     title: (
@@ -460,7 +460,7 @@ export const adminEnergyAnalyticColumns = [
     ),
     key: 'shs_capacity',
     dataIndex: 'shs_capacity',
-    render: (value) => `${value.toLocaleString()} kwh`,
+    render: (value) => `${parseFloat(value.toLocaleString()).toFixed(1)} kwh`,
   },
 ]
 
