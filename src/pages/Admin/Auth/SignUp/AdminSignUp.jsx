@@ -12,10 +12,11 @@ import LeftLayout from '../../../../components/Auth/Layout/LeftLayout/LeftLayout
 import RightLayout from '../../../../components/Auth/Layout/RightLayout/RightLayout'
 
 import imageDesc from '../../../../../src/assets/Auth/adminlogo.svg'
-import classes from './AdminSignIn.module.scss'
+import classes from './AdminSignUp.module.scss'
 import FormHeader from '../../../../components/Auth/Forms/Widgets/FormHeader'
+import ThirdPartyAuth from '../../../../components/Auth/Forms/Widgets/ThirdPartyAuth'
 
-const AdminSignIn = () => {
+const AdminSignUp = () => {
   const formDescription = {
     image: imageDesc,
     header: '',
@@ -54,14 +55,15 @@ const AdminSignIn = () => {
     }
   })
   return (
-    <section className={classes.AdminSignPage}>
-      <Row className={classes.AdminSignPage__Layout}>
+    <section className={classes.AdminSignUpPage}>
+      <Row className={classes.AdminSignUpPage__Layout}>
         <LeftLayout>
-          <div className={classes.AdminSignPage__LoginForm}>
+          <div className={classes.AdminSignUpPage__LoginForm}>
             <FormHeader
-              header={'Log In'}
-              tagline={'Welcome back! Please enter your details.'}
+              header={'Create Account'}
+              tagline={'Let’s get started with imperium today'}
             />
+            <ThirdPartyAuth />
             <Form
               name="admin-login"
               labelCol={8}
@@ -83,14 +85,14 @@ const AdminSignIn = () => {
                   <p
                     style={{
                       marginBottom: '2px',
-                      marginTop: '20px',
+                      marginTop: '-10px',
                       fontSize: '13.5px',
                     }}
                   >
-                    Email
+                    First Name
                   </p>
                 }
-                name="email"
+                name="first-name"
                 rules={[
                   {
                     required: true,
@@ -100,11 +102,39 @@ const AdminSignIn = () => {
                 required
               >
                 <Input
-                  className={classes.AdminSignPage__Input}
-                  placeholder="Enter your email"
+                  className={classes.AdminSignUpPage__Input}
+                  placeholder="Enter first name"
+                  style={{ marginTop: '-1rem', marginBottom: '-100px' }}
+                />
+              </Form.Item>
+              <Form.Item
+                label={
+                  <p
+                    style={{
+                      marginBottom: '2px',
+                      marginTop: '-20px',
+                      fontSize: '13.5px',
+                    }}
+                  >
+                    Last Name
+                  </p>
+                }
+                name="last-name"
+                rules={[
+                  {
+                    required: true,
+                    message: 'This field is required.',
+                  },
+                ]}
+                required
+              >
+                <Input
+                  className={classes.AdminSignUpPage__Input}
+                  placeholder="Enter last name"
                   style={{ marginTop: '-1rem' }}
                 />
               </Form.Item>
+
               <Form.Item
                 label={
                   <p
@@ -117,14 +147,7 @@ const AdminSignIn = () => {
                     Password
                   </p>
                 }
-                extra={
-                  <Link
-                    to={'/admin/forgot-password/'}
-                    style={{ color: 'grey' }}
-                  >
-                    Can’t remember password ?
-                  </Link>
-                }
+                extra={'Must be at least 8 characters.'}
                 name="password"
                 style={{ marginTop: '-1rem' }}
                 rules={[
@@ -135,25 +158,35 @@ const AdminSignIn = () => {
                 ]}
               >
                 <Input.Password
-                  className={classes.AdminSignPage__Password}
+                  className={classes.AdminSignUpPage__Password}
                   placeholder="Enter a password"
                   style={{ marginTop: '-1px' }}
                 />
               </Form.Item>
               <Form.Item>
-                <FormButton action={'Log In'} isLoading={isLoading} />
+                <FormButton action={'Create account'} isLoading={isLoading} />
               </Form.Item>
 
               <FormFooter
-                footer={'Don’t have an account?'}
-                action={'Sign Up'}
-                footerlink={'/admin/sign-up'}
+                extra={
+                  <p>
+                    By selecting <strong>Create account</strong>. I agree to
+                    imperium’s{' '}
+                    <span style={{ color: '#5C9D48' }}>
+                      {' '}
+                      privacy policy & terms
+                    </span>
+                  </p>
+                }
+                footer={'Already have an account?'}
+                action={'Log In'}
+                footerlink={'/admin'}
               />
             </Form>
           </div>
         </LeftLayout>
 
-        <Col span={12} className={classes.AdminSignPage__RightLayOut}>
+        <Col span={12} className={classes.AdminSignUpPage__RightLayOut}>
           <RightLayout span={24} backgroundColor={'none'}>
             <FormDescription content={formDescription} />{' '}
           </RightLayout>
@@ -163,4 +196,4 @@ const AdminSignIn = () => {
   )
 }
 
-export default AdminSignIn
+export default AdminSignUp
