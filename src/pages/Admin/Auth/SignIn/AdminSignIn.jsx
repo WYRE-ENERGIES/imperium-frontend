@@ -36,12 +36,10 @@ const AdminSignIn = () => {
       }).unwrap()
       navigate('/admin/overview')
     } catch (err) {
-      let errorMsg = ''
       if (err.status === 401) {
-        errorMsg += err?.data?.detail
-        setErrMsg(errorMsg)
+        setErrMsg(err?.data?.detail)
       } else if (err.status === 400) {
-        setErrMsg('Missing username or password')
+        setErrMsg(err?.data?.message)
       } else if (err.status === 500) {
         setErrMsg('Cannot connect to server.')
       } else {

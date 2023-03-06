@@ -1,5 +1,12 @@
 import { Tag, Select, Space, Input, Modal, Divider, Form } from 'antd'
 import React, { useState } from 'react'
+import {
+  useGetAdminActiveAlertsQuery,
+  useGetAdminActiveAlertsAnalyticsQuery,
+  useGetAdminActiveAlertsStatisticsQuery,
+  useGetAdminActiveAlertsTableQuery,
+  useCreateAdminActiveAlertsMutation,
+} from '../../../features/slices/activeAlerts/admin/adminActiveAlertSlice'
 import { MdFilterList } from 'react-icons/md'
 import {
   BsArrowsMove,
@@ -9,6 +16,7 @@ import {
   BsEyeSlash,
   BsHouse,
   BsPlus,
+  BsThreeDots,
 } from 'react-icons/bs'
 import Chart from 'react-apexcharts'
 import AdminPageLayout from '../../../components/Layout/AdminPageLayout/AdminPageLayout'
@@ -19,10 +27,21 @@ import classes from './ActiveAlert.module.scss'
 import { SearchOutlined, CloudDownloadOutlined } from '@ant-design/icons'
 import { Link } from 'react-router-dom'
 import ActiveAlertTable from '../../../components/ActiveAlert/Table/ActiveAlertTable'
-import activeAlertdata from '../../../components/ActiveAlert/Data/data'
+import { useEffect } from 'react'
 
+const dateTimeOption = {
+  timeZone: 'Africa/Accra',
+  hour12: true,
+  hour: 'numeric',
+  minute: 'numeric',
+  seconds: 'numeric',
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+}
 const ActiveAlertDetails = (data) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
+
   const showModal = () => {
     setIsModalOpen(true)
   }
@@ -32,9 +51,7 @@ const ActiveAlertDetails = (data) => {
   const handleCancel = () => {
     setIsModalOpen(false)
   }
-  const handleChange = (value) => {
-    console.log(`selected ${value}`)
-  }
+  const handleChange = (value) => {}
 
   return (
     <div>
@@ -53,12 +70,12 @@ const ActiveAlertDetails = (data) => {
           <div className={classes.ActiveAlert__ModalContentInit}>
             <div>
               {' '}
-              <span>{data?.data?.info?.fname[0]}</span>
-              <span>{data?.data?.info?.lname[0]}</span>
+              <span>{data?.data?.shs_name[0]}</span>
+              <span>{data?.data?.shs_name[1]}</span>
             </div>
           </div>
-          <h1>{data?.data?.info?.username}</h1>
-          <p>{data?.data?.info?.email}</p>
+          <h1>{data?.data?.shs_name}</h1>
+          <p>{'Ikogbafav@gmail.com'}</p>
           <div>
             <div className={classes.ActiveAlert__ActiveAlertModalFilterStatus}>
               <div>
@@ -74,24 +91,20 @@ const ActiveAlertDetails = (data) => {
                   </div>
                   <Select
                     className={classes.ActiveAlert__ActiveAlertModalFormSelect}
-                    defaultValue={data.data.shs[0].name}
+                    defaultValue={data?.data?.active_alert}
                     style={{
                       width: 150,
                       border: 'none',
                       color: 'white',
                     }}
                     onChange={handleChange}
-                    options={data.data.shs.map((option) => ({
-                      label: option.name,
-                      value: option.name,
-                    }))}
                     dropdownStyle={{ background: 'white', width: '20px' }}
                     showArrow={true}
                   />
                 </Space>
               </div>
               <div className={classes.ActiveAlert__ActiveAlertModalStatus}>
-                <span>Unresolved</span>{' '}
+                <span>{data?.data?.status}</span>{' '}
                 <span>
                   <MdFilterList size={20} color="#5C9D48" />
                 </span>
@@ -99,9 +112,14 @@ const ActiveAlertDetails = (data) => {
             </div>
 
             <div className={classes.ActiveAlert__ActiveAlertModalShsInfo}>
-              <span>Low panel voltage</span>
-              <span>11:58pm, 2/01/2023</span>
-              <span>Unresolved</span>
+              <span>{data?.data?.active_alert}</span>
+              <span>
+                {new Date(data?.data?.time).toLocaleTimeString(
+                  'en-US',
+                  dateTimeOption,
+                )}
+              </span>
+              <span>{data?.data?.status}</span>
             </div>
           </div>
           <div className={classes.ActiveAlert__ModalClose}>
@@ -112,76 +130,115 @@ const ActiveAlertDetails = (data) => {
     </div>
   )
 }
+
 const ActiveAlert = () => {
   const columns = [
     {
-      key: '1',
+      key: 'active_alert',
       title: 'Active Alerts',
-      dataIndex: 'shs',
+      dataIndex: 'active_alert',
       render: (data) => (
         <span
           style={{
             color: 'black',
           }}
         >
-          {data[0]?.header}
+          {data}
         </span>
       ),
     },
     {
-      key: '2',
+      key: 'shs_name',
       title: 'Solar House System(SHS)',
-      dataIndex: 'shs',
+      dataIndex: 'shs_name',
       render: (data) => (
         <span
           style={{
             color: 'black',
           }}
         >
-          {data[0]?.name}
+          {data}
         </span>
       ),
     },
     {
-      key: '3',
+      key: 'time',
       title: 'Time',
-      dataIndex: 'shs',
+      dataIndex: 'time',
       render: (data) => (
         <span
           style={{
             color: 'black',
           }}
         >
-          {data[0]?.time}
+          {new Date(data).toLocaleTimeString('en-US', dateTimeOption)}
         </span>
       ),
     },
     {
-      key: '4',
+      key: 'status',
       title: 'Status',
-      dataIndex: 'shs',
+      dataIndex: 'status',
       render: (data) => (
         <span
           style={{
-            color: data[0]?.status === 'Resolved' ? '#5C9D48' : '#B42318',
+            color: data === 'RESOLVED' ? '#5C9D48' : '#B42318',
           }}
         >
-          {data[0]?.status}
+          {data}
         </span>
       ),
     },
     {
       key: '5',
       title: <span style={{ color: '#f0f7ed' }}>i</span>,
-      dataIndex: ['shs', 'info'],
+      dataIndex: ['shs_name', 'active_alert'],
       render: (text, record) => <ActiveAlertDetails data={record} />,
     },
   ]
-  const [data, setActiveAlertData] = useState(activeAlertdata)
+
+  const [activeAlertsData, setActiveAlertData] = useState([])
+  const [activeAlertsDataAnalytics, setActiveAlertDataAnalytics] = useState([])
+  const [activeAlertsDataStatistics, setActiveAlertDataStatistics] = useState()
+  const [errMs, setErrMsg] = useState('')
+  const [activeAlertsDataTable, setActiveAlertDataTable] = useState([])
+  const [pageNum, setPageNum] = useState(1)
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const { data: activeAlerts, isLoading: isLoadingactiveAlerts } =
+    useGetAdminActiveAlertsQuery({
+      page: pageNum,
+    })
+  const {
+    data: activeAlertsAnalytics,
+    isLoading: isLoadingactiveAlertsAnalytics,
+  } = useGetAdminActiveAlertsAnalyticsQuery()
+  const {
+    data: activeAlertsStatistics,
+    isLoading: isLoadingactiveAlertsStatistics,
+  } = useGetAdminActiveAlertsStatisticsQuery()
+  const { data: activeAlertsTable, isLoading: isLoadingactiveAlertsTable } =
+    useGetAdminActiveAlertsTableQuery()
+  const [
+    createAdminActiveAlerts,
+    { data: activeAlertsCreate, isLoading: isLoadingactiveAlertsCreate },
+  ] = useCreateAdminActiveAlertsMutation()
+
+  useEffect(() => {
+    setActiveAlertData(activeAlerts)
+    setActiveAlertDataAnalytics(activeAlertsAnalytics)
+    setActiveAlertDataTable(activeAlertsTable)
+    setActiveAlertDataStatistics(activeAlertsStatistics)
+  }, [
+    activeAlerts,
+    activeAlertsAnalytics,
+    activeAlertsStatistics,
+    activeAlertsTable,
+  ])
+
   const showModal = () => {
     setIsModalOpen(true)
   }
+
   const handleOk = () => {
     setIsModalOpen(false)
   }
@@ -197,9 +254,7 @@ const ActiveAlert = () => {
       }}
     />
   )
-  const handleChange = (value) => {
-    console.log(`selected ${value}`)
-  }
+  const handleChange = (value) => {}
 
   const ativeAlertTableTitle = () => (
     <div className={classes.ActiveAlert__ActiveAlertTableHeader}>
@@ -267,12 +322,23 @@ const ActiveAlert = () => {
     </div>
   )
 
-  const onFinish = (values) => {
-    console.log('Success:', values)
+  const onFinish = async (values) => {
+    try {
+      await createAdminActiveAlerts(values)
+      setIsModalOpen(false)
+    } catch (err) {
+      if (err.status === 401) {
+        setErrMsg(err?.data?.detail)
+      } else if (err.status === 400) {
+        setErrMsg(err?.data?.message)
+      } else if (err.status === 500) {
+        setErrMsg('Cannot connect to server.')
+      } else {
+        setErrMsg('Check your internet connection')
+      }
+    }
   }
-  const onFinishFailed = (errorInfo) => {
-    console.log('Failed:', errorInfo)
-  }
+  const onFinishFailed = (errorInfo) => {}
 
   return (
     <AdminPageLayout>
@@ -288,7 +354,9 @@ const ActiveAlert = () => {
             </div>
             <div className={classes.ActiveAlert__WidgetText}>
               <p>Active alerts created</p>
-              <h1 className={classes.ActiveAlert__WidgetValue}>5</h1>
+              <h1 className={classes.ActiveAlert__WidgetValue}>
+                {activeAlertsDataAnalytics?.active_alerts_created}
+              </h1>
             </div>
             <div className={classes.ActiveAlert__WidgetGraphOne}>
               <img src={alertCreated} alt="" srcSet="" />
@@ -301,7 +369,9 @@ const ActiveAlert = () => {
               </div>
               <div className={classes.ActiveAlert__WidgetText}>
                 <p>Device location alert</p>
-                <h1 className={classes.ActiveAlert__WidgetValue}>18</h1>
+                <h1 className={classes.ActiveAlert__WidgetValue}>
+                  {activeAlertsDataAnalytics?.device_location_alerts}
+                </h1>
               </div>
               <div className={classes.ActiveAlert__WidgetExtra}>
                 <div>
@@ -332,7 +402,9 @@ const ActiveAlert = () => {
               <div className={classes.ActiveAlert__WidgetText}>
                 <p>Total number of resolved alert</p>
                 <div className={classes.ActiveAlert__WidgetVal}>
-                  <h1 className={classes.ActiveAlert__WidgetValue}>198</h1>
+                  <h1 className={classes.ActiveAlert__WidgetValue}>
+                    {activeAlertsDataAnalytics?.total_unresolved_alerts}
+                  </h1>
                   <div className={classes.ActiveAlert__WidgetGraphTwo}>
                     <img src={alertResolved} alt="" srcSet="" />
                   </div>
@@ -406,7 +478,17 @@ const ActiveAlert = () => {
                           requiredMark="optional"
                           labelAlign="left"
                         >
-                          <Form.Item label="Title" name="title" required>
+                          <Form.Item
+                            label="Title"
+                            name="title"
+                            required
+                            rules={[
+                              {
+                                required: true,
+                                message: 'This field is required.',
+                              },
+                            ]}
+                          >
                             <Input
                               className={classes.ActiveAlert__AddAlertInput}
                               style={{ marginBottom: '-5px' }}
@@ -416,8 +498,14 @@ const ActiveAlert = () => {
 
                           <Form.Item
                             label="Event Description"
-                            name="description"
+                            name="event_description"
                             required
+                            rules={[
+                              {
+                                required: true,
+                                message: 'This field is required.',
+                              },
+                            ]}
                           >
                             <Input.TextArea
                               className={classes.ActiveAlert__AddAlertInput}
@@ -429,7 +517,7 @@ const ActiveAlert = () => {
                           <Form.Item>
                             <div className={classes.ActiveAlert__AddAlertBtn}>
                               <button onClick={handleOk}>Cancel</button>
-                              <button onClick={handleOk}>Submit</button>
+                              <button type="submit">Submit</button>
                             </div>
                           </Form.Item>
                         </Form>
@@ -440,15 +528,19 @@ const ActiveAlert = () => {
               </div>
             </div>
             <div className={classes.ActiveAlert__ActiveAlertNotificationList}>
-              {data.slice(0, 3).map((data, key) => (
-                <div key={key}>
-                  <span>{data.action}</span>
-                  <div>
-                    <p>{data?.shs[0]?.header}</p>
-                    <p>{data?.shs[0]?.text} </p>
-                  </div>
-                </div>
-              ))}
+              {activeAlertsData
+                ? activeAlertsData.map((alert, key) => (
+                    <div key={key}>
+                      <span>
+                        <BsThreeDots />
+                      </span>
+                      <div>
+                        <p>{alert?.title}</p>
+                        <p>{alert?.event_description} </p>
+                      </div>
+                    </div>
+                  ))
+                : 'No active alerts'}
             </div>
             <div
               className={classes.ActiveAlert__ActiveAlertNotificationViewBtn}
@@ -525,11 +617,37 @@ const ActiveAlert = () => {
                 series={[
                   {
                     name: 'Unresolved alert',
-                    data: [44, 55, 41, 67, 22, 43],
+                    data: [
+                      activeAlertsStatistics?.['1'].unresolved,
+                      activeAlertsStatistics?.['2'].unresolved,
+                      activeAlertsStatistics?.['3'].unresolved,
+                      activeAlertsStatistics?.['4'].unresolved,
+                      activeAlertsStatistics?.['5'].unresolved,
+                      activeAlertsStatistics?.['6'].unresolved,
+                      activeAlertsStatistics?.['7'].unresolved,
+                      activeAlertsStatistics?.['8'].unresolved,
+                      activeAlertsStatistics?.['9'].unresolved,
+                      activeAlertsStatistics?.['10'].unresolved,
+                      activeAlertsStatistics?.['11'].unresolved,
+                      activeAlertsStatistics?.['12'].unresolved,
+                    ],
                   },
                   {
                     name: 'Resolved alert',
-                    data: [13, 23, 20, 8, 13, 27],
+                    data: [
+                      activeAlertsStatistics?.['1'].unresolved,
+                      activeAlertsStatistics?.['2'].resolved,
+                      activeAlertsStatistics?.['3'].resolved,
+                      activeAlertsStatistics?.['4'].resolved,
+                      activeAlertsStatistics?.['5'].resolved,
+                      activeAlertsStatistics?.['6'].resolved,
+                      activeAlertsStatistics?.['7'].resolved,
+                      activeAlertsStatistics?.['8'].resolved,
+                      activeAlertsStatistics?.['9'].resolved,
+                      activeAlertsStatistics?.['10'].resolved,
+                      activeAlertsStatistics?.['11'].resolved,
+                      activeAlertsStatistics?.['12'].resolved,
+                    ],
                   },
                 ]}
                 options={{
@@ -571,7 +689,20 @@ const ActiveAlert = () => {
                   },
                   xaxis: {
                     show: true,
-                    categories: ['Jan', 'March', 'May', 'Jul', 'Sep', 'Nov'],
+                    categories: [
+                      'Jan',
+                      'feb',
+                      'March',
+                      'Apr',
+                      'May',
+                      'Jun',
+                      'Jul',
+                      'Aug',
+                      'Sep',
+                      'Oct',
+                      'Nov',
+                      'Dec',
+                    ],
                   },
 
                   legend: {
@@ -606,7 +737,7 @@ const ActiveAlert = () => {
           <ActiveAlertTable
             title={ativeAlertTableTitle}
             columns={columns}
-            dataSource={activeAlertdata}
+            dataSource={activeAlertsDataTable}
           />
         </section>
       </section>
