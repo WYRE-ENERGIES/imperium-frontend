@@ -18,17 +18,13 @@ const AdminResetPassword = () => {
       try {
         await adminNewPassword({
           email: email.state.email,
-          // silaref921@pubpng.com
           password: values.password1,
           confirm_password: values.password2,
         }).unwrap()
         navigate('/admin/')
       } catch (err) {
-        let errorMsg = ''
-        console.log(err)
         if (err.status === 401) {
-          errorMsg += err?.data?.message
-          setErrMsg(errorMsg)
+          setErrMsg(err?.data?.message)
         } else if (err.status === 400) {
           setErrMsg(err?.data?.message)
         } else if (err.status === 500) {
