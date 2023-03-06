@@ -61,14 +61,6 @@ export const activerAlertsSlice = apiSlice.injectEndpoints({
           body: credentials,
         }
       },
-      async onQueryStarted(email, { dispatch, queryFulfilled }) {
-        try {
-          const { data } = await queryFulfilled
-          return data
-        } catch (error) {
-          return error
-        }
-      },
     }),
   }),
 })
