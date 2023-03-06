@@ -51,9 +51,7 @@ const ActiveAlertDetails = (data) => {
   const handleCancel = () => {
     setIsModalOpen(false)
   }
-  const handleChange = (value) => {
-    console.log(`selected ${value}`)
-  }
+  const handleChange = (value) => {}
 
   return (
     <div>
@@ -100,14 +98,6 @@ const ActiveAlertDetails = (data) => {
                       color: 'white',
                     }}
                     onChange={handleChange}
-                    // options={{
-                    //   label: 'data?.data?.active_alert',
-                    //   value: 'data?.data?.active_alert',
-                    // }}
-                    // options={data.data.shs.map((option) => ({
-                    //   label: option.name,
-                    //   value: option.name,
-                    // }))}
                     dropdownStyle={{ background: 'white', width: '20px' }}
                     showArrow={true}
                   />
@@ -233,8 +223,6 @@ const ActiveAlert = () => {
     { data: activeAlertsCreate, isLoading: isLoadingactiveAlertsCreate },
   ] = useCreateAdminActiveAlertsMutation()
 
-  console.log('activeAlertsTable ', activeAlertsTable)
-
   useEffect(() => {
     setActiveAlertData(activeAlerts)
     setActiveAlertDataAnalytics(activeAlertsAnalytics)
@@ -266,9 +254,7 @@ const ActiveAlert = () => {
       }}
     />
   )
-  const handleChange = (value) => {
-    console.log(`selected ${value}`)
-  }
+  const handleChange = (value) => {}
 
   const ativeAlertTableTitle = () => (
     <div className={classes.ActiveAlert__ActiveAlertTableHeader}>
@@ -340,25 +326,22 @@ const ActiveAlert = () => {
     try {
       await createAdminActiveAlerts(values)
       setIsModalOpen(false)
-      console.log(values)
     } catch (err) {
       let errorMsg = ''
-      console.log(err)
-      // if (err.status === 401) {
-      //   errorMsg += err?.data?.detail
-      //   setErrMsg(errorMsg)
-      // } else if (err.status === 400) {
-      //   setErrMsg('Missing username or password')
-      // } else if (err.status === 500) {
-      //   setErrMsg('Cannot connect to server.')
-      // } else {
-      //   setErrMsg('Check your internet connection')
-      // }
+
+      if (err.status === 401) {
+        errorMsg += err?.data?.detail
+        setErrMsg(errorMsg)
+      } else if (err.status === 400) {
+        setErrMsg('Missing username or password')
+      } else if (err.status === 500) {
+        setErrMsg('Cannot connect to server.')
+      } else {
+        setErrMsg('Check your internet connection')
+      }
     }
   }
-  const onFinishFailed = (errorInfo) => {
-    console.log('Failed:', errorInfo)
-  }
+  const onFinishFailed = (errorInfo) => {}
 
   return (
     <AdminPageLayout>
