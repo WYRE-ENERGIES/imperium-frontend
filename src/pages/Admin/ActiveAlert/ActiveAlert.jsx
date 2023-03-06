@@ -74,8 +74,8 @@ const ActiveAlertDetails = (data) => {
               <span>{data?.data?.shs_name[1]}</span>
             </div>
           </div>
-          <h1>{'data?.data?.active_alert'}</h1>
-          <p>{'data?.data?.active_alert'}</p>
+          <h1>{data?.data?.shs_name}</h1>
+          <p>{'Ikogbafav@gmail.com'}</p>
           <div>
             <div className={classes.ActiveAlert__ActiveAlertModalFilterStatus}>
               <div>
@@ -91,7 +91,7 @@ const ActiveAlertDetails = (data) => {
                   </div>
                   <Select
                     className={classes.ActiveAlert__ActiveAlertModalFormSelect}
-                    defaultValue={'data?.data?.active_alert'}
+                    defaultValue={data?.data?.active_alert}
                     style={{
                       width: 150,
                       border: 'none',
