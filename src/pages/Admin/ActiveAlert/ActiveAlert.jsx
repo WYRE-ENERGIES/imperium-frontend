@@ -340,6 +340,7 @@ const ActiveAlert = () => {
     try {
       await createAdminActiveAlerts(values)
       setIsModalOpen(false)
+      console.log(values)
     } catch (err) {
       let errorMsg = ''
       console.log(err)
@@ -497,7 +498,17 @@ const ActiveAlert = () => {
                           requiredMark="optional"
                           labelAlign="left"
                         >
-                          <Form.Item label="Title" name="title" required>
+                          <Form.Item
+                            label="Title"
+                            name="title"
+                            required
+                            rules={[
+                              {
+                                required: true,
+                                message: 'This field is required.',
+                              },
+                            ]}
+                          >
                             <Input
                               className={classes.ActiveAlert__AddAlertInput}
                               style={{ marginBottom: '-5px' }}
@@ -509,6 +520,12 @@ const ActiveAlert = () => {
                             label="Event Description"
                             name="event_description"
                             required
+                            rules={[
+                              {
+                                required: true,
+                                message: 'This field is required.',
+                              },
+                            ]}
                           >
                             <Input.TextArea
                               className={classes.ActiveAlert__AddAlertInput}
