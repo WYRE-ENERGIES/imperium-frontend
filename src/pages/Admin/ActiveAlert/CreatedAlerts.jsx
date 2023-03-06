@@ -1,12 +1,13 @@
 import { Input, Modal, Divider, Form } from 'antd'
 import React, { useState } from 'react'
+import { useGetAdminActiveAlertsQuery } from '../../../features/slices/activeAlerts/admin/adminActiveAlertSlice'
 import { BsPlus, BsBell } from 'react-icons/bs'
 import AdminPageLayout from '../../../components/Layout/AdminPageLayout/AdminPageLayout'
 import PageBreadcrumb from '../../../components/PageBreadcrumb/PageBreadcrumb'
 import classes from './ActiveAlert.module.scss'
 import { SearchOutlined, CloudDownloadOutlined } from '@ant-design/icons'
 import ActiveAlertTable from '../../../components/ActiveAlert/Table/ActiveAlertTable'
-import activeAlertdata from '../../../components/ActiveAlert/Data/data'
+import { useEffect } from 'react'
 
 const CreatedAlerts = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -25,33 +26,45 @@ const CreatedAlerts = () => {
   const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo)
   }
+  const [pageNum, setPageNum] = useState(1)
+  const [activeAlertsDataTable, setActiveAlertDataTable] = useState([])
+  const [searchactiveAlerts, setSearchactiveAlerts] = useState('')
+  const { data: activeAlertsTable, isLoading: isLoadingactiveAlertsTable } =
+    useGetAdminActiveAlertsQuery({
+      page: pageNum,
+      search: searchactiveAlerts,
+    })
+  console.log(activeAlertsTable)
+  useEffect(() => {
+    setActiveAlertDataTable(activeAlertsTable)
+  }, [activeAlertsTable])
 
   const columns = [
     {
-      key: '1',
+      key: 'title',
       title: 'Active Alerts',
-      dataIndex: 'shs',
+      dataIndex: 'title',
       render: (data) => (
         <span
           style={{
             color: 'black',
           }}
         >
-          {data[0]?.header}
+          {data}
         </span>
       ),
     },
     {
-      key: '2',
+      key: 'event_description',
       title: 'Event Description',
-      dataIndex: 'shs',
+      dataIndex: 'event_description',
       render: (data) => (
         <span
           style={{
             color: 'black',
           }}
         >
-          {data[0]?.text}
+          {data}
         </span>
       ),
     },
@@ -194,7 +207,7 @@ const CreatedAlerts = () => {
             <ActiveAlertTable
               title={ActiveAlertTableTitle}
               columns={columns}
-              dataSource={activeAlertdata}
+              dataSource={activeAlertsDataTable}
             />
           </section>
         </section>

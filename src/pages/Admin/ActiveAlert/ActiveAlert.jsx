@@ -8,6 +8,7 @@ import {
   useCreateAdminActiveAlertsMutation,
 } from '../../../features/slices/activeAlerts/admin/adminActiveAlertSlice'
 import { MdFilterList } from 'react-icons/md'
+import TableFooter from '../../../components/TableFooter/TableFooter'
 import {
   BsArrowsMove,
   BsArrowUp,
@@ -203,25 +204,27 @@ const ActiveAlert = () => {
   const [errMs, setErrMsg] = useState('')
   const [activeAlertsDataTable, setActiveAlertDataTable] = useState([])
   const [pageNum, setPageNum] = useState(1)
+  const [searchactiveAlerts, setSearchactiveAlerts] = useState('')
   const [isModalOpen, setIsModalOpen] = useState(false)
   const { data: activeAlerts, isLoading: isLoadingactiveAlerts } =
     useGetAdminActiveAlertsQuery({
       page: pageNum,
+      search: searchactiveAlerts,
     })
   const {
     data: activeAlertsAnalytics,
     isLoading: isLoadingactiveAlertsAnalytics,
   } = useGetAdminActiveAlertsAnalyticsQuery()
+
+  console.log('activeAlertsDataTable', activeAlertsDataTable)
   const {
     data: activeAlertsStatistics,
     isLoading: isLoadingactiveAlertsStatistics,
   } = useGetAdminActiveAlertsStatisticsQuery()
   const { data: activeAlertsTable, isLoading: isLoadingactiveAlertsTable } =
     useGetAdminActiveAlertsTableQuery()
-  const [
-    createAdminActiveAlerts,
-    { data: activeAlertsCreate, isLoading: isLoadingactiveAlertsCreate },
-  ] = useCreateAdminActiveAlertsMutation()
+  const [createAdminActiveAlerts, { isLoading: isLoadingactiveAlertsCreate }] =
+    useCreateAdminActiveAlertsMutation()
 
   useEffect(() => {
     setActiveAlertData(activeAlerts)
@@ -517,7 +520,12 @@ const ActiveAlert = () => {
                           <Form.Item>
                             <div className={classes.ActiveAlert__AddAlertBtn}>
                               <button onClick={handleOk}>Cancel</button>
-                              <button type="submit">Submit</button>
+                              <button type="submit">
+                                {' '}
+                                {isLoadingactiveAlertsCreate
+                                  ? 'Loading...'
+                                  : 'Submit'}
+                              </button>
                             </div>
                           </Form.Item>
                         </Form>
@@ -529,7 +537,7 @@ const ActiveAlert = () => {
             </div>
             <div className={classes.ActiveAlert__ActiveAlertNotificationList}>
               {activeAlertsData
-                ? activeAlertsData.map((alert, key) => (
+                ? activeAlertsData.slice(0, 3).map((alert, key) => (
                     <div key={key}>
                       <span>
                         <BsThreeDots />
@@ -738,6 +746,7 @@ const ActiveAlert = () => {
             title={ativeAlertTableTitle}
             columns={columns}
             dataSource={activeAlertsDataTable}
+            setPageNum={setPageNum}
           />
         </section>
       </section>

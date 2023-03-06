@@ -13,7 +13,7 @@ export const activerAlertsSlice = apiSlice.injectEndpoints({
         return url
       },
       transformResponse: (response, meta, arg) => {
-        const results = response.results.slice(0, 3).map((alerts) => ({
+        const results = response.results.map((alerts) => ({
           ...alerts,
           key: alerts.id,
         }))
@@ -45,9 +45,30 @@ export const activerAlertsSlice = apiSlice.injectEndpoints({
         return `${BASE_URL}table/`
       },
       transformResponse: (response, meta, arg) => {
-        const results = response.results.map((tabledata) => ({
-          ...tabledata,
-          key: tabledata.id,
+        // const results = response.results.map((tabledata) => ({
+        //   ...tabledata,
+        //   key: tabledata.id,
+        //   page: tabledata.page,
+        //   total_pages: tabledata.total_pages,
+        //   count: tabledata.count,
+        // }))
+        // console.log(response)
+        return response
+      },
+      transformErrorResponse: (response, meta, arg) => response.status,
+    }),
+    getAdminActiveAlertsLocation: build.query({
+      query: ({ page, search }) => {
+        let url = `${BASE_URL}location/?page=${page}`
+        if (search) {
+          url += `&search=${search}`
+        }
+        return url
+      },
+      transformResponse: (response, meta, arg) => {
+        const results = response.results.map((locationdata) => ({
+          ...locationdata,
+          key: locationdata.id,
         }))
         return results
       },
@@ -71,4 +92,5 @@ export const {
   useGetAdminActiveAlertsStatisticsQuery,
   useGetAdminActiveAlertsTableQuery,
   useCreateAdminActiveAlertsMutation,
+  useGetAdminActiveAlertsLocationQuery,
 } = activerAlertsSlice
