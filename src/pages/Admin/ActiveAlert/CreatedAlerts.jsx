@@ -208,6 +208,7 @@ const CreatedAlerts = () => {
               title={ActiveAlertTableTitle}
               columns={columns}
               dataSource={activeAlertsDataTable}
+              setPageNum={setPageNum}
             />
           </section>
         </section>

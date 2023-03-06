@@ -203,7 +203,7 @@ const ActiveAlert = () => {
   const [activeAlertsDataStatistics, setActiveAlertDataStatistics] = useState()
   const [errMs, setErrMsg] = useState('')
   const [activeAlertsDataTable, setActiveAlertDataTable] = useState([])
-  const [pageNum, setPageNum] = useState(1)
+  const [pageNum, setPageNum] = useState(3)
   const [searchactiveAlerts, setSearchactiveAlerts] = useState('')
   const [isModalOpen, setIsModalOpen] = useState(false)
   const { data: activeAlerts, isLoading: isLoadingactiveAlerts } =
@@ -227,7 +227,7 @@ const ActiveAlert = () => {
     useCreateAdminActiveAlertsMutation()
 
   useEffect(() => {
-    setActiveAlertData(activeAlerts)
+    setActiveAlertData(activeAlerts?.results)
     setActiveAlertDataAnalytics(activeAlertsAnalytics)
     setActiveAlertDataTable(activeAlertsTable)
     setActiveAlertDataStatistics(activeAlertsStatistics)
@@ -643,7 +643,7 @@ const ActiveAlert = () => {
                   {
                     name: 'Resolved alert',
                     data: [
-                      activeAlertsStatistics?.['1'].unresolved,
+                      activeAlertsStatistics?.['1'].resolved,
                       activeAlertsStatistics?.['2'].resolved,
                       activeAlertsStatistics?.['3'].resolved,
                       activeAlertsStatistics?.['4'].resolved,

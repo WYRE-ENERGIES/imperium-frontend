@@ -6,18 +6,17 @@ export const activerAlertsSlice = apiSlice.injectEndpoints({
   endpoints: (build) => ({
     getAdminActiveAlerts: build.query({
       query: ({ page, search }) => {
-        let url = `${BASE_URL}?page=${page}`
+        let url = `${BASE_URL}`
         if (search) {
           url += `&search=${search}`
+        }
+        if (page) {
+          url += `?page=${page}`
         }
         return url
       },
       transformResponse: (response, meta, arg) => {
-        const results = response.results.map((alerts) => ({
-          ...alerts,
-          key: alerts.id,
-        }))
-        return results
+        return response
       },
       transformErrorResponse: (response, meta, arg) => response.status,
       providesTags: ['ActiveAlerts'],
@@ -30,6 +29,7 @@ export const activerAlertsSlice = apiSlice.injectEndpoints({
         return response
       },
       transformErrorResponse: (response, meta, arg) => response.status,
+      providesTags: ['ActiveAlertsAnaylytics'],
     }),
     getAdminActiveAlertsStatistics: build.query({
       query: () => {
@@ -45,14 +45,6 @@ export const activerAlertsSlice = apiSlice.injectEndpoints({
         return `${BASE_URL}table/`
       },
       transformResponse: (response, meta, arg) => {
-        // const results = response.results.map((tabledata) => ({
-        //   ...tabledata,
-        //   key: tabledata.id,
-        //   page: tabledata.page,
-        //   total_pages: tabledata.total_pages,
-        //   count: tabledata.count,
-        // }))
-        // console.log(response)
         return response
       },
       transformErrorResponse: (response, meta, arg) => response.status,
@@ -82,6 +74,7 @@ export const activerAlertsSlice = apiSlice.injectEndpoints({
           body: credentials,
         }
       },
+      invalidatesTags: ['ActiveAlerts', 'ActiveAlertsAnaylytics'],
     }),
   }),
 })
