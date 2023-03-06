@@ -13,12 +13,6 @@ const DropDownFilter = ({ options, onFilterChanged, value }) => {
         onChange={(e) => onFilterChanged(e)}
         size="large"
         allowClear
-        dropdownStyle={{
-          border: 'none',
-          ':hover': {
-            backgroundColor: 'green',
-          },
-        }}
         className={classes.DropDownFilter__select}
       >
         {options}
