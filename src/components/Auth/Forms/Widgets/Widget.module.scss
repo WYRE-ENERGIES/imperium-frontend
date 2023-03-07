@@ -44,6 +44,7 @@ $buttonPadding: 14px 48px;
 
 .ThirdPartyAuth {
   margin-top: 1.5rem;
+  margin-bottom: -10px;
   button {
     display: flex;
     justify-content: center;
@@ -73,12 +74,14 @@ $buttonPadding: 14px 48px;
   }
 
   &__divider {
-    margin: 25px 0;
+    margin: 15px 0;
   }
 }
 
 .FormFooter {
-  text-align: center;
+  &__OptAuth {
+    text-align: center;
+  }
 
   &__content {
     p {

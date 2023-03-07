@@ -1,0 +1,102 @@
+.AdminSignUpPage {
+  height: 100vh;
+  &__RightLayOut {
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.39), rgba(0, 0, 0, 0.39)),
+      url('../../../../../public/adminSignIn.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    img {
+      width: 200px;
+      margin-top: 20px;
+    }
+    div[id='tagline'] {
+      width: 400px;
+      font-weight: 400;
+      font-size: 15px;
+      line-height: 24px;
+      margin-bottom: 100px;
+    }
+    div > h1 {
+      margin-top: 0% !important;
+    }
+  }
+
+  h1 {
+    margin-top: 12%;
+  }
+
+  &__LoginForm {
+    width: 300px;
+    margin-top: -10%;
+  }
+  &__Input {
+    font-size: 15px !important;
+    padding: 7px 10px;
+    offset: 10px 30px;
+    font-family: 'Baloo 2', cursive;
+    border: 1px solid #c4c4c4;
+    box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05);
+
+    &:hover {
+      border: 1px solid #c4c4c4;
+    }
+
+    &:focus {
+      border: 1px solid #66ab4f;
+      box-shadow: 0 1px 1px 3px #f7fff4;
+    }
+  }
+  &__Password {
+    font-family: 'Baloo 2', cursive;
+    font-size: 15px;
+    background: white;
+    padding: 7px;
+    border: 1px solid #c4c4c4;
+    box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05);
+
+    input {
+      font-family: 'Baloo 2', cursive;
+    }
+
+    &:hover {
+      border: 1px solid #c4c4c4 !important;
+    }
+
+    &:focus-within {
+      border: 1px solid #66ab4f !important;
+      box-shadow: 0 1px 1px 3px #f7fff4;
+      padding: 7px !important;
+    }
+
+    & [id='admin-login_password']:not(:placeholder-shown) {
+      font-size: 14px;
+      font-family: verdana;
+      font-weight: bolder;
+    }
+  }
+  .UserForm {
+    &__Message {
+      color: red;
+      font-size: 14px;
+      position: relative;
+      top: 15px;
+    }
+  }
+}
+@media only screen and (max-width: 768px) {
+  .AdminSignPage {
+    &__RightLayOut {
+      display: none;
+    }
+    &__LeftLayOut > div {
+      padding-top: 20%;
+      display: block;
+      padding: 0;
+    }
+    &__LoginForm {
+      width: 100%;
+      margin-top: 1%;
+    }
+  }
+}
