@@ -1,20 +1,18 @@
+import { Col, Form, Input, Row } from 'antd'
 import React, { useEffect, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import { Col, Row, Form, Input } from 'antd'
-import { useLoginMutation } from '../../../../features/slices/auth/authApiSlice'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 
-import { getItemFromLocalStorage } from '../../../../utils/helpers'
 import FormButton from '../../../../components/Auth/Forms/Widgets/FormButton'
-import FormFooter from '../../../../components/Auth/Forms/Widgets/FormFooter'
 import FormDescription from '../../../../components/Auth/Forms/Widgets/FormDescription'
-import LeftLayout from '../../../../components/Auth/Layout/LeftLayout/LeftLayout'
-
-import RightLayout from '../../../../components/Auth/Layout/RightLayout/RightLayout'
-
-import imageDesc from '../../../../../src/assets/Auth/adminlogo.svg'
-import classes from './AdminSignUp.module.scss'
+import FormFooter from '../../../../components/Auth/Forms/Widgets/FormFooter'
 import FormHeader from '../../../../components/Auth/Forms/Widgets/FormHeader'
+import LeftLayout from '../../../../components/Auth/Layout/LeftLayout/LeftLayout'
+import RightLayout from '../../../../components/Auth/Layout/RightLayout/RightLayout'
 import ThirdPartyAuth from '../../../../components/Auth/Forms/Widgets/ThirdPartyAuth'
+import classes from './AdminSignUp.module.scss'
+import { getItemFromLocalStorage } from '../../../../utils/helpers'
+import imageDesc from '../../../../../src/assets/Auth/adminlogo.svg'
+import { useRegisterUserMutation } from '../../../../features/slices/auth/authApiSlice'
 
 const AdminSignUp = () => {
   const formDescription = {
@@ -24,18 +22,21 @@ const AdminSignUp = () => {
       'As an admin, you can view energy analytics and panel data through charts and graphs, set shut down and turn on timers, and access battery information on our platform.',
   }
   const [errMsg, setErrMsg] = useState('')
-  const [login, { isLoading }] = useLoginMutation()
+  const [registerUser, { isLoading }] = useRegisterUserMutation()
   const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
 
+  const email = searchParams.get('email')
   const accessToken = getItemFromLocalStorage('access')
 
   const onFinish = async (values) => {
     try {
-      await login({
-        credentials: values,
-        endpoint: 'imperium-admin/auth/login/',
+      await registerUser({
+        credentials: { ...values, email },
+        endpoint: '/imperium-admin/auth/register-user/',
       }).unwrap()
-      navigate('/admin/overview')
+
+      navigate('/admin/')
     } catch (err) {
       if (err.status === 401) {
         setErrMsg(err?.data?.detail)
@@ -54,6 +55,7 @@ const AdminSignUp = () => {
       navigate('/admin/overview')
     }
   })
+
   return (
     <section className={classes.AdminSignUpPage}>
       <Row className={classes.AdminSignUpPage__Layout}>
@@ -92,7 +94,7 @@ const AdminSignUp = () => {
                     First Name
                   </p>
                 }
-                name="first-name"
+                name="first_name"
                 rules={[
                   {
                     required: true,
@@ -119,7 +121,7 @@ const AdminSignUp = () => {
                     Last Name
                   </p>
                 }
-                name="last-name"
+                name="last_name"
                 rules={[
                   {
                     required: true,

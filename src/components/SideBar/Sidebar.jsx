@@ -1,11 +1,11 @@
 import { Divider, Layout, Menu } from 'antd'
 import { Link, useLocation } from 'react-router-dom'
 import React, { Suspense, lazy, useState } from 'react'
+import { getItemFromLocalStorage, getUserFullName } from '../../utils/helpers'
 
 import { ReactComponent as AdminLogo } from '../../assets/Auth/adminlogo.svg'
 import Footer from './Footer/Footer'
 import { ReactComponent as Logo } from '../../assets/logo.svg'
-import { getItemFromLocalStorage } from '../../utils/helpers'
 import styles from './Sidebar.module.scss'
 
 const { Sider } = Layout
@@ -22,6 +22,7 @@ const Sidebar = ({
   const [showSwitchAccount, setShowSwitchAccount] = useState(false)
 
   const accessToken = getItemFromLocalStorage('access')
+
   const toggleActivateShsModal = () => {
     setShowSwitchAccount(!showSwitchAccount)
   }
@@ -98,7 +99,7 @@ const Sidebar = ({
           />
           <Divider />
           <Footer
-            userName="Emeka Isokun"
+            userName={getUserFullName()}
             toggleActivateShsModal={toggleActivateShsModal}
             isAdmin={isAdmin}
           />

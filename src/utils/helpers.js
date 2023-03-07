@@ -56,3 +56,8 @@ export const formatLabel = (value) => {
   }
   return label
 }
+
+export const getUserFullName = () => {
+  const { first_name, last_name } = getItemFromLocalStorage('userInfo')
+  return `${first_name} ${last_name}`
+}

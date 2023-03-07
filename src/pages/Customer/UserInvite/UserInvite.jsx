@@ -31,17 +31,20 @@ const UserInvite = () => {
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
 
-  const token = searchParams.get('invite-token')
+  const email = searchParams.get('email')
+  const role = searchParams.get('role')
+  const name = searchParams.get('initiator-name')
+
   const [acceptInvite, { isLoading, isSuccess, isError, error }] =
     useAcceptInviteMutation()
 
   const handleAccept = () => {
-    acceptInvite({ token })
+    acceptInvite({ invitee_email: email, role })
   }
 
   useEffect(() => {
     if (!isLoading && isSuccess) {
-      navigate('/signup')
+      navigate(`/admin/sign-up?email=${email}`)
     }
 
     if (isError) {
@@ -59,9 +62,9 @@ const UserInvite = () => {
         <Logo />
         <div className={classes.UserInvite__textBox}>
           <Title className={classes.UserInvite__title}>
-            Monitor and collaborate with Emeka
+            Monitor and collaborate with {name}
           </Title>
-          <Text>{message('Emeka', 'admin')}</Text>
+          <Text>{message(name, role)}</Text>
         </div>
         <Button onClick={handleAccept} className={classes.UserInvite__btn}>
           {isLoading ? <ButtonLoader color="#fff" /> : 'Accept Invitation'}
