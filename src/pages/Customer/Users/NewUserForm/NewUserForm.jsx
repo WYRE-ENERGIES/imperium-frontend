@@ -27,13 +27,18 @@ const layout = {
 
 const ModalForm = ({ toggleModal }) => {
   const [roleDescription, setRoleDescription] = useState('')
+
   const { data } = useGetUsersRolesQuery()
   const [inviteUser, { isLoading, isSuccess }] = useInviteUserMutation()
 
   const [form] = Form.useForm()
   const onFinish = ({ invitee_email, role }) => {
     let choice = JSON.parse(role)
-    inviteUser({ invitee_email, role: choice.value })
+    inviteUser({
+      invitee_email,
+      role: choice.value,
+      redirect_url: `${window.location.origin}/accept-user`,
+    })
   }
 
   const handleRoleChange = (role) => {
@@ -43,7 +48,7 @@ const ModalForm = ({ toggleModal }) => {
 
   useEffect(() => {
     if (!isLoading && isSuccess) {
-      toast.success('User Added', {
+      toast.success('Invite sent', {
         hideProgressBar: true,
         autoClose: 3000,
         theme: 'colored',
