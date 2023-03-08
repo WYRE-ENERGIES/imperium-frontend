@@ -2,10 +2,6 @@ import { Col, Form, Input, Row } from 'antd'
 import React, { useEffect, useState } from 'react'
 
 import { useNavigate, useSearchParams } from 'react-router-dom'
-
-import { useNavigate } from 'react-router-dom'
-import { Col, Row, Form, Input } from 'antd'
-import { useLoginMutation } from '../../../../features/slices/auth/authApiSlice'
 import FormButton from '../../../../components/Auth/Forms/Widgets/FormButton'
 import FormDescription from '../../../../components/Auth/Forms/Widgets/FormDescription'
 import FormFooter from '../../../../components/Auth/Forms/Widgets/FormFooter'
