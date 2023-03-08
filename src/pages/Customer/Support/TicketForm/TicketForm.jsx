@@ -52,7 +52,7 @@ const ModalForm = ({ toggleModal, ticketData, isAdmin }) => {
       toast.success(
         `Ticket ${
           isResolved === supportStatusEnums.RESOLVED ? 'Resolved' : 'Unresolved'
-        }  `,
+        }`,
         {
           hideProgressBar: true,
           autoClose: 3000,

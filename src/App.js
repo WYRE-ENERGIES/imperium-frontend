@@ -75,6 +75,7 @@ const AdminResetPassword = lazy(() =>
 )
 
 const AdminSignIn = lazy(() => import('./pages/Admin/Auth/SignIn/AdminSignIn'))
+const AdminSignUp = lazy(() => import('./pages/Admin/Auth/SignUp/AdminSignUp'))
 
 const AdminAccount = lazy(() =>
   import('./pages/Admin/Account/AccountPassword/AccountPassword'),
@@ -131,11 +132,12 @@ function App() {
             <Route path="battery-analytic" element={<Battery />} />
             <Route path="active-alerts" element={<ActiveAlerts />} />
             <Route path="users" element={<Users />} />
-            <Route path="user-invite" element={<UserInvitePage />} />
+            <Route path="accept-user" element={<UserInvitePage />} />
 
             {/* Admin routes */}
             <Route path="admin">
               <Route index element={<AdminSignIn />} />
+              <Route path="sign-up" element={<AdminSignUp />} />
               <Route path="forgot-password" element={<AdminForgotPassword />} />
               <Route path="new-password" element={<AdminResetPassword />} />
               <Route path="otp" element={<AdminOtp />} />

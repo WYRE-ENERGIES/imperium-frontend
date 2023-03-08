@@ -1,21 +1,24 @@
+import { Col, Form, Input, Row } from 'antd'
 import React, { useEffect, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+
+import { useNavigate, useSearchParams } from 'react-router-dom'
+
+import { useNavigate } from 'react-router-dom'
 import { Col, Row, Form, Input } from 'antd'
 import { useLoginMutation } from '../../../../features/slices/auth/authApiSlice'
-
-import { getItemFromLocalStorage } from '../../../../utils/helpers'
 import FormButton from '../../../../components/Auth/Forms/Widgets/FormButton'
-import FormFooter from '../../../../components/Auth/Forms/Widgets/FormFooter'
 import FormDescription from '../../../../components/Auth/Forms/Widgets/FormDescription'
-import LeftLayout from '../../../../components/Auth/Layout/LeftLayout/LeftLayout'
-
-import RightLayout from '../../../../components/Auth/Layout/RightLayout/RightLayout'
-
-import imageDesc from '../../../../../src/assets/Auth/adminlogo.svg'
-import classes from './AdminSignIn.module.scss'
+import FormFooter from '../../../../components/Auth/Forms/Widgets/FormFooter'
 import FormHeader from '../../../../components/Auth/Forms/Widgets/FormHeader'
+import LeftLayout from '../../../../components/Auth/Layout/LeftLayout/LeftLayout'
+import RightLayout from '../../../../components/Auth/Layout/RightLayout/RightLayout'
+import ThirdPartyAuth from '../../../../components/Auth/Forms/Widgets/ThirdPartyAuth'
+import classes from './AdminSignUp.module.scss'
+import { getItemFromLocalStorage } from '../../../../utils/helpers'
+import imageDesc from '../../../../../src/assets/Auth/adminlogo.svg'
+import { useRegisterUserMutation } from '../../../../features/slices/auth/authApiSlice'
 
-const AdminSignIn = () => {
+const AdminSignUp = () => {
   const formDescription = {
     image: imageDesc,
     header: '',
@@ -23,18 +26,21 @@ const AdminSignIn = () => {
       'As an admin, you can view energy analytics and panel data through charts and graphs, set shut down and turn on timers, and access battery information on our platform.',
   }
   const [errMsg, setErrMsg] = useState('')
-  const [login, { isLoading }] = useLoginMutation()
+  const [registerUser, { isLoading }] = useRegisterUserMutation()
   const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
 
+  const email = searchParams.get('email')
   const accessToken = getItemFromLocalStorage('access')
 
   const onFinish = async (values) => {
     try {
-      await login({
-        credentials: values,
-        endpoint: 'imperium-admin/auth/login/',
+      await registerUser({
+        credentials: { ...values, email },
+        endpoint: '/imperium-admin/auth/register-user/',
       }).unwrap()
-      navigate('/admin/overview')
+
+      navigate('/admin/')
     } catch (err) {
       if (err.status === 401) {
         setErrMsg(err?.data?.detail)
@@ -53,15 +59,17 @@ const AdminSignIn = () => {
       navigate('/admin/overview')
     }
   })
+
   return (
-    <section className={classes.AdminSignPage}>
-      <Row className={classes.AdminSignPage__Layout}>
+    <section className={classes.AdminSignUpPage}>
+      <Row className={classes.AdminSignUpPage__Layout}>
         <LeftLayout>
-          <div className={classes.AdminSignPage__LoginForm}>
+          <div className={classes.AdminSignUpPage__LoginForm}>
             <FormHeader
-              header={'Log In'}
-              tagline={'Welcome back! Please enter your details.'}
+              header={'Create Account'}
+              tagline={'Let’s get started with imperium today'}
             />
+            <ThirdPartyAuth />
             <Form
               name="admin-login"
               labelCol={8}
@@ -83,14 +91,14 @@ const AdminSignIn = () => {
                   <p
                     style={{
                       marginBottom: '2px',
-                      marginTop: '20px',
+                      marginTop: '-10px',
                       fontSize: '13.5px',
                     }}
                   >
-                    Email
+                    First Name
                   </p>
                 }
-                name="email"
+                name="first_name"
                 rules={[
                   {
                     required: true,
@@ -100,11 +108,39 @@ const AdminSignIn = () => {
                 required
               >
                 <Input
-                  className={classes.AdminSignPage__Input}
-                  placeholder="Enter your email"
+                  className={classes.AdminSignUpPage__Input}
+                  placeholder="Enter first name"
+                  style={{ marginTop: '-1rem', marginBottom: '-100px' }}
+                />
+              </Form.Item>
+              <Form.Item
+                label={
+                  <p
+                    style={{
+                      marginBottom: '2px',
+                      marginTop: '-20px',
+                      fontSize: '13.5px',
+                    }}
+                  >
+                    Last Name
+                  </p>
+                }
+                name="last_name"
+                rules={[
+                  {
+                    required: true,
+                    message: 'This field is required.',
+                  },
+                ]}
+                required
+              >
+                <Input
+                  className={classes.AdminSignUpPage__Input}
+                  placeholder="Enter last name"
                   style={{ marginTop: '-1rem' }}
                 />
               </Form.Item>
+
               <Form.Item
                 label={
                   <p
@@ -117,14 +153,7 @@ const AdminSignIn = () => {
                     Password
                   </p>
                 }
-                extra={
-                  <Link
-                    to={'/admin/forgot-password/'}
-                    style={{ color: 'grey' }}
-                  >
-                    Can’t remember password ?
-                  </Link>
-                }
+                extra={'Must be at least 8 characters.'}
                 name="password"
                 style={{ marginTop: '-1rem' }}
                 rules={[
@@ -135,25 +164,35 @@ const AdminSignIn = () => {
                 ]}
               >
                 <Input.Password
-                  className={classes.AdminSignPage__Password}
+                  className={classes.AdminSignUpPage__Password}
                   placeholder="Enter a password"
                   style={{ marginTop: '-1px' }}
                 />
               </Form.Item>
               <Form.Item>
-                <FormButton action={'Log In'} isLoading={isLoading} />
+                <FormButton action={'Create account'} isLoading={isLoading} />
               </Form.Item>
 
               <FormFooter
-                footer={'Don’t have an account?'}
-                action={'Sign Up'}
-                footerlink={'/admin/sign-up'}
+                extra={
+                  <p>
+                    By selecting <strong>Create account</strong>. I agree to
+                    imperium’s{' '}
+                    <span style={{ color: '#5C9D48' }}>
+                      {' '}
+                      privacy policy & terms
+                    </span>
+                  </p>
+                }
+                footer={'Already have an account?'}
+                action={'Log In'}
+                footerlink={'/admin'}
               />
             </Form>
           </div>
         </LeftLayout>
 
-        <Col span={12} className={classes.AdminSignPage__RightLayOut}>
+        <Col span={12} className={classes.AdminSignUpPage__RightLayOut}>
           <RightLayout span={24} backgroundColor={'none'}>
             <FormDescription content={formDescription} />{' '}
           </RightLayout>
@@ -163,4 +202,4 @@ const AdminSignIn = () => {
   )
 }
 
-export default AdminSignIn
+export default AdminSignUp

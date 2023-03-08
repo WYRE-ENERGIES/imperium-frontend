@@ -48,11 +48,16 @@ export const formatLabel = (value) => {
       label = 'For the last 7 days'
       break
     case 'daily':
-      label = 'For the last 12 hours'
+      label = 'For the last 24 hours'
       break
     default:
       label = 'For the last 12 months'
       break
   }
   return label
+}
+
+export const getUserFullName = () => {
+  const { first_name, last_name } = getItemFromLocalStorage('userInfo')
+  return `${first_name} ${last_name}`
 }

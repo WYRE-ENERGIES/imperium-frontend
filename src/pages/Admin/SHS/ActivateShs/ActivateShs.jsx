@@ -1,16 +1,36 @@
 import { Button, Form, Modal, Typography } from 'antd'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { ToastContainer, toast } from 'react-toastify'
 
+import ButtonLoader from '../../../../components/ButtonLoader/ButtonLoader'
 import { ReactComponent as DisableTicketIcon } from '../../../../assets/widget-icons/disable-caution-icon.svg'
 import { ReactComponent as TicketIcon } from '../../../../assets/widget-icons/caution-icon.svg'
 import classes from '../../Customers/SHSForm/SHSForm.module.scss'
+import { useDeactivateDeviceMutation } from '../../../../features/slices/allShsSlice'
 
 const { Text, Title } = Typography
 
-const ActivateContent = ({ user, toggleModal }) => {
-  const title = user?.isActive ? 'Activate SHS' : 'Disabled SHS'
-  const TIcon = user?.isActive ? TicketIcon : DisableTicketIcon
+const ActivateContent = ({ shs, toggleModal }) => {
+  const { id: shsId, status } = shs
+  const title = status === 'OFF' ? 'Activate SHS' : 'Disabled SHS'
+  const TIcon = status === 'OFF' ? TicketIcon : DisableTicketIcon
+
+  const [deactivateDevice, { isLoading, isSuccess, data }] =
+    useDeactivateDeviceMutation()
+
+  useEffect(() => {
+    if (!isLoading && isSuccess) {
+      toast.success(
+        `Device ${data.device_switch_state === 'ON' ? 'Enabled' : 'Disabled'}`,
+        {
+          hideProgressBar: true,
+          autoClose: 3000,
+          theme: 'colored',
+        },
+      )
+      toggleModal()
+    }
+  }, [isLoading, isSuccess, data?.device_switch_state, toggleModal])
 
   return (
     <div>
@@ -24,8 +44,9 @@ const ActivateContent = ({ user, toggleModal }) => {
           {title}
         </Title>
         <Text type="secondary" className={classes.SHSForm__subTitle}>
-          By disabling this SHS, you will stop collecting data from the SHS.
-          Would you like to proceed?
+          {status === 'OFF'
+            ? 'Enable this SHS'
+            : 'By disabling this SHS, you will stop collecting data from the SHS.Would you like to proceed?'}
         </Text>
       </div>
       <div className={classes.AddSHSForm__btn}>
@@ -36,15 +57,22 @@ const ActivateContent = ({ user, toggleModal }) => {
         >
           Cancel
         </Button>
-        <Button className={classes.AddSHSForm__submitBtn} htmlType="submit">
-          Proceed
+        <Button
+          className={classes.AddSHSForm__submitBtn}
+          onClick={() =>
+            deactivateDevice({ shsId, data: { deactivate: status !== 'OFF' } })
+          }
+          htmlType="button"
+        >
+          {isLoading ? <ButtonLoader color="#fff" /> : 'Proceed'}
         </Button>
       </div>
+      <ToastContainer />
     </div>
   )
 }
 
-const ActivateShs = ({ user, isOpen, toggleModal }) => {
+const ActivateShs = ({ shs, isOpen, toggleModal }) => {
   return (
     <Modal
       centered
@@ -54,7 +82,7 @@ const ActivateShs = ({ user, isOpen, toggleModal }) => {
       width={400}
       footer={null}
     >
-      <ActivateContent toggleModal={toggleModal} user={user} />
+      <ActivateContent toggleModal={toggleModal} shs={shs} />
     </Modal>
   )
 }
