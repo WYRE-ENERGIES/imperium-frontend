@@ -21,10 +21,8 @@ const CreatedAlerts = () => {
     setIsModalOpen(false)
   }
   const onFinish = (values) => {
-    console.log('Success:', values)
   }
   const onFinishFailed = (errorInfo) => {
-    console.log('Failed:', errorInfo)
   }
   const [pageNum, setPageNum] = useState(1)
   const [activeAlertsDataTable, setActiveAlertDataTable] = useState([])
