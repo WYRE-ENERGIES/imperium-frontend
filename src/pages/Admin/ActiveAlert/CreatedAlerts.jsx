@@ -32,7 +32,7 @@ const CreatedAlerts = () => {
       page: pageNum,
       search: searchactiveAlerts,
     })
-  console.log(activeAlertsTable)
+ 
   useEffect(() => {
     setActiveAlertDataTable(activeAlertsTable)
   }, [activeAlertsTable])
@@ -69,7 +69,6 @@ const CreatedAlerts = () => {
   ]
 
   const handleChange = (value) => {
-    console.log(`selected ${value}`)
   }
 
   const ActiveAlertTableTitle = () => (
