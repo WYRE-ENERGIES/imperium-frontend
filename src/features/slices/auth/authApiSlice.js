@@ -20,7 +20,16 @@ export const authApiSlice = apiSlice.injectEndpoints({
         }
       },
     }),
+    registerUser: builder.mutation({
+      query: ({ credentials, endpoint }) => {
+        return {
+          url: endpoint,
+          method: 'POST',
+          body: credentials,
+        }
+      },
+    }),
   }),
 })
 
-export const { useLoginMutation } = authApiSlice
+export const { useLoginMutation, useRegisterUserMutation } = authApiSlice

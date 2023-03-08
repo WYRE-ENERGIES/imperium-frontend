@@ -42,6 +42,13 @@ export const usersApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ['Users'],
     }),
+    acceptInvite: builder.mutation({
+      query: (data) => ({
+        url: `${ADMIN_URL_PATH}accept-user/`,
+        method: 'POST',
+        body: data,
+      }),
+    }),
   }),
 })
 
@@ -50,4 +57,5 @@ export const {
   useGetUsersRolesQuery,
   useInviteUserMutation,
   useRemoveUserMutation,
+  useAcceptInviteMutation,
 } = usersApiSlice

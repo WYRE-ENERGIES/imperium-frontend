@@ -132,7 +132,7 @@ function App() {
             <Route path="battery-analytic" element={<Battery />} />
             <Route path="active-alerts" element={<ActiveAlerts />} />
             <Route path="users" element={<Users />} />
-            <Route path="user-invite" element={<UserInvitePage />} />
+            <Route path="accept-user" element={<UserInvitePage />} />
 
             {/* Admin routes */}
             <Route path="admin">
