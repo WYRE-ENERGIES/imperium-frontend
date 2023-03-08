@@ -1,6 +1,10 @@
-import React, { Suspense, lazy, useState } from 'react'
+import React, { Suspense, lazy, useRef, useState } from 'react'
 import { Switch, Tag } from 'antd'
 import { TbActivityHeartbeat, TbBoltOff } from 'react-icons/tb'
+import {
+  useGetAllShsPageAnalyticsQuery,
+  useGetShsTableDataQuery,
+} from '../../../features/slices/allShsSlice'
 
 import AdminEnergyAnalytic from '../../../components/Widget/AdminEnergyAnalytic/AdminEnergyAnalytic'
 import AdminPageLayout from '../../../components/Layout/AdminPageLayout/AdminPageLayout'
@@ -8,54 +12,73 @@ import { BsDot } from 'react-icons/bs'
 import { Link } from 'react-router-dom'
 import PageBreadcrumb from '../../../components/PageBreadcrumb/PageBreadcrumb'
 import ReactAvatar from 'react-avatar'
+import TableFooter from '../../../components/TableFooter/TableFooter'
 import TableWithFilter from '../../../components/SHSTableWithFilter/SHSTableWithFilter'
 import WidgetFilter from '../../../components/WidgetFilter/WidgetFilter'
 import classes from '../../Customer/Support/Support.module.scss'
-import { data } from '../../../components/SHSTable/tableData'
+import { formatLabel } from '../../../utils/helpers'
+import { tab } from '@testing-library/user-event/dist/tab'
+import useDebounce from '../../../hooks/useDebounce'
 
 const ActivateShs = lazy(() => import('./ActivateShs/ActivateShs'))
 
 const SHS = () => {
-  const [selectedUser, setSelectedUser] = useState(false)
+  const [selectedDevice, setSelectedDevice] = useState({})
   const [openActivateShsModal, setOpenActivateShsModal] = useState(false)
+  const [search, setSearch] = useState('')
+  const [page, setPage] = useState(1)
+  const [globalFilter, setGlobalFilter] = useState('yearly')
+  const [tableFilter, setTableFilter] = useState('')
 
-  const toggleActivateShsModal = (record) => {
-    setSelectedUser(record)
+  const handleSearch = (e) => setSearch(e.target.value)
+  const debounceValue = useDebounce(search, 1000)
+
+  const toggleActivateShsModal = (e, record) => {
+    setSelectedDevice(record)
     setOpenActivateShsModal(!openActivateShsModal)
   }
+
+  const { isError, error, data, isFetching } = useGetShsTableDataQuery({
+    page,
+    search: debounceValue,
+    filterBy: globalFilter,
+    tableFilter: tableFilter,
+  })
+
+  const {
+    isFetching: isAnalyticsFetching,
+    isError: isAnalyticsError,
+    error: analyticsError,
+    data: analyticsData,
+  } = useGetAllShsPageAnalyticsQuery({ filterBy: globalFilter })
 
   const widgets = [
     {
       id: 1,
-      icon: TbBoltOff,
       title: 'Total Energy Consumped',
       duration: 'For the last 12 months',
-      value: '1124.89',
-      valueCurrency: 'kWh',
+      value: analyticsData?.total_shs || 0,
       graphColor: '#65AA4F',
     },
     {
       id: 2,
-      icon: TbActivityHeartbeat,
       title: 'Total Energy Generated',
       duration: 'For the last 12 months',
-      value: '654.14',
+      value: parseFloat(analyticsData?.energy_generated?.toFixed(1)) || 0,
       valueCurrency: 'kWh',
       graphColor: '#C9E00C',
     },
     {
       id: 3,
-      icon: TbActivityHeartbeat,
       title: 'Total Capacity',
       duration: 'For the last 12 months',
-      value: '5480 kVA / 76.9 kW',
+      value: parseFloat(analyticsData?.capacity?.toFixed(1)) || 0,
       graphColor: '#5714E4',
     },
   ].map((widget) => (
     <AdminEnergyAnalytic
       key={widget.id}
-      Icon={widget.icon}
-      duration={widget.duration}
+      duration={formatLabel(globalFilter)}
       valueCurrency={widget.valueCurrency}
       title={widget.title}
       value={widget.value}
@@ -66,51 +89,55 @@ const SHS = () => {
   const columns = [
     {
       title: 'SHS Name',
-      dataIndex: 'name',
-      key: 'name',
-      sorter: (a, b) => a.name.localeCompare(b.name),
-      render: (_, record) => (
-        <div className={classes.Support__nameDiv}>
-          <Switch
-            style={{ backgroundColor: record.status ? '#385E2B' : '' }}
-            defaultChecked={record.status}
-            onChange={() => toggleActivateShsModal(record)}
-          />
-          <ReactAvatar
-            size={30}
-            round={true}
-            name={record.name}
-            fgColor="#385E2B"
-            color="#F0F7ED"
-          />
-          <div className={classes.Support__names}>
-            <h3 style={{ color: record.status ? '' : '#C4C4C4' }}>
-              {record.name}
-            </h3>
-            <h4 style={{ color: record.status ? '' : '#C4C4C4' }}>
-              {record.email}
-            </h4>
+      dataIndex: 'device_name',
+      key: 'device_name',
+      sorter: (a, b) => a.device_name.localeCompare(b.device_name),
+      render: (_, record) => {
+        return (
+          <div className={classes.Support__nameDiv}>
+            <Switch
+              style={{
+                backgroundColor: record.status === 'ON' ? '#385E2B' : '#C4C4C4',
+              }}
+              defaultChecked={record.status === 'ON'}
+              onChange={(e) => toggleActivateShsModal(e, record)}
+            />
+            <ReactAvatar
+              size={30}
+              round={true}
+              name={record.client_name}
+              fgColor="#385E2B"
+              color="#F0F7ED"
+            />
+            <div className={classes.Support__names}>
+              <h3 style={{ color: record.status !== 'OFF' ? '' : '#C4C4C4' }}>
+                {record.device_name}
+              </h3>
+              <h4 style={{ color: record.status !== 'OFF' ? '' : '#C4C4C4' }}>
+                {record?.client_name}
+              </h4>
+            </div>
           </div>
-        </div>
-      ),
+        )
+      },
     },
     {
       title: 'Energy Consumed',
-      key: 'energyConsumed',
-      dataIndex: 'energyConsumed',
+      key: 'energy_consumed',
+      dataIndex: 'energy_consumed',
       render: (value, record) => (
-        <p style={{ color: record.status ? '' : '#C4C4C4' }}>
-          {value.toLocaleString()}
+        <p style={{ color: record.status !== 'OFF' ? '' : '#C4C4C4' }}>
+          {parseFloat(value?.toLocaleString())?.toFixed(1)}
         </p>
       ),
     },
     {
       title: 'Energy Generated',
-      key: 'energyGenerated',
-      dataIndex: 'energyGenerated',
+      key: 'energy_generated',
+      dataIndex: 'energy_generated',
       render: (value, record) => (
-        <p style={{ color: record.status ? '' : '#C4C4C4' }}>
-          {value.toLocaleString()}
+        <p style={{ color: record.status !== 'OFF' ? '' : '#C4C4C4' }}>
+          {parseFloat(value?.toLocaleString())?.toFixed(1)}
         </p>
       ),
     },
@@ -121,12 +148,12 @@ const SHS = () => {
       render: (value, record) => {
         return (
           <div className={classes.Support__Location}>
-            <h3 style={{ color: record.status ? '' : '#C4C4C4' }}>
-              {value.area}
+            <h3 style={{ color: record.status !== 'OFF' ? '' : '#C4C4C4' }}>
+              {value}
             </h3>
-            <h4 style={{ color: record.status ? '' : '#C4C4C4' }}>
+            {/* <h4 style={{ color: record.status !== 'OFF' ? '' : '#C4C4C4' }}>
               {value.street}
-            </h4>
+            </h4> */}
           </div>
         )
       },
@@ -146,7 +173,7 @@ const SHS = () => {
         }
 
         return (
-          <span style={{ color: record.status ? color : '#C4C4C4' }}>
+          <span style={{ color: record.status !== 'OFF' ? color : '#C4C4C4' }}>
             {value}%
           </span>
         )
@@ -167,10 +194,10 @@ const SHS = () => {
       dataIndex: 'status',
       sorter: (a, b) => a.status - b.status,
       render: (value) => {
-        const color = value ? '#027A48' : '#606062'
+        const color = value !== 'OFF' ? '#027A48' : '#606062'
         return (
           <Tag
-            color={value ? 'success' : '#E6E6E6'}
+            color={value !== 'OFF' ? 'success' : '#E6E6E6'}
             key={value}
             style={{
               borderRadius: '10px',
@@ -183,7 +210,7 @@ const SHS = () => {
             }}
           >
             <BsDot size={20} />
-            {value ? 'On' : 'Off'}
+            {value}
           </Tag>
         )
       },
@@ -214,23 +241,41 @@ const SHS = () => {
           <PageBreadcrumb title="All SHS" items={['All SHS']} />
         </section>
         <section className={classes.Support__filters}>
-          <WidgetFilter />
+          <WidgetFilter
+            selectFilterBy={(value) => setGlobalFilter(value)}
+            filterBy={globalFilter}
+          />
         </section>
         <div className={classes.Support__widgets}>{widgets}</div>
         <div className={classes.Support__shsTable}>
           <TableWithFilter
             columns={columns}
-            data={data}
+            data={data?.results}
             tableTitle="SHS"
-            filterOptions={[]}
+            filterOptions={[
+              { name: 'ON', value: 'ON' },
+              { name: 'OFF', value: 'OFF' },
+            ]}
             isAdmin={true}
+            handleSearch={handleSearch}
+            isLoading={isFetching}
+            footer={() => (
+              <TableFooter
+                pageNo={data?.page}
+                totalPages={data?.total_pages}
+                handleClick={setPage}
+                hasNext={data?.page === data?.total_pages}
+                hasPrev={!data?.total_pages || data?.page === 1}
+              />
+            )}
+            onFilterChanged={(e) => setTableFilter(e)}
           />
         </div>
       </div>
       <Suspense fallback={<h4>Loading...</h4>}>
         {openActivateShsModal && (
           <ActivateShs
-            user={selectedUser}
+            shs={selectedDevice}
             isOpen={openActivateShsModal}
             toggleModal={toggleActivateShsModal}
           />
