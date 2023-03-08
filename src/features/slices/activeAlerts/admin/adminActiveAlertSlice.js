@@ -6,18 +6,17 @@ export const activerAlertsSlice = apiSlice.injectEndpoints({
   endpoints: (build) => ({
     getAdminActiveAlerts: build.query({
       query: ({ page, search }) => {
-        let url = `${BASE_URL}?page=${page}`
+        let url = `${BASE_URL}`
         if (search) {
           url += `&search=${search}`
+        }
+        if (page) {
+          url += `?page=${page}`
         }
         return url
       },
       transformResponse: (response, meta, arg) => {
-        const results = response.results.slice(0, 3).map((alerts) => ({
-          ...alerts,
-          key: alerts.id,
-        }))
-        return results
+        return response
       },
       transformErrorResponse: (response, meta, arg) => response.status,
       providesTags: ['ActiveAlerts'],
@@ -30,6 +29,7 @@ export const activerAlertsSlice = apiSlice.injectEndpoints({
         return response
       },
       transformErrorResponse: (response, meta, arg) => response.status,
+      providesTags: ['ActiveAlertsAnaylytics'],
     }),
     getAdminActiveAlertsStatistics: build.query({
       query: () => {
@@ -45,9 +45,22 @@ export const activerAlertsSlice = apiSlice.injectEndpoints({
         return `${BASE_URL}table/`
       },
       transformResponse: (response, meta, arg) => {
-        const results = response.results.map((tabledata) => ({
-          ...tabledata,
-          key: tabledata.id,
+        return response
+      },
+      transformErrorResponse: (response, meta, arg) => response.status,
+    }),
+    getAdminActiveAlertsLocation: build.query({
+      query: ({ page, search }) => {
+        let url = `${BASE_URL}location/?page=${page}`
+        if (search) {
+          url += `&search=${search}`
+        }
+        return url
+      },
+      transformResponse: (response, meta, arg) => {
+        const results = response.results.map((locationdata) => ({
+          ...locationdata,
+          key: locationdata.id,
         }))
         return results
       },
@@ -61,6 +74,7 @@ export const activerAlertsSlice = apiSlice.injectEndpoints({
           body: credentials,
         }
       },
+      invalidatesTags: ['ActiveAlerts', 'ActiveAlertsAnaylytics'],
     }),
   }),
 })
@@ -71,4 +85,5 @@ export const {
   useGetAdminActiveAlertsStatisticsQuery,
   useGetAdminActiveAlertsTableQuery,
   useCreateAdminActiveAlertsMutation,
+  useGetAdminActiveAlertsLocationQuery,
 } = activerAlertsSlice

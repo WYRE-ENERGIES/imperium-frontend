@@ -22,6 +22,7 @@ export const apiSlice = createApi({
     'CustomersAnalytics',
     'ActiveAlerts',
     'ShsList',
+ 'ActiveAlertsAnaylytics',
   ],
   endpoints: (builder) => ({}),
 })
