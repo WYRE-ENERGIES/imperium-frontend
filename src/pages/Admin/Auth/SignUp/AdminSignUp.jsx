@@ -1,6 +1,5 @@
 import { Col, Form, Input, Row } from 'antd'
 import React, { useEffect, useState } from 'react'
-
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import FormButton from '../../../../components/Auth/Forms/Widgets/FormButton'
 import FormDescription from '../../../../components/Auth/Forms/Widgets/FormDescription'
