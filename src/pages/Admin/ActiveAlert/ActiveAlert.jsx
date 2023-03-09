@@ -206,6 +206,7 @@ const ActiveAlert = () => {
       page: pageNum,
       search: searchactiveAlerts,
     })
+
   const {
     data: activeAlertsAnalytics,
     isLoading: isLoadingactiveAlertsAnalytics,
@@ -528,10 +529,10 @@ const ActiveAlert = () => {
                 </Modal>
               </div>
             </div>
-            handleStatisticChange
+
             <div className={classes.ActiveAlert__ActiveAlertNotificationList}>
-              {activeAlertsData
-                ? activeAlertsData.slice(0, 3).map((alert, key) => (
+              {activeAlertsData?.results
+                ? activeAlertsData?.results.slice(0, 3).map((alert, key) => (
                     <div key={key}>
                       <span>
                         <BsThreeDots />
