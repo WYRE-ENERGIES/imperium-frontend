@@ -34,7 +34,7 @@ const SignIn = () => {
         credentials: values,
         endpoint: 'imperium-admin/auth/login/',
       }).unwrap()
-      navigate('/admin/overview')
+      navigate('/overview')
     } catch (err) {
       if (err.status === 401) {
         setErrMsg(err?.data?.detail)

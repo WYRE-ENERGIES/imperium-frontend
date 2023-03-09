@@ -61,7 +61,6 @@ const ActiveAlertDetails = (data) => {
       </div>
       <Modal
         open={isModalOpen}
-        onOk={handleOk}
         onCancel={handleCancel}
         className={classes.ActiveAlert__ActiveAlertNotificationListModal}
         width={400}
@@ -366,6 +365,22 @@ const ActiveAlert = () => {
             </div>
           </div>
           <div className={classes.ActiveAlert__WidgetRightContent}>
+            <div className={classes.ActiveAlert__WidgetRight}>
+              <div className={classes.ActiveAlert__WidgetIcon}>
+                <BsBellSlash color={'#497A38'} size={15} />
+              </div>
+              <div className={classes.ActiveAlert__WidgetText}>
+                <p>Total number of resolved alert</p>
+                <div className={classes.ActiveAlert__WidgetVal}>
+                  <h1 className={classes.ActiveAlert__WidgetValue}>
+                    {activeAlertsDataAnalytics?.total_unresolved_alerts}
+                  </h1>
+                  <div className={classes.ActiveAlert__WidgetGraphTwo}>
+                    <img src={alertResolved} alt="" srcSet="" />
+                  </div>
+                </div>
+              </div>
+            </div>
             <div className={classes.ActiveAlert__WidgetCenter}>
               <div className={classes.ActiveAlert__WidgetIcon}>
                 <BsArrowsMove color={'#497A38'} size={15} />
@@ -378,7 +393,10 @@ const ActiveAlert = () => {
               </div>
               <div className={classes.ActiveAlert__WidgetExtra}>
                 <div>
-                  <BsEyeSlash color={'#292D32'} size={15} />
+                  <Link to={'/admin/active-alerts/location-alerts'}>
+                    {' '}
+                    <BsThreeDots color={'#292D32'} size={15} />
+                  </Link>
                 </div>
                 <div>
                   <Tag
@@ -395,22 +413,6 @@ const ActiveAlert = () => {
                   >
                     <BsArrowUp color={'#039855'} size={15} /> 19%
                   </Tag>
-                </div>
-              </div>
-            </div>
-            <div className={classes.ActiveAlert__WidgetRight}>
-              <div className={classes.ActiveAlert__WidgetIcon}>
-                <BsBellSlash color={'#497A38'} size={15} />
-              </div>
-              <div className={classes.ActiveAlert__WidgetText}>
-                <p>Total number of resolved alert</p>
-                <div className={classes.ActiveAlert__WidgetVal}>
-                  <h1 className={classes.ActiveAlert__WidgetValue}>
-                    {activeAlertsDataAnalytics?.total_unresolved_alerts}
-                  </h1>
-                  <div className={classes.ActiveAlert__WidgetGraphTwo}>
-                    <img src={alertResolved} alt="" srcSet="" />
-                  </div>
                 </div>
               </div>
             </div>

@@ -20,10 +20,8 @@ const CreatedAlerts = () => {
   const handleCancel = () => {
     setIsModalOpen(false)
   }
-  const onFinish = (values) => {
-  }
-  const onFinishFailed = (errorInfo) => {
-  }
+  const onFinish = (values) => {}
+  const onFinishFailed = (errorInfo) => {}
   const [pageNum, setPageNum] = useState(1)
   const [activeAlertsDataTable, setActiveAlertDataTable] = useState([])
   const [searchactiveAlerts, setSearchactiveAlerts] = useState('')
@@ -32,11 +30,10 @@ const CreatedAlerts = () => {
       page: pageNum,
       search: searchactiveAlerts,
     })
- 
+
   useEffect(() => {
     setActiveAlertDataTable(activeAlertsTable)
   }, [activeAlertsTable])
-
   const columns = [
     {
       key: 'title',
@@ -68,8 +65,7 @@ const CreatedAlerts = () => {
     },
   ]
 
-  const handleChange = (value) => {
-  }
+  const handleChange = (value) => {}
 
   const ActiveAlertTableTitle = () => (
     <div className={classes.ActiveAlert__ActiveAlertTableHeader}>
