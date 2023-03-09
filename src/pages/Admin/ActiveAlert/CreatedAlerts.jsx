@@ -23,7 +23,7 @@ const CreatedAlerts = () => {
   const handleCancel = () => {
     setIsModalOpen(false)
   }
-  const onFinish = (values) => {}
+
   const [pageNum, setPageNum] = useState(1)
   const [activeAlertsDataTable, setActiveAlertDataTable] = useState([])
   const [errMs, setErrMsg] = useState('')
