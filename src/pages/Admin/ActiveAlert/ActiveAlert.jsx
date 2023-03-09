@@ -353,7 +353,7 @@ const ActiveAlert = () => {
               </h1>
             </div>
             <div className={classes.ActiveAlert__WidgetGraphOne}>
-              <img src={alertCreated} alt="" srcSet="" />
+              <img src={alertCreated} alt="alert created" />
             </div>
           </div>
           <div className={classes.ActiveAlert__WidgetRightContent}>
