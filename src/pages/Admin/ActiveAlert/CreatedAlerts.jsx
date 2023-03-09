@@ -1,6 +1,9 @@
 import { Input, Modal, Divider, Form } from 'antd'
 import React, { useState } from 'react'
-import { useGetAdminActiveAlertsQuery } from '../../../features/slices/activeAlerts/admin/adminActiveAlertSlice'
+import {
+  useGetAdminActiveAlertsQuery,
+  useCreateAdminActiveAlertsMutation,
+} from '../../../features/slices/activeAlerts/admin/adminActiveAlertSlice'
 import { BsPlus, BsBell } from 'react-icons/bs'
 import AdminPageLayout from '../../../components/Layout/AdminPageLayout/AdminPageLayout'
 import PageBreadcrumb from '../../../components/PageBreadcrumb/PageBreadcrumb'
@@ -21,15 +24,34 @@ const CreatedAlerts = () => {
     setIsModalOpen(false)
   }
   const onFinish = (values) => {}
-  const onFinishFailed = (errorInfo) => {}
   const [pageNum, setPageNum] = useState(1)
   const [activeAlertsDataTable, setActiveAlertDataTable] = useState([])
+  const [errMs, setErrMsg] = useState('')
   const [searchactiveAlerts, setSearchactiveAlerts] = useState('')
   const { data: activeAlertsTable, isLoading: isLoadingactiveAlertsTable } =
     useGetAdminActiveAlertsQuery({
       page: pageNum,
       search: searchactiveAlerts,
     })
+  const [createAdminActiveAlerts, { isLoading: isLoadingactiveAlertsCreate }] =
+    useCreateAdminActiveAlertsMutation()
+
+  const handleCreateAlert = async (values) => {
+    try {
+      await createAdminActiveAlerts(values)
+      setIsModalOpen(false)
+    } catch (err) {
+      if (err.status === 401) {
+        setErrMsg(err?.data?.detail)
+      } else if (err.status === 400) {
+        setErrMsg(err?.data?.message)
+      } else if (err.status === 500) {
+        setErrMsg('Cannot connect to server.')
+      } else {
+        setErrMsg('Check your internet connection')
+      }
+    }
+  }
 
   useEffect(() => {
     setActiveAlertDataTable(activeAlertsTable)
@@ -64,8 +86,6 @@ const CreatedAlerts = () => {
       ),
     },
   ]
-
-  const handleChange = (value) => {}
 
   const ActiveAlertTableTitle = () => (
     <div className={classes.ActiveAlert__ActiveAlertTableHeader}>
@@ -154,14 +174,23 @@ const CreatedAlerts = () => {
                       initialValues={{
                         remember: false,
                       }}
-                      onFinish={onFinish}
-                      onFinishFailed={onFinishFailed}
+                      onFinish={handleCreateAlert}
                       autoComplete="off"
                       layout="horizontal"
                       requiredMark="optional"
                       labelAlign="left"
                     >
-                      <Form.Item label="Title" name="title" required>
+                      <Form.Item
+                        label="Title"
+                        name="title"
+                        required
+                        rules={[
+                          {
+                            required: true,
+                            message: 'This field is required.',
+                          },
+                        ]}
+                      >
                         <Input
                           className={classes.ActiveAlert__AddAlertInput}
                           style={{ marginBottom: '-5px' }}
@@ -171,8 +200,14 @@ const CreatedAlerts = () => {
 
                       <Form.Item
                         label="Event Description"
-                        name="description"
+                        name="event_description"
                         required
+                        rules={[
+                          {
+                            required: true,
+                            message: 'This field is required.',
+                          },
+                        ]}
                       >
                         <Input.TextArea
                           className={classes.ActiveAlert__AddAlertInput}
@@ -184,7 +219,12 @@ const CreatedAlerts = () => {
                       <Form.Item>
                         <div className={classes.ActiveAlert__AddAlertBtn}>
                           <button onClick={handleOk}>Cancel</button>
-                          <button onClick={handleOk}>Submit</button>
+                          <button type="submit">
+                            {' '}
+                            {isLoadingactiveAlertsCreate
+                              ? 'Loading...'
+                              : 'Submit'}
+                          </button>
                         </div>
                       </Form.Item>
                     </Form>

@@ -7,33 +7,19 @@ import PageBreadcrumb from '../../../components/PageBreadcrumb/PageBreadcrumb'
 import classes from './ActiveAlert.module.scss'
 import ActiveAlertTable from '../../../components/ActiveAlert/Table/ActiveAlertTable'
 import { SearchOutlined, CloudDownloadOutlined } from '@ant-design/icons'
-import activeAlertdata from '../../../components/ActiveAlert/Data/data'
 const LocationAlerts = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [locationData, setLocationData] = useState([])
   const [pageNum, setPageNum] = useState(1)
+  const [search, setSeacrh] = useState('')
   const { data, isLoading } = useGetAdminActiveAlertsLocationQuery({
     page: pageNum,
+    search: search,
   })
-  const showModal = () => {
-    setIsModalOpen(true)
-  }
-  const handleOk = () => {
-    setIsModalOpen(false)
-  }
-  const handleCancel = () => {
-    setIsModalOpen(false)
-  }
-  const onFinish = (values) => {
-    console.log('Success:', values)
-  }
-  const onFinishFailed = (errorInfo) => {
-    console.log('Failed:', errorInfo)
-  }
+
   useEffect(() => {
     setLocationData(data)
   }, [data])
-  console.log(locationData)
   const ClientData = ({ data }) => {
     return (
       <section className={classes.ActiveAlert__ActiveAlertClient}>
@@ -86,10 +72,6 @@ const LocationAlerts = () => {
       ),
     },
   ]
-
-  const handleChange = (value) => {
-    console.log(`selected ${value}`)
-  }
 
   const ativeAlertTableTitle = () => (
     <div className={classes.ActiveAlert__ActiveAlertTableHeader}>
