@@ -30,7 +30,6 @@ const SignUp = () => {
 
   const accessToken = getItemFromLocalStorage('access')
   const onFinish = async (values) => {
-    console.log(values)
     try {
       await customerRegister({
         credentials: values,

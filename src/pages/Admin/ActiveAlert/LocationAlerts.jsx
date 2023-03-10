@@ -1,87 +1,77 @@
 import { Input, Modal, Divider, Form } from 'antd'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { BsPlus, BsBell } from 'react-icons/bs'
+import { useGetAdminActiveAlertsLocationQuery } from '../../../features/slices/activeAlerts/admin/adminActiveAlertSlice'
 import AdminPageLayout from '../../../components/Layout/AdminPageLayout/AdminPageLayout'
 import PageBreadcrumb from '../../../components/PageBreadcrumb/PageBreadcrumb'
 import classes from './ActiveAlert.module.scss'
 import ActiveAlertTable from '../../../components/ActiveAlert/Table/ActiveAlertTable'
 import { SearchOutlined, CloudDownloadOutlined } from '@ant-design/icons'
-import activeAlertdata from '../../../components/ActiveAlert/Data/data'
 const LocationAlerts = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const showModal = () => {
-    setIsModalOpen(true)
-  }
-  const handleOk = () => {
-    setIsModalOpen(false)
-  }
-  const handleCancel = () => {
-    setIsModalOpen(false)
-  }
-  const onFinish = (values) => {
-    console.log('Success:', values)
-  }
-  const onFinishFailed = (errorInfo) => {
-    console.log('Failed:', errorInfo)
-  }
+  const [locationData, setLocationData] = useState([])
+  const [pageNum, setPageNum] = useState(1)
+  const [search, setSeacrh] = useState('')
+  const { data, isLoading } = useGetAdminActiveAlertsLocationQuery({
+    page: pageNum,
+    search: search,
+  })
 
-  const ClientData = (data) => {
+  useEffect(() => {
+    setLocationData(data)
+  }, [data])
+  const ClientData = ({ data }) => {
     return (
       <section className={classes.ActiveAlert__ActiveAlertClient}>
         <div className={classes.ActiveAlert__ModalContentInit}>
           <div>
-            {' '}
-            <span>{data?.data.fname[0]}</span>
-            <span>{data?.data.lname[0]}</span>
+            <span>{data?.client_name[0]}</span>
+            <span>{data?.client_name[0]}</span>
           </div>
         </div>
         <div>
-          <p>{data?.data.username}</p>
-          <span>{data?.data.email}</span>
+          <p>{data?.client_name}</p>
+          <span>{data?.client_email}</span>
         </div>
       </section>
     )
   }
   const columns = [
     {
-      key: '1',
+      key: 'id',
       title: 'Client',
-      dataIndex: 'info',
-      render: (data) => <ClientData data={data} />,
+      dataIndex: ['id', 'client_name'],
+      render: (data, record) => <ClientData data={record} />,
     },
     {
-      key: '2',
+      key: 'device_name',
       title: 'SHS',
-      dataIndex: 'shs',
+      dataIndex: 'device_name',
       render: (data) => (
         <span
           style={{
             color: 'black',
           }}
         >
-          {data[0]?.name}
+          {data}
         </span>
       ),
     },
     {
-      key: '3',
+      key: 'address',
       title: 'Location Address',
-      dataIndex: 'shs',
+      dataIndex: 'address',
       render: (data) => (
         <span
           style={{
             color: 'black',
           }}
         >
-          {data[0]?.location}
+          {data}
         </span>
       ),
     },
   ]
-
-  const handleChange = (value) => {
-    console.log(`selected ${value}`)
-  }
 
   const ativeAlertTableTitle = () => (
     <div className={classes.ActiveAlert__ActiveAlertTableHeader}>
@@ -132,7 +122,8 @@ const LocationAlerts = () => {
             <ActiveAlertTable
               title={ativeAlertTableTitle}
               columns={columns}
-              dataSource={activeAlertdata}
+              dataSource={locationData}
+              setPageNum={setPageNum}
             />
           </section>
         </section>

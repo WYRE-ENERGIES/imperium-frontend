@@ -8,13 +8,11 @@ import {
   useCreateAdminActiveAlertsMutation,
 } from '../../../features/slices/activeAlerts/admin/adminActiveAlertSlice'
 import { MdFilterList } from 'react-icons/md'
-import TableFooter from '../../../components/TableFooter/TableFooter'
 import {
   BsArrowsMove,
   BsArrowUp,
   BsBell,
   BsBellSlash,
-  BsEyeSlash,
   BsHouse,
   BsPlus,
   BsThreeDots,
@@ -52,7 +50,6 @@ const ActiveAlertDetails = (data) => {
   const handleCancel = () => {
     setIsModalOpen(false)
   }
-  const handleChange = (value) => {}
 
   return (
     <div>
@@ -61,7 +58,6 @@ const ActiveAlertDetails = (data) => {
       </div>
       <Modal
         open={isModalOpen}
-        onOk={handleOk}
         onCancel={handleCancel}
         className={classes.ActiveAlert__ActiveAlertNotificationListModal}
         width={400}
@@ -98,7 +94,6 @@ const ActiveAlertDetails = (data) => {
                       border: 'none',
                       color: 'white',
                     }}
-                    onChange={handleChange}
                     dropdownStyle={{ background: 'white', width: '20px' }}
                     showArrow={true}
                   />
@@ -211,6 +206,7 @@ const ActiveAlert = () => {
       page: pageNum,
       search: searchactiveAlerts,
     })
+
   const {
     data: activeAlertsAnalytics,
     isLoading: isLoadingactiveAlertsAnalytics,
@@ -226,7 +222,7 @@ const ActiveAlert = () => {
     useCreateAdminActiveAlertsMutation()
 
   useEffect(() => {
-    setActiveAlertData(activeAlerts?.results)
+    setActiveAlertData(activeAlerts)
     setActiveAlertDataAnalytics(activeAlertsAnalytics)
     setActiveAlertDataTable(activeAlertsTable)
     setActiveAlertDataStatistics(activeAlertsStatistics)
@@ -256,7 +252,6 @@ const ActiveAlert = () => {
       }}
     />
   )
-  const handleChange = (value) => {}
 
   const ativeAlertTableTitle = () => (
     <div className={classes.ActiveAlert__ActiveAlertTableHeader}>
@@ -284,7 +279,6 @@ const ActiveAlert = () => {
                 border: 'none',
                 color: 'white',
               }}
-              onChange={handleChange}
               options={[
                 {
                   value: 'Months',
@@ -324,7 +318,7 @@ const ActiveAlert = () => {
     </div>
   )
 
-  const onFinish = async (values) => {
+  const handleCreateAlert = async (values) => {
     try {
       await createAdminActiveAlerts(values)
       setIsModalOpen(false)
@@ -340,7 +334,6 @@ const ActiveAlert = () => {
       }
     }
   }
-  const onFinishFailed = (errorInfo) => {}
 
   return (
     <AdminPageLayout>
@@ -361,10 +354,28 @@ const ActiveAlert = () => {
               </h1>
             </div>
             <div className={classes.ActiveAlert__WidgetGraphOne}>
-              <img src={alertCreated} alt="alertCreated" />
+
+              <img src={alertCreated} alt="alert created" />
+
             </div>
           </div>
           <div className={classes.ActiveAlert__WidgetRightContent}>
+            <div className={classes.ActiveAlert__WidgetRight}>
+              <div className={classes.ActiveAlert__WidgetIcon}>
+                <BsBellSlash color={'#497A38'} size={15} />
+              </div>
+              <div className={classes.ActiveAlert__WidgetText}>
+                <p>Total number of resolved alert</p>
+                <div className={classes.ActiveAlert__WidgetVal}>
+                  <h1 className={classes.ActiveAlert__WidgetValue}>
+                    {activeAlertsDataAnalytics?.total_unresolved_alerts}
+                  </h1>
+                  <div className={classes.ActiveAlert__WidgetGraphTwo}>
+                    <img src={alertResolved} alt="" srcSet="" />
+                  </div>
+                </div>
+              </div>
+            </div>
             <div className={classes.ActiveAlert__WidgetCenter}>
               <div className={classes.ActiveAlert__WidgetIcon}>
                 <BsArrowsMove color={'#497A38'} size={15} />
@@ -377,7 +388,10 @@ const ActiveAlert = () => {
               </div>
               <div className={classes.ActiveAlert__WidgetExtra}>
                 <div>
-                  <BsEyeSlash color={'#292D32'} size={15} />
+                  <Link to={'/admin/active-alerts/location-alerts'}>
+                    {' '}
+                    <BsThreeDots color={'#292D32'} size={15} />
+                  </Link>
                 </div>
                 <div>
                   <Tag
@@ -397,6 +411,7 @@ const ActiveAlert = () => {
                 </div>
               </div>
             </div>
+
             <div className={classes.ActiveAlert__WidgetRight}>
               <div className={classes.ActiveAlert__WidgetIcon}>
                 <BsBellSlash color={'#497A38'} size={15} />
@@ -413,6 +428,7 @@ const ActiveAlert = () => {
                 </div>
               </div>
             </div>
+
           </div>
         </section>
         <section className={classes.ActiveAlert__ActiveAlertSection}>
@@ -473,8 +489,7 @@ const ActiveAlert = () => {
                           initialValues={{
                             remember: false,
                           }}
-                          onFinish={onFinish}
-                          onFinishFailed={onFinishFailed}
+                          onFinish={handleCreateAlert}
                           autoComplete="off"
                           layout="horizontal"
                           requiredMark="optional"
@@ -534,9 +549,10 @@ const ActiveAlert = () => {
                 </Modal>
               </div>
             </div>
+
             <div className={classes.ActiveAlert__ActiveAlertNotificationList}>
-              {activeAlertsData
-                ? activeAlertsData.slice(0, 3).map((alert, key) => (
+              {activeAlertsData?.results
+                ? activeAlertsData?.results.slice(0, 3).map((alert, key) => (
                     <div key={key}>
                       <span>
                         <BsThreeDots />
@@ -582,7 +598,6 @@ const ActiveAlert = () => {
                       border: 'none',
                       color: 'white',
                     }}
-                    onChange={handleChange}
                     options={[
                       {
                         value: 'Last 12 Months',
