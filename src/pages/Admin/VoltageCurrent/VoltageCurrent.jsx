@@ -1,6 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { generalFilterOptions } from '../../../utils/data'
-
+import {
+  useGetAdminVoltageCurrentAnalyticsQuery,
+  useGetAdminVoltageCurrentStatisticsQuery,
+} from '../../../features/slices/VoltageCurrent/VoltageCurrent'
 import AdminPageLayout from '../../../components/Layout/AdminPageLayout/AdminPageLayout'
 import PageBreadcrumb from '../../../components/PageBreadcrumb/PageBreadcrumb'
 import Chart from 'react-apexcharts'
@@ -39,32 +42,7 @@ export const adminVoltageCurrentTableData = [
     panelEnergy: 91.19,
   },
 ]
-const adminVolatgeCurrentWidgetsData = [
-  {
-    id: 1,
-    icon: SunWidgetIcon,
-    title: 'Voltage',
-    range: 'For the year',
-    value: 284.67,
-    valueCurrency: 'V',
-  },
-  {
-    id: 2,
-    icon: SunWidgetIcon,
-    title: 'Current',
-    range: 'For the year',
-    value: 919.98,
-    valueCurrency: 'V',
-  },
-  {
-    id: 3,
-    icon: EnergyWidgetIcon,
-    title: 'Energy',
-    range: 'For the year',
-    value: 209848.71,
-    valueCurrency: 'KWh',
-  },
-]
+
 const columns = [
   {
     title: 'Date',
@@ -114,17 +92,77 @@ const prefix = (
 )
 
 const VoltageCurrent = () => {
-  const [chartData, setChartData] = useState([
-    {
-      name: 'Current',
-      data: [1400, 1800, 2000, 100, 800, 1000, 400, 600, 1200, 200, 2300, 2400],
-    },
-    {
-      name: 'Voltage',
-      data: [200, 1985, 1700, 1900, 400, 600, 700, 890, 1500, 2400, 2300, 2400],
-    },
-  ])
+  const [chartData, setChartData] = useState([])
+  const [voltageCurrentDataAnalytics, setVoltageCurrentDataAnalytics] =
+    useState(null)
+  const {
+    data: voltageCurrentDataAnaylytics,
+    isLoading: voltageCurrentDataAnaylyticsisLoading,
+  } = useGetAdminVoltageCurrentAnalyticsQuery()
+  const {
+    data: voltageCurrentDataStatistics,
+    isLoading: voltageCurrentDataStatisticsisLoading,
+  } = useGetAdminVoltageCurrentStatisticsQuery()
 
+  const DataStatistics = (data, key) => {
+    const dataList = [
+      data?.[0]?.[1],
+      data?.[0]?.[2],
+      data?.[0]?.[3],
+      data?.[0]?.[4],
+      data?.[0]?.[5],
+      data?.[0]?.[6],
+      data?.[0]?.[7],
+      data?.[0]?.[8],
+      data?.[0]?.[9],
+      data?.[0]?.[10],
+      data?.[0]?.[11],
+      data?.[0]?.[12],
+    ]
+    return dataList.map((value) => (value?.[key] !== null ? value?.[key] : 0))
+  }
+
+  useEffect(() => {
+    setVoltageCurrentDataAnalytics(voltageCurrentDataAnaylytics)
+    setChartData([
+      {
+        name: 'Current',
+        data: DataStatistics(voltageCurrentDataStatistics, 'month_current'),
+      },
+      {
+        name: 'Voltage',
+        data: DataStatistics(voltageCurrentDataStatistics, 'month_voltage'),
+      },
+    ])
+  }, [voltageCurrentDataAnaylytics, voltageCurrentDataStatistics])
+  const adminVolatgeCurrentWidgetsData = [
+    {
+      id: 1,
+      icon: SunWidgetIcon,
+      title: 'Voltage',
+      range: 'For the year',
+      value: voltageCurrentDataAnalytics?.voltage,
+      valueCurrency: 'V',
+    },
+    {
+      id: 2,
+      icon: SunWidgetIcon,
+      title: 'Current',
+      range: 'For the year',
+      value: voltageCurrentDataAnalytics?.current,
+      valueCurrency: 'V',
+    },
+    {
+      id: 3,
+      icon: EnergyWidgetIcon,
+      title: 'Energy',
+      range: 'For the year',
+      value: voltageCurrentDataAnalytics?.kw,
+      valueCurrency: 'KWh',
+    },
+  ]
+
+  console.log('chartData:', chartData)
   const widgets = adminVolatgeCurrentWidgetsData.map((widget) => (
     <Widget
       key={widget.id}
@@ -169,76 +207,80 @@ const VoltageCurrent = () => {
             paddingBottom: '20px',
           }}
         >
-          <Chart
-            height="100%"
-            options={{
-              title: {
-                text: 'Energy Consumed VS Energy Generated',
-                align: 'left',
-                margin: 50,
-                offsetX: 10,
-                offsetY: 20,
-                floating: false,
-                style: {
-                  fontSize: '18px',
-                  fontWeight: '500',
-                  fontFamily: undefined,
-                  color: '#263238',
+          {voltageCurrentDataStatisticsisLoading ? (
+            'Loading...'
+          ) : (
+            <Chart
+              height="100%"
+              options={{
+                title: {
+                  text: 'Energy Consumed VS Energy Generated',
+                  align: 'left',
+                  margin: 50,
+                  offsetX: 10,
+                  offsetY: 20,
+                  floating: false,
+                  style: {
+                    fontSize: '18px',
+                    fontWeight: '500',
+                    fontFamily: undefined,
+                    color: '#263238',
+                  },
                 },
-              },
-              legend: {
-                fontSize: '14px',
-                position: 'bottom',
-                horizontalAlign: 'center',
-              },
-              fill: {
-                opacity: 0.1,
-                gradient: {
-                  shadeIntensity: 1,
-                  inverseColors: false,
-                  opacityFrom: 0.45,
-                  opacityTo: 0.05,
-                  stops: [20, 100, 100, 100],
+                legend: {
+                  fontSize: '14px',
+                  position: 'bottom',
+                  horizontalAlign: 'center',
                 },
-              },
+                fill: {
+                  opacity: 0.1,
+                  gradient: {
+                    shadeIntensity: 1,
+                    inverseColors: false,
+                    opacityFrom: 0.45,
+                    opacityTo: 0.05,
+                    stops: [20, 100, 100, 100],
+                  },
+                },
 
-              chart: {
-                id: 'VoltageCurrent-bar',
-                fontFamily: 'baloo 2',
-                stacked: true,
-                toolbar: {
-                  show: false,
+                chart: {
+                  id: 'VoltageCurrent-bar',
+                  fontFamily: 'baloo 2',
+                  stacked: true,
+                  toolbar: {
+                    show: false,
+                  },
+                  type: 'area',
                 },
-                type: 'area',
-              },
-              stroke: {
-                curve: 'smooth',
-              },
-              colors: ['#C9E00C', '#5C9D48'],
-              xaxis: {
-                categories: [
-                  'Jan',
-                  'Feb',
-                  'Mar',
-                  'Apr',
-                  'May',
-                  'Jun',
-                  'Jul',
-                  'Aug',
-                  'Sep',
-                  'Oct',
-                  'Nov',
-                  'Dec',
-                ],
-              },
-              dataLabels: {
-                enabled: false,
-              },
-            }}
-            type="area"
-            series={chartData}
-            width="100%"
-          />
+                stroke: {
+                  curve: 'smooth',
+                },
+                colors: ['#C9E00C', '#5C9D48'],
+                xaxis: {
+                  categories: [
+                    'Jan',
+                    'Feb',
+                    'Mar',
+                    'Apr',
+                    'May',
+                    'Jun',
+                    'Jul',
+                    'Aug',
+                    'Sep',
+                    'Oct',
+                    'Nov',
+                    'Dec',
+                  ],
+                },
+                dataLabels: {
+                  enabled: false,
+                },
+              }}
+              type="area"
+              series={chartData}
+              width="100%"
+            />
+          )}
         </div>
         <div className={classes.VoltageCurrent__shsTable}>
           <SHSTableWithFilter
