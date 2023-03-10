@@ -216,7 +216,6 @@ const ActiveAlert = () => {
     isLoading: isLoadingactiveAlertsAnalytics,
   } = useGetAdminActiveAlertsAnalyticsQuery()
 
-  console.log('activeAlertsDataTable', activeAlertsDataTable)
   const {
     data: activeAlertsStatistics,
     isLoading: isLoadingactiveAlertsStatistics,
@@ -362,7 +361,7 @@ const ActiveAlert = () => {
               </h1>
             </div>
             <div className={classes.ActiveAlert__WidgetGraphOne}>
-              <img src={alertCreated} alt="" srcSet="" />
+              <img src={alertCreated} alt="alertCreated" />
             </div>
           </div>
           <div className={classes.ActiveAlert__WidgetRightContent}>
@@ -409,7 +408,7 @@ const ActiveAlert = () => {
                     {activeAlertsDataAnalytics?.total_unresolved_alerts}
                   </h1>
                   <div className={classes.ActiveAlert__WidgetGraphTwo}>
-                    <img src={alertResolved} alt="" srcSet="" />
+                    <img src={alertResolved} alt="alertResolved" />
                   </div>
                 </div>
               </div>
