@@ -3,6 +3,7 @@ import { generalFilterOptions } from '../../../utils/data'
 import {
   useGetAdminVoltageCurrentAnalyticsQuery,
   useGetAdminVoltageCurrentStatisticsQuery,
+  useGetAdminVoltageCurrentTableQuery,
 } from '../../../features/slices/VoltageCurrent/VoltageCurrent'
 import AdminPageLayout from '../../../components/Layout/AdminPageLayout/AdminPageLayout'
 import PageBreadcrumb from '../../../components/PageBreadcrumb/PageBreadcrumb'
@@ -15,72 +16,38 @@ import WidgetFilter from '../../../components/WidgetFilter/WidgetFilter'
 import classes from './VoltageCurrent.module.scss'
 import { SearchOutlined } from '@ant-design/icons'
 import { Input } from 'antd'
-
-export const adminVoltageCurrentTableData = [
-  {
-    id: 1,
-    key: 1,
-    name: 'January, 2023',
-    panelVoltage: 6.35,
-    panelCurrent: 14.36,
-    panelEnergy: 91.19,
-  },
-  {
-    id: 2,
-    key: 2,
-    name: 'January, 2023',
-    panelVoltage: 6.35,
-    panelCurrent: 14.36,
-    panelEnergy: 91.19,
-  },
-  {
-    id: 3,
-    key: 3,
-    name: 'January, 2023',
-    panelVoltage: 6.35,
-    panelCurrent: 14.36,
-    panelEnergy: 91.19,
-  },
-]
+import { DataStatistics, dateTimeConverter } from '../../../utils/helpers'
+import TableFooter from '../../../components/TableFooter/TableFooter'
 
 const columns = [
   {
     title: 'Date',
-    dataIndex: 'name',
-    key: 'name',
+    dataIndex: 'created_at',
+    key: 'created_at',
+    render: (value) => {
+      return dateTimeConverter(value)
+    },
   },
   {
     title: ' Voltage',
-    key: 'panelVoltage',
-    dataIndex: 'panelVoltage',
-    render: (value) => `${value.toLocaleString()} V`,
+    key: 'total_voltage',
+    dataIndex: 'total_voltage',
+    render: (value) => `${value} V`,
   },
 
   {
     title: ' Current',
-    key: 'panelCurrent',
-    dataIndex: 'panelCurrent',
-    render: (value) => `${value.toLocaleString()} A`,
+    key: 'total_current',
+    dataIndex: 'total_current',
+    render: (value) => `${value} A`,
   },
   {
     title: ' Energy',
-    key: 'panelEnergy',
-    dataIndex: 'panelEnergy',
-    render: (value) => `${value.toLocaleString()} W`,
+    key: 'total_kw',
+    dataIndex: 'total_kw',
+    render: (value) => `${value} W`,
   },
 ]
-const Footer = () => {
-  return (
-    <section className={classes.VoltageCurrent__Footer}>
-      <div className={classes.VoltageCurrent__NavBtn}>
-        {' '}
-        <button>Previous</button>
-        <button>Next</button>
-      </div>
-      <div className={classes.VoltageCurrent__Pagination}>Page 1 of 10</div>
-    </section>
-  )
-}
 
 const prefix = (
   <SearchOutlined
@@ -95,35 +62,26 @@ const VoltageCurrent = () => {
   const [chartData, setChartData] = useState([])
   const [voltageCurrentDataAnalytics, setVoltageCurrentDataAnalytics] =
     useState(null)
+  const [pageNum, setPageNum] = useState(1)
+  const [search, setSearch] = useState('')
+  const [voltageCurrentDataTable, setvoltageCurrentDataTable] = useState([])
   const {
     data: voltageCurrentDataAnaylytics,
     isLoading: voltageCurrentDataAnaylyticsisLoading,
-  } = useGetAdminVoltageCurrentAnalyticsQuery()
+  } = useGetAdminVoltageCurrentAnalyticsQuery({})
   const {
     data: voltageCurrentDataStatistics,
     isLoading: voltageCurrentDataStatisticsisLoading,
   } = useGetAdminVoltageCurrentStatisticsQuery()
-
-  const DataStatistics = (data, key) => {
-    const dataList = [
-      data?.[0]?.[1],
-      data?.[0]?.[2],
-      data?.[0]?.[3],
-      data?.[0]?.[4],
-      data?.[0]?.[5],
-      data?.[0]?.[6],
-      data?.[0]?.[7],
-      data?.[0]?.[8],
-      data?.[0]?.[9],
-      data?.[0]?.[10],
-      data?.[0]?.[11],
-      data?.[0]?.[12],
-    ]
-    return dataList.map((value) => (value?.[key] !== null ? value?.[key] : 0))
-  }
+  const {
+    data: voltageCurrentData,
+    isLoading: voltageCurrentDataTableisLoading,
+  } = useGetAdminVoltageCurrentTableQuery({ page: pageNum, search: search })
 
   useEffect(() => {
     setVoltageCurrentDataAnalytics(voltageCurrentDataAnaylytics)
+    setvoltageCurrentDataTable(voltageCurrentData)
+
     setChartData([
       {
         name: 'Current',
@@ -134,7 +92,12 @@ const VoltageCurrent = () => {
         data: DataStatistics(voltageCurrentDataStatistics, 'month_voltage'),
       },
     ])
-  }, [voltageCurrentDataAnaylytics, voltageCurrentDataStatistics])
+  }, [
+    voltageCurrentDataAnaylytics,
+    voltageCurrentData,
+    voltageCurrentDataStatistics,
+    pageNum,
+  ])
   const adminVolatgeCurrentWidgetsData = [
     {
       id: 1,
@@ -162,7 +125,6 @@ const VoltageCurrent = () => {
     },
   ]
 
-  console.log('chartData:', chartData)
   const widgets = adminVolatgeCurrentWidgetsData.map((widget) => (
     <Widget
       key={widget.id}
@@ -285,11 +247,24 @@ const VoltageCurrent = () => {
         <div className={classes.VoltageCurrent__shsTable}>
           <SHSTableWithFilter
             columns={columns}
-            data={adminVoltageCurrentTableData}
+            data={voltageCurrentData?.results}
             tableTitle="Voltage & Current Table"
             tagValue="kWh"
             filterOptions={generalFilterOptions}
-            footer={Footer}
+            footer={() => (
+              <TableFooter
+                pageNo={voltageCurrentData?.page}
+                totalPages={voltageCurrentData?.total_pages}
+                handleClick={setPageNum}
+                hasNext={
+                  voltageCurrentData?.page === voltageCurrentData?.total_pages
+                }
+                hasPrev={
+                  !voltageCurrentData?.total_pages ||
+                  voltageCurrentData?.page === 1
+                }
+              />
+            )}
           />
         </div>
       </div>

@@ -36,7 +36,7 @@ export const activerAlertsSlice = apiSlice.injectEndpoints({
         return `${BASE_URL}statistics/`
       },
       transformResponse: (response, meta, arg) => {
-        return response[0]
+        return response
       },
       transformErrorResponse: (response, meta, arg) => response.status,
     }),

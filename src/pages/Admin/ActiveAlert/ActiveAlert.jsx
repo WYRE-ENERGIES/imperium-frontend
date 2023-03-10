@@ -27,17 +27,8 @@ import { SearchOutlined, CloudDownloadOutlined } from '@ant-design/icons'
 import { Link } from 'react-router-dom'
 import ActiveAlertTable from '../../../components/ActiveAlert/Table/ActiveAlertTable'
 import { useEffect } from 'react'
+import { DataStatistics, dateTimeConverter } from '../../../utils/helpers'
 
-const dateTimeOption = {
-  timeZone: 'Africa/Accra',
-  hour12: true,
-  hour: 'numeric',
-  minute: 'numeric',
-  seconds: 'numeric',
-  year: 'numeric',
-  month: 'long',
-  day: 'numeric',
-}
 const ActiveAlertDetails = (data) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
 
@@ -109,12 +100,7 @@ const ActiveAlertDetails = (data) => {
 
             <div className={classes.ActiveAlert__ActiveAlertModalShsInfo}>
               <span>{data?.data?.active_alert}</span>
-              <span>
-                {new Date(data?.data?.time).toLocaleTimeString(
-                  'en-US',
-                  dateTimeOption,
-                )}
-              </span>
+              <span>{dateTimeConverter(data?.data?.time)}</span>
               <span>{data?.data?.status}</span>
             </div>
           </div>
@@ -167,7 +153,7 @@ const ActiveAlert = () => {
             color: 'black',
           }}
         >
-          {new Date(data).toLocaleTimeString('en-US', dateTimeOption)}
+          {dateTimeConverter(data)}
         </span>
       ),
     },
@@ -619,37 +605,11 @@ const ActiveAlert = () => {
                 series={[
                   {
                     name: 'Unresolved alert',
-                    data: [
-                      activeAlertsStatistics?.['1'].unresolved,
-                      activeAlertsStatistics?.['2'].unresolved,
-                      activeAlertsStatistics?.['3'].unresolved,
-                      activeAlertsStatistics?.['4'].unresolved,
-                      activeAlertsStatistics?.['5'].unresolved,
-                      activeAlertsStatistics?.['6'].unresolved,
-                      activeAlertsStatistics?.['7'].unresolved,
-                      activeAlertsStatistics?.['8'].unresolved,
-                      activeAlertsStatistics?.['9'].unresolved,
-                      activeAlertsStatistics?.['10'].unresolved,
-                      activeAlertsStatistics?.['11'].unresolved,
-                      activeAlertsStatistics?.['12'].unresolved,
-                    ],
+                    data: DataStatistics(activeAlertsStatistics, 'unresolved'),
                   },
                   {
                     name: 'Resolved alert',
-                    data: [
-                      activeAlertsStatistics?.['1'].resolved,
-                      activeAlertsStatistics?.['2'].resolved,
-                      activeAlertsStatistics?.['3'].resolved,
-                      activeAlertsStatistics?.['4'].resolved,
-                      activeAlertsStatistics?.['5'].resolved,
-                      activeAlertsStatistics?.['6'].resolved,
-                      activeAlertsStatistics?.['7'].resolved,
-                      activeAlertsStatistics?.['8'].resolved,
-                      activeAlertsStatistics?.['9'].resolved,
-                      activeAlertsStatistics?.['10'].resolved,
-                      activeAlertsStatistics?.['11'].resolved,
-                      activeAlertsStatistics?.['12'].resolved,
-                    ],
+                    data: DataStatistics(activeAlertsStatistics, 'resolved'),
                   },
                 ]}
                 options={{
