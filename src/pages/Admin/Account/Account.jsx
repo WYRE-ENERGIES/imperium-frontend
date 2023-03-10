@@ -16,7 +16,7 @@ const Account = ({ children, props }) => {
       <AdminPageLayout>
         <PageBreadcrumb title="My Account" items={['My Account']} />
         <div>
-          <AccountProfile AccountData={AccountData} type={props} />
+          <AccountProfile AcctInfo={AccountData} type={props} />
         </div>
         {children}
       </AdminPageLayout>

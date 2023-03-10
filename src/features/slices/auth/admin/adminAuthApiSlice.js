@@ -29,6 +29,15 @@ export const authApiSlice = apiSlice.injectEndpoints({
         }
       },
     }),
+    adminChangePassword: builder.mutation({
+      query: (credentials) => {
+        return {
+          url: '/imperium-admin/settings/change-password/',
+          method: 'PATCH',
+          body: credentials,
+        }
+      },
+    }),
   }),
 })
 
@@ -36,4 +45,5 @@ export const {
   useAdminforgotPasswordMutation,
   useAdminOtpMutation,
   useAdminNewPasswordMutation,
+  useAdminChangePasswordMutation,
 } = authApiSlice
