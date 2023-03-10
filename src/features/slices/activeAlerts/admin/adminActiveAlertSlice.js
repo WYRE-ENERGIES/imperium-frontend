@@ -58,11 +58,7 @@ export const activerAlertsSlice = apiSlice.injectEndpoints({
         return url
       },
       transformResponse: (response, meta, arg) => {
-        const results = response.results.map((locationdata) => ({
-          ...locationdata,
-          key: locationdata.id,
-        }))
-        return results
+        return response
       },
       transformErrorResponse: (response, meta, arg) => response.status,
     }),
