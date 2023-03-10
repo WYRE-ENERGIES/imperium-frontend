@@ -621,9 +621,29 @@
   }
 }
 
-// @media only screen and (max-width: 768px) {
-
-// }
+@media only screen and (max-width: 768px) {
+  .Widget:nth-child(2) {
+    padding: 10px 100px 10px 10px;
+    width: auto;
+  }
+  .ActiveAlert {
+    &__ActiveAlertTableHeader {
+      width: 100%;
+      display: block;
+      justify-content: space-between;
+      align-items: center;
+    }
+    &__WidgetSection {
+      width: auto;
+      overflow-x: scroll;
+      scrollbar-width: none; /* Firefox */
+      scroll-behavior: smooth;
+      &::-webkit-scrollbar {
+        overflow: hidden;
+      }
+    }
+  }
+}
 @media only screen and (max-width: 320px) {
   .Widget {
     margin-bottom: 10px;
@@ -694,9 +714,6 @@
     }
     &__ActiveAlertStatsFilter {
       display: none;
-    }
-    &__ActiveAlertTableHeader {
-      display: block;
     }
     &__ActiveAlertTableHeader {
       width: 100%;
