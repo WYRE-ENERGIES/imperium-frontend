@@ -340,7 +340,9 @@ const ActiveAlert = () => {
               </h1>
             </div>
             <div className={classes.ActiveAlert__WidgetGraphOne}>
+
               <img src={alertCreated} alt="alert created" />
+
             </div>
           </div>
           <div className={classes.ActiveAlert__WidgetRightContent}>
@@ -395,6 +397,24 @@ const ActiveAlert = () => {
                 </div>
               </div>
             </div>
+
+            <div className={classes.ActiveAlert__WidgetRight}>
+              <div className={classes.ActiveAlert__WidgetIcon}>
+                <BsBellSlash color={'#497A38'} size={15} />
+              </div>
+              <div className={classes.ActiveAlert__WidgetText}>
+                <p>Total number of resolved alert</p>
+                <div className={classes.ActiveAlert__WidgetVal}>
+                  <h1 className={classes.ActiveAlert__WidgetValue}>
+                    {activeAlertsDataAnalytics?.total_unresolved_alerts}
+                  </h1>
+                  <div className={classes.ActiveAlert__WidgetGraphTwo}>
+                    <img src={alertResolved} alt="alertResolved" />
+                  </div>
+                </div>
+              </div>
+            </div>
+
           </div>
         </section>
         <section className={classes.ActiveAlert__ActiveAlertSection}>
