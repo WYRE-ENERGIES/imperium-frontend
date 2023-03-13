@@ -1,15 +1,50 @@
-import { Col, Form, Input, Row } from 'antd'
-import React from 'react'
+import { Col, Form, Input, Row, notification } from 'antd'
+import React, { useState } from 'react'
+
 import FormButton from '../../../../components/Auth/Forms/Widgets/FormButton'
 import classes from './AccountPassword.module.scss'
 import Account from '../Account'
 import PasswordKeyIcon from '../../../../assets/Auth/passwordIcon.svg'
+import { useAdminChangePasswordMutation } from '../../../../features/slices/auth/admin/adminAuthApiSlice'
+import { useNavigate } from 'react-router-dom'
 
 const AccountPassword = () => {
+  const [errMsg, setErrMsg] = useState('')
   const [form] = Form.useForm()
+  const navigate = useNavigate()
+  const openNotification = () => {
+    notification.success({
+      message: 'Successful',
+      description: `Password reset successful`,
+    })
+  }
+  const [adminChangePassword, { isLoading }] = useAdminChangePasswordMutation()
 
-  const onFinish = (values) => {
-    console.log('Finish:', values)
+  const onFinish = async (values) => {
+    setErrMsg('')
+    if (values.new_password !== values.confirm_password) {
+      setErrMsg('New passwords do not match!')
+    } else {
+      try {
+        await adminChangePassword({
+          old_password: values.old_password,
+          new_password: values.new_password,
+          confirm_password: values.confirm_password,
+        }).unwrap()
+        openNotification()
+        navigate('/admin/account')
+      } catch (err) {
+        if (err.status === 401) {
+          setErrMsg(err?.data?.message)
+        } else if (err.status === 400) {
+          setErrMsg(err?.data?.message)
+        } else if (err.status === 500) {
+          setErrMsg('Server could not be reached. Try later!')
+        } else {
+          setErrMsg('Check your internet connection')
+        }
+      }
+    }
   }
   return (
     <Account props={'admin-password'}>
@@ -21,6 +56,9 @@ const AccountPassword = () => {
           onFinish={onFinish}
           requiredMark="optional"
         >
+          {errMsg && (
+            <small className={classes.AccountPassword__Message}>{errMsg}</small>
+          )}
           <Row justify={'space-between'} gutter={20}>
             <Col span={8}>
               {' '}
@@ -36,7 +74,7 @@ const AccountPassword = () => {
                     Old Password
                   </p>
                 }
-                name="old-password"
+                name="old_password"
                 style={{ marginTop: '-1rem' }}
                 required
               >
@@ -64,7 +102,7 @@ const AccountPassword = () => {
                     Password
                   </p>
                 }
-                name="new-password"
+                name="new_password"
                 style={{ marginTop: '-1rem' }}
                 required
               >
@@ -91,7 +129,7 @@ const AccountPassword = () => {
                     Confirm Password
                   </p>
                 }
-                name="confirm-password"
+                name="confirm_password"
                 style={{ marginTop: '-1rem' }}
                 required
               >
@@ -110,7 +148,11 @@ const AccountPassword = () => {
           <Form.Item>
             <Row justify={'end'} gutter={20}>
               <Col span={8}>
-                <FormButton type={'submit'} action={'Save changes'} />
+                <FormButton
+                  type={'submit'}
+                  action={'Save changes'}
+                  isLoading={isLoading}
+                />
               </Col>
             </Row>
           </Form.Item>

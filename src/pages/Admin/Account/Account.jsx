@@ -5,18 +5,12 @@ import { React } from 'react'
 import classes from './Account.module.scss'
 
 const Account = ({ children, props }) => {
-  const AccountData = {
-    firstName: 'John',
-    lastName: 'Kahan',
-    email: 'JonniKahan@gmail.com',
-  }
-
   return (
     <div className={classes.Account}>
       <AdminPageLayout>
         <PageBreadcrumb title="My Account" items={['My Account']} />
         <div>
-          <AccountProfile AccountData={AccountData} type={props} />
+          <AccountProfile type={props} />
         </div>
         {children}
       </AdminPageLayout>

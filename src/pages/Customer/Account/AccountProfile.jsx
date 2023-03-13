@@ -3,17 +3,13 @@ import { Row, Col } from 'antd'
 import classes from './Account.module.scss'
 import { message, Form, Upload } from 'antd'
 import uploadImg from '../../../assets/widget-icons/bussinessuploadIcon.svg'
-const AccountInfo = ({ AcctInfo, type }) => {
-  const { firstName, lastName, email } = AcctInfo
-  const firstNameInit = firstName[0]
-  const lastNameInit = lastName[0]
+import { getItemFromLocalStorage } from '../../../utils/helpers'
+const AccountInfo = ({ type }) => {
+  const { id, first_name, last_name, email, phone_number } =
+    getItemFromLocalStorage('userInfo')
+
   const [fileUpload, setFileUpload] = useState(false)
-  const onFinish = (values) => {
-    console.log('Success:', values)
-  }
-  const onFinishFailed = (errorInfo) => {
-    console.log('Failed:', errorInfo)
-  }
+
   const normFile = (e) => {
     console.log('Upload event:', e)
     if (Array.isArray(e)) {
@@ -95,8 +91,8 @@ const AccountInfo = ({ AcctInfo, type }) => {
           ) : (
             <div className={classes.AccountInfo__Init}>
               <p>
-                {firstNameInit}
-                {lastNameInit}
+                {first_name[0]}
+                {last_name[0]}
               </p>
             </div>
           )}
@@ -106,7 +102,7 @@ const AccountInfo = ({ AcctInfo, type }) => {
             {' '}
             <div>
               <p>
-                {firstName} {lastName}
+                {first_name} {last_name}
               </p>
               <p>{email}</p>
             </div>
