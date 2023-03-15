@@ -1,6 +1,10 @@
 import { Button, Form, Input, Modal, Select, Typography } from 'antd'
 import React, { useState } from 'react'
 import { ToastContainer, toast } from 'react-toastify'
+import {
+  useActivateCustomerMutation,
+  useDeactivateReasonsQuery,
+} from '../../../../features/slices/customersSlice'
 
 import { ReactComponent as DisableTicketIcon } from '../../../../assets/widget-icons/disable-caution-icon.svg'
 import { ReactComponent as TicketIcon } from '../../../../assets/widget-icons/caution-icon.svg'
@@ -18,7 +22,7 @@ const layout = {
   },
 }
 
-const ActivateContent = ({ user, toggleModal, toggleForm }) => {
+const ActivateContent = ({ user, toggleModal, toggleForm, onProceed }) => {
   const title = !user.status ? 'Activate Client' : 'Disabled Client'
   const TIcon = !user.status ? TicketIcon : DisableTicketIcon
 
@@ -61,14 +65,30 @@ const ActivateContent = ({ user, toggleModal, toggleForm }) => {
   )
 }
 
-const DisableClientForm = ({ user, toggleModal }) => {
+const DisableClientForm = ({ user, toggleModal, onProceed }) => {
   const [form] = Form.useForm()
   const onFinish = (values) => {
-    toast.success('User Added', {
+    toast.success('Disabled', {
       hideProgressBar: true,
       autoClose: 3000,
       theme: 'colored',
     })
+  }
+
+  const {
+    isError,
+    error: tableError,
+    data,
+    isFetching,
+  } = useDeactivateReasonsQuery({})
+
+  let reasons = []
+  if (!isFetching) {
+    reasons = data.map(({ id, reason }) => (
+      <Option key={id} value={reason}>
+        {reason}
+      </Option>
+    ))
   }
 
   return (
@@ -120,13 +140,7 @@ const DisableClientForm = ({ user, toggleModal }) => {
             onChange={() => {}}
             allowClear
           >
-            <Option value="Payment">Payment</Option>
-            <Option value="Location">Location</Option>
-            <Option value="Suspicious activity">Suspicious activity</Option>
-            <Option value="Device malfunction">Device malfunction</Option>
-            <Option value="Inconsistent data post">
-              Inconsistent data post
-            </Option>
+            {reasons}
           </Select>
         </Form.Item>
         <Form.Item
@@ -168,9 +182,11 @@ const DisableClientForm = ({ user, toggleModal }) => {
 }
 
 const ActivateCustomer = ({ user, isOpen, toggleModal }) => {
-  console.log(user)
   const [showForm, setShowForm] = useState(false)
   const toggleForm = () => setShowForm(!showForm)
+
+  const [activateCustomer, { isLoading, isSuccess }] =
+    useActivateCustomerMutation()
 
   return (
     <Modal
@@ -182,12 +198,17 @@ const ActivateCustomer = ({ user, isOpen, toggleModal }) => {
       footer={null}
     >
       {showForm ? (
-        <DisableClientForm toggleModal={toggleModal} user={user} />
+        <DisableClientForm
+          toggleModal={toggleModal}
+          user={user}
+          onProceed={activateCustomer}
+        />
       ) : (
         <ActivateContent
           toggleModal={toggleModal}
           user={user}
           toggleForm={toggleForm}
+          onProceed={activateCustomer}
         />
       )}
     </Modal>

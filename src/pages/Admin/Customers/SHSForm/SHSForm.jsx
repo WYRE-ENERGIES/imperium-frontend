@@ -180,20 +180,20 @@ const AddSHSForm = ({ toggleModal }) => {
             rules={[
               {
                 required: true,
-                message: `Unique Equipment Identifier is required ${index + 1}`,
+                message: `Unique Equipment Identifier is required`,
               },
             ]}
             key={input}
           >
             <Input
-              placeholder={`Enter your unique identifier ${index + 1}`}
+              placeholder={`Enter your unique identifier`}
               className={classes.AddSHSForm__input}
             />
           </Form.Item>
         ))}
       </Form.Item>
 
-      <Text
+      {/* <Text
         style={{
           fontSize: '12px',
           margin: '0',
@@ -205,7 +205,7 @@ const AddSHSForm = ({ toggleModal }) => {
         onClick={addNewInput}
       >
         <PlusOutlined /> Add
-      </Text>
+      </Text> */}
 
       <div className={classes.AddSHSForm__btn}>
         <Button

@@ -51,6 +51,17 @@ export const customerApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ['Customers'],
     }),
+    deactivateReasons: builder.query({
+      query: () => ({ url: '/imperium-admin/shs/deactivate-reasons' }),
+    }),
+    toggleActivateShs: builder.mutation({
+      query: (data) => ({
+        url: `/imperium-admin/shs/deactivate/`,
+        method: 'PUT',
+        body: data,
+      }),
+      invalidatesTags: ['Customers', 'CustomersAnalytics'],
+    }),
   }),
 })
 
@@ -60,4 +71,5 @@ export const {
   useGetCustomerPageStatisticsQuery,
   useActivateCustomerMutation,
   useAssignShsMutation,
+  useDeactivateReasonsQuery,
 } = customerApiSlice
