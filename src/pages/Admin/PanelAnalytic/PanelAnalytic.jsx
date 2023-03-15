@@ -1,20 +1,47 @@
+import React, { useState } from 'react'
+import { generalFilterOptions, panelColumns } from '../../../utils/data'
 import {
-  generalFilterOptions,
-  panelColumns,
-  panelData,
-} from '../../../utils/data'
+  useGetPanelPageAnalyticsQuery,
+  useGetPanelTableDataQuery,
+} from '../../../features/slices/panelSlice'
 
 import AdminPageLayout from '../../../components/Layout/AdminPageLayout/AdminPageLayout'
 import PageBreadcrumb from '../../../components/PageBreadcrumb/PageBreadcrumb'
 import PanelTable from '../../../components/SHSTableWithFilter/SHSTableWithFilter'
 import PanelWidgets from '../../../components/Widget/Panel/Panel'
-import React from 'react'
+import TableFooter from '../../../components/TableFooter/TableFooter'
 import WidgetFilter from '../../../components/WidgetFilter/WidgetFilter'
 import classes from '../../Customer/PanelAnalytic/PanelAnalytic.module.scss'
+import useDebounce from '../../../hooks/useDebounce'
 import useWeather from '../../../hooks/useWeather'
 
 const PanelAnalytic = () => {
   const [coord, weatherResult, isLoading, error] = useWeather()
+
+  const [search, setSearch] = useState('')
+  const [page, setPage] = useState(1)
+  const [globalFilter, setGlobalFilter] = useState('yearly')
+
+  const handleSearch = (e) => setSearch(e.target.value)
+  const debounceValue = useDebounce(search, 1000)
+
+  const {
+    isError,
+    error: tableError,
+    data,
+    isFetching,
+  } = useGetPanelTableDataQuery({
+    page,
+    search: debounceValue,
+    filterBy: globalFilter,
+  })
+
+  const {
+    isFetching: isAnalyticsFetching,
+    isError: isAnalyticsError,
+    error: analyticsError,
+    data: analyticsData,
+  } = useGetPanelPageAnalyticsQuery({ filterBy: globalFilter })
 
   return (
     <AdminPageLayout>
@@ -26,19 +53,37 @@ const PanelAnalytic = () => {
           <PageBreadcrumb title="Panel Analytic" items={['Panel Analytic']} />
         </section>
         <section className={classes.PanelAnalytic__filters}>
-          <WidgetFilter />
+          <WidgetFilter
+            selectFilterBy={(value) => setGlobalFilter(value)}
+            filterBy={globalFilter}
+          />
         </section>
         <div className={classes.PanelAnalytic__widgets}>
-          <PanelWidgets totalPanel={8} />
+          <PanelWidgets
+            totalPanel={8}
+            data={analyticsData}
+            isLoading={isAnalyticsFetching}
+          />
         </div>
         <div className={classes.PanelAnalytic__shsTable}>
           <PanelTable
             columns={panelColumns}
-            data={panelData}
+            data={data?.results}
             tableTitle="Panel Table"
             tagValue="kWh"
-            filterOptions={generalFilterOptions}
+            filterOptions={[]}
             isAdmin={true}
+            handleSearch={handleSearch}
+            isLoading={isFetching}
+            footer={() => (
+              <TableFooter
+                pageNo={data?.page}
+                totalPages={data?.total_pages}
+                handleClick={setPage}
+                hasNext={data?.page === data?.total_pages}
+                hasPrev={!data?.total_pages || data?.page === 1}
+              />
+            )}
           />
         </div>
       </div>

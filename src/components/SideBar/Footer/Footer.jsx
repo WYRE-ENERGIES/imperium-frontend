@@ -34,7 +34,10 @@ const Footer = ({ userName, toggleActivateShsModal, isAdmin }) => {
           onClick={toggleActivateShsModal}
         />
       ) : null}
-      <MdLogout style={{ cursor: 'pointer' }} onClick={onLogout} />
+      <MdLogout
+        style={{ cursor: 'pointer', color: 'red' }}
+        onClick={onLogout}
+      />
     </div>
   )
 }

@@ -1,20 +1,59 @@
 import { Col, Row } from 'antd'
 
+import { ReactComponent as BentArrowWidgetIcon } from '../../../assets/widget-icons/bent-arrow.svg'
+import { ReactComponent as EnergyWidgetIcon } from '../../../assets/widget-icons/energy-icon.svg'
 import React from 'react'
+import { ReactComponent as SEnergyWidgetIcon } from '../../../assets/widget-icons/cancel-energy-con.svg'
+import { ReactComponent as SunWidgetIcon } from '../../../assets/widget-icons/sun.svg'
 import Widget from '../Widget/Widget'
 import classes from './panel.module.scss'
-import { panelWidgetsData } from '../../../utils/data'
 
-const PanelWidgets = ({ totalPanel }) => {
-  const widgets = panelWidgetsData.map((data, index) => (
-    <Widget
-      key={index}
-      title={data.title}
-      Icon={data.icon}
-      value={data.value}
-      valueCurrency={data.valueCurrency}
-    />
-  ))
+const PanelWidgets = ({ totalPanel, data, isLoading }) => {
+  let widgets = []
+  if (!isLoading) {
+    widgets = [
+      {
+        id: 1,
+        icon: EnergyWidgetIcon,
+        title: 'Panel Total Energy',
+        range: 'For the year',
+        value: parseFloat(data?.panel_total_energy?.toFixed(1)) || 0,
+        valueCurrency: 'WH',
+      },
+      {
+        id: 2,
+        icon: BentArrowWidgetIcon,
+        title: 'Panel Voltage',
+        range: 'For the year',
+        value: parseFloat(data?.panel_voltage?.toFixed(1)) || 0,
+        valueCurrency: 'V',
+      },
+      {
+        id: 1,
+        icon: SEnergyWidgetIcon,
+        title: 'Panel Total Power',
+        range: 'For the year',
+        value: parseFloat(data?.panel_total_power?.toFixed(1)) || 0,
+        valueCurrency: 'W',
+      },
+      {
+        id: 1,
+        icon: SunWidgetIcon,
+        title: 'Panel Current',
+        range: 'For the year',
+        value: parseFloat(data?.panel_current?.toFixed(1)) || 0,
+        valueCurrency: 'A',
+      },
+    ].map((data, index) => (
+      <Widget
+        key={index}
+        title={data.title}
+        Icon={data.icon}
+        value={data.value}
+        valueCurrency={data.valueCurrency}
+      />
+    ))
+  }
 
   return (
     <div className={classes.Panel}>

@@ -255,33 +255,34 @@ export const batteryTableData = [
 
 export const panelColumns = [
   {
-    title: 'Monthly',
-    dataIndex: 'name',
-    key: 'name',
+    title: 'Date',
+    dataIndex: 'date',
+    key: 'date',
+    render: (val) => (val ? new Date(val).toLocaleDateString() : ''),
   },
   {
     title: 'Panel Voltage',
-    key: 'panelVoltage',
-    dataIndex: 'panelVoltage',
-    render: (value) => `${value.toLocaleString()} V`,
+    key: 'total_panel_voltage',
+    dataIndex: 'total_panel_voltage',
+    render: (value) => `${parseFloat(value.toLocaleString()).toFixed(1)} V`,
   },
   {
     title: 'Panel Current',
-    key: 'panelCurrent',
-    dataIndex: 'panelCurrent',
-    render: (value) => `${value.toLocaleString()} A`,
+    key: 'total_panel_current',
+    dataIndex: 'total_panel_current',
+    render: (value) => `${parseFloat(value.toLocaleString()).toFixed(1)} A`,
   },
   {
     title: 'Panel Power',
-    key: 'panelPower',
-    dataIndex: 'panelPower',
-    render: (value) => `${value.toLocaleString()} W`,
+    key: 'total_panel_power',
+    dataIndex: 'total_panel_power',
+    render: (value) => `${parseFloat(value.toLocaleString()).toFixed(1)} W`,
   },
   {
     title: 'Panel Total Energy',
-    key: 'panelTotalEnergy',
-    dataIndex: 'panelTotalEnergy',
-    render: (value) => `${value.toLocaleString()} WH`,
+    key: 'total_panel_energy',
+    dataIndex: 'total_panel_energy',
+    render: (value) => `${parseFloat(value.toLocaleString()).toFixed(1)} WH`,
   },
 ]
 
