@@ -28,7 +28,7 @@
 
   &__LoginForm {
     width: 300px;
-    margin-top: -8%;
+    margin-top: -4%;
   }
   &__Input {
     font-size: 15px !important;
@@ -85,7 +85,7 @@
   }
 }
 @media only screen and (max-width: 768px) {
-  .AdminSignPage {
+  .AdminSignUpPage {
     &__RightLayOut {
       display: none;
     }
@@ -97,6 +97,13 @@
     &__LoginForm {
       width: 100%;
       margin-top: 1%;
+    }
+  }
+}
+@media only screen and (max-width: 320px) {
+  .AdminSignUpPage {
+    &__RightLayOut {
+      display: none;
     }
   }
 }
