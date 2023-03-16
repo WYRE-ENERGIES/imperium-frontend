@@ -5,8 +5,8 @@ const BASE_URL = 'imperium-admin/list-voltage/'
 export const voltageCurrentSlice = apiSlice.injectEndpoints({
   endpoints: (build) => ({
     getAdminVoltageCurrentAnalytics: build.query({
-      query: () => {
-        return `${BASE_URL}analytics/`
+      query: ({ filter }) => {
+        return `${BASE_URL}analytics/?order_by=${filter}`
       },
       transformResponse: (response, meta, arg) => {
         return response

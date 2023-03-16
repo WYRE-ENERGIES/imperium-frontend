@@ -60,51 +60,45 @@ const prefix = (
 
 const VoltageCurrent = () => {
   const [chartData, setChartData] = useState([])
-  const [voltageCurrentDataAnalytics, setVoltageCurrentDataAnalytics] =
-    useState(null)
+  const [filter, setFilter] = useState('yearly')
+  const [analytics, setAnalytics] = useState(null)
+  const [statistics, setStatistics] = useState(null)
   const [pageNum, setPageNum] = useState(1)
   const [search, setSearch] = useState('')
-  const [voltageCurrentDataTable, setvoltageCurrentDataTable] = useState([])
+  const [table, setTable] = useState([])
+  const { data: dataAnalytics, isLoading: DataAnaylyticsisLoading } =
+    useGetAdminVoltageCurrentAnalyticsQuery({ filter: filter })
+
   const {
-    data: voltageCurrentDataAnaylytics,
-    isLoading: voltageCurrentDataAnaylyticsisLoading,
-  } = useGetAdminVoltageCurrentAnalyticsQuery({})
-  const {
-    data: voltageCurrentDataStatistics,
+    data: dataStatistics,
     isLoading: voltageCurrentDataStatisticsisLoading,
   } = useGetAdminVoltageCurrentStatisticsQuery()
-  const {
-    data: voltageCurrentData,
-    isLoading: voltageCurrentDataTableisLoading,
-  } = useGetAdminVoltageCurrentTableQuery({ page: pageNum, search: search })
+  console.log(dataStatistics)
+  const { data: dataTable, isLoading: voltageCurrentDataTableisLoading } =
+    useGetAdminVoltageCurrentTableQuery({ page: pageNum, search: search })
 
   useEffect(() => {
-    setVoltageCurrentDataAnalytics(voltageCurrentDataAnaylytics)
-    setvoltageCurrentDataTable(voltageCurrentData)
-
+    setAnalytics(dataAnalytics)
+    setTable(dataTable)
+    setStatistics(dataStatistics)
     setChartData([
       {
         name: 'Current',
-        data: DataStatistics(voltageCurrentDataStatistics, 'month_current'),
+        data: DataStatistics(statistics, 'month_current'),
       },
       {
         name: 'Voltage',
-        data: DataStatistics(voltageCurrentDataStatistics, 'month_voltage'),
+        data: DataStatistics(statistics, 'month_voltage'),
       },
     ])
-  }, [
-    voltageCurrentDataAnaylytics,
-    voltageCurrentData,
-    voltageCurrentDataStatistics,
-    pageNum,
-  ])
+  }, [dataAnalytics, dataTable, dataStatistics, pageNum])
   const adminVolatgeCurrentWidgetsData = [
     {
       id: 1,
       icon: SunWidgetIcon,
       title: 'Voltage',
       range: 'For the year',
-      value: voltageCurrentDataAnalytics?.voltage,
+      value: analytics?.voltage || 0,
       valueCurrency: 'V',
     },
     {
@@ -112,7 +106,7 @@ const VoltageCurrent = () => {
       icon: SunWidgetIcon,
       title: 'Current',
       range: 'For the year',
-      value: voltageCurrentDataAnalytics?.current,
+      value: analytics?.current || 0,
       valueCurrency: 'V',
     },
     {
@@ -120,7 +114,7 @@ const VoltageCurrent = () => {
       icon: EnergyWidgetIcon,
       title: 'Energy',
       range: 'For the year',
-      value: voltageCurrentDataAnalytics?.kw,
+      value: analytics?.kw || 0,
       valueCurrency: 'KWh',
     },
   ]
@@ -150,7 +144,10 @@ const VoltageCurrent = () => {
           />
         </section>
         <section className={classes.VoltageCurrent__filters}>
-          <WidgetFilter />
+          <WidgetFilter
+            selectFilterBy={(value) => setFilter(value)}
+            filterBy={filter}
+          />
         </section>
         <section>
           <Input
@@ -247,22 +244,17 @@ const VoltageCurrent = () => {
         <div className={classes.VoltageCurrent__shsTable}>
           <SHSTableWithFilter
             columns={columns}
-            data={voltageCurrentData?.results}
+            data={table?.results}
             tableTitle="Voltage & Current Table"
             tagValue="kWh"
             filterOptions={generalFilterOptions}
             footer={() => (
               <TableFooter
-                pageNo={voltageCurrentData?.page}
-                totalPages={voltageCurrentData?.total_pages}
+                pageNo={table?.page}
+                totalPages={table?.total_pages}
                 handleClick={setPageNum}
-                hasNext={
-                  voltageCurrentData?.page === voltageCurrentData?.total_pages
-                }
-                hasPrev={
-                  !voltageCurrentData?.total_pages ||
-                  voltageCurrentData?.page === 1
-                }
+                hasNext={table?.page === table?.total_pages}
+                hasPrev={!table?.total_pages || table?.page === 1}
               />
             )}
           />
