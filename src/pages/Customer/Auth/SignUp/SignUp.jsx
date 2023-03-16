@@ -34,7 +34,7 @@ const SignUp = () => {
       await customerRegister({
         credentials: values,
       }).unwrap()
-      navigate('/')
+      navigate('/verification', { state: { email: values?.email } })
     } catch (err) {
       if (err.status === 401) {
         setErrMsg(err?.data?.detail)
@@ -71,7 +71,7 @@ const SignUp = () => {
             </div>
             <div>
               <Form
-                name="admin-login"
+                name="customer-login"
                 labelCol={8}
                 wrapperCol={32}
                 initialValues={{

@@ -1,17 +1,20 @@
+import React, { useState } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
+
 import '../../../../components/Auth/Forms/global.module.scss'
+import { Row, Form, Input } from 'antd'
 
-import { Row } from 'antd'
-import React from 'react'
-
-import VerificationForm from '../../../../components/Auth/Forms/Verification/Verification'
+import { useCustomerVerificationCodeMutation } from '../../../../features/slices/auth/customer/customerAuthApiSlice'
 import FormDescription from '../../../../components/Auth/Forms/Widgets/FormDescription'
 import PageIndicator from '../../../../components/Auth/Forms/Widgets/FormPageIndicator'
 import imageDesc from '../../../../../src/assets/Auth/Analyze-amico 1.svg'
 import LeftLayout from '../../../../components/Auth/Layout/LeftLayout/LeftLayout'
 import RightLayout from '../../../../components/Auth/Layout/RightLayout/RightLayout'
 import classes from './Verification.module.scss'
-
+import FormButton from '../../../../components/Auth/Forms/Widgets/FormButton'
+import FormHeader from '../../../../components/Auth/Forms/Widgets/FormHeader'
 const Verification = () => {
+  const email = useLocation()
   const formDescription = {
     image: imageDesc,
     header: 'Graphs and charts',
@@ -19,11 +22,91 @@ const Verification = () => {
       'Have a better experience irrespective of the device, OS, screen size, orientation, and browser platform.',
     ImgHeight: '2px',
   }
+  const [errMsg, setErrMsg] = useState('')
+  const [customerVerificationCode, { isLoading }] =
+    useCustomerVerificationCodeMutation()
+  const navigate = useNavigate()
+  const onFinish = async (values) => {
+    try {
+      await customerVerificationCode({
+        email: email.state.email,
+        otp: values.otp,
+      }).unwrap()
+      navigate('/business')
+    } catch (err) {
+      if (err.status === 401) {
+        setErrMsg(err?.data?.detail)
+      } else if (err.status === 400) {
+        setErrMsg(err?.data?.email)
+      } else if (err.status === 500) {
+        setErrMsg('Cannot connect to server.')
+      } else {
+        setErrMsg('Check your internet connection')
+      }
+    }
+  }
   return (
     <div className={classes.Verification}>
       <Row className={classes.Verification__Layout}>
         <LeftLayout>
-          <VerificationForm />
+          <div className={classes.Verification__Form}>
+            <div>
+              <FormHeader
+                header={'Verification Code Sent'}
+                tagline={` We just sent you a temporary one time pin to ${email?.state?.email}. Please check your inbox!`}
+              />
+            </div>
+            <Form
+              name="verification"
+              labelCol={8}
+              wrapperCol={32}
+              initialValues={{
+                remember: false,
+              }}
+              onFinish={onFinish}
+              autoComplete="off"
+              layout="vertical"
+              requiredMark="optional"
+            >
+              {errMsg && (
+                <small className={classes.Verification__Message}>
+                  {errMsg}
+                </small>
+              )}
+
+              <Form.Item
+                label={
+                  <p
+                    style={{
+                      marginBottom: '2px',
+                      marginTop: '20px',
+                      fontSize: '13.5px',
+                    }}
+                  >
+                    OTP CODE
+                  </p>
+                }
+                name="otp"
+                rules={[
+                  {
+                    required: true,
+                    message: 'This field is required.',
+                  },
+                ]}
+                required
+              >
+                <Input
+                  className={classes.Verification__Input}
+                  placeholder="Enter code"
+                  style={{ marginTop: '-1rem' }}
+                />
+              </Form.Item>
+
+              <Form.Item>
+                <FormButton action={'Continue'} isLoading={isLoading} />
+              </Form.Item>
+            </Form>
+          </div>
         </LeftLayout>
         <RightLayout>
           <div className={classes.Verification__content}>
