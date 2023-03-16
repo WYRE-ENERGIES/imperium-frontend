@@ -38,6 +38,15 @@ export const authApiSlice = apiSlice.injectEndpoints({
         }
       },
     }),
+    customerVerificationCode: builder.mutation({
+      query: (credentials) => {
+        return {
+          url: 'auth/verify-email/',
+          method: 'POST',
+          body: credentials,
+        }
+      },
+    }),
   }),
 })
 
@@ -45,5 +54,6 @@ export const {
   useCustomerforgotPasswordMutation,
   useCustomerOtpMutation,
   useCustomerNewPasswordMutation,
+  useCustomerVerificationCodeMutation,
   useCustomerRegisterMutation,
 } = authApiSlice
