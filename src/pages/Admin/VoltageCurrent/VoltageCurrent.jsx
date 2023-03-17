@@ -77,7 +77,7 @@ const VoltageCurrent = () => {
     data: dataStatistics,
     isLoading: voltageCurrentDataStatisticsisLoading,
   } = useGetAdminVoltageCurrentStatisticsQuery()
-  console.log(dataStatistics)
+
   const { data: dataTable, isLoading: voltageCurrentDataTableisLoading } =
     useGetAdminVoltageCurrentTableQuery({ page: pageNum, search: search })
 
