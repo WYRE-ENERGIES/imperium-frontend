@@ -16,7 +16,11 @@ import WidgetFilter from '../../../components/WidgetFilter/WidgetFilter'
 import classes from './VoltageCurrent.module.scss'
 import { SearchOutlined } from '@ant-design/icons'
 import { Input } from 'antd'
-import { DataStatistics, dateTimeConverter } from '../../../utils/helpers'
+import {
+  DataStatistics,
+  dateTimeConverter,
+  formatLabel,
+} from '../../../utils/helpers'
 import TableFooter from '../../../components/TableFooter/TableFooter'
 
 const columns = [
@@ -97,7 +101,7 @@ const VoltageCurrent = () => {
       id: 1,
       icon: SunWidgetIcon,
       title: 'Voltage',
-      range: 'For the year',
+      range: formatLabel(filter),
       value: analytics?.voltage || 0,
       valueCurrency: 'V',
     },
@@ -105,7 +109,7 @@ const VoltageCurrent = () => {
       id: 2,
       icon: SunWidgetIcon,
       title: 'Current',
-      range: 'For the year',
+      range: formatLabel(filter),
       value: analytics?.current || 0,
       valueCurrency: 'V',
     },
@@ -113,7 +117,7 @@ const VoltageCurrent = () => {
       id: 3,
       icon: EnergyWidgetIcon,
       title: 'Energy',
-      range: 'For the year',
+      range: formatLabel(filter),
       value: analytics?.kw || 0,
       valueCurrency: 'KWh',
     },

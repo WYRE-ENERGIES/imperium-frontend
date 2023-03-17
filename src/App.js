@@ -136,7 +136,7 @@ function App() {
 
             {/* Admin routes */}
             <Route path="admin">
-              <Route index element={<AdminSignIn />} />
+              <Route path="sign-in" element={<AdminSignIn />} />
               <Route path="sign-up" element={<AdminSignUp />} />
               <Route path="forgot-password" element={<AdminForgotPassword />} />
               <Route path="new-password" element={<AdminResetPassword />} />
