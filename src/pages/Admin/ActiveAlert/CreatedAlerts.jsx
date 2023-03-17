@@ -11,6 +11,7 @@ import classes from './ActiveAlert.module.scss'
 import { SearchOutlined, CloudDownloadOutlined } from '@ant-design/icons'
 import ActiveAlertTable from '../../../components/ActiveAlert/Table/ActiveAlertTable'
 import { useEffect } from 'react'
+import Loading from '../../../components/Loading/Loading'
 
 const CreatedAlerts = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -25,10 +26,10 @@ const CreatedAlerts = () => {
   }
 
   const [pageNum, setPageNum] = useState(1)
-  const [activeAlertsDataTable, setActiveAlertDataTable] = useState([])
-  const [errMs, setErrMsg] = useState('')
+  const [table, setTable] = useState(null)
+  const [errMsg, setErrMsg] = useState('')
   const [searchactiveAlerts, setSearchactiveAlerts] = useState('')
-  const { data: activeAlertsTable, isLoading: isLoadingactiveAlertsTable } =
+  const { data: dataTable, isLoading: isLoadingactiveAlertsTable } =
     useGetAdminActiveAlertsQuery({
       page: pageNum,
       search: searchactiveAlerts,
@@ -54,8 +55,8 @@ const CreatedAlerts = () => {
   }
 
   useEffect(() => {
-    setActiveAlertDataTable(activeAlertsTable)
-  }, [activeAlertsTable])
+    setTable(dataTable)
+  }, [dataTable])
   const columns = [
     {
       key: 'title',
@@ -237,12 +238,16 @@ const CreatedAlerts = () => {
         <section>
           {' '}
           <section className={classes.ActiveAlert__ActiveAlertCreateTable}>
-            <ActiveAlertTable
-              title={ActiveAlertTableTitle}
-              columns={columns}
-              dataSource={activeAlertsDataTable}
-              setPageNum={setPageNum}
-            />
+            {table ? (
+              <ActiveAlertTable
+                title={ActiveAlertTableTitle}
+                columns={columns}
+                dataSource={table}
+                setPageNum={setPageNum}
+              />
+            ) : (
+              <Loading data={'Table'} />
+            )}
           </section>
         </section>
       </section>

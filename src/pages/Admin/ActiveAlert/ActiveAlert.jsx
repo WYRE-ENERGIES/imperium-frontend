@@ -28,6 +28,7 @@ import { Link } from 'react-router-dom'
 import ActiveAlertTable from '../../../components/ActiveAlert/Table/ActiveAlertTable'
 import { useEffect } from 'react'
 import { DataStatistics, dateTimeConverter } from '../../../utils/helpers'
+import Loading from '../../../components/Loading/Loading'
 
 const ActiveAlertDetails = (data) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -181,9 +182,9 @@ const ActiveAlert = () => {
 
   const [activeAlertsData, setActiveAlertData] = useState([])
   const [activeAlertsDataAnalytics, setActiveAlertDataAnalytics] = useState([])
-  const [activeAlertsDataStatistics, setActiveAlertDataStatistics] = useState()
+  const [dataStatistics, setDataStatistics] = useState(null)
   const [errMs, setErrMsg] = useState('')
-  const [activeAlertsDataTable, setActiveAlertDataTable] = useState([])
+  const [table, setTable] = useState([])
   const [pageNum, setPageNum] = useState(3)
   const [searchactiveAlerts, setSearchactiveAlerts] = useState('')
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -198,11 +199,9 @@ const ActiveAlert = () => {
     isLoading: isLoadingactiveAlertsAnalytics,
   } = useGetAdminActiveAlertsAnalyticsQuery()
 
-  const {
-    data: activeAlertsStatistics,
-    isLoading: isLoadingactiveAlertsStatistics,
-  } = useGetAdminActiveAlertsStatisticsQuery()
-  const { data: activeAlertsTable, isLoading: isLoadingactiveAlertsTable } =
+  const { data: statistics, isLoading: isLoadingStatistics } =
+    useGetAdminActiveAlertsStatisticsQuery()
+  const { data: dataTable, isLoading: isLoadingactiveAlertsTable } =
     useGetAdminActiveAlertsTableQuery()
   const [createAdminActiveAlerts, { isLoading: isLoadingactiveAlertsCreate }] =
     useCreateAdminActiveAlertsMutation()
@@ -210,14 +209,9 @@ const ActiveAlert = () => {
   useEffect(() => {
     setActiveAlertData(activeAlerts)
     setActiveAlertDataAnalytics(activeAlertsAnalytics)
-    setActiveAlertDataTable(activeAlertsTable)
-    setActiveAlertDataStatistics(activeAlertsStatistics)
-  }, [
-    activeAlerts,
-    activeAlertsAnalytics,
-    activeAlertsStatistics,
-    activeAlertsTable,
-  ])
+    setTable(dataTable)
+    setDataStatistics(statistics)
+  }, [activeAlerts, activeAlertsAnalytics, statistics, dataTable])
 
   const showModal = () => {
     setIsModalOpen(true)
@@ -517,19 +511,21 @@ const ActiveAlert = () => {
             </div>
 
             <div className={classes.ActiveAlert__ActiveAlertNotificationList}>
-              {activeAlertsData?.results
-                ? activeAlertsData?.results.slice(0, 3).map((alert, key) => (
-                    <div key={key}>
-                      <span>
-                        <BsThreeDots />
-                      </span>
-                      <div>
-                        <p>{alert?.title}</p>
-                        <p>{alert?.event_description} </p>
-                      </div>
+              {activeAlertsData?.results ? (
+                activeAlertsData?.results.slice(0, 3).map((alert, key) => (
+                  <div key={key}>
+                    <span>
+                      <BsThreeDots />
+                    </span>
+                    <div>
+                      <p>{alert?.title}</p>
+                      <p>{alert?.event_description} </p>
                     </div>
-                  ))
-                : 'No active alerts'}
+                  </div>
+                ))
+              ) : (
+                <Loading data={'active alerts...'} />
+              )}
             </div>
             <div
               className={classes.ActiveAlert__ActiveAlertNotificationViewBtn}
@@ -601,107 +597,115 @@ const ActiveAlert = () => {
               </div>
             </div>
             <div className={classes.ActiveAlert__ActiveAlertStatsGraph}>
-              <Chart
-                series={[
-                  {
-                    name: 'Unresolved alert',
-                    data: DataStatistics(activeAlertsStatistics, 'unresolved'),
-                  },
-                  {
-                    name: 'Resolved alert',
-                    data: DataStatistics(activeAlertsStatistics, 'resolved'),
-                  },
-                ]}
-                options={{
-                  chart: {
-                    type: 'bar',
-                    height: 8,
-                    stacked: true,
-                    fontFamily: 'baloo 2',
-                    toolbar: {
-                      show: false,
+              {dataStatistics ? (
+                <Chart
+                  series={[
+                    {
+                      name: 'Unresolved alert',
+                      data: DataStatistics(dataStatistics, 'unresolved'),
                     },
-                  },
-                  yaxis: {
-                    show: true,
-                    showAlways: true,
-                  },
-                  dataLabels: {
-                    enabled: false,
-                  },
-                  grid: {
-                    show: true,
-                    padding: {
-                      top: 0,
-                      right: 0,
-                      bottom: 0,
-                      left: 0,
+                    {
+                      name: 'Resolved alert',
+                      data: DataStatistics(dataStatistics, 'resolved'),
                     },
-                    position: 'back',
-                    xaxis: {
-                      lines: {
+                  ]}
+                  options={{
+                    chart: {
+                      type: 'bar',
+                      height: 8,
+                      stacked: true,
+                      fontFamily: 'baloo 2',
+                      toolbar: {
                         show: false,
                       },
                     },
                     yaxis: {
-                      lines: {
-                        show: false,
+                      show: true,
+                      showAlways: true,
+                    },
+                    dataLabels: {
+                      enabled: false,
+                    },
+                    grid: {
+                      show: true,
+                      padding: {
+                        top: 0,
+                        right: 0,
+                        bottom: 0,
+                        left: 0,
+                      },
+                      position: 'back',
+                      xaxis: {
+                        lines: {
+                          show: false,
+                        },
+                      },
+                      yaxis: {
+                        lines: {
+                          show: false,
+                        },
                       },
                     },
-                  },
-                  xaxis: {
-                    show: true,
-                    categories: [
-                      'Jan',
-                      'feb',
-                      'March',
-                      'Apr',
-                      'May',
-                      'Jun',
-                      'Jul',
-                      'Aug',
-                      'Sep',
-                      'Oct',
-                      'Nov',
-                      'Dec',
-                    ],
-                  },
+                    xaxis: {
+                      show: true,
+                      categories: [
+                        'Jan',
+                        'feb',
+                        'March',
+                        'Apr',
+                        'May',
+                        'Jun',
+                        'Jul',
+                        'Aug',
+                        'Sep',
+                        'Oct',
+                        'Nov',
+                        'Dec',
+                      ],
+                    },
 
-                  legend: {
-                    position: 'bottom',
-                    offsetY: 0,
-                    markers: {
-                      radius: 10,
-                      width: 8,
-                      height: 8,
-                    },
-                  },
-                  plotOptions: {
-                    bar: {
-                      borderRadius: 3,
-                      borderRadiusApplication: 'around',
-                      columnWidth: 10,
-                      dataLabels: {
-                        hideOverflowingLabels: false,
+                    legend: {
+                      position: 'bottom',
+                      offsetY: 0,
+                      markers: {
+                        radius: 10,
+                        width: 8,
+                        height: 8,
                       },
                     },
-                  },
-                  colors: ['#F04438', '#C4C4C4'],
-                }}
-                type="bar"
-                height="350px"
-                width="100%"
-              />
+                    plotOptions: {
+                      bar: {
+                        borderRadius: 3,
+                        borderRadiusApplication: 'around',
+                        columnWidth: 10,
+                        dataLabels: {
+                          hideOverflowingLabels: false,
+                        },
+                      },
+                    },
+                    colors: ['#F04438', '#C4C4C4'],
+                  }}
+                  type="bar"
+                  height="350px"
+                  width="100%"
+                />
+              ) : (
+                <Loading data={'graph...'} />
+              )}
             </div>
           </div>
         </section>
         <section className={classes.ActiveAlert__ActiveAlertTable}>
-          <ActiveAlertTable
-            title={ativeAlertTableTitle}
-            columns={columns}
-            dataSource={activeAlertsDataTable}
-            setPageNum={setPageNum}
-          />
+          {table ? (
+            <ActiveAlertTable
+              title={ativeAlertTableTitle}
+              columns={columns}
+              dataSource={table}
+              setPageNum={setPageNum}
+            />
+          ) : (
+            <Loading data={'table...'} />
+          )}
         </section>
       </section>
     </AdminPageLayout>
