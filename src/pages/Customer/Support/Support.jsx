@@ -7,6 +7,7 @@ import PageBreadcrumb from '../../../components/PageBreadcrumb/PageBreadcrumb'
 import PageLayout from '../../../components/Layout/PageLayout'
 import TicketTable from './TicketTable/TicketTable'
 import classes from './Support.module.scss'
+import { useGetClientSupportTicketsQuery } from '../../../features/slices/supportSlice'
 
 const TicketForm = lazy(() => import('./TicketForm/TicketForm'))
 const data = [
@@ -30,6 +31,7 @@ const Support = () => {
   const [openModal, setOpenModal] = useState(false)
   const [ticketData, setTicketData] = useState({})
   const [isPending, startTransition] = useTransition()
+  const [page, setPage] = useState(1)
 
   const toggleModal = () => setOpenModal(!openModal)
 
@@ -39,6 +41,13 @@ const Support = () => {
       toggleModal()
     })
   }
+  const {
+    isLoading,
+    isError,
+    error,
+    data: supportData,
+    isFetching,
+  } = useGetClientSupportTicketsQuery(page)
 
   return (
     <PageLayout>
