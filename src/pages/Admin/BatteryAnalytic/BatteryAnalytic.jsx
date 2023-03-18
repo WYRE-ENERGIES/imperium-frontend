@@ -1,49 +1,56 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
-  adminBatteryTableData,
-  adminBatteryWidgetsData,
-  generalFilterOptions,
-} from '../../../utils/data'
+  useGetBatteryPageAnalyticsQuery,
+  useGetBatteryStatisticsQuery,
+  useGetBatteryTableDataQuery,
+} from '../../../features/slices/batterySlice'
 
 import AdminPageLayout from '../../../components/Layout/AdminPageLayout/AdminPageLayout'
+import { ReactComponent as BadBatteryWidgetIcon } from '../../../assets/widget-icons/bad-battery-icon.svg'
 import { BsDot } from 'react-icons/bs'
+import { ReactComponent as EnergyWidgetIcon } from '../../../assets/widget-icons/energy-icon.svg'
+import { ReactComponent as GoodBatteryWidgetIcon } from '../../../assets/widget-icons/good-battery-icon.svg'
 import PageBreadcrumb from '../../../components/PageBreadcrumb/PageBreadcrumb'
 import { RiBattery2ChargeLine } from 'react-icons/ri'
 import StackedBarChart from '../../../components/Charts/StackedBarChart/StackedBarChart'
+import TableFooter from '../../../components/TableFooter/TableFooter'
 import TableWithFilter from '../../../components/SHSTableWithFilter/SHSTableWithFilter'
 import { Tag } from 'antd'
 import Widget from '../../../components/Widget/Widget/Widget'
 import WidgetFilter from '../../../components/WidgetFilter/WidgetFilter'
+import WidgetLoader from '../../../components/Widget/WidgetLoader/WidgetLoader'
 import classes from '../../Customer/Battery/Battery.module.scss'
+import { formatLabel } from '../../../utils/helpers'
+import useDebounce from '../../../hooks/useDebounce'
 
 const columns = [
   {
     title: 'Monthly',
-    dataIndex: 'name',
-    key: 'name',
+    dataIndex: 'shs_name',
+    key: 'shs_name',
   },
   {
     title: 'Battery Voltage',
-    key: 'batteryVoltage',
-    dataIndex: 'batteryVoltage',
-    render: (value) => `${value.toLocaleString()} V`,
+    key: 'battery_voltage',
+    dataIndex: 'battery_voltage',
+    render: (value) => `${parseFloat(value.toLocaleString()).toFixed(1)} V`,
   },
 
   {
     title: 'Battery Current',
-    key: 'batteryCurrent',
-    dataIndex: 'batteryCurrent',
-    render: (value) => `${value.toLocaleString()} A`,
+    key: 'battery_current',
+    dataIndex: 'battery_current',
+    render: (value) => `${parseFloat(value.toLocaleString()).toFixed(1)} A`,
   },
   {
     title: 'Battery Health',
-    key: 'batteryHealth',
-    dataIndex: 'batteryHealth',
+    key: 'battery_health',
+    dataIndex: 'battery_health',
     render: (value) => {
-      const color = value ? '#027A48' : '#B42318'
+      const color = value.toLowerCase() === 'good' ? '#027A48' : '#B42318'
       return (
         <Tag
-          color={value ? 'success' : 'error'}
+          color={value.toLowerCase() === 'good' ? 'success' : 'error'}
           key={value}
           style={{
             borderRadius: '10px',
@@ -54,15 +61,15 @@ const columns = [
             color: color,
           }}
         >
-          {value ? 'Good' : 'Bad'}
+          {value}
         </Tag>
       )
     },
   },
   {
     title: 'Charging Source',
-    key: 'chargingSource',
-    dataIndex: 'chargingSource',
+    key: 'charging_source',
+    dataIndex: 'charging_source',
     render: (value) => value.toLocaleString(),
   },
   {
@@ -74,22 +81,22 @@ const columns = [
       return (
         <div className={classes.Battery__status}>
           <RiBattery2ChargeLine
-            color={value.isCharging ? '#84BB72' : '#B42318'}
+            color={value.charging ? '#84BB72' : '#B42318'}
             size={20}
           />
           <section className={classes.Battery__statusSection}>
             <h3 className={classes.Battery__statusText}>Charging Status</h3>
             <div className={classes.Battery__statusResultSection}>
-              <h4 style={{ color: value.isCharging ? '#84BB72' : '#B42318' }}>
+              <h4 style={{ color: value.charging ? '#84BB72' : '#B42318' }}>
                 <BsDot
-                  color={value.isCharging ? '#84BB72' : '#B42318'}
+                  color={value.charging ? '#84BB72' : '#B42318'}
                   size={20}
                   style={{ marginLeft: 0 }}
                 />
-                {value.percentage}%
+                {value.battery_health}%
               </h4>
               <h5 className={classes.Battery__statusResult}>
-                {value.isCharging ? 'Charging' : 'Not Charging'}
+                {value.charging ? 'Charging' : 'Not Charging'}
               </h5>
             </div>
           </section>
@@ -111,17 +118,69 @@ const BatteryAnalytic = () => {
     },
   ])
 
-  const widgets = adminBatteryWidgetsData.map((widget) => (
-    <Widget
-      key={widget.id}
-      Icon={widget.icon}
-      range={widget.range}
-      title={widget.title}
-      value={widget.value}
-      valueCurrency={widget.valueCurrency}
-      valuePercentage={widget.valuePercentage}
-    />
-  ))
+  const [widgets, setWidgets] = useState([])
+  const [search, setSearch] = useState('')
+  const [page, setPage] = useState(1)
+  const [globalFilter, setGlobalFilter] = useState('yearly')
+
+  const handleSearch = (e) => setSearch(e.target.value)
+  const debounceValue = useDebounce(search, 1000)
+
+  const { isError, error, data, isFetching } = useGetBatteryTableDataQuery({
+    page,
+    search: debounceValue,
+    filterBy: globalFilter,
+  })
+
+  const {
+    isFetching: isAnalyticsFetching,
+    isError: isAnalyticsError,
+    error: analyticsError,
+    data: analyticsData,
+  } = useGetBatteryPageAnalyticsQuery({ filterBy: globalFilter })
+
+  const {
+    isFetching: isStatisticsFetching,
+    isError: isStatisticsError,
+    error: statisticsError,
+    data: statisticsData,
+  } = useGetBatteryStatisticsQuery({ filterBy: globalFilter })
+
+  useEffect(() => {
+    if (isAnalyticsFetching) return
+    setWidgets(
+      [
+        {
+          id: 1,
+          icon: EnergyWidgetIcon,
+          title: 'Total SHS Battery',
+          value: parseFloat(analyticsData?.total_shs_battery?.toFixed(1)) || 0,
+        },
+        {
+          id: 2,
+          icon: GoodBatteryWidgetIcon,
+          title: 'Good SHS Battery',
+          value: parseFloat(analyticsData?.good_shs_battery?.toFixed(1)) || 0,
+        },
+        {
+          id: 3,
+          icon: BadBatteryWidgetIcon,
+          title: 'Bad SHS Battery',
+          value: parseFloat(analyticsData?.bad_shs_battery?.toFixed(1)) || 0,
+        },
+      ].map((widget) => (
+        <Widget
+          key={widget.id}
+          Icon={widget.icon}
+          duration={formatLabel(globalFilter)}
+          title={widget.title}
+          value={widget.value}
+          valueCurrency={widget.valueCurrency}
+          valuePercentage={widget.valuePercentage}
+        />
+      )),
+    )
+  }, [isAnalyticsFetching])
 
   return (
     <AdminPageLayout>
@@ -130,9 +189,14 @@ const BatteryAnalytic = () => {
           <PageBreadcrumb title="Battery" items={['Battery']} />
         </section>
         <section className={classes.Battery__filters}>
-          <WidgetFilter />
+          <WidgetFilter
+            selectFilterBy={(value) => setGlobalFilter(value)}
+            filterBy={globalFilter}
+          />
         </section>
-        <div className={classes.Battery__widgets}>{widgets}</div>
+        <div className={classes.Battery__widgets}>
+          {widgets.length ? widgets : <WidgetLoader />}
+        </div>
         <div className={classes.Battery__chart}>
           <StackedBarChart
             title="Battery Statistical Representation"
@@ -147,11 +211,22 @@ const BatteryAnalytic = () => {
         <div className={classes.Battery__shsTable}>
           <TableWithFilter
             columns={columns}
-            data={adminBatteryTableData}
+            data={data?.results}
             tableTitle="Battery Table"
             tagValue="kWh"
-            filterOptions={generalFilterOptions}
             isAdmin={true}
+            filterOptions={[]}
+            handleSearch={handleSearch}
+            isLoading={isFetching}
+            footer={() => (
+              <TableFooter
+                pageNo={data?.page}
+                totalPages={data?.total_pages}
+                handleClick={setPage}
+                hasNext={data?.page === data?.total_pages}
+                hasPrev={!data?.total_pages || data?.page === 1}
+              />
+            )}
           />
         </div>
       </div>
