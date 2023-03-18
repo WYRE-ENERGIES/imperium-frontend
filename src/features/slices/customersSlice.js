@@ -1,6 +1,6 @@
 import { apiSlice } from '../api/apiSlice'
 
-const BASE_CUSTOMERS_URL = '/imperium-admin/list-customers/'
+const BASE_CUSTOMERS_URL = '/imperium-admin/shs-assign/list-customers/'
 
 export const customerApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({

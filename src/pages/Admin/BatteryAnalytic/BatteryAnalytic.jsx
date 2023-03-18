@@ -110,11 +110,11 @@ const BatteryAnalytic = () => {
   const [chartData, setChartData] = useState([
     {
       name: 'Bad Battery Status',
-      data: [400, 500, 350, 420, 320, 500, 410, 430, 410, 500, 570, 400],
+      data: [],
     },
     {
       name: 'Good battery status',
-      data: [400, 500, 230, 430, 260, 430, 390, 380, 390, 330, 430, 310],
+      data: [],
     },
   ])
 
@@ -145,6 +145,11 @@ const BatteryAnalytic = () => {
     error: statisticsError,
     data: statisticsData,
   } = useGetBatteryStatisticsQuery({ filterBy: globalFilter })
+
+  useEffect(() => {
+    if (isStatisticsFetching) return
+    setChartData(statisticsData)
+  }, [isStatisticsFetching])
 
   useEffect(() => {
     if (isAnalyticsFetching) return
@@ -198,15 +203,19 @@ const BatteryAnalytic = () => {
           {widgets.length ? widgets : <WidgetLoader />}
         </div>
         <div className={classes.Battery__chart}>
-          <StackedBarChart
-            title="Battery Statistical Representation"
-            chartData={chartData}
-            colors={['#F04438', '#66AB4F']}
-            borderRadius={2}
-            columnWidth={15}
-            legendPosition="bottom"
-            legendHorizontalAlign="center"
-          />
+          {chartData[0].data.length && chartData[1].data.length ? (
+            <StackedBarChart
+              title="Battery Statistical Representation"
+              chartData={chartData}
+              colors={['#F04438', '#66AB4F']}
+              borderRadius={2}
+              columnWidth={15}
+              legendPosition="bottom"
+              legendHorizontalAlign="center"
+            />
+          ) : (
+            <WidgetLoader />
+          )}
         </div>
         <div className={classes.Battery__shsTable}>
           <TableWithFilter

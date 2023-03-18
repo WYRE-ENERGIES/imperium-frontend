@@ -31,6 +31,28 @@ export const batteryApiSlice = apiSlice.injectEndpoints({
       query: ({ filterBy }) => ({
         url: `${BASE_BATTERY_URL}statistics/?order_by=${filterBy}`,
       }),
+      transformResponse: (response) => {
+        const badStats = {
+          name: 'Bad Battery Status',
+          data: [],
+        }
+        const goodStats = {
+          name: 'Good battery status',
+          data: [],
+        }
+
+        const {
+          statistics: [data],
+        } = response
+
+        Object.values(data).forEach((stat) => {
+          const { good, bad } = stat
+          goodStats.data.push(good ?? 0)
+          badStats.data.push(bad ?? 0)
+        })
+
+        return [badStats, goodStats]
+      },
     }),
   }),
 })

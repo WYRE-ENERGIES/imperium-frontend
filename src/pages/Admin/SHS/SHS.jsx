@@ -1,4 +1,4 @@
-import React, { Suspense, lazy, useRef, useState } from 'react'
+import React, { Suspense, lazy, useEffect, useRef, useState } from 'react'
 import { Switch, Tag } from 'antd'
 import { TbActivityHeartbeat, TbBoltOff } from 'react-icons/tb'
 import {
@@ -15,6 +15,7 @@ import ReactAvatar from 'react-avatar'
 import TableFooter from '../../../components/TableFooter/TableFooter'
 import TableWithFilter from '../../../components/SHSTableWithFilter/SHSTableWithFilter'
 import WidgetFilter from '../../../components/WidgetFilter/WidgetFilter'
+import WidgetLoader from '../../../components/Widget/WidgetLoader/WidgetLoader'
 import classes from '../../Customer/Support/Support.module.scss'
 import { formatLabel } from '../../../utils/helpers'
 import { tab } from '@testing-library/user-event/dist/tab'
@@ -29,6 +30,7 @@ const SHS = () => {
   const [page, setPage] = useState(1)
   const [globalFilter, setGlobalFilter] = useState('yearly')
   const [tableFilter, setTableFilter] = useState('')
+  const [widgets, setWidgets] = useState([])
 
   const handleSearch = (e) => setSearch(e.target.value)
   const debounceValue = useDebounce(search, 1000)
@@ -52,39 +54,44 @@ const SHS = () => {
     data: analyticsData,
   } = useGetAllShsPageAnalyticsQuery({ filterBy: globalFilter })
 
-  const widgets = [
-    {
-      id: 1,
-      title: 'Total Energy Consumped',
-      duration: 'For the last 12 months',
-      value: analyticsData?.total_shs || 0,
-      graphColor: '#65AA4F',
-    },
-    {
-      id: 2,
-      title: 'Total Energy Generated',
-      duration: 'For the last 12 months',
-      value: parseFloat(analyticsData?.energy_generated?.toFixed(1)) || 0,
-      valueCurrency: 'kWh',
-      graphColor: '#C9E00C',
-    },
-    {
-      id: 3,
-      title: 'Total Capacity',
-      duration: 'For the last 12 months',
-      value: parseFloat(analyticsData?.capacity?.toFixed(1)) || 0,
-      graphColor: '#5714E4',
-    },
-  ].map((widget) => (
-    <AdminEnergyAnalytic
-      key={widget.id}
-      duration={formatLabel(globalFilter)}
-      valueCurrency={widget.valueCurrency}
-      title={widget.title}
-      value={widget.value}
-      graphColor={widget.graphColor}
-    />
-  ))
+  useEffect(() => {
+    if (isAnalyticsFetching) return
+    setWidgets(
+      [
+        {
+          id: 1,
+          title: 'Total Energy Consumped',
+          duration: 'For the last 12 months',
+          value: analyticsData?.total_shs || 0,
+          graphColor: '#65AA4F',
+        },
+        {
+          id: 2,
+          title: 'Total Energy Generated',
+          duration: 'For the last 12 months',
+          value: parseFloat(analyticsData?.energy_generated?.toFixed(1)) || 0,
+          valueCurrency: 'kWh',
+          graphColor: '#C9E00C',
+        },
+        {
+          id: 3,
+          title: 'Total Capacity',
+          duration: 'For the last 12 months',
+          value: parseFloat(analyticsData?.capacity?.toFixed(1)) || 0,
+          graphColor: '#5714E4',
+        },
+      ].map((widget) => (
+        <AdminEnergyAnalytic
+          key={widget.id}
+          duration={formatLabel(globalFilter)}
+          valueCurrency={widget.valueCurrency}
+          title={widget.title}
+          value={widget.value}
+          graphColor={widget.graphColor}
+        />
+      )),
+    )
+  }, [isAnalyticsFetching])
 
   const columns = [
     {
@@ -246,7 +253,9 @@ const SHS = () => {
             filterBy={globalFilter}
           />
         </section>
-        <div className={classes.Support__widgets}>{widgets}</div>
+        <div className={classes.Support__widgets}>
+          {widgets.length ? widgets : <WidgetLoader />}
+        </div>
         <div className={classes.Support__shsTable}>
           <TableWithFilter
             columns={columns}
