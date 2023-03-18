@@ -103,9 +103,6 @@ const SHS = () => {
         return (
           <div className={classes.Support__nameDiv}>
             <Switch
-              style={{
-                backgroundColor: record.status === 'ON' ? '#385E2B' : '#C4C4C4',
-              }}
               defaultChecked={record.status === 'ON'}
               onChange={(e) => toggleActivateShsModal(e, record)}
             />

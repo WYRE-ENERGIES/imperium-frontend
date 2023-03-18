@@ -92,7 +92,6 @@ const Customers = () => {
       render: (_, record) => (
         <div className={classes.Customers__nameDiv}>
           <Switch
-            style={{ backgroundColor: record.status ? '#385E2B' : '' }}
             defaultChecked={record.status}
             onChange={() => toggleActivateCustomerModal(record)}
           />

@@ -1,11 +1,13 @@
 import { Button, Form, Input, Modal, Select, Typography } from 'antd'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { ToastContainer, toast } from 'react-toastify'
 import {
   useActivateCustomerMutation,
+  useDeactivateCustomerMutation,
   useDeactivateReasonsQuery,
 } from '../../../../features/slices/customersSlice'
 
+import ButtonLoader from '../../../../components/ButtonLoader/ButtonLoader'
 import { ReactComponent as DisableTicketIcon } from '../../../../assets/widget-icons/disable-caution-icon.svg'
 import { ReactComponent as TicketIcon } from '../../../../assets/widget-icons/caution-icon.svg'
 import classes from '../SHSForm/SHSForm.module.scss'
@@ -22,9 +24,41 @@ const layout = {
   },
 }
 
-const ActivateContent = ({ user, toggleModal, toggleForm, onProceed }) => {
+const ActivateContent = ({ user, toggleModal, toggleForm }) => {
   const title = !user.status ? 'Activate Client' : 'Disabled Client'
   const TIcon = !user.status ? TicketIcon : DisableTicketIcon
+
+  const [activateCustomer, { isLoading, isSuccess }] =
+    useActivateCustomerMutation()
+
+  const onSubmit = () => {
+    if (user.status) {
+      toggleForm()
+      return
+    }
+
+    const data = {
+      enable: true,
+    }
+
+    activateCustomer({ data, clientId: user.id })
+  }
+
+  useEffect(() => {
+    if (!isSuccess) return
+
+    toast.success('activated', {
+      hideProgressBar: true,
+      autoClose: 3000,
+      theme: 'colored',
+    })
+
+    const timeoutId = setTimeout(() => {
+      toggleModal()
+    }, 1000)
+
+    return () => clearTimeout(timeoutId)
+  }, [isSuccess])
 
   return (
     <div>
@@ -55,24 +89,52 @@ const ActivateContent = ({ user, toggleModal, toggleForm, onProceed }) => {
         </Button>
         <Button
           className={classes.AddSHSForm__submitBtn}
-          onClick={toggleForm}
-          htmlType="submit"
+          onClick={onSubmit}
+          htmlType="button"
         >
-          Proceed
+          {isLoading ? <ButtonLoader color="#fff" /> : 'Proceed'}
         </Button>
       </div>
+      <ToastContainer />
     </div>
   )
 }
 
-const DisableClientForm = ({ user, toggleModal, onProceed }) => {
-  const [form] = Form.useForm()
-  const onFinish = (values) => {
-    toast.success('Disabled', {
+const DisableClientForm = ({ user, toggleModal }) => {
+  const [deactivateCustomer, { isLoading, isSuccess }] =
+    useDeactivateCustomerMutation()
+
+  useEffect(() => {
+    if (!isSuccess) return
+
+    toast.success('deactivated', {
       hideProgressBar: true,
       autoClose: 3000,
       theme: 'colored',
     })
+
+    const timeoutId = setTimeout(() => {
+      toggleModal()
+    }, 1000)
+
+    return () => clearTimeout(timeoutId)
+  }, [isSuccess])
+
+  const [form] = Form.useForm()
+  const onFinish = (values) => {
+    const data = {
+      reason_id: values.reason,
+      disable: true,
+      accounts: [
+        [
+          {
+            email: user.customer_email,
+          },
+        ],
+      ],
+    }
+
+    deactivateCustomer(data)
   }
 
   const {
@@ -85,7 +147,7 @@ const DisableClientForm = ({ user, toggleModal, onProceed }) => {
   let reasons = []
   if (!isFetching) {
     reasons = data.map(({ id, reason }) => (
-      <Option key={id} value={reason}>
+      <Option key={id} value={id}>
         {reason}
       </Option>
     ))
@@ -143,26 +205,6 @@ const DisableClientForm = ({ user, toggleModal, onProceed }) => {
             {reasons}
           </Select>
         </Form.Item>
-        <Form.Item
-          name="account"
-          label="Add more account"
-          rules={[
-            {
-              required: true,
-            },
-          ]}
-          style={{ marginBottom: '8px' }}
-        >
-          <Select
-            className={classes.NewUserForm__select}
-            placeholder="Select Account"
-            onChange={() => {}}
-            allowClear
-          >
-            <Option value="Admin">Admin</Option>
-            <Option value="Viewer">Viewer</Option>
-          </Select>
-        </Form.Item>
         <div className={classes.AddSHSForm__btn}>
           <Button
             className={classes.AddSHSForm__cancelBtn}
@@ -172,7 +214,7 @@ const DisableClientForm = ({ user, toggleModal, onProceed }) => {
             Cancel
           </Button>
           <Button className={classes.AddSHSForm__submitBtn} htmlType="submit">
-            Proceed
+            {isLoading ? <ButtonLoader color="#fff" /> : 'Proceed'}
           </Button>
         </div>
         <ToastContainer />
@@ -185,9 +227,6 @@ const ActivateCustomer = ({ user, isOpen, toggleModal }) => {
   const [showForm, setShowForm] = useState(false)
   const toggleForm = () => setShowForm(!showForm)
 
-  const [activateCustomer, { isLoading, isSuccess }] =
-    useActivateCustomerMutation()
-
   return (
     <Modal
       centered
@@ -198,17 +237,12 @@ const ActivateCustomer = ({ user, isOpen, toggleModal }) => {
       footer={null}
     >
       {showForm ? (
-        <DisableClientForm
-          toggleModal={toggleModal}
-          user={user}
-          onProceed={activateCustomer}
-        />
+        <DisableClientForm toggleModal={toggleModal} user={user} />
       ) : (
         <ActivateContent
           toggleModal={toggleModal}
           user={user}
           toggleForm={toggleForm}
-          onProceed={activateCustomer}
         />
       )}
     </Modal>

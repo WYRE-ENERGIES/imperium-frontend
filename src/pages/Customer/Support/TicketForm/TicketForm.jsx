@@ -132,10 +132,6 @@ const ModalForm = ({ toggleModal, ticketData, isAdmin }) => {
           <Divider />
           <div className={classes.TicketForm__switch}>
             <Switch
-              style={{
-                backgroundColor:
-                  isResolved !== supportStatusEnums.PENDING ? '#385E2B' : '',
-              }}
               onChange={(e) =>
                 setIsResolved(
                   e ? supportStatusEnums.RESOLVED : supportStatusEnums.PENDING,
