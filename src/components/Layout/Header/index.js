@@ -32,7 +32,12 @@ const Header = ({ isAdmin, toggle }) => {
           <Logo style={{ width: '40px', height: '40px' }} />
         )}
       </Link>
-      <MenuOutlined onClick={toggle} style={{ color: isAdmin ? '#fff' : '' }} />
+      <div className={classes.Header__icon}>
+        <MenuOutlined
+          onClick={toggle}
+          style={{ color: isAdmin ? '#fff' : '' }}
+        />
+      </div>
     </header>
   )
 }

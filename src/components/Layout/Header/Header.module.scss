@@ -6,8 +6,20 @@
 
   height: 64px;
   background: #fff;
-}
 
+  &__icon {
+    margin-left: auto;
+    width: 32px;
+    height: 32px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 0.5px solid #b6d7ac;
+    border-radius: 4px;
+  }
+}
 .AdminHeader {
   background: #294620;
 }
