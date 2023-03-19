@@ -8,7 +8,7 @@ import { ReactComponent as SunWidgetIcon } from '../../../assets/widget-icons/su
 import Widget from '../Widget/Widget'
 import classes from './panel.module.scss'
 
-const PanelWidgets = ({ totalPanel, data, isLoading }) => {
+const PanelWidgets = ({ data, isLoading }) => {
   let widgets = []
   if (!isLoading) {
     widgets = [
@@ -81,10 +81,10 @@ const PanelWidgets = ({ totalPanel, data, isLoading }) => {
             Today’s weather forecast <span>31</span>
           </div>
           <div>
-            CO2 avoided <span>12kg</span>
+            CO2 avoided <span>{data?.co2 || 0}</span>
           </div>
           <div>
-            Total Panel <span>{totalPanel}</span>
+            Total Panel <span>{data?.total_panel || 0}</span>
           </div>
         </div>
         <div className={classes.Panel__weatherForecast}>

@@ -15,6 +15,7 @@ import SHSTableWithFilter from '../../../components/SHSTableWithFilter/SHSTableW
 import { Spin } from 'antd'
 import TableFooter from '../../../components/TableFooter/TableFooter'
 import WidgetFilter from '../../../components/WidgetFilter/WidgetFilter'
+import WidgetLoader from '../../../components/Widget/WidgetLoader/WidgetLoader'
 import { adminEnergyAnalyticColumns } from '../../../utils/data'
 import classes from '../../Customer/EnergyAnalytic/EnergyAnalytic.module.scss'
 import { formatLabel } from '../../../utils/helpers'
@@ -133,22 +134,7 @@ const EnergyAnalytic = () => {
           />
         </section>
         <div className={classes.EnergyAnalytic__widgets}>
-          {isAnalyticsFetching ? (
-            <div
-              style={{
-                height: '100%',
-                width: '100%',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                padding: '7px 0px',
-              }}
-            >
-              <Spin size="large" />
-            </div>
-          ) : (
-            widgets
-          )}
+          {isAnalyticsFetching ? <WidgetLoader /> : widgets}
         </div>
         <div className={classes.EnergyAnalytic__shsTable}>
           <SHSTableWithFilter

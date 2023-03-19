@@ -14,9 +14,9 @@ export const panelApiSlice = apiSlice.injectEndpoints({
         return { url }
       },
       transformResponse: (response) => {
-        response.results = response.results.map((list) => ({
+        response.results = response.results.map((list, index) => ({
           ...list,
-          key: list.id,
+          key: index,
         }))
 
         return response
