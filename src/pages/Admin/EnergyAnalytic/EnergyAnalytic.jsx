@@ -39,6 +39,7 @@ const EnergyAnalytic = () => {
     },
   ])
 
+  const [widgets, setWidgets] = useState([])
   const [search, setSearch] = useState('')
   const [page, setPage] = useState(1)
   const [globalFilter, setGlobalFilter] = useState('yearly')
@@ -67,50 +68,54 @@ const EnergyAnalytic = () => {
   } = useGetEnergyStatisticsQuery({ filterBy: globalFilter })
 
   useEffect(() => {
-    if (!isCapacityFetching && capacityData?.energyConsumed) {
+    if (isCapacityFetching) return
+
+    if (capacityData?.energyConsumed) {
       setAreaChartData([capacityData.energyDifference])
       setChartData([capacityData.energyConsumed, capacityData.energyGenerated])
     }
   }, [capacityData])
 
-  let widgets = []
-  if (!isAnalyticsFetching) {
-    widgets = [
-      {
-        id: 1,
-        icon: TbBoltOff,
-        title: 'Total Energy Consumed',
-        value: parseFloat(analyticsData?.energy_consumed?.toFixed(1)) || 0,
-        valueCurrency: 'kWh',
-        graphColor: '#65AA4F',
-      },
-      {
-        id: 2,
-        icon: TbActivityHeartbeat,
-        title: 'Total Energy Generated',
-        value: parseFloat(analyticsData?.energy_generated?.toFixed(1)) || 0,
-        valueCurrency: 'kWh',
-        graphColor: '#C9E00C',
-      },
-      {
-        id: 3,
-        icon: RiseOutlined,
-        title: 'Energy Difference',
-        valueCurrency: 'kWh',
-        value: parseFloat(analyticsData?.capacity?.toFixed(1)) || 0,
-      },
-    ].map((widget) => (
-      <AdminEnergyAnalytic
-        key={widget.id}
-        Icon={widget.icon}
-        duration={formatLabel(globalFilter)}
-        valueCurrency={widget.valueCurrency}
-        title={widget.title}
-        value={widget.value}
-        graphColor={widget.graphColor}
-      />
-    ))
-  }
+  useEffect(() => {
+    if (isAnalyticsFetching) return
+    setWidgets(
+      [
+        {
+          id: 1,
+          icon: TbBoltOff,
+          title: 'Total Energy Consumed',
+          value: parseFloat(analyticsData?.energy_consumed?.toFixed(1)) || 0,
+          valueCurrency: 'kWh',
+          graphColor: '#65AA4F',
+        },
+        {
+          id: 2,
+          icon: TbActivityHeartbeat,
+          title: 'Total Energy Generated',
+          value: parseFloat(analyticsData?.energy_generated?.toFixed(1)) || 0,
+          valueCurrency: 'kWh',
+          graphColor: '#C9E00C',
+        },
+        {
+          id: 3,
+          icon: RiseOutlined,
+          title: 'Energy Difference',
+          valueCurrency: 'kWh',
+          value: parseFloat(analyticsData?.capacity?.toFixed(1)) || 0,
+        },
+      ].map((widget) => (
+        <AdminEnergyAnalytic
+          key={widget.id}
+          Icon={widget.icon}
+          duration={formatLabel(globalFilter)}
+          valueCurrency={widget.valueCurrency}
+          title={widget.title}
+          value={widget.value}
+          graphColor={widget.graphColor}
+        />
+      )),
+    )
+  }, [isAnalyticsFetching])
 
   return (
     <AdminPageLayout>
