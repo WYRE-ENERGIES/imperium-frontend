@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from 'react'
+
+import { SearchOutlined } from '@ant-design/icons'
+import { Input } from 'antd'
 import { generalFilterOptions } from '../../../utils/data'
+
 import {
   useGetAdminVoltageCurrentAnalyticsQuery,
   useGetAdminVoltageCurrentStatisticsQuery,
@@ -14,10 +18,14 @@ import { ReactComponent as EnergyWidgetIcon } from '../../../assets/widget-icons
 import Widget from '../../../components/Widget/Widget/Widget'
 import WidgetFilter from '../../../components/WidgetFilter/WidgetFilter'
 import classes from './VoltageCurrent.module.scss'
-import { SearchOutlined } from '@ant-design/icons'
-import { Input } from 'antd'
-import { DataStatistics, dateTimeConverter } from '../../../utils/helpers'
+
+import {
+  DataStatistics,
+  dateTimeConverter,
+  formatLabel,
+} from '../../../utils/helpers'
 import TableFooter from '../../../components/TableFooter/TableFooter'
+import Loading from '../../../components/Loading/Loading'
 
 const columns = [
   {
@@ -59,36 +67,37 @@ const prefix = (
 )
 
 const VoltageCurrent = () => {
-  const [chartData, setChartData] = useState([])
+  const [chartData, setChartData] = useState(null)
   const [filter, setFilter] = useState('yearly')
+  const [tableFilter, setTableFilter] = useState('yearly')
   const [analytics, setAnalytics] = useState(null)
-  const [statistics, setStatistics] = useState(null)
   const [pageNum, setPageNum] = useState(1)
   const [search, setSearch] = useState('')
   const [table, setTable] = useState([])
   const { data: dataAnalytics, isLoading: DataAnaylyticsisLoading } =
     useGetAdminVoltageCurrentAnalyticsQuery({ filter: filter })
 
-  const {
-    data: dataStatistics,
-    isLoading: voltageCurrentDataStatisticsisLoading,
-  } = useGetAdminVoltageCurrentStatisticsQuery()
-  console.log(dataStatistics)
-  const { data: dataTable, isLoading: voltageCurrentDataTableisLoading } =
-    useGetAdminVoltageCurrentTableQuery({ page: pageNum, search: search })
+  const { data: dataStatistics, isLoading: statisticsisLoading } =
+    useGetAdminVoltageCurrentStatisticsQuery()
+
+  const { data: dataTable, isLoading: tableisLoading } =
+    useGetAdminVoltageCurrentTableQuery({
+      page: pageNum,
+      search: search,
+      filter: tableFilter,
+    })
 
   useEffect(() => {
     setAnalytics(dataAnalytics)
     setTable(dataTable)
-    setStatistics(dataStatistics)
     setChartData([
       {
         name: 'Current',
-        data: DataStatistics(statistics, 'month_current'),
+        data: DataStatistics(dataStatistics, 'month_current'),
       },
       {
         name: 'Voltage',
-        data: DataStatistics(statistics, 'month_voltage'),
+        data: DataStatistics(dataStatistics, 'month_voltage'),
       },
     ])
   }, [dataAnalytics, dataTable, dataStatistics, pageNum])
@@ -97,7 +106,7 @@ const VoltageCurrent = () => {
       id: 1,
       icon: SunWidgetIcon,
       title: 'Voltage',
-      range: 'For the year',
+      range: formatLabel(filter),
       value: analytics?.voltage || 0,
       valueCurrency: 'V',
     },
@@ -105,7 +114,7 @@ const VoltageCurrent = () => {
       id: 2,
       icon: SunWidgetIcon,
       title: 'Current',
-      range: 'For the year',
+      range: formatLabel(filter),
       value: analytics?.current || 0,
       valueCurrency: 'V',
     },
@@ -113,7 +122,7 @@ const VoltageCurrent = () => {
       id: 3,
       icon: EnergyWidgetIcon,
       title: 'Energy',
-      range: 'For the year',
+      range: formatLabel(filter),
       value: analytics?.kw || 0,
       valueCurrency: 'KWh',
     },
@@ -166,9 +175,7 @@ const VoltageCurrent = () => {
             paddingBottom: '20px',
           }}
         >
-          {voltageCurrentDataStatisticsisLoading ? (
-            'Loading...'
-          ) : (
+          {!statisticsisLoading ? (
             <Chart
               height="100%"
               options={{
@@ -239,25 +246,31 @@ const VoltageCurrent = () => {
               series={chartData}
               width="100%"
             />
+          ) : (
+            <Loading data={'Graph'} />
           )}
         </div>
         <div className={classes.VoltageCurrent__shsTable}>
-          <SHSTableWithFilter
-            columns={columns}
-            data={table?.results}
-            tableTitle="Voltage & Current Table"
-            tagValue="kWh"
-            filterOptions={generalFilterOptions}
-            footer={() => (
-              <TableFooter
-                pageNo={table?.page}
-                totalPages={table?.total_pages}
-                handleClick={setPageNum}
-                hasNext={table?.page === table?.total_pages}
-                hasPrev={!table?.total_pages || table?.page === 1}
-              />
-            )}
-          />
+          {!tableisLoading ? (
+            <SHSTableWithFilter
+              columns={columns}
+              data={table?.results}
+              tableTitle="Voltage & Current Table"
+              tagValue="kWh"
+              filterOptions={generalFilterOptions}
+              footer={() => (
+                <TableFooter
+                  pageNo={table?.page}
+                  totalPages={table?.total_pages}
+                  handleClick={setPageNum}
+                  hasNext={table?.page === table?.total_pages}
+                  hasPrev={!table?.total_pages || table?.page === 1}
+                />
+              )}
+            />
+          ) : (
+            <Loading data={'Table'} />
+          )}
         </div>
       </div>
     </AdminPageLayout>

@@ -88,6 +88,7 @@ export const areaChartOptions = {
   chart: {
     height: 500,
     type: 'area',
+    fontFamily: 'baloo 2',
     toolbar: {
       show: false,
     },

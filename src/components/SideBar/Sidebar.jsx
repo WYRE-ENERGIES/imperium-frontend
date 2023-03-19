@@ -32,7 +32,7 @@ const Sidebar = ({
     if (accessToken) {
       path = isAdmin ? '/admin/overview' : '/overview'
     } else {
-      path = isAdmin ? '/admin' : '/'
+      path = isAdmin ? '/admin/sign-in' : '/'
     }
     return path
   }

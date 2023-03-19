@@ -11,7 +11,7 @@ const Footer = ({ userName, toggleActivateShsModal, isAdmin }) => {
   const dispatch = useDispatch()
 
   const onLogout = () => {
-    const navigateTo = isAdmin ? '/admin' : '/'
+    const navigateTo = isAdmin ? '/admin/sign-in' : '/'
     dispatch(logOutUser())
     navigate(navigateTo)
   }

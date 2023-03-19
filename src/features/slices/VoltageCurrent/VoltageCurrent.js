@@ -6,7 +6,7 @@ export const voltageCurrentSlice = apiSlice.injectEndpoints({
   endpoints: (build) => ({
     getAdminVoltageCurrentAnalytics: build.query({
       query: ({ filter }) => {
-        return `${BASE_URL}analytics/?order_by=${filter}`
+        return `${BASE_URL}analytics/?sort_by=${filter}`
       },
       transformResponse: (response, meta, arg) => {
         return response
