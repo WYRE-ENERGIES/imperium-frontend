@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { generalFilterOptions, panelColumns } from '../../../utils/data'
 import {
   useGetPanelPageAnalyticsQuery,
@@ -11,13 +11,14 @@ import PanelTable from '../../../components/SHSTableWithFilter/SHSTableWithFilte
 import PanelWidgets from '../../../components/Widget/Panel/Panel'
 import TableFooter from '../../../components/TableFooter/TableFooter'
 import WidgetFilter from '../../../components/WidgetFilter/WidgetFilter'
+import WidgetLoader from '../../../components/Widget/WidgetLoader/WidgetLoader'
 import classes from '../../Customer/PanelAnalytic/PanelAnalytic.module.scss'
 import useDebounce from '../../../hooks/useDebounce'
 import useWeather from '../../../hooks/useWeather'
 
 const PanelAnalytic = () => {
   const [coord, weatherResult, isLoading, error] = useWeather()
-
+  const [widgets, setWidgets] = useState({})
   const [search, setSearch] = useState('')
   const [page, setPage] = useState(1)
   const [globalFilter, setGlobalFilter] = useState('yearly')
@@ -43,6 +44,11 @@ const PanelAnalytic = () => {
     data: analyticsData,
   } = useGetPanelPageAnalyticsQuery({ filterBy: globalFilter })
 
+  useEffect(() => {
+    if (isAnalyticsFetching) return
+    setWidgets(data)
+  }, [isAnalyticsFetching])
+
   return (
     <AdminPageLayout>
       <div
@@ -59,11 +65,11 @@ const PanelAnalytic = () => {
           />
         </section>
         <div className={classes.PanelAnalytic__widgets}>
-          <PanelWidgets
-            totalPanel={8}
-            data={analyticsData}
-            isLoading={isAnalyticsFetching}
-          />
+          {isAnalyticsFetching ? (
+            <WidgetLoader />
+          ) : (
+            <PanelWidgets data={widgets} isLoading={isAnalyticsFetching} />
+          )}
         </div>
         <div className={classes.PanelAnalytic__shsTable}>
           <PanelTable

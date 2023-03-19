@@ -141,6 +141,7 @@ const BatteryAnalytic = () => {
 
   const {
     isFetching: isStatisticsFetching,
+    isSuccess: isStatisticsSuccess,
     isError: isStatisticsError,
     error: statisticsError,
     data: statisticsData,
@@ -148,8 +149,23 @@ const BatteryAnalytic = () => {
 
   useEffect(() => {
     if (isStatisticsFetching) return
+    if (isStatisticsError) {
+      setChartData(
+        {
+          name: 'Bad Battery Status',
+          data: [],
+        },
+        {
+          name: 'Good battery status',
+          data: [],
+        },
+      )
+
+      return
+    }
+
     setChartData(statisticsData)
-  }, [isStatisticsFetching])
+  }, [isStatisticsFetching, isStatisticsError])
 
   useEffect(() => {
     if (isAnalyticsFetching) return
@@ -203,7 +219,7 @@ const BatteryAnalytic = () => {
           {widgets.length ? widgets : <WidgetLoader />}
         </div>
         <div className={classes.Battery__chart}>
-          {chartData[0].data.length && chartData[1].data.length ? (
+          {!isStatisticsFetching ? (
             <StackedBarChart
               title="Battery Statistical Representation"
               chartData={chartData}

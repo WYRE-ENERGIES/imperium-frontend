@@ -1,6 +1,8 @@
 import { apiSlice } from '../api/apiSlice'
+import { getItemFromLocalStorage } from '../../utils/helpers'
 
 const BASE_SUPPORT_URL = '/imperium-admin/list-support-tickets/'
+const BASE_CLIENT_SUPPORT_URL = '/imperium-client'
 
 const transformError = (error) => {
   let message = 'Internal Server Error..Contact Support'
@@ -55,6 +57,41 @@ export const supportApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ['Support', 'SupportAnalytics'],
     }),
+
+    getClientSupportTickets: builder.query({
+      query: (page) => {
+        const userInfo = getItemFromLocalStorage('userInfo')
+        return {
+          url: `${BASE_CLIENT_SUPPORT_URL}/list-support-ticket/${userInfo.id}?page=${page}`,
+        }
+      },
+      transformResponse: (response) => {
+        response.results = response.results.map((ticket) => ({
+          ...ticket,
+          key: ticket.id,
+        }))
+
+        return response
+      },
+      transformErrorResponse: (error) => transformError(error),
+      providesTags: ['ClientSupport'],
+    }),
+    createTicket: builder.mutation({
+      query: (data) => ({
+        url: `${BASE_CLIENT_SUPPORT_URL}/support-ticket/`,
+        method: 'POST',
+        body: data,
+      }),
+      invalidatesTags: ['ClientSupport'],
+    }),
+    updateTicket: builder.mutation({
+      query: ({ data, id }) => ({
+        url: `${BASE_CLIENT_SUPPORT_URL}/support-ticket/${id}/`,
+        method: 'PUT',
+        body: data,
+      }),
+      invalidatesTags: ['ClientSupport'],
+    }),
   }),
 })
 
@@ -62,4 +99,7 @@ export const {
   useGetAdminSupportTicketsQuery,
   useGetSupportPageAnalyticsQuery,
   useResolveTicketMutation,
+  useCreateTicketMutation,
+  useGetClientSupportTicketsQuery,
+  useUpdateTicketMutation,
 } = supportApiSlice

@@ -11,6 +11,10 @@
   border-radius: 8px;
   overflow: scroll;
 
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
   &__table {
     & table > thead > tr > th,
     & table > thead > tr > td {
