@@ -125,13 +125,7 @@ const DisableClientForm = ({ user, toggleModal }) => {
     const data = {
       reason_id: values.reason,
       disable: true,
-      accounts: [
-        [
-          {
-            email: user.customer_email,
-          },
-        ],
-      ],
+      account: user.customer_email,
     }
 
     deactivateCustomer(data)
