@@ -37,7 +37,7 @@ export const customerApiSlice = apiSlice.injectEndpoints({
     }),
     deactivateCustomer: builder.mutation({
       query: (data) => ({
-        url: `/imperium-admin/shs/disable-clients/`,
+        url: `/imperium-admin/shs/disable-client/`,
         method: 'POST',
         body: data,
       }),
