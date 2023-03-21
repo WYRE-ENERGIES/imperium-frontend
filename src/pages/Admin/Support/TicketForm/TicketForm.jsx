@@ -12,7 +12,7 @@ import React, { Suspense, lazy, useEffect, useState } from 'react'
 import { ToastContainer, toast } from 'react-toastify'
 
 import { ReactComponent as TicketIcon } from '../../../../assets/ticket-icon.svg'
-import classes from './TicketForm.module.scss'
+import classes from '../../../Customer/Support/TicketForm/TicketForm.module.scss'
 import { supportStatusEnums } from '../../../../utils/enums'
 import { useListClientShsDevicesQuery } from '../../../../features/slices/allShsSlice'
 import { useResolveTicketMutation } from '../../../../features/slices/supportSlice'
