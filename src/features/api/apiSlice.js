@@ -9,7 +9,10 @@ export const apiSlice = createApi({
     prepareHeaders: (headers, { getState }) => {
       const token = getItemFromLocalStorage('access')
       if (token) {
-        headers.set('authorization', `Bearer ${token}`)
+        headers.set(
+          'authorization',
+          `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjgwMTYyMDI2LCJpYXQiOjE2NzkyOTgwMjYsImp0aSI6IjFiZmYzMjE3NzU4MTQxNzc5YjFmN2E2MTQ3NjhmMzQyIiwidXNlcl9pZCI6IjVjYjhmMDIxLTU2MzEtNDNkNy05ZjgxLWExOTMwZjhlNzdiZSJ9.FBmROrDc_crXGVtMG_D7iDk6JVYZWuVAyinHTrtycpY`,
+        )
       }
       return headers
     },

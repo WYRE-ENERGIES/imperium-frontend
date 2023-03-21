@@ -1,12 +1,15 @@
 import { Button, Modal, Radio, Spin, Typography } from 'antd'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { Link } from 'react-router-dom'
 import { MdLogout } from 'react-icons/md'
 import ReactAvatar from 'react-avatar'
 import { ReactComponent as TicketIcon } from '../../assets/logout-modal-icon.svg'
 import classes from './SwitchAccount.module.scss'
-import { useGetUserClientListQuery } from '../../features/slices/clientUserSlice'
+import { switchClient } from '../../features/slices/auth/authSlice'
+import { useDispatch } from 'react-redux'
+import { useGetUserClientListQuery } from '../../features/slices/clientUserApiSlice'
+import { useNavigate } from 'react-router'
 
 const { Text, Title } = Typography
 
@@ -18,7 +21,13 @@ const Options = ({ name, email, username, value, selected }) => (
     }`}
   >
     <div className={classes.SwitchAccount__left}>
-      <ReactAvatar size={30} round={true} name={name} color="#C4C4C4" />
+      <ReactAvatar
+        size={30}
+        round={true}
+        name={name}
+        color={selected === value ? '#385E2B' : '#C4C4C4'}
+        fgColor={selected === value ? '#C4C4C4' : '#385E2B'}
+      />
       <div className={classes.SwitchAccount__names}>
         <h3
           className={`${classes.SwitchAccount__name} ${
@@ -46,29 +55,50 @@ const Options = ({ name, email, username, value, selected }) => (
   </Radio>
 )
 
-const SwitchAccountContent = ({ toggleModal, isAdmin }) => {
+const SwitchAccountContent = ({ toggleModal }) => {
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
   const [selected, setSelected] = useState(null)
+  const [list, setList] = useState([])
 
   const handleChange = (e) => {
     setSelected(e.target.value)
   }
 
+  const onProceed = () => {
+    dispatch(switchClient(selected))
+    navigate(0)
+  }
+
   const { isFetching, data, isError } = useGetUserClientListQuery()
+
+  useEffect(() => {
+    if (isFetching) return
+    if (isError) {
+      setList([])
+      return
+    }
+
+    if (data?.current) {
+      setSelected(data?.current)
+    }
+    setList(data.response)
+  }, [isFetching, isError])
 
   return (
     <div className={classes.SwitchAccount__content}>
-      {isFetching ? (
+      {isFetching || !list?.length ? (
         <Spin />
       ) : (
         <>
-          <Radio.Group onChange={handleChange}>
-            {data?.map((option) => (
+          <Radio.Group onChange={handleChange} defaultValue={selected}>
+            {list?.map((option) => (
               <Options
                 key={option.id}
-                name={option.fullname}
+                name={option.name}
                 email={option.email}
                 username={option.username}
-                value={option}
+                value={option.id}
                 selected={selected}
               />
             ))}
@@ -90,6 +120,7 @@ const SwitchAccountContent = ({ toggleModal, isAdmin }) => {
               <Button
                 className={classes.SwitchAccount__submitBtn}
                 htmlType="submit"
+                onClick={onProceed}
               >
                 Proceed
               </Button>

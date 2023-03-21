@@ -5,6 +5,7 @@ import { ReactComponent as Logo } from '../../../assets/icon.svg'
 import { MdNorthEast } from 'react-icons/md'
 import PageBreadcrumb from '../../../components/PageBreadcrumb/PageBreadcrumb'
 import PageLayout from '../../../components/Layout/PageLayout'
+import TableFooter from '../../../components/TableFooter/TableFooter'
 import TicketTable from './TicketTable/TicketTable'
 import classes from './Support.module.scss'
 import { useGetClientSupportTicketsQuery } from '../../../features/slices/supportSlice'
@@ -41,13 +42,10 @@ const Support = () => {
       toggleModal()
     })
   }
-  const {
-    isLoading,
-    isError,
-    error,
-    data: supportData,
-    isFetching,
-  } = useGetClientSupportTicketsQuery(page)
+  const { data: supportData, isFetching } =
+    useGetClientSupportTicketsQuery(page)
+
+  console.log({ supportData })
 
   return (
     <PageLayout>
@@ -67,7 +65,20 @@ const Support = () => {
           </Button>
         </section>
         <section className={classes.Support__topSection}>
-          <TicketTable onEditTicket={handleEditTicket} />
+          <TicketTable
+            onEditTicket={handleEditTicket}
+            loading={isFetching}
+            data={supportData?.results}
+            footer={() => (
+              <TableFooter
+                pageNo={supportData?.page}
+                totalPages={supportData?.total_pages}
+                handleClick={setPage}
+                hasNext={supportData?.page === supportData?.total_pages}
+                hasPrev={!supportData?.total_pages || supportData?.page === 1}
+              />
+            )}
+          />
         </section>
         <section className={classes.Support__bottomSection}>
           {data.map((item, index) => (

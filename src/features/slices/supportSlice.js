@@ -62,7 +62,7 @@ export const supportApiSlice = apiSlice.injectEndpoints({
       query: (page) => {
         const userInfo = getItemFromLocalStorage('userInfo')
         return {
-          url: `${BASE_CLIENT_SUPPORT_URL}/list-support-ticket/${userInfo.id}?page=${page}`,
+          url: `${BASE_CLIENT_SUPPORT_URL}/list-support-ticket/${7}?page=${page}`,
         }
       },
       transformResponse: (response) => {

@@ -54,50 +54,7 @@ const handleDelete = (id) => {
   })
 }
 
-const data = [
-  {
-    id: 1,
-    subject: 'Missing SHS',
-    description: 'Missing SHS description',
-    priority: 'Urgent',
-    status: 'Pending',
-    key: 1,
-  },
-  {
-    id: 2,
-    subject: 'TDS is missing',
-    description: 'TDS is missing description',
-    priority: 'Urgent',
-    status: 'Pending',
-    key: 2,
-  },
-  {
-    id: 3,
-    subject: 'Tags • Applications & Uses is missing',
-    description: 'Tags • Applications & Uses is missing description',
-    priority: 'Normal',
-    status: 'Resolved',
-    key: 3,
-  },
-  {
-    id: 4,
-    subject: 'Image is missing',
-    description: 'Image is missing description',
-    priority: 'Urgent',
-    status: 'Resolved',
-    key: 4,
-  },
-  {
-    id: 5,
-    subject: 'Failing SHS',
-    description: 'Failing SHS description',
-    priority: 'Normal',
-    status: 'Resolved',
-    key: 5,
-  },
-]
-
-const TicketTable = ({ onEditTicket }) => {
+const TicketTable = ({ onEditTicket, footer, loading, data }) => {
   const columns = [
     {
       title: 'ID',
@@ -191,7 +148,18 @@ const TicketTable = ({ onEditTicket }) => {
     },
   ]
 
-  return <Table style={{ width: '100%' }} columns={columns} dataSource={data} />
+  return (
+    <Table
+      style={{ width: '100%', overflow: 'scroll' }}
+      columns={columns}
+      dataSource={data}
+      footer={footer}
+      loading={loading}
+      pagination={{
+        hideOnSinglePage: true,
+      }}
+    />
+  )
 }
 
 export default TicketTable
