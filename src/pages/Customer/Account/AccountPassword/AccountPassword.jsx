@@ -4,12 +4,21 @@ import FormButton from '../../../../components/Auth/Forms/Widgets/FormButton'
 import classes from './AccountPassword.module.scss'
 import Account from '../Account'
 import passwordKeyIcon from '../../../../assets/Auth/passwordIcon.svg'
+import { useCustomerChangePasswordMutation } from '../../../../features/slices/auth/customer/customerAuthApiSlice'
 
 const AccountPassword = () => {
   const [form] = Form.useForm()
-
-  const onFinish = (values) => {
+  const [customerChangePassword, { isLoading }] =
+    useCustomerChangePasswordMutation()
+  const onFinish = async (values) => {
     console.log('Finish:', values)
+    try {
+      await customerChangePassword({
+        credentials: values,
+      }).unwrap()
+    } catch (err) {
+      console.log(err)
+    }
   }
   return (
     <Account props={'password'}>
@@ -21,7 +30,7 @@ const AccountPassword = () => {
           onFinish={onFinish}
           requiredMark="optional"
         >
-          <Row justify={'space-between'} gutter={20}>
+          <Row justify={'space-between'} gutter={32}>
             <Col span={8}>
               {' '}
               <Form.Item
@@ -110,7 +119,7 @@ const AccountPassword = () => {
           <Form.Item>
             <Row justify={'end'} gutter={20}>
               <Col span={8}>
-                <FormButton type={'submit'} action={'Save changes'} />
+                <FormButton action={'Save changes'} isLoading={isLoading} />
               </Col>
             </Row>
           </Form.Item>

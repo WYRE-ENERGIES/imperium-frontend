@@ -47,11 +47,31 @@ export const authApiSlice = apiSlice.injectEndpoints({
         }
       },
     }),
-    customerDetails: builder.query({
+    customerGetDetails: builder.query({
       query: () => {
         return {
           url: '/imperium-client/user-account/',
           method: 'GET',
+        }
+      },
+      providesTags: ['CustomerDetails'],
+    }),
+    customerUpdateDetails: builder.mutation({
+      query: ({ credentials }) => {
+        return {
+          url: '/auth/user-detail/',
+          method: 'POST',
+          body: credentials,
+        }
+      },
+      invalidatesTags: ['CustomerDetails'],
+    }),
+    customerChangePassword: builder.mutation({
+      query: (credentials) => {
+        return {
+          url: '/auth/change-password/',
+          method: 'POST',
+          body: credentials,
         }
       },
     }),
@@ -64,5 +84,7 @@ export const {
   useCustomerNewPasswordMutation,
   useCustomerVerificationCodeMutation,
   useCustomerRegisterMutation,
-  useCustomerDetailsQuery,
+  useCustomerGetDetailsQuery,
+  useCustomerChangePasswordMutation,
+  useCustomerUpdateDetailsMutation,
 } = authApiSlice

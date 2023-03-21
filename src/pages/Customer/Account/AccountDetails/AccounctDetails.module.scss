@@ -4,7 +4,7 @@
   height: 100vh;
   &__Input {
     font-size: 16px !important;
-    padding: $formElementPadding;
+    padding: 6px;
     offset: 10px 30px;
     font-family: $font-family;
     border: 1px solid #c4c4c4;
@@ -25,7 +25,7 @@
   &__Address {
     width: 100%;
     font-size: 16px !important;
-    padding: $formElementPadding;
+    padding: 6px;
     offset: 10px 30px;
     font-family: $font-family;
     border: 1px solid #c4c4c4;
@@ -45,7 +45,7 @@
   &__Phone {
     input {
       width: 350px;
-      padding: 10px;
+      padding: 6px;
       border: 1px solid #c4c4c4;
       font-size: 16px;
       font-family: $font-family;

@@ -5,11 +5,8 @@ import { message, Form, Upload } from 'antd'
 import uploadImg from '../../../assets/widget-icons/bussinessuploadIcon.svg'
 import { getItemFromLocalStorage } from '../../../utils/helpers'
 const AccountInfo = ({ type }) => {
-  const { id, first_name, last_name, email, phone_number } =
-    getItemFromLocalStorage('userInfo')
-
   const [fileUpload, setFileUpload] = useState(false)
-
+  const { first_name, last_name, email } = getItemFromLocalStorage('userInfo')
   const normFile = (e) => {
     console.log('Upload event:', e)
     if (Array.isArray(e)) {

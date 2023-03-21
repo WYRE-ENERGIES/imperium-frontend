@@ -23,7 +23,7 @@ const Verification = () => {
     ImgHeight: '2px',
   }
   const [errMsg, setErrMsg] = useState('')
-  const [customerVerificationCode, { isLoading }] =
+  const [customerVerificationCode, { data, isLoading }] =
     useCustomerVerificationCodeMutation()
   const navigate = useNavigate()
   const onFinish = async (values) => {
@@ -33,6 +33,7 @@ const Verification = () => {
         otp: values.otp,
       }).unwrap()
       navigate('/business')
+      console.log(data)
     } catch (err) {
       if (err.status === 401) {
         setErrMsg(err?.data?.detail)
