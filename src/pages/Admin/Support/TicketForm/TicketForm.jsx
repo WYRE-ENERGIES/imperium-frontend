@@ -129,16 +129,7 @@ const ModalForm = ({ toggleModal, ticketData, isAdmin }) => {
           <Option value="Urgent">Urgent</Option>
         </Select>
       </Form.Item>
-      <Form.Item
-        name="SHS"
-        label="SHS"
-        labelAlign="left"
-        rules={[
-          {
-            required: true,
-          },
-        ]}
-      >
+      <Form.Item name="shs" label="SHS" labelAlign="left">
         <Select
           placeholder="Select SHS"
           className={classes.TicketForm__select}

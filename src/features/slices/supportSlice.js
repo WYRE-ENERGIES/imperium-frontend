@@ -60,9 +60,9 @@ export const supportApiSlice = apiSlice.injectEndpoints({
 
     getClientSupportTickets: builder.query({
       query: (page) => {
-        const userInfo = getItemFromLocalStorage('userInfo')
+        const clientId = getItemFromLocalStorage('current_client')
         return {
-          url: `${BASE_CLIENT_SUPPORT_URL}/list-support-ticket/${7}?page=${page}`,
+          url: `${BASE_CLIENT_SUPPORT_URL}/list-support-ticket/${clientId}?page=${page}`,
         }
       },
       transformResponse: (response) => {
@@ -76,7 +76,7 @@ export const supportApiSlice = apiSlice.injectEndpoints({
       transformErrorResponse: (error) => transformError(error),
       providesTags: ['ClientSupport'],
     }),
-    createTicket: builder.mutation({
+    createSupportTicket: builder.mutation({
       query: (data) => ({
         url: `${BASE_CLIENT_SUPPORT_URL}/support-ticket/`,
         method: 'POST',
@@ -84,11 +84,18 @@ export const supportApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ['ClientSupport'],
     }),
-    updateTicket: builder.mutation({
+    updateSupportTicket: builder.mutation({
       query: ({ data, id }) => ({
         url: `${BASE_CLIENT_SUPPORT_URL}/support-ticket/${id}/`,
         method: 'PUT',
         body: data,
+      }),
+      invalidatesTags: ['ClientSupport'],
+    }),
+    deleteSupportTicket: builder.mutation({
+      query: (id) => ({
+        url: `${BASE_CLIENT_SUPPORT_URL}/support-ticket/${id}/`,
+        method: 'DELETE',
       }),
       invalidatesTags: ['ClientSupport'],
     }),
@@ -99,7 +106,8 @@ export const {
   useGetAdminSupportTicketsQuery,
   useGetSupportPageAnalyticsQuery,
   useResolveTicketMutation,
-  useCreateTicketMutation,
+  useCreateSupportTicketMutation,
   useGetClientSupportTicketsQuery,
-  useUpdateTicketMutation,
+  useUpdateSupportTicketMutation,
+  useDeleteSupportTicketMutation,
 } = supportApiSlice

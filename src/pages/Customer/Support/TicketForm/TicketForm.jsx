@@ -1,10 +1,14 @@
 import { Button, Divider, Form, Input, Modal, Select, Typography } from 'antd'
 import React, { Suspense, lazy, useEffect, useState } from 'react'
 import { ToastContainer, toast } from 'react-toastify'
+import {
+  useCreateSupportTicketMutation,
+  useUpdateSupportTicketMutation,
+} from '../../../../features/slices/supportSlice'
 
 import { ReactComponent as TicketIcon } from '../../../../assets/ticket-icon.svg'
 import classes from './TicketForm.module.scss'
-import { useCreateTicketMutation } from '../../../../features/slices/supportSlice'
+import { getItemFromLocalStorage } from '../../../../utils/helpers'
 import { useListClientShsDevicesQuery } from '../../../../features/slices/allShsSlice'
 
 const ButtonLoader = lazy(() =>
@@ -25,24 +29,40 @@ const layout = {
 
 const ModalForm = ({ toggleModal, ticketData }) => {
   const [shsDevices, setShsDevices] = useState([])
+  const [currentClient, setCurrentClient] = useState()
 
   const { isFetching: shsLoading, data: shsData } =
     useListClientShsDevicesQuery()
 
-  const [createTicket, { isLoading, isSuccess, isError }] =
-    useCreateTicketMutation()
+  const [createSupportTicket, { isLoading, isSuccess, isError }] =
+    useCreateSupportTicketMutation()
 
-  console.log({ shsData })
+  const [
+    updateSupportTicket,
+    {
+      isLoading: isUpdating,
+      isSuccess: isUpdateSuccess,
+      isError: isisUpdateError,
+    },
+  ] = useUpdateSupportTicketMutation()
+
   const [form] = Form.useForm()
   const onFinish = (values) => {
-    createTicket({ ...values, client: 7, shs: 0 })
+    if (ticketData.id) {
+      updateSupportTicket({
+        data: { ...values, client: currentClient },
+        id: ticketData.id,
+      })
+    } else {
+      createSupportTicket({ ...values, client: currentClient })
+    }
   }
 
   useEffect(() => {
-    if (isLoading) return
+    if (isLoading || isUpdating) return
 
-    if (isSuccess) {
-      toast.success('Ticket created', {
+    if (isSuccess || isUpdateSuccess) {
+      toast.success(ticketData.id ? 'Ticket Updated' : 'Ticket created', {
         hideProgressBar: true,
         autoClose: 3000,
         theme: 'colored',
@@ -51,7 +71,7 @@ const ModalForm = ({ toggleModal, ticketData }) => {
       toggleModal()
     }
     form.resetFields()
-  }, [isLoading, isSuccess])
+  }, [isLoading, isSuccess, isUpdating, isUpdateSuccess])
 
   useEffect(() => {
     if (shsLoading) return
@@ -66,6 +86,11 @@ const ModalForm = ({ toggleModal, ticketData }) => {
       )
     }
   }, [shsLoading])
+
+  useEffect(() => {
+    const currentClient = getItemFromLocalStorage('current_client')
+    setCurrentClient(currentClient)
+  }, [])
 
   return (
     <Form

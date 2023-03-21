@@ -45,8 +45,6 @@ const Support = () => {
   const { data: supportData, isFetching } =
     useGetClientSupportTicketsQuery(page)
 
-  console.log({ supportData })
-
   return (
     <PageLayout>
       <div className={classes.Support} style={{ backgroundColor: '#FCFCFD' }}>

@@ -1,9 +1,10 @@
+import React, { useEffect } from 'react'
 import { Space, Table, Tag, Tooltip } from 'antd'
 
 import { BsDot } from 'react-icons/bs'
 import { FaRegQuestionCircle } from 'react-icons/fa'
-import React from 'react'
 import Swal from 'sweetalert2'
+import { useDeleteSupportTicketMutation } from '../../../../features/slices/supportSlice'
 
 const getColor = (name) => {
   let color = ''
@@ -38,8 +39,8 @@ const getPriorityColor = (name) => {
   return color
 }
 
-const handleDelete = (id) => {
-  Swal.fire({
+const handleDelete = async (id, cb) => {
+  const res = await Swal.fire({
     title: 'Are you sure?',
     text: "You won't be able to revert this!",
     icon: 'warning',
@@ -47,14 +48,23 @@ const handleDelete = (id) => {
     confirmButtonColor: '#3085d6',
     cancelButtonColor: '#d33',
     confirmButtonText: 'Yes, delete it!',
-  }).then((result) => {
-    if (result.isConfirmed) {
-      Swal.fire('Deleted!', 'ticket has been deleted.', 'success')
-    }
   })
+
+  if (res.isConfirmed) {
+    await cb(id)
+  }
 }
 
 const TicketTable = ({ onEditTicket, footer, loading, data }) => {
+  const [deleteSupportTicket, { isLoading, isSuccess, isError }] =
+    useDeleteSupportTicketMutation()
+
+  useEffect(() => {
+    if (isSuccess) {
+      Swal.fire('Deleted!', 'ticket has been deleted.', 'success')
+    }
+  }, [isSuccess])
+
   const columns = [
     {
       title: 'ID',
@@ -136,7 +146,7 @@ const TicketTable = ({ onEditTicket, footer, loading, data }) => {
         <Space size="middle">
           <a
             style={{ color: '#737373' }}
-            onClick={() => handleDelete(record.id)}
+            onClick={() => handleDelete(record.id, deleteSupportTicket)}
           >
             Delete
           </a>
