@@ -17,7 +17,7 @@ const FormFileUpload = ({ fileName, fileSize, fileUploadingProgress }) => {
         <div className={classes.FormFileUpload__Info}>
           <div className={classes.FormFileUpload__Text}>
             <Text
-              ellipsis={{ rows: 1 }}
+              ellipsis={{ rows: 1, tooltip: { fileName } }}
               className={classes.FormFileUpload__FileName}
             >
               {fileName}

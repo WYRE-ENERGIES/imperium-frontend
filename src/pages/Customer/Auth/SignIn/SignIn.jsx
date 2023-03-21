@@ -14,6 +14,8 @@ import FormHeader from '../../../../components/Auth/Forms/Widgets/FormHeader'
 import ThirdPartyAuth from '../../../../components/Auth/Forms/Widgets/ThirdPartyAuth'
 import FormButton from '../../../../components/Auth/Forms/Widgets/FormButton'
 import FormFooter from '../../../../components/Auth/Forms/Widgets/FormFooter'
+import Error from '../../../../components/ErrorMessage/Error'
+import { ErrorMessage } from '../../../../components/ErrorMessage/ErrorMessage'
 
 const SignIn = () => {
   const formDescription = {
@@ -36,15 +38,7 @@ const SignIn = () => {
       }).unwrap()
       navigate('/overview')
     } catch (err) {
-      if (err.status === 401) {
-        setErrMsg(err?.data?.detail)
-      } else if (err.status === 400) {
-        setErrMsg(err?.data?.message)
-      } else if (err.status === 500) {
-        setErrMsg('Cannot connect to server.')
-      } else {
-        setErrMsg('Check your internet connection')
-      }
+      setErrMsg(ErrorMessage(err))
     }
   }
 
@@ -82,11 +76,7 @@ const SignIn = () => {
                 layout="vertical"
                 requiredMark="optional"
               >
-                {errMsg && (
-                  <small className={classes.SignInPage__Message}>
-                    {errMsg}
-                  </small>
-                )}
+                {errMsg && <Error Errormsg={errMsg} />}
 
                 <Form.Item
                   label={

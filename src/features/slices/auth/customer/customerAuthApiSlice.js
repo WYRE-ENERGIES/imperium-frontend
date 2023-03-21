@@ -47,6 +47,15 @@ export const authApiSlice = apiSlice.injectEndpoints({
         }
       },
     }),
+    customerBusiness: builder.mutation({
+      query: ({ credentials }) => {
+        return {
+          url: '/imperium-client/business/',
+          method: 'POST',
+          body: credentials,
+        }
+      },
+    }),
   }),
 })
 
@@ -56,4 +65,5 @@ export const {
   useCustomerNewPasswordMutation,
   useCustomerVerificationCodeMutation,
   useCustomerRegisterMutation,
+  useCustomerBusinessMutation,
 } = authApiSlice
