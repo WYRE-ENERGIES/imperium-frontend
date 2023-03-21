@@ -8,6 +8,7 @@ import { createSlice } from '@reduxjs/toolkit'
 const initialState = {
   isLoggedIn: false,
   token: null,
+  currentClientId: null,
 }
 const authSlice = createSlice({
   name: 'auth',
@@ -30,8 +31,12 @@ const authSlice = createSlice({
       removeItemFromLocalStorage('userInfo')
       removeItemFromLocalStorage('weather_info')
     },
+    switchClient: (state, { payload }) => {
+      state.currentClientId = payload
+      saveToLocalStorage('current_client', payload)
+    },
   },
 })
 
-export const { loginUser, logOutUser } = authSlice.actions
+export const { loginUser, logOutUser, switchClient } = authSlice.actions
 export default authSlice.reducer

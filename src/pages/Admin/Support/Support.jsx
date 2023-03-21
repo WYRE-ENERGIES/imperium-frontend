@@ -20,9 +20,7 @@ import { ReactComponent as UnResolvedIcon } from '../../../assets/widget-icons/u
 import classes from '../../Customer/Support/Support.module.scss'
 import useDebounce from '../../../hooks/useDebounce'
 
-const TicketForm = lazy(() =>
-  import('../../Customer/Support/TicketForm/TicketForm'),
-)
+const TicketForm = lazy(() => import('./TicketForm/TicketForm'))
 
 const getColor = (name) => {
   let color = ''
