@@ -54,14 +54,6 @@ const Account = ({ children, props }) => {
           <AccountInfo AcctInfo={AcctInfo} type={props} />
         </div>
         {children}
-        <Form.Item>
-          <Row justify={'end'} gutter={20}>
-            <Col span={8}>
-              {' '}
-              <FormButton type={'submit'} action={'Save changes'} />
-            </Col>{' '}
-          </Row>
-        </Form.Item>
       </PageLayout>
     </div>
   )

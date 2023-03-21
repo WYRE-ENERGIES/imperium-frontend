@@ -1,24 +1,30 @@
 import { Col, Form, Input, Row } from 'antd'
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import FormButton from '../../../../components/Auth/Forms/Widgets/FormButton'
+import { useCustomerDetailsQuery } from '../../../../features/slices/auth/customer/customerAuthApiSlice'
 import Account from '../Account'
 import classes from './AccounctDetails.module.scss'
 const AccountDetails = () => {
   const [form] = Form.useForm()
+  const [firstName, setFirstName] = useState('')
+  const [lastName, setLastName] = useState('')
+  const [phone, setPhone] = useState('')
+  const [address, setAddress] = useState('')
+  const { data, isLoading } = useCustomerDetailsQuery()
 
-  const onFinish = (values) => {
-    console.log('Finish:', values)
-  }
+  useEffect(() => {
+    console.log('data ', data)
+    setFirstName(data.first_name)
+    setLastName(data.last_name)
+    setPhone(data.phone)
+    setAddress(data.address)
+  })
+
   return (
     <Account props={'details'}>
       <div className={classes.AccountDetails}>
         {' '}
-        <Form
-          form={form}
-          layout="vertical"
-          onFinish={onFinish}
-          requiredMark="optional"
-        >
+        <Form form={form} layout="vertical" requiredMark="optional">
           <Row justify={'space-between'}>
             <Col>
               {' '}
@@ -33,7 +39,7 @@ const AccountDetails = () => {
                 ]}
               >
                 <Input
-                  placeholder="nisha@uitrend.com"
+                  placeholder={firstName}
                   className={classes.AccountDetails__Input}
                 />
               </Form.Item>
@@ -52,7 +58,7 @@ const AccountDetails = () => {
               >
                 <Input
                   className={classes.AccountDetails__Input}
-                  placeholder="nisha@uitrend.com"
+                  placeholder={lastName}
                 />
               </Form.Item>
             </Col>
@@ -64,14 +70,14 @@ const AccountDetails = () => {
                 rules={[
                   {
                     required: true,
-                    message: 'Please input your username!',
+                    message: 'Please your phone number!',
                   },
                 ]}
               >
                 <Input
                   className={classes.AccountDetails__Phone}
                   addonBefore="+ 234"
-                  placeholder="8123456789"
+                  placeholder={phone}
                 />
               </Form.Item>
             </Col>
@@ -89,8 +95,12 @@ const AccountDetails = () => {
           >
             <Input
               className={classes.AccountDetails__Address}
-              placeholder="12, Rockstone villa estate, Bakery bus stop, Badagri, Eko, La"
+              placeholder={address ? address : 'Update your address'}
             />
+          </Form.Item>
+
+          <Form.Item>
+            <FormButton action={'Save'} isLoading={isLoading} />
           </Form.Item>
         </Form>
       </div>
