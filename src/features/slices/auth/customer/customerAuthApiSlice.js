@@ -1,3 +1,4 @@
+import { saveToLocalStorage } from '../../../../utils/helpers'
 import { apiSlice } from '../../../api/apiSlice'
 
 export const authApiSlice = apiSlice.injectEndpoints({
@@ -46,13 +47,25 @@ export const authApiSlice = apiSlice.injectEndpoints({
           body: credentials,
         }
       },
+      transformResponse: (response, meta, arg) => {
+        return response
+      },
+      transformErrorResponse: (response, meta, arg) => response.status,
     }),
     customerBusiness: builder.mutation({
-      query: ({ credentials }) => {
+      query: (formData) => {
+        // const formData = new FormData()
+        // formData.append('business_name', values.business_name)
+        // formData.append('company_url', values.company_url)
+        // formData.append('company_logo', values.file)
+        // console.log('formData is ', formData)
         return {
           url: '/imperium-client/business/',
           method: 'POST',
-          body: credentials,
+          body: formData,
+          // headers: {
+          //   'Content-Type': 'multipart/form-data;',
+          // },
         }
       },
     }),

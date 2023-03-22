@@ -17,6 +17,7 @@ import uploadImg from '../../../../../src/assets/Auth/Featured icon.svg'
 import FormFileUpload from '../../../../components/Auth/Forms/Widgets/FormFileUpload'
 import { ErrorMessage } from '../../../../components/ErrorMessage/ErrorMessage'
 import Error from '../../../../components/ErrorMessage/Error'
+import { getItemFromLocalStorage } from '../../../../utils/helpers'
 
 const Business = () => {
   const formDescription = {
@@ -35,6 +36,7 @@ const Business = () => {
   const [fileSize, setfileSize] = useState(0)
   const [upLoadedFile, setUpLoadedFile] = useState('')
   const { Dragger } = Upload
+  const token = getItemFromLocalStorage('access')
   const formData = new FormData()
   const size = Math.round(fileSize / 1000)
   const fileUploadProps = {
@@ -43,6 +45,10 @@ const Business = () => {
     progress: { showInfo: false },
     showUploadList: false,
     maxCount: 1,
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+
     onChange(info) {
       const { status } = info.file
       if (status == 'uploading') {
@@ -53,34 +59,36 @@ const Business = () => {
       }
       if (status === 'done') {
         setFileUpload(true)
-        formData.append('company_logo', info.file)
         message.success(`${info.file.name} 
                                file uploaded successfully`)
       } else if (status === 'error') {
+        message.success(`${info.file.name} 
+                               file upload failed`)
         setFileUpload(true)
       }
     },
-    onDrop(e) {
-      console.log('Dropped files', e.dataTransfer.files)
-    },
+    onDrop(e) {},
   }
 
   const normFile = (e) => {
-    console.log('Upload event:', e)
+    formData.append('company_logo', e?.file)
     if (Array.isArray(e)) {
       return e
     }
     return e?.fileList
   }
   const onFinish = async (values) => {
+    console.log('formData ', formData)
     formData.append('business_name', values.business_name)
-    formData.append('company_url', values.company_url)
+    formData.append('company_url', values.campany_url)
+    formData.append('company_logo', values.file?.originFileObj)
+    console.log('values', values)
+    // https://www.man.com
     try {
-      await customerBusiness({
-        credentials: formData,
-      }).unwrap()
+      await customerBusiness(formData).unwrap()
       navigate('/')
     } catch (err) {
+      console.log(err)
       setErrMsg(ErrorMessage(err))
     }
   }
@@ -133,7 +141,7 @@ const Business = () => {
                       Company
                     </p>
                   }
-                  name="campany_name"
+                  name="campany_url"
                   required
                 >
                   <Input
@@ -149,15 +157,15 @@ const Business = () => {
                   className={classes.Business__FileUpload}
                 >
                   <Form.Item
-                    name="dragger"
+                    name="file"
                     valuePropName="fileList"
                     getValueFromEvent={normFile}
                     noStyle
                   >
                     <Dragger
                       {...fileUploadProps}
-                      name="files"
-                      action=""
+                      name="file"
+                      action="https://www.imperiumdev.wyreng.com/imperium-client/business/"
                       style={{
                         border: '1px solid #E6E6E6',
                         background: 'white',
