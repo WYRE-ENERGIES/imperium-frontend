@@ -1,5 +1,5 @@
 import { Button, List } from 'antd'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   additionalOverviewBarProps,
   additionalOverviewProps,
@@ -18,6 +18,7 @@ import SimpleBarChart from '../../../components/Charts/SimpleBarChart/SimpleBarC
 import WidgetFilter from '../../../components/WidgetFilter/WidgetFilter'
 import classes from '../../Customer/Overview/Overview.module.scss'
 import { listData } from '../../../utils/data'
+import { useGetAdminOverviewAnalyticsQuery } from '../../../features/slices/overview/adminOverviewSlice'
 
 const Overview = () => {
   const [pieChartData, setPieChartData] = useState([50, 75, 64, 35, 80, 27])
@@ -48,40 +49,61 @@ const Overview = () => {
     },
   ])
 
-  const widgets = [
-    {
-      id: 1,
-      title: 'Total Energy Generation',
-      duration: 'For the last 12 months',
-      value: '1124.89',
-      valueCurrency: 'kWh',
-      graph: GraphIcon2,
-    },
-    {
-      id: 2,
-      title: 'Total Energy Consumption',
-      duration: 'For the last 12 months',
-      value: '654.14',
-      valueCurrency: 'kWh',
-      graph: GraphIcon,
-    },
-    {
-      id: 3,
-      title: 'Total Customers',
-      duration: 'For the last 12 months',
-      value: '279',
-      graph: GraphIcon2,
-    },
-  ].map((widget) => (
-    <AdminEnergyAnalytic
-      key={widget.id}
-      duration={widget.duration}
-      valueCurrency={widget.valueCurrency}
-      title={widget.title}
-      value={widget.value}
-      LineGraph={widget.graph}
-    />
-  ))
+  const [widgets, setWidgets] = useState([])
+  const [page, setPage] = useState(1)
+  const [globalFilter, setGlobalFilter] = useState('yearly')
+
+  const {
+    isFetching: isAnalyticsFetching,
+    isError: isAnalyticsError,
+    error: analyticsError,
+    data: analyticsData,
+  } = useGetAdminOverviewAnalyticsQuery({
+    filterBy: globalFilter,
+  })
+
+  useEffect(() => {
+    if (isAnalyticsFetching) return
+    setWidgets(
+      [
+        {
+          id: 1,
+          title: 'Total Energy Generation',
+          duration: 'For the last 12 months',
+          value:
+            parseFloat(analyticsData?.total_installed_capacity?.toFixed(1)) ||
+            0,
+          valueCurrency: 'kWh',
+          graph: GraphIcon2,
+        },
+        {
+          id: 2,
+          title: 'Total Energy Consumption',
+          duration: 'For the last 12 months',
+          value:
+            parseFloat(analyticsData?.total_energy_consumed?.toFixed(1)) || 0,
+          valueCurrency: 'kWh',
+          graph: GraphIcon,
+        },
+        {
+          id: 3,
+          title: 'Total Customers',
+          duration: 'For the last 12 months',
+          value: parseFloat(analyticsData?.total_customers?.toFixed(1)) || 0,
+          graph: GraphIcon2,
+        },
+      ].map((widget) => (
+        <AdminEnergyAnalytic
+          key={widget.id}
+          duration={widget.duration}
+          valueCurrency={widget.valueCurrency}
+          title={widget.title}
+          value={widget.value}
+          LineGraph={widget.graph}
+        />
+      )),
+    )
+  }, [isAnalyticsFetching])
 
   return (
     <AdminPageLayout>
@@ -90,7 +112,10 @@ const Overview = () => {
           <PageBreadcrumb title="Overview" items={['Overview']} />
         </section>
         <section className={classes.Overview__filters}>
-          <WidgetFilter />
+          <WidgetFilter
+            selectFilterBy={(value) => setGlobalFilter(value)}
+            filterBy={globalFilter}
+          />
         </section>
         <div className={classes.Overview__widgets}>{widgets}</div>
         <div className={classes.Overview__map}>{/* <ShsDeviceMap /> */}</div>

@@ -9,22 +9,57 @@ import {
 } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { ToastContainer, toast } from 'react-toastify'
+import {
+  useAssignShsMutation,
+  useListShsRegionsQuery,
+  useListShsSectorsQuery,
+  useListShsStatesQuery,
+  useListShsVendorsQuery,
+} from '../../../../features/slices/customersSlice'
 
 import { PlusOutlined } from '@ant-design/icons'
 import { ReactComponent as TicketIcon } from '../../../../assets/widget-icons/home-icon.svg'
 import classes from './SHSForm.module.scss'
-import { useAssignShsMutation } from '../../../../features/slices/customersSlice'
 
 const { Text, Title } = Typography
 const { Option } = Select
 
 const AddSHSForm = ({ toggleModal }) => {
   const [form] = Form.useForm()
-  const [inputs, setInputs] = useState(['uid-1'])
+  const [inputs, setInputs] = useState(['uid '])
+  let sectors = []
+  let regions = []
+  let states = []
+  let vendors = []
+
+  const {
+    isFetching: fetchingRegion,
+    isError: regionError,
+    data: regionData,
+  } = useListShsRegionsQuery()
+
+  const {
+    isFetching: fetchingSector,
+    isError: sectorError,
+    data: sectorData,
+  } = useListShsSectorsQuery()
+
+  const {
+    isFetching: fetchingState,
+    isError: stateError,
+    data: stateData,
+  } = useListShsStatesQuery()
+
+  const {
+    isFetching: fetchingVendor,
+    isError: vendorError,
+    data: vendorData,
+  } = useListShsVendorsQuery()
 
   const [assignShs, { isLoading, isSuccess }] = useAssignShsMutation()
 
   const onFinish = (values) => {
+    console.log({ values })
     // assignShs(values)
   }
 
@@ -39,9 +74,13 @@ const AddSHSForm = ({ toggleModal }) => {
     }
   }, [isLoading, isSuccess])
 
-  const addNewInput = () => {
-    setInputs((prev) => [...prev, `uid-${inputs.length + 1}`])
-  }
+  // if (!fetchingRegion && !regionError && regionData) {
+  //   regions = regionData.data.map((region, index) => (
+  //     <Option value={region.id} key={index}>
+  //       {region.name}
+  //     </Option>
+  //   ))
+  // }
 
   return (
     <Form
