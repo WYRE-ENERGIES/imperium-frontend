@@ -5,9 +5,8 @@ import { useNavigate, useSearchParams } from 'react-router-dom'
 
 import ButtonLoader from '../../../components/ButtonLoader/ButtonLoader'
 import { ReactComponent as Logo } from '../../../assets/logo.svg'
-import classes from './UserInvite.module.scss'
-import { getItemFromLocalStorage } from '../../../utils/helpers'
-import { useAcceptInviteMutation } from '../../../features/slices/users/customer/usersSlice'
+import classes from '../../Customer/UserInvite/UserInvite.module.scss'
+import { useAcceptInviteMutation } from '../../../features/slices/users/usersSlice'
 
 const { Text, Title } = Typography
 
@@ -40,13 +39,12 @@ const UserInvite = () => {
     useAcceptInviteMutation()
 
   const handleAccept = () => {
-    const currentClient = getItemFromLocalStorage('current_client')
     acceptInvite({ invitee_email: email, role })
   }
 
   useEffect(() => {
     if (!isLoading && isSuccess) {
-      navigate(`/sign-up?email=${email}`)
+      navigate(`/admin/sign-up?email=${email}`)
     }
 
     if (isError) {

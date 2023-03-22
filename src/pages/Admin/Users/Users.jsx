@@ -10,7 +10,7 @@ import { ToastContainer, toast } from 'react-toastify'
 import {
   useGetUsersListQuery,
   useRemoveUserMutation,
-} from '../../../features/slices/users/customer/usersSlice'
+} from '../../../features/slices/users/usersSlice'
 
 import AdminPageLayout from '../../../components/Layout/AdminPageLayout/AdminPageLayout'
 import { FiTrash2 } from 'react-icons/fi'
@@ -21,7 +21,7 @@ import ReactAvatar from 'react-avatar'
 import Swal from 'sweetalert2'
 import TableFooter from '../../../components/TableFooter/TableFooter'
 import TableWithFilter from '../../../components/SHSTableWithFilter/SHSTableWithFilter'
-import classes from './Users.module.scss'
+import classes from '../../Customer/Users/Users.module.scss'
 import useDebounce from '../../../hooks/useDebounce'
 import { useLocation } from 'react-router-dom'
 
@@ -86,13 +86,13 @@ const Users = () => {
           <ReactAvatar
             size={30}
             round={true}
-            name={record?.name || record.invitee_email}
+            name={record.name || record.invitee_email}
             fgColor="#385E2B"
             color="#F0F7ED"
           />
           <div className={classes.Users__names}>
-            {record.invite_status.toLowerCase() !== 'pending' && (
-              <h3>{record?.name}</h3>
+            {record.status.toLowerCase() !== 'pending' && (
+              <h3>{record.name}</h3>
             )}
             <h4>{record.invitee_email}</h4>
           </div>
@@ -105,6 +105,7 @@ const Users = () => {
       dataIndex: 'role',
       sorter: (a, b) => a.role.localeCompare(b.role),
     },
+
     {
       title: 'Date Added',
       key: 'created_at',
@@ -122,9 +123,9 @@ const Users = () => {
     },
     {
       title: 'Status',
-      key: 'invite_status',
-      dataIndex: 'invite_status',
-      sorter: (a, b) => a.invite_status.localeCompare(b.status),
+      key: 'status',
+      dataIndex: 'status',
+      sorter: (a, b) => a.status.localeCompare(b.status),
       render: (value) => {
         const color = value.toLowerCase() !== 'pending' ? '#027A48' : '#B54708'
         return (

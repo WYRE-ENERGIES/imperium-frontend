@@ -1,11 +1,13 @@
 import { Button, Form, Input, Modal, Select, Typography } from 'antd'
 import React, { Suspense, lazy, useEffect, useState } from 'react'
 import { ToastContainer, toast } from 'react-toastify'
+import {
+  useGetUsersRolesQuery,
+  useInviteUserMutation,
+} from '../../../../features/slices/users/usersSlice'
 
 import { ReactComponent as TicketIcon } from '../../../../assets/user-icon.svg'
-import classes from './NewUserForm.module.scss'
-import { getItemFromLocalStorage } from '../../../../utils/helpers'
-import { useInviteUserMutation } from '../../../../features/slices/users/customer/usersSlice'
+import classes from '../../../Customer/Users/NewUserForm/NewUserForm.module.scss'
 
 const ButtonLoader = lazy(() =>
   import('../../../../components/ButtonLoader/ButtonLoader'),
@@ -26,17 +28,22 @@ const layout = {
 const ModalForm = ({ toggleModal }) => {
   const [roleDescription, setRoleDescription] = useState('')
 
+  const { data } = useGetUsersRolesQuery()
   const [inviteUser, { isLoading, isSuccess }] = useInviteUserMutation()
 
   const [form] = Form.useForm()
   const onFinish = ({ invitee_email, role }) => {
-    const currentClient = getItemFromLocalStorage('current_client')
+    let choice = JSON.parse(role)
     inviteUser({
       invitee_email,
-      role,
-      client: currentClient,
-      redirect_url: `${window.location.origin}/accept-user`,
+      role: choice.value,
+      redirect_url: `${window.location.origin}/admin/accept-user`,
     })
+  }
+
+  const handleRoleChange = (role) => {
+    let choice = JSON.parse(role)
+    setRoleDescription(choice.description)
   }
 
   useEffect(() => {
@@ -96,11 +103,12 @@ const ModalForm = ({ toggleModal }) => {
         <Select
           className={classes.NewUserForm__select}
           placeholder="Select Role"
+          onChange={handleRoleChange}
           allowClear
         >
-          {['owner', 'viewer']?.map((role, index) => (
-            <Option key={`${role}-${index}`} value={role}>
-              {role}
+          {data?.map((role, index) => (
+            <Option key={`${role.name}-${index}`} value={JSON.stringify(role)}>
+              {role.name}
             </Option>
           ))}
         </Select>
