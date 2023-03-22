@@ -123,21 +123,23 @@ function App() {
             <Route path="new-password" element={<NewPasswordPage />} />
             <Route path="disabled-account" element={<DisabledAccount />} />
             <Route path="contact-error" element={<ContactError />} />
-            <Route path="account">
-              <Route path="business" element={<AccountBusiness />} />
-              <Route index path="details" element={<AccountDetails />} />
-              <Route path="password" element={<AccountPassword />} />
+            <Route element={<PrivateRoute />}>
+              <Route path="account">
+                <Route path="business" element={<AccountBusiness />} />
+                <Route index path="details" element={<AccountDetails />} />
+                <Route path="password" element={<AccountPassword />} />
+              </Route>
+              <Route path="overview">
+                <Route index element={<Overview />} />
+                <Route path="shs/:id" element={<Shs />} />
+              </Route>
+              <Route path="support" element={<Support />} />
+              <Route path="energy-analytic" element={<EnergyAnalytic />} />
+              <Route path="panel-analytic" element={<PanelAnalytic />} />
+              <Route path="battery-analytic" element={<Battery />} />
+              <Route path="active-alerts" element={<ActiveAlerts />} />
+              <Route path="users" element={<Users />} />
             </Route>
-            <Route path="overview">
-              <Route index element={<Overview />} />
-              <Route path="shs/:id" element={<Shs />} />
-            </Route>
-            <Route path="support" element={<Support />} />
-            <Route path="energy-analytic" element={<EnergyAnalytic />} />
-            <Route path="panel-analytic" element={<PanelAnalytic />} />
-            <Route path="battery-analytic" element={<Battery />} />
-            <Route path="active-alerts" element={<ActiveAlerts />} />
-            <Route path="users" element={<Users />} />
             <Route path="accept-user" element={<UserInvitePage />} />
 
             {/* Admin routes */}
@@ -179,8 +181,8 @@ function App() {
                   path="voltage-current-analytics"
                   element={<AdminVoltageCurrent />}
                 />
-                <Route path="accept-user" element={<AdminUserInvitePage />} />
               </Route>
+              <Route path="accept-user" element={<AdminUserInvitePage />} />
             </Route>
           </Route>
         </Routes>

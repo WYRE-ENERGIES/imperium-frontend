@@ -7,7 +7,7 @@ const PrivateRoute = ({ pathTo }) => {
   return isAuthenticated() ? (
     <Outlet />
   ) : (
-    <Navigate to={pathTo ? '/admin' : '/'} />
+    <Navigate to={pathTo ? '/admin/sign-in' : '/'} />
   )
 }
 

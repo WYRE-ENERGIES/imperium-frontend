@@ -1,4 +1,5 @@
 import {
+  emptyLocalStorage,
   removeItemFromLocalStorage,
   saveToLocalStorage,
 } from '../../../utils/helpers'
@@ -21,19 +22,16 @@ const authSlice = createSlice({
       saveToLocalStorage('access', token)
       saveToLocalStorage('userInfo', user_info)
 
-      if (action.payload.clients) {
-        const { clients } = action.payload
-        state.currentClientId = clients[0]
-        saveToLocalStorage('current_client', clients[0])
+      if (action.payload.client) {
+        const { client } = action.payload
+        state.currentClientId = Object.values(client)[0]
+        saveToLocalStorage('current_client', Object.values(client)[0])
       }
     },
     logOutUser: (state) => {
       state.isLoggedIn = false
       state.token = null
-      removeItemFromLocalStorage('access')
-      removeItemFromLocalStorage('refresh')
-      removeItemFromLocalStorage('userInfo')
-      removeItemFromLocalStorage('weather_info')
+      emptyLocalStorage()
     },
     switchClient: (state, { payload }) => {
       state.currentClientId = payload

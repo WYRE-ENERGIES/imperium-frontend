@@ -58,7 +58,12 @@ export const formatLabel = (value) => {
 }
 
 export const getUserFullName = () => {
-  const { first_name, last_name } = getItemFromLocalStorage('userInfo')
+  const userInfo = getItemFromLocalStorage('userInfo')
+  if (!userInfo) {
+    return 'User'
+  }
+
+  const { first_name, last_name } = userInfo
   return `${first_name} ${last_name}`
 }
 
@@ -95,3 +100,5 @@ export const DataStatistics = (data, key) => {
   ]
   return dataList.map((value) => (value?.[key] !== null ? value?.[key] : 0))
 }
+
+export const emptyLocalStorage = () => localStorage.clear()

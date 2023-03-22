@@ -150,7 +150,12 @@ const TicketTable = ({ onEditTicket, footer, loading, data }) => {
           >
             Delete
           </a>
-          <a style={{ color: '#737373' }} onClick={() => onEditTicket(record)}>
+          <a
+            style={{ color: '#737373' }}
+            onClick={
+              record.status !== 'Pending' ? null : () => onEditTicket(record)
+            }
+          >
             Edit
           </a>
         </Space>
