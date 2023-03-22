@@ -8,7 +8,7 @@ const FormFooter = ({ footer, action, footerlink, extra }) => {
       {extra && extra}
       <div className={classes.FormFooter__OptAuth}>
         {' '}
-        {footerlink && (
+        {footerlink ? (
           <div className={classes.FormFooter__content}>
             <p>
               <Link>Continue with SAML SSO</Link>
@@ -18,6 +18,8 @@ const FormFooter = ({ footer, action, footerlink, extra }) => {
               <Link to={footerlink}>{action}</Link>
             </p>
           </div>
+        ) : (
+          <p className={classes.FormFooter__AuthOpt}>{footer}</p>
         )}
       </div>
     </div>

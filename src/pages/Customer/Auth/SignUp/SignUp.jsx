@@ -1,5 +1,5 @@
 import { Row, Form, Input } from 'antd'
-import React from 'react'
+import React, { useEffect } from 'react'
 import FormDescription from '../../../../components/Auth/Forms/Widgets/FormDescription'
 import LeftLayout from '../../../../components/Auth/Layout/LeftLayout/LeftLayout'
 import RightLayout from '../../../../components/Auth/Layout/RightLayout/RightLayout'
@@ -9,7 +9,7 @@ import PageIndicator from '../../../../components/Auth/Forms/Widgets/FormPageInd
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { getItemFromLocalStorage } from '../../../../utils/helpers'
-import { useEffect } from 'react'
+
 import FormHeader from '../../../../components/Auth/Forms/Widgets/FormHeader'
 import ThirdPartyAuth from '../../../../components/Auth/Forms/Widgets/ThirdPartyAuth'
 import FormFooter from '../../../../components/Auth/Forms/Widgets/FormFooter'

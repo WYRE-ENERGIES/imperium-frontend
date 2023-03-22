@@ -13,6 +13,8 @@ import RightLayout from '../../../../components/Auth/Layout/RightLayout/RightLay
 import classes from './Verification.module.scss'
 import FormButton from '../../../../components/Auth/Forms/Widgets/FormButton'
 import FormHeader from '../../../../components/Auth/Forms/Widgets/FormHeader'
+import { useEffect } from 'react'
+import { saveToLocalStorage } from '../../../../utils/helpers'
 const Verification = () => {
   const email = useLocation()
   const formDescription = {
@@ -23,7 +25,7 @@ const Verification = () => {
     ImgHeight: '2px',
   }
   const [errMsg, setErrMsg] = useState('')
-  const [customerVerificationCode, { isLoading }] =
+  const [customerVerificationCode, { data, isLoading }] =
     useCustomerVerificationCodeMutation()
   const navigate = useNavigate()
   const onFinish = async (values) => {
@@ -32,6 +34,7 @@ const Verification = () => {
         email: email.state.email,
         otp: values.otp,
       }).unwrap()
+
       navigate('/business')
     } catch (err) {
       if (err.status === 401) {
@@ -45,6 +48,13 @@ const Verification = () => {
       }
     }
   }
+  useEffect(() => {
+    if (data) {
+      const access_code = data?.message?.tokens?.access
+      saveToLocalStorage('access', access_code)
+    }
+  }, [data])
+
   return (
     <div className={classes.Verification}>
       <Row className={classes.Verification__Layout}>
