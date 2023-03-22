@@ -86,7 +86,6 @@ const Business = () => {
       await customerBusiness(formData).unwrap()
       navigate('/')
     } catch (err) {
-      console.log(err)
       setErrMsg(ErrorMessage(err))
     }
   }

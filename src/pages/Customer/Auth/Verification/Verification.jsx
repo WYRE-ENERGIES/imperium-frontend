@@ -15,6 +15,8 @@ import FormButton from '../../../../components/Auth/Forms/Widgets/FormButton'
 import FormHeader from '../../../../components/Auth/Forms/Widgets/FormHeader'
 import { useEffect } from 'react'
 import { saveToLocalStorage } from '../../../../utils/helpers'
+import { ErrorMessage } from '../../../../components/ErrorMessage/ErrorMessage'
+import Error from '../../../../components/ErrorMessage/Error'
 const Verification = () => {
   const email = useLocation()
   const formDescription = {
@@ -31,22 +33,12 @@ const Verification = () => {
   const onFinish = async (values) => {
     try {
       await customerVerificationCode({
-        email: email.state.email,
+        email: 'email.state.email',
         otp: values.otp,
       }).unwrap()
-
-      navigate('/business')
-      console.log(data)
+      navigate('/details')
     } catch (err) {
-      if (err.status === 401) {
-        setErrMsg(err?.data?.detail)
-      } else if (err.status === 400) {
-        setErrMsg(err?.data?.email)
-      } else if (err.status === 500) {
-        setErrMsg('Cannot connect to server.')
-      } else {
-        setErrMsg('Check your internet connection')
-      }
+      setErrMsg(ErrorMessage(err))
     }
   }
   useEffect(() => {
@@ -80,12 +72,7 @@ const Verification = () => {
               layout="vertical"
               requiredMark="optional"
             >
-              {errMsg && (
-                <small className={classes.Verification__Message}>
-                  {errMsg}
-                </small>
-              )}
-
+              {errMsg && <Error Errormsg={errMsg} />}
               <Form.Item
                 label={
                   <p
