@@ -33,7 +33,7 @@ const Verification = () => {
   const onFinish = async (values) => {
     try {
       await customerVerificationCode({
-        email: 'email.state.email',
+        email: email.state.email,
         otp: values.otp,
       }).unwrap()
       navigate('/details')
@@ -41,6 +41,7 @@ const Verification = () => {
       setErrMsg(ErrorMessage(err))
     }
   }
+
   useEffect(() => {
     if (data) {
       const access_code = data?.message?.tokens?.access

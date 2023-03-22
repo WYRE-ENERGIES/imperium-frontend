@@ -54,20 +54,20 @@ export const authApiSlice = apiSlice.injectEndpoints({
     }),
     customerBusiness: builder.mutation({
       query: (formData) => {
-        // const formData = new FormData()
-        // formData.append('business_name', values.business_name)
-        // formData.append('company_url', values.company_url)
-        // formData.append('company_logo', values.file)
-        // console.log('formData is ', formData)
         return {
           url: '/imperium-client/business/',
           method: 'POST',
           body: formData,
-          // headers: {
-          //   'Content-Type': 'multipart/form-data;',
-          // },
         }
       },
+      // async queryFn(formData) {
+      //   console.log(formData)
+      //     return {
+      //       url: '/imperium-client/business/',
+      //       method: 'POST',
+      //       body: formData,
+      //     },
+      // },
     }),
     customerGetDetails: builder.query({
       query: () => {
