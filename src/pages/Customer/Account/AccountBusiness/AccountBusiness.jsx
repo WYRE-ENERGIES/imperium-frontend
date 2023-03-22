@@ -1,13 +1,41 @@
 import { Col, Form, Input, Row } from 'antd'
-import React from 'react'
+import React, { useState } from 'react'
 import FormButton from '../../../../components/Auth/Forms/Widgets/FormButton'
 import classes from './AccountBusiness.module.scss'
 import Account from '../Account'
+import {
+  useCustomerBusinessMutation,
+  useCustomerGetBusinessQuery,
+} from '../../../../features/slices/auth/customer/customerAuthApiSlice'
+import { ErrorMessage } from '../../../../components/ErrorMessage/ErrorMessage'
+import { useEffect } from 'react'
 const AccountBusiness = () => {
   const [form] = Form.useForm()
-  const onFinish = (values) => {
-    console.log('Finish:', values)
+  const formData = new FormData()
+  const [customerBusiness, { isLoading: updatingBusiness }] =
+    useCustomerBusinessMutation()
+  const { data, isLoading: gettingBusiness } = useCustomerGetBusinessQuery()
+  const [upLoadedFile, setUpLoadedFile] = useState('')
+  const [errMsg, setErrMsg] = useState('')
+  const [businessName, setBusinessName] = useState('')
+  const [companyLogo, setCompanyLogo] = useState(null)
+  const [companyUrl, setCompanyUrl] = useState('')
+
+  const onFinish = async (values) => {
+    formData.append('company_logo', upLoadedFile)
+    formData.append('business_name', values.business_name)
+    formData.append('company_url', values.campany_url)
+
+    try {
+      await customerBusiness(formData).unwrap()
+    } catch (err) {
+      setErrMsg(ErrorMessage(err))
+    }
   }
+
+  useEffect(() => {
+    console.log(data)
+  }, [])
   return (
     <Account props={'business'}>
       <div className={classes.AccountBusiness}>
@@ -23,7 +51,7 @@ const AccountBusiness = () => {
               {' '}
               <Form.Item
                 label="Business name"
-                name="business-name"
+                name="business_name"
                 rules={[
                   {
                     required: true,
@@ -41,7 +69,7 @@ const AccountBusiness = () => {
               {' '}
               <Form.Item
                 label="Company"
-                name="company"
+                name="company_url"
                 rules={[
                   {
                     required: true,
@@ -50,7 +78,7 @@ const AccountBusiness = () => {
                 ]}
               >
                 <Input
-                  addonBefore={'http://'}
+                  addonBefore={'https://'}
                   className={classes.AccountBusiness__Company}
                   placeholder="www.yourdomain.com"
                 />

@@ -61,6 +61,14 @@ export const authApiSlice = apiSlice.injectEndpoints({
         }
       },
     }),
+    customerGetBusiness: builder.query({
+      query: () => {
+        return {
+          url: '/imperium-client/business/',
+          method: 'GET',
+        }
+      },
+    }),
     customerGetDetails: builder.query({
       query: () => {
         return {
@@ -102,4 +110,5 @@ export const {
   useCustomerGetDetailsQuery,
   useCustomerChangePasswordMutation,
   useCustomerUpdateDetailsMutation,
+  useCustomerGetBusinessQuery,
 } = authApiSlice
