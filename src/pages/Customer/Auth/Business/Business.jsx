@@ -78,14 +78,8 @@ const Business = () => {
     return e?.fileList
   }
   const onFinish = async (values) => {
-    console.log('formData ', formData)
-    formData.append('business_name', values.business_name)
-    formData.append('company_url', values.campany_url)
-    formData.append('company_logo', values.file?.originFileObj)
-    console.log('values', values)
-
     try {
-      await customerBusiness(formData).unwrap()
+      await customerBusiness(values).unwrap()
       navigate('/')
     } catch (err) {
       console.log(err)
