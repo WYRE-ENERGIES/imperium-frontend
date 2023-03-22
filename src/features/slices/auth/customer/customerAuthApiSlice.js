@@ -107,7 +107,7 @@ export const {
   useCustomerVerificationCodeMutation,
   useCustomerRegisterMutation,
   useCustomerBusinessMutation,
- useCustomerGetDetailsQuery,
+  useCustomerGetDetailsQuery,
   useCustomerChangePasswordMutation,
   useCustomerUpdateDetailsMutation,
 } = authApiSlice

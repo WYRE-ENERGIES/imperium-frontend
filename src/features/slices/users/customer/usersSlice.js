@@ -1,12 +1,14 @@
-import { apiSlice } from '../api/apiSlice'
+import { apiSlice } from '../../../api/apiSlice'
+import { getItemFromLocalStorage } from '../../../../utils/helpers'
 
-const ADMIN_URL_PATH = '/imperium-admin/'
+const CLIENT_URL_PATH = '/imperium-client/'
 
 export const usersApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getUsersList: builder.query({
       query: ({ page, search }) => {
-        let url = `${ADMIN_URL_PATH}list-users/?page=${page}`
+        const clientId = getItemFromLocalStorage('current_client')
+        let url = `${CLIENT_URL_PATH}user-invite/list-users/${clientId}/?page=${page}`
 
         if (search) {
           url += `&search=${search}`
@@ -24,27 +26,27 @@ export const usersApiSlice = apiSlice.injectEndpoints({
       },
       providesTags: ['Users'],
     }),
-    getUsersRoles: builder.query({
-      query: () => ({ url: `${ADMIN_URL_PATH}list-user-roles/` }),
-    }),
     inviteUser: builder.mutation({
       query: (data) => ({
-        url: `${ADMIN_URL_PATH}invite-user/`,
+        url: `${CLIENT_URL_PATH}invite-user/`,
         method: 'POST',
         body: data,
       }),
       invalidatesTags: ['Users'],
     }),
     removeUser: builder.mutation({
-      query: (email) => ({
-        url: `${ADMIN_URL_PATH}remove-user/${email}`,
-        method: 'DELETE',
-      }),
+      query: (email) => {
+        const clientId = getItemFromLocalStorage('current_client')
+        return {
+          url: `${CLIENT_URL_PATH}user-invite/remove-user/${clientId}/${email}`,
+          method: 'DELETE',
+        }
+      },
       invalidatesTags: ['Users'],
     }),
     acceptInvite: builder.mutation({
       query: (data) => ({
-        url: `${ADMIN_URL_PATH}accept-user/`,
+        url: `${CLIENT_URL_PATH}accept-invite/`,
         method: 'POST',
         body: data,
       }),
@@ -54,7 +56,6 @@ export const usersApiSlice = apiSlice.injectEndpoints({
 
 export const {
   useGetUsersListQuery,
-  useGetUsersRolesQuery,
   useInviteUserMutation,
   useRemoveUserMutation,
   useAcceptInviteMutation,

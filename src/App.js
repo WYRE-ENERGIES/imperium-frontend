@@ -99,6 +99,12 @@ const AdminOverview = lazy(() => import('./pages/Admin/Overview/Overview'))
 const AdminVoltageCurrent = lazy(() =>
   import('./pages/Admin/VoltageCurrent/VoltageCurrent'),
 )
+
+const AdminUsers = lazy(() => import('./pages/Admin/Users/Users'))
+const AdminUserInvitePage = lazy(() =>
+  import('./pages/Admin/UserInvite/UserInvite'),
+)
+
 const PrivateRoute = lazy(() => import('./utils/PrivateRoute'))
 
 function App() {
@@ -160,7 +166,7 @@ function App() {
                   path="energy-analytic"
                   element={<AdminEnergyAnalytic />}
                 />
-                <Route path="users" element={<Users />} />
+                <Route path="users" element={<AdminUsers />} />
                 <Route path="support" element={<AdminSupport />} />
 
                 <Route path="customers">
@@ -173,6 +179,7 @@ function App() {
                   path="voltage-current-analytics"
                   element={<AdminVoltageCurrent />}
                 />
+                <Route path="accept-user" element={<AdminUserInvitePage />} />
               </Route>
             </Route>
           </Route>
