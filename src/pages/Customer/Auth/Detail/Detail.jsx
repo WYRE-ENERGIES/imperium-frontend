@@ -33,7 +33,9 @@ const Details = () => {
       await customerUpdateDetails({
         credentials: values,
       }).unwrap()
+      navigate('/business')
     } catch (err) {
+      console.log(err)
       setErrMsg(ErrorMessage(err))
     }
   }

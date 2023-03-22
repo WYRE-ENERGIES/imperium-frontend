@@ -62,16 +62,11 @@ const Business = () => {
         message.success(`${info.file.name} 
                                file uploaded successfully`)
       } else if (status === 'error') {
-        message.success(`${info.file.name} 
-                               file upload failed`)
         setFileUpload(true)
       }
     },
-    onDrop(e) {},
   }
-
   const normFile = (e) => {
-    formData.append('company_logo', e?.file)
     if (Array.isArray(e)) {
       return e
     }
@@ -161,13 +156,10 @@ const Business = () => {
                   >
                     <Dragger
                       {...fileUploadProps}
-                      beforeUpload={(file, fileList) => {
-                        // Access file content here and do something with it
-                        console.log(file)
+                      beforeUpload={(file) => {
                         setUpLoadedFile(file)
                       }}
                       name="file"
-                      action="https://www.imperiumdev.wyreng.com/imperium-client/business/"
                       style={{
                         border: '1px solid #E6E6E6',
                         background: 'white',
