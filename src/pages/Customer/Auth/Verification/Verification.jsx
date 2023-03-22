@@ -50,6 +50,7 @@ const Verification = () => {
     }
   }
   useEffect(() => {
+    console.log(data)
     if (data) {
       const access_code = data?.message?.tokens?.access
       saveToLocalStorage('access', access_code)

@@ -78,8 +78,12 @@ const Business = () => {
     return e?.fileList
   }
   const onFinish = async (values) => {
+    formData.append('company_logo', upLoadedFile)
+    formData.append('business_name', values.business_name)
+    formData.append('company_url', values.campany_url)
+
     try {
-      await customerBusiness(values).unwrap()
+      await customerBusiness(formData).unwrap()
       navigate('/')
     } catch (err) {
       console.log(err)
@@ -158,6 +162,11 @@ const Business = () => {
                   >
                     <Dragger
                       {...fileUploadProps}
+                      beforeUpload={(file, fileList) => {
+                        // Access file content here and do something with it
+                        console.log(file)
+                        setUpLoadedFile(file)
+                      }}
                       name="file"
                       action="https://www.imperiumdev.wyreng.com/imperium-client/business/"
                       style={{

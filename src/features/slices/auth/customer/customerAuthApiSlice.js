@@ -53,26 +53,21 @@ export const authApiSlice = apiSlice.injectEndpoints({
       transformErrorResponse: (response, meta, arg) => response.status,
     }),
     customerBusiness: builder.mutation({
-      async queryFn(values, _queryApi, _extraOptions, fetchWithBQ) {
-        // upload with multipart/form-data
-        const formData = new FormData()
-        formData.append('business_name', values.business_name)
-        formData.append('company_url', values.campany_url)
-        formData.append('company_logo', values.file)
-        const response = await fetchWithBQ(
-          {
-            url: '/files',
-            method: 'POST',
-            body: formData,
-          },
-          _queryApi,
-          _extraOptions,
-        )
-        if (response.error) throw response.error
-        return response.data
-          ? { data: response.data }
-          : { error: response.error }
+      query: (formData) => {
+        return {
+          url: '/imperium-client/business/',
+          method: 'POST',
+          body: formData,
+        }
       },
+      // async queryFn(formData) {
+      //   console.log(formData)
+      //     return {
+      //       url: '/imperium-client/business/',
+      //       method: 'POST',
+      //       body: formData,
+      //     },
+      // },
     }),
     customerGetDetails: builder.query({
       query: () => {
