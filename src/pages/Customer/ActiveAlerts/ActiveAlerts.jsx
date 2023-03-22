@@ -1,29 +1,34 @@
 import FormButton from '../../../components/Auth/Forms/Widgets/FormButton'
 import PageBreadcrumb from '../../../components/PageBreadcrumb/PageBreadcrumb'
 import PageLayout from '../../../components/Layout/PageLayout'
-import React from 'react'
+import React, { useState } from 'react'
 import ShsCapacityDropdown from '../../../components/ShsCapacityDropdown/ShsCapacityDropdown'
 import { Table } from 'antd'
 import alertIcon from '../../../../src/assets/widget-icons/alertIcon.svg'
 import classes from './ActiveAlerts.module.scss'
+import { useGetCustomerActiveAlertsQuery } from '../../../features/slices/activeAlerts/customer/customerActiveAlertSlice'
+import { getItemFromLocalStorage } from '../../../utils/helpers'
+import { useListClientShsDevicesQuery } from '../../../features/slices/allShsSlice'
+import { useEffect } from 'react'
+
 const ActiveAlerts = () => {
   const title = () => (
     <p style={{ fontWeight: '500', fontSize: '18px' }}>Active Alerts Table</p>
   )
+  const clientId = getItemFromLocalStorage('current_client')
+  const [activeAlert, setActiveAlerts] = useState(1)
+  const [page, setPage] = useState(1)
 
-  const footer = () => {
-    return (
-      <div className={classes.ActiveAlerts__Footer}>
-        <div className={classes.ActiveAlerts__NavBtn}>
-          {' '}
-          <FormButton type="button" action="Previous" />
-          <FormButton type="button" action="Next" />
-        </div>
-        <div className={classes.ActiveAlerts__Pagination}>Page 1 of 10</div>
-      </div>
-    )
-  }
-
+  const { data: shsDevices, isLoading: shsDevicesIsLoading } =
+    useListClientShsDevicesQuery({
+      client_id: clientId,
+    })
+  const { data: activeAlerts, isLoading: activeAlertsIsLoading } =
+    useGetCustomerActiveAlertsQuery({
+      client_id: clientId,
+      page: page,
+      device_id: shsDevices,
+    })
   const columns = [
     {
       title: ' ',
@@ -128,6 +133,10 @@ const ActiveAlerts = () => {
     },
   ]
 
+  useEffect(() => {
+    console.log('shsDevices: ', shsDevices)
+    console.log('activeAlerts: ', activeAlerts)
+  }, [shsDevices, activeAlerts])
   return (
     <PageLayout>
       <section className={classes.ActiveAlerts}>
@@ -169,7 +178,6 @@ const ActiveAlerts = () => {
         <section className={classes.ActiveAlerts__Table}>
           <Table
             title={title}
-            footer={footer}
             columns={columns}
             dataSource={activeAlertdata}
             pagination={{

@@ -42,7 +42,9 @@ export const allShsSlice = apiSlice.injectEndpoints({
       invalidatesTags: ['ShsList'],
     }),
     listClientShsDevices: builder.query({
-      query: () => ({ url: `/imperium-client/list-shs-device/7/` }),
+      query: ({ client_id }) => ({
+        url: `/imperium-client/list-shs-device/${client_id}/`,
+      }),
     }),
   }),
 })
