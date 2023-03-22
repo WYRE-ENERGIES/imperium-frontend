@@ -34,7 +34,7 @@ const SignIn = () => {
     try {
       await login({
         credentials: values,
-        endpoint: 'imperium-admin/auth/login/',
+        endpoint: '/auth/login/',
       }).unwrap()
       navigate('/overview')
     } catch (err) {
