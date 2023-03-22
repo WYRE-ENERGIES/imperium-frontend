@@ -36,6 +36,7 @@ const Verification = () => {
       }).unwrap()
 
       navigate('/business')
+      console.log(data)
     } catch (err) {
       if (err.status === 401) {
         setErrMsg(err?.data?.detail)

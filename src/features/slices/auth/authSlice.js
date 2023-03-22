@@ -20,8 +20,6 @@ const authSlice = createSlice({
       state.token = token
       saveToLocalStorage('access', token)
       saveToLocalStorage('userInfo', user_info)
-      // There's no refresh token from the swagger doc and the response object keys were changed
-      // saveToLocalStorage('refresh', refresh)
     },
     logOutUser: (state) => {
       state.isLoggedIn = false

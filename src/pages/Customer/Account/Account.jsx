@@ -9,12 +9,6 @@ import FormButton from '../../../components/Auth/Forms/Widgets/FormButton'
 import { Row, Form, Col } from 'antd'
 
 const Account = ({ children, props }) => {
-  const AcctInfo = {
-    firstName: 'John',
-    lastName: 'Kahan',
-    email: 'JonniKahan@gmail.com',
-  }
-
   const userAccountLink = [
     {
       page: 'Detail',
@@ -51,17 +45,9 @@ const Account = ({ children, props }) => {
           ))}
         </div>
         <div>
-          <AccountInfo AcctInfo={AcctInfo} type={props} />
+          <AccountInfo type={props} />
         </div>
         {children}
-        <Form.Item>
-          <Row justify={'end'} gutter={20}>
-            <Col span={8}>
-              {' '}
-              <FormButton type={'submit'} action={'Save changes'} />
-            </Col>{' '}
-          </Row>
-        </Form.Item>
       </PageLayout>
     </div>
   )
