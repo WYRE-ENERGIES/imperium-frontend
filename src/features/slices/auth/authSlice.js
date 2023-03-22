@@ -20,6 +20,12 @@ const authSlice = createSlice({
       state.token = token
       saveToLocalStorage('access', token)
       saveToLocalStorage('userInfo', user_info)
+
+      if (action.payload.clients) {
+        const { clients } = action.payload
+        state.currentClientId = clients[0]
+        saveToLocalStorage('current_client', clients[0])
+      }
     },
     logOutUser: (state) => {
       state.isLoggedIn = false
