@@ -3,19 +3,6 @@ import React from 'react'
 import classes from './ActiveAlertTable.module.scss'
 import TableFooter from '../../TableFooter/TableFooter'
 
-const Footer = () => {
-  return (
-    <section className={classes.ActiveAlertTable__Footer}>
-      <div className={classes.ActiveAlertTable__NavBtn}>
-        {' '}
-        <button>Previous</button>
-        <button>Next</button>
-      </div>
-      <div className={classes.ActiveAlertTable__Pagination}>Page 1 of 10</div>
-    </section>
-  )
-}
-
 const ActiveAlertTable = ({ dataSource, columns, title, setPageNum }) => {
   return (
     <div>
