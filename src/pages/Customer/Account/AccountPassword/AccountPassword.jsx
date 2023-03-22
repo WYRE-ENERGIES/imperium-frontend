@@ -1,13 +1,16 @@
 import { Col, Form, Input, Row } from 'antd'
-import React from 'react'
+import React, { useState } from 'react'
 import FormButton from '../../../../components/Auth/Forms/Widgets/FormButton'
 import classes from './AccountPassword.module.scss'
 import Account from '../Account'
 import passwordKeyIcon from '../../../../assets/Auth/passwordIcon.svg'
 import { useCustomerChangePasswordMutation } from '../../../../features/slices/auth/customer/customerAuthApiSlice'
+import { ErrorMessage } from '../../../../components/ErrorMessage/ErrorMessage'
+import Error from '../../../../components/ErrorMessage/Error'
 
 const AccountPassword = () => {
   const [form] = Form.useForm()
+  const [errMsg, setErrMsg] = useState('')
   const [customerChangePassword, { isLoading }] =
     useCustomerChangePasswordMutation()
   const onFinish = async (values) => {
@@ -17,13 +20,14 @@ const AccountPassword = () => {
         credentials: values,
       }).unwrap()
     } catch (err) {
-      console.log(err)
+      setErrMsg(ErrorMessage(err))
     }
   }
   return (
     <Account props={'password'}>
       <div className={classes.AccountPassword}>
         {' '}
+        {errMsg && <Error Errormsg={errMsg} />}
         <Form
           form={form}
           layout="vertical"
@@ -45,7 +49,7 @@ const AccountPassword = () => {
                     Old Password
                   </p>
                 }
-                name="old-password"
+                name="old_password"
                 style={{ marginTop: '-1rem' }}
                 required
               >
@@ -73,7 +77,7 @@ const AccountPassword = () => {
                     Password
                   </p>
                 }
-                name="new-password"
+                name="new_password1"
                 style={{ marginTop: '-1rem' }}
                 required
               >
@@ -100,7 +104,7 @@ const AccountPassword = () => {
                     Confirm Password
                   </p>
                 }
-                name="confirm-password"
+                name="new_password2"
                 style={{ marginTop: '-1rem' }}
                 required
               >

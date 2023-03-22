@@ -50,7 +50,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
       transformResponse: (response, meta, arg) => {
         return response
       },
-      transformErrorResponse: (response, meta, arg) => response.status,
+      transformErrorResponse: (response, meta, arg) => response,
     }),
     customerBusiness: builder.mutation({
       query: (formData) => {
@@ -60,14 +60,6 @@ export const authApiSlice = apiSlice.injectEndpoints({
           body: formData,
         }
       },
-      // async queryFn(formData) {
-      //   console.log(formData)
-      //     return {
-      //       url: '/imperium-client/business/',
-      //       method: 'POST',
-      //       body: formData,
-      //     },
-      // },
     }),
     customerGetDetails: builder.query({
       query: () => {
@@ -89,7 +81,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
       invalidatesTags: ['CustomerDetails'],
     }),
     customerChangePassword: builder.mutation({
-      query: (credentials) => {
+      query: ({ credentials }) => {
         return {
           url: '/auth/change-password/',
           method: 'POST',
