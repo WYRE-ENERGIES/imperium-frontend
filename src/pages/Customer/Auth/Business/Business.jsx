@@ -83,7 +83,7 @@ const Business = () => {
     formData.append('company_url', values.campany_url)
     formData.append('company_logo', values.file?.originFileObj)
     console.log('values', values)
-    // https://www.man.com
+
     try {
       await customerBusiness(formData).unwrap()
       navigate('/')
