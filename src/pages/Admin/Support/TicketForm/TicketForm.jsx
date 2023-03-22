@@ -1,15 +1,21 @@
-import { Button, Divider, Form, Input, Modal, Select, Typography } from 'antd'
+import {
+  Button,
+  Divider,
+  Form,
+  Input,
+  Modal,
+  Select,
+  Switch,
+  Typography,
+} from 'antd'
 import React, { Suspense, lazy, useEffect, useState } from 'react'
 import { ToastContainer, toast } from 'react-toastify'
-import {
-  useCreateSupportTicketMutation,
-  useUpdateSupportTicketMutation,
-} from '../../../../features/slices/supportSlice'
 
 import { ReactComponent as TicketIcon } from '../../../../assets/ticket-icon.svg'
-import classes from './TicketForm.module.scss'
-import { getItemFromLocalStorage } from '../../../../utils/helpers'
+import classes from '../../../Customer/Support/TicketForm/TicketForm.module.scss'
+import { supportStatusEnums } from '../../../../utils/enums'
 import { useListClientShsDevicesQuery } from '../../../../features/slices/allShsSlice'
+import { useResolveTicketMutation } from '../../../../features/slices/supportSlice'
 
 const ButtonLoader = lazy(() =>
   import('../../../../components/ButtonLoader/ButtonLoader'),
@@ -27,54 +33,42 @@ const layout = {
   },
 }
 
-const ModalForm = ({ toggleModal, ticketData }) => {
+const ModalForm = ({ toggleModal, ticketData, isAdmin }) => {
+  const [isResolved, setIsResolved] = useState(ticketData.status)
   const [shsDevices, setShsDevices] = useState([])
-  const [currentClient, setCurrentClient] = useState()
+  const [resolveTicket, { isLoading, isSuccess }] = useResolveTicketMutation()
 
   const { isFetching: shsLoading, data: shsData } =
     useListClientShsDevicesQuery()
 
-  const [createSupportTicket, { isLoading, isSuccess, isError }] =
-    useCreateSupportTicketMutation()
-
-  const [
-    updateSupportTicket,
-    {
-      isLoading: isUpdating,
-      isSuccess: isUpdateSuccess,
-      isError: isisUpdateError,
-    },
-  ] = useUpdateSupportTicketMutation()
-
   const [form] = Form.useForm()
   const onFinish = (values) => {
-    if (ticketData.id) {
-      updateSupportTicket({
-        data: { ...values, client: currentClient },
-        id: ticketData.id,
-      })
-    } else {
-      createSupportTicket({ ...values, client: currentClient })
-    }
+    resolveTicket({
+      ticket_id: ticketData.id,
+      resolve: isResolved === supportStatusEnums.RESOLVED,
+    })
   }
 
   useEffect(() => {
-    if (isLoading || isUpdating) return
+    form.resetFields()
 
-    if (isSuccess || isUpdateSuccess) {
-      toast.success(ticketData.id ? 'Ticket Updated' : 'Ticket created', {
-        hideProgressBar: true,
-        autoClose: 3000,
-        theme: 'colored',
-      })
-
+    if (!isLoading && isSuccess) {
+      toast.success(
+        `Ticket ${
+          isResolved === supportStatusEnums.RESOLVED ? 'Resolved' : 'Unresolved'
+        }`,
+        {
+          hideProgressBar: true,
+          autoClose: 3000,
+          theme: 'colored',
+        },
+      )
       toggleModal()
     }
-    form.resetFields()
-  }, [isLoading, isSuccess, isUpdating, isUpdateSuccess])
+  }, [ticketData, isLoading, isSuccess])
 
   useEffect(() => {
-    if (shsLoading) return
+    if (isLoading) return
 
     if (shsData?.length) {
       setShsDevices(
@@ -86,11 +80,6 @@ const ModalForm = ({ toggleModal, ticketData }) => {
       )
     }
   }, [shsLoading])
-
-  useEffect(() => {
-    const currentClient = getItemFromLocalStorage('current_client')
-    setCurrentClient(currentClient)
-  }, [])
 
   return (
     <Form
@@ -116,6 +105,7 @@ const ModalForm = ({ toggleModal, ticketData }) => {
         <Input
           placeholder="Enter Subject"
           className={classes.TicketForm__input}
+          disabled={isAdmin}
         />
       </Form.Item>
       <Form.Item
@@ -131,7 +121,9 @@ const ModalForm = ({ toggleModal, ticketData }) => {
         <Select
           placeholder="Select Priority"
           className={classes.TicketForm__select}
+          onChange={() => {}}
           allowClear
+          disabled={isAdmin}
         >
           <Option value="Normal">Normal</Option>
           <Option value="Urgent">Urgent</Option>
@@ -141,27 +133,37 @@ const ModalForm = ({ toggleModal, ticketData }) => {
         <Select
           placeholder="Select SHS"
           className={classes.TicketForm__select}
+          onChange={() => {}}
           allowClear
+          disabled={isAdmin}
         >
           {shsDevices}
         </Select>
       </Form.Item>
-      <Form.Item
-        label="Description"
-        name="description"
-        labelAlign="left"
-        rules={[
-          {
-            required: true,
-          },
-        ]}
-      >
+      <Form.Item label="Description" name="description" labelAlign="left">
         <TextArea
           rows={4}
           placeholder="Enter a description..."
           className={classes.TicketForm__input}
+          disabled={isAdmin}
         />
       </Form.Item>
+      {isAdmin && (
+        <>
+          <Divider />
+          <div className={classes.TicketForm__switch}>
+            <Switch
+              onChange={(e) =>
+                setIsResolved(
+                  e ? supportStatusEnums.RESOLVED : supportStatusEnums.PENDING,
+                )
+              }
+              defaultChecked={isResolved !== supportStatusEnums.PENDING}
+            />
+            Resolve ticket
+          </div>
+        </>
+      )}
       <Divider />
       <div className={classes.TicketForm__btn}>
         <Button
@@ -172,8 +174,18 @@ const ModalForm = ({ toggleModal, ticketData }) => {
           Cancel
         </Button>
         <Suspense>
-          <Button className={classes.TicketForm__submitBtn} htmlType="submit">
-            {isLoading ? <ButtonLoader color="#385E2B" /> : 'Submit'}
+          <Button
+            className={classes.TicketForm__submitBtn}
+            htmlType="submit"
+            disabled={isResolved === ticketData.status}
+          >
+            {isLoading ? (
+              <ButtonLoader
+                color={isResolved === ticketData.status ? '#385E2B' : '#fff'}
+              />
+            ) : (
+              'Submit'
+            )}
           </Button>
         </Suspense>
       </div>
@@ -182,7 +194,13 @@ const ModalForm = ({ toggleModal, ticketData }) => {
   )
 }
 
-const TicketForm = ({ title, isOpen, toggleModal, ticketData }) => {
+const TicketForm = ({
+  title,
+  isOpen,
+  toggleModal,
+  ticketData,
+  isAdmin = false,
+}) => {
   return (
     <Modal
       title={
@@ -198,9 +216,11 @@ const TicketForm = ({ title, isOpen, toggleModal, ticketData }) => {
             >
               {title}
             </Title>
-            <Text type="secondary" className={classes.ModalForm__subTitle}>
-              Submit a ticket for any issues you are experiencing
-            </Text>
+            {!isAdmin && (
+              <Text type="secondary" className={classes.ModalForm__subTitle}>
+                Submit a ticket for any issues you are experiencing
+              </Text>
+            )}
           </div>
         </div>
       }
@@ -215,6 +235,7 @@ const TicketForm = ({ title, isOpen, toggleModal, ticketData }) => {
         title={title}
         toggleModal={toggleModal}
         ticketData={ticketData}
+        isAdmin={isAdmin}
       />
     </Modal>
   )

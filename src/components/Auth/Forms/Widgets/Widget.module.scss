@@ -176,25 +176,31 @@ $buttonPadding: 14px 48px;
   display: flex;
   justify-content: space-between;
   padding: 0 16px;
+  width: 220px;
 
   &__fileUploadStatus {
     display: flex;
     justify-content: space-around;
-    gap: 7px;
+    gap: 6px;
   }
 
   &__Text {
-    width: 325px;
+    width: 230px;
     text-align: left;
   }
 
   &__FileName {
     width: 300px;
     color: #606062;
+    border: none;
+    &:hover {
+      border: none !important;
+      background: none !important;
+    }
   }
 
   &__FileUploadProgress {
-    width: 100%;
+    width: 230px;
     margin-top: 10px;
   }
 }

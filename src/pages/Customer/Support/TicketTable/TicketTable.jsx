@@ -1,9 +1,10 @@
+import React, { useEffect } from 'react'
 import { Space, Table, Tag, Tooltip } from 'antd'
 
 import { BsDot } from 'react-icons/bs'
 import { FaRegQuestionCircle } from 'react-icons/fa'
-import React from 'react'
 import Swal from 'sweetalert2'
+import { useDeleteSupportTicketMutation } from '../../../../features/slices/supportSlice'
 
 const getColor = (name) => {
   let color = ''
@@ -38,8 +39,8 @@ const getPriorityColor = (name) => {
   return color
 }
 
-const handleDelete = (id) => {
-  Swal.fire({
+const handleDelete = async (id, cb) => {
+  const res = await Swal.fire({
     title: 'Are you sure?',
     text: "You won't be able to revert this!",
     icon: 'warning',
@@ -47,57 +48,23 @@ const handleDelete = (id) => {
     confirmButtonColor: '#3085d6',
     cancelButtonColor: '#d33',
     confirmButtonText: 'Yes, delete it!',
-  }).then((result) => {
-    if (result.isConfirmed) {
-      Swal.fire('Deleted!', 'ticket has been deleted.', 'success')
-    }
   })
+
+  if (res.isConfirmed) {
+    await cb(id)
+  }
 }
 
-const data = [
-  {
-    id: 1,
-    subject: 'Missing SHS',
-    description: 'Missing SHS description',
-    priority: 'Urgent',
-    status: 'Pending',
-    key: 1,
-  },
-  {
-    id: 2,
-    subject: 'TDS is missing',
-    description: 'TDS is missing description',
-    priority: 'Urgent',
-    status: 'Pending',
-    key: 2,
-  },
-  {
-    id: 3,
-    subject: 'Tags • Applications & Uses is missing',
-    description: 'Tags • Applications & Uses is missing description',
-    priority: 'Normal',
-    status: 'Resolved',
-    key: 3,
-  },
-  {
-    id: 4,
-    subject: 'Image is missing',
-    description: 'Image is missing description',
-    priority: 'Urgent',
-    status: 'Resolved',
-    key: 4,
-  },
-  {
-    id: 5,
-    subject: 'Failing SHS',
-    description: 'Failing SHS description',
-    priority: 'Normal',
-    status: 'Resolved',
-    key: 5,
-  },
-]
+const TicketTable = ({ onEditTicket, footer, loading, data }) => {
+  const [deleteSupportTicket, { isLoading, isSuccess, isError }] =
+    useDeleteSupportTicketMutation()
 
-const TicketTable = ({ onEditTicket }) => {
+  useEffect(() => {
+    if (isSuccess) {
+      Swal.fire('Deleted!', 'ticket has been deleted.', 'success')
+    }
+  }, [isSuccess])
+
   const columns = [
     {
       title: 'ID',
@@ -179,7 +146,7 @@ const TicketTable = ({ onEditTicket }) => {
         <Space size="middle">
           <a
             style={{ color: '#737373' }}
-            onClick={() => handleDelete(record.id)}
+            onClick={() => handleDelete(record.id, deleteSupportTicket)}
           >
             Delete
           </a>
@@ -191,7 +158,18 @@ const TicketTable = ({ onEditTicket }) => {
     },
   ]
 
-  return <Table style={{ width: '100%' }} columns={columns} dataSource={data} />
+  return (
+    <Table
+      style={{ width: '100%', overflow: 'scroll' }}
+      columns={columns}
+      dataSource={data}
+      footer={footer}
+      loading={loading}
+      pagination={{
+        hideOnSinglePage: true,
+      }}
+    />
+  )
 }
 
 export default TicketTable
