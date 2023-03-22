@@ -6,6 +6,9 @@ export const ErrorMessage = (error) => {
     case 401:
       errorMsg = error?.data?.detail
       break
+    case 422:
+      errorMsg = error?.data?.detail
+      break
     case 400:
       errorMsg = error?.data?.message
       break

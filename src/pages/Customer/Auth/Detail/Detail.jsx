@@ -14,6 +14,7 @@ import FormButton from '../../../../components/Auth/Forms/Widgets/FormButton'
 import FormHeader from '../../../../components/Auth/Forms/Widgets/FormHeader'
 import Error from '../../../../components/ErrorMessage/Error'
 import { ErrorMessage } from '../../../../components/ErrorMessage/ErrorMessage'
+import { saveToLocalStorage } from '../../../../utils/helpers'
 
 const Details = () => {
   const formDescription = {
@@ -34,8 +35,8 @@ const Details = () => {
         credentials: values,
       }).unwrap()
       navigate('/business')
+      saveToLocalStorage('userInfo', values)
     } catch (err) {
-      console.log(err)
       setErrMsg(ErrorMessage(err))
     }
   }

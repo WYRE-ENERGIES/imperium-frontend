@@ -2,6 +2,8 @@ import { Col, Form, Input, Row } from 'antd'
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import FormButton from '../../../../components/Auth/Forms/Widgets/FormButton'
+import Error from '../../../../components/ErrorMessage/Error'
+import { ErrorMessage } from '../../../../components/ErrorMessage/ErrorMessage'
 import Loading from '../../../../components/Loading/Loading'
 import {
   useCustomerGetDetailsQuery,
@@ -22,6 +24,7 @@ const AccountDetails = () => {
   const [lastName, setLastName] = useState('')
   const [phone, setPhone] = useState('')
   const [address, setAddress] = useState('')
+  const [errMsg, setErrMsg] = useState('')
   const [initialValues, setInitialValues] = useState(null)
   const { data: userData, isLoading: detailLoading } =
     useCustomerGetDetailsQuery()
@@ -38,7 +41,7 @@ const AccountDetails = () => {
         ...values,
       })
     } catch (err) {
-      console.log(err)
+      setErrMsg(ErrorMessage(err))
     }
   }
 
@@ -61,6 +64,7 @@ const AccountDetails = () => {
             requiredMark="optional"
             initialValues={{ ...userData }}
           >
+            {errMsg && <Error Errormsg={errMsg} />}
             <Row justify={'space-between'}>
               <Col>
                 {' '}
