@@ -173,7 +173,7 @@ const ModalForm = ({ toggleModal, ticketData }) => {
         </Button>
         <Suspense>
           <Button className={classes.TicketForm__submitBtn} htmlType="submit">
-            {isLoading ? <ButtonLoader color="#385E2B" /> : 'Submit'}
+            {isLoading ? <ButtonLoader color="#fff" /> : 'Submit'}
           </Button>
         </Suspense>
       </div>
