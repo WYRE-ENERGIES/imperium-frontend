@@ -6,6 +6,8 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import { Form, Input } from 'antd'
 import classes from './Newpassword.module.scss'
 import FormButton from '../../../../components/Auth/Forms/Widgets/FormButton'
+import Error from '../../../../components/ErrorMessage/Error'
+import { ErrorMessage } from '../../../../components/ErrorMessage/ErrorMessage'
 
 const NewPasswordPage = () => {
   const [errMsg, setErrMsg] = useState('')
@@ -24,15 +26,7 @@ const NewPasswordPage = () => {
         }).unwrap()
         navigate('/admin/')
       } catch (err) {
-        if (err.status === 401) {
-          setErrMsg(err?.data?.message)
-        } else if (err.status === 400) {
-          setErrMsg(err?.data?.message)
-        } else if (err.status === 500) {
-          setErrMsg('Server could not be reached. Try later!')
-        } else {
-          setErrMsg('Check your internet connection')
-        }
+        setErrMsg(ErrorMessage(err))
       }
     }
   }
@@ -46,9 +40,7 @@ const NewPasswordPage = () => {
         }}
         admin={false}
       >
-        {errMsg && (
-          <small className={classes.NewPassword__Message}>{errMsg}</small>
-        )}
+        {errMsg && <Error Errormsg={errMsg} />}
 
         <Form
           name="admin-newpassword"

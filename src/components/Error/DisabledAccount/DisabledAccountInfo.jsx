@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 const DisabledAccountInfo = () => {
   return (
     <div>
-      <ErrorLayout>
+      <ErrorLayout width={'300px'}>
         <div className={classes.DisabledAccountInfo}>
           <div>
             <p className={classes.DisabledAccountInfo__Header}>
