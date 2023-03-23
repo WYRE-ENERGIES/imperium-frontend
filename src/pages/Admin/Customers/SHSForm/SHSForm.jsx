@@ -18,6 +18,7 @@ import {
 } from '../../../../features/slices/customersSlice'
 
 import { PlusOutlined } from '@ant-design/icons'
+import SearchDropdown from '../../../../components/SearchDropdown'
 import { ReactComponent as TicketIcon } from '../../../../assets/widget-icons/home-icon.svg'
 import classes from './SHSForm.module.scss'
 
@@ -133,10 +134,7 @@ const AddSHSForm = ({ toggleModal }) => {
             },
           ]}
         >
-          <Input
-            placeholder="Enter users email"
-            className={classes.AddSHSForm__input}
-          />
+          <SearchDropdown placeholder="Enter users email" data={[]} />
         </Form.Item>
 
         <Form.Item
