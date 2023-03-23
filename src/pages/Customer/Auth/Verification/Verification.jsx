@@ -44,7 +44,7 @@ const Verification = () => {
 
   useEffect(() => {
     if (data) {
-      const token = data?.message?.token
+      const { token } = data
       saveToLocalStorage('access', token)
     }
   }, [data])
