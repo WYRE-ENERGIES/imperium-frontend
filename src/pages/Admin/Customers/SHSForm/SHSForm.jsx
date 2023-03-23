@@ -74,13 +74,37 @@ const AddSHSForm = ({ toggleModal }) => {
     }
   }, [isLoading, isSuccess])
 
-  // if (!fetchingRegion && !regionError && regionData) {
-  //   regions = regionData.data.map((region, index) => (
-  //     <Option value={region.id} key={index}>
-  //       {region.name}
-  //     </Option>
-  //   ))
-  // }
+  if (!fetchingRegion && !regionError && regionData.results) {
+    regions = regionData.results.map((region, index) => (
+      <Option value={region.id} key={index}>
+        {region.name}
+      </Option>
+    ))
+  }
+
+  if (!fetchingSector && !sectorError && sectorData.results) {
+    sectors = sectorData.results.map((region, index) => (
+      <Option value={region.id} key={index}>
+        {region.name}
+      </Option>
+    ))
+  }
+
+  if (!fetchingState && !stateError && stateData.results) {
+    states = stateData.results.map((region, index) => (
+      <Option value={region.id} key={index}>
+        {region.name}
+      </Option>
+    ))
+  }
+
+  if (!fetchingVendor && !vendorError && vendorData.results) {
+    vendors = vendorData.results.map((region, index) => (
+      <Option value={region.id} key={index}>
+        {region.name}
+      </Option>
+    ))
+  }
 
   return (
     <Form
@@ -131,7 +155,7 @@ const AddSHSForm = ({ toggleModal }) => {
             onChange={() => {}}
             allowClear
           >
-            <Option value="Payment">Payment</Option>
+            {sectors}
           </Select>
         </Form.Item>
       </div>
@@ -153,7 +177,7 @@ const AddSHSForm = ({ toggleModal }) => {
             onChange={() => {}}
             allowClear
           >
-            <Option value="Payment">Payment</Option>
+            {regions}
           </Select>
         </Form.Item>
 
@@ -173,7 +197,7 @@ const AddSHSForm = ({ toggleModal }) => {
             onChange={() => {}}
             allowClear
           >
-            <Option value="Payment">Payment</Option>
+            {states}
           </Select>
         </Form.Item>
       </div>
@@ -186,7 +210,7 @@ const AddSHSForm = ({ toggleModal }) => {
             required: true,
           },
         ]}
-        style={{ marginBottom: '8px' }}
+        style={{ marginBottom: '20px' }}
       >
         <Select
           className={classes.AddSHSForm__select}
@@ -194,7 +218,7 @@ const AddSHSForm = ({ toggleModal }) => {
           onChange={() => {}}
           allowClear
         >
-          <Option value="Payment">Payment</Option>
+          {vendors}
         </Select>
       </Form.Item>
 
