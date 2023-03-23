@@ -8,7 +8,7 @@ import classes from './Account.module.scss'
 import FormButton from '../../../components/Auth/Forms/Widgets/FormButton'
 import { Row, Form, Col } from 'antd'
 
-const Account = ({ children, props }) => {
+const Account = ({ children, type, content }) => {
   const userAccountLink = [
     {
       page: 'Detail',
@@ -45,7 +45,7 @@ const Account = ({ children, props }) => {
           ))}
         </div>
         <div>
-          <AccountInfo type={props} />
+          <AccountInfo type={type} content={content} />
         </div>
         {children}
       </PageLayout>

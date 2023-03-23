@@ -25,7 +25,6 @@ const AccountDetails = () => {
   const [phone, setPhone] = useState('')
   const [address, setAddress] = useState('')
   const [errMsg, setErrMsg] = useState('')
-  const [initialValues, setInitialValues] = useState(null)
   const { data: userData, isLoading: detailLoading } =
     useCustomerGetDetailsQuery()
   const [customerUpdateDetails, { data, isLoading }] =
