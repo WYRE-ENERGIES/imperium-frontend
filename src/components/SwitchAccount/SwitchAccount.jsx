@@ -87,8 +87,10 @@ const SwitchAccountContent = ({ toggleModal }) => {
 
   return (
     <div className={classes.SwitchAccount__content}>
-      {isFetching || !list?.length ? (
+      {isFetching ? (
         <Spin />
+      ) : isError ? (
+        <h1 style={{ textAlign: 'center' }}>An Error Occurred</h1>
       ) : (
         <>
           <Radio.Group onChange={handleChange} defaultValue={selected}>
@@ -121,6 +123,7 @@ const SwitchAccountContent = ({ toggleModal }) => {
                 className={classes.SwitchAccount__submitBtn}
                 htmlType="submit"
                 onClick={onProceed}
+                disabled={isError}
               >
                 Proceed
               </Button>
