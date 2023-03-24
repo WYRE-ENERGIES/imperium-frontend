@@ -9,22 +9,58 @@ import {
 } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { ToastContainer, toast } from 'react-toastify'
+import {
+  useAssignShsMutation,
+  useListShsRegionsQuery,
+  useListShsSectorsQuery,
+  useListShsStatesQuery,
+  useListShsVendorsQuery,
+} from '../../../../features/slices/customersSlice'
 
 import { PlusOutlined } from '@ant-design/icons'
+import SearchDropdown from '../../../../components/SearchDropdown'
 import { ReactComponent as TicketIcon } from '../../../../assets/widget-icons/home-icon.svg'
 import classes from './SHSForm.module.scss'
-import { useAssignShsMutation } from '../../../../features/slices/customersSlice'
 
 const { Text, Title } = Typography
 const { Option } = Select
 
 const AddSHSForm = ({ toggleModal }) => {
   const [form] = Form.useForm()
-  const [inputs, setInputs] = useState(['uid-1'])
+  const [inputs, setInputs] = useState(['uid '])
+  let sectors = []
+  let regions = []
+  let states = []
+  let vendors = []
+
+  const {
+    isFetching: fetchingRegion,
+    isError: regionError,
+    data: regionData,
+  } = useListShsRegionsQuery()
+
+  const {
+    isFetching: fetchingSector,
+    isError: sectorError,
+    data: sectorData,
+  } = useListShsSectorsQuery()
+
+  const {
+    isFetching: fetchingState,
+    isError: stateError,
+    data: stateData,
+  } = useListShsStatesQuery()
+
+  const {
+    isFetching: fetchingVendor,
+    isError: vendorError,
+    data: vendorData,
+  } = useListShsVendorsQuery()
 
   const [assignShs, { isLoading, isSuccess }] = useAssignShsMutation()
 
   const onFinish = (values) => {
+    console.log({ values })
     // assignShs(values)
   }
 
@@ -39,8 +75,36 @@ const AddSHSForm = ({ toggleModal }) => {
     }
   }, [isLoading, isSuccess])
 
-  const addNewInput = () => {
-    setInputs((prev) => [...prev, `uid-${inputs.length + 1}`])
+  if (!fetchingRegion && !regionError && regionData.results) {
+    regions = regionData.results.map((region, index) => (
+      <Option value={region.id} key={index}>
+        {region.name}
+      </Option>
+    ))
+  }
+
+  if (!fetchingSector && !sectorError && sectorData.results) {
+    sectors = sectorData.results.map((region, index) => (
+      <Option value={region.id} key={index}>
+        {region.name}
+      </Option>
+    ))
+  }
+
+  if (!fetchingState && !stateError && stateData.results) {
+    states = stateData.results.map((region, index) => (
+      <Option value={region.id} key={index}>
+        {region.name}
+      </Option>
+    ))
+  }
+
+  if (!fetchingVendor && !vendorError && vendorData.results) {
+    vendors = vendorData.results.map((region, index) => (
+      <Option value={region.id} key={index}>
+        {region.name}
+      </Option>
+    ))
   }
 
   return (
@@ -70,10 +134,7 @@ const AddSHSForm = ({ toggleModal }) => {
             },
           ]}
         >
-          <Input
-            placeholder="Enter users email"
-            className={classes.AddSHSForm__input}
-          />
+          <SearchDropdown placeholder="Enter users email" data={[]} />
         </Form.Item>
 
         <Form.Item
@@ -92,7 +153,7 @@ const AddSHSForm = ({ toggleModal }) => {
             onChange={() => {}}
             allowClear
           >
-            <Option value="Payment">Payment</Option>
+            {sectors}
           </Select>
         </Form.Item>
       </div>
@@ -114,7 +175,7 @@ const AddSHSForm = ({ toggleModal }) => {
             onChange={() => {}}
             allowClear
           >
-            <Option value="Payment">Payment</Option>
+            {regions}
           </Select>
         </Form.Item>
 
@@ -134,7 +195,7 @@ const AddSHSForm = ({ toggleModal }) => {
             onChange={() => {}}
             allowClear
           >
-            <Option value="Payment">Payment</Option>
+            {states}
           </Select>
         </Form.Item>
       </div>
@@ -147,7 +208,7 @@ const AddSHSForm = ({ toggleModal }) => {
             required: true,
           },
         ]}
-        style={{ marginBottom: '8px' }}
+        style={{ marginBottom: '20px' }}
       >
         <Select
           className={classes.AddSHSForm__select}
@@ -155,7 +216,7 @@ const AddSHSForm = ({ toggleModal }) => {
           onChange={() => {}}
           allowClear
         >
-          <Option value="Payment">Payment</Option>
+          {vendors}
         </Select>
       </Form.Item>
 

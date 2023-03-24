@@ -70,6 +70,18 @@ export const customerApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ['Customers'],
     }),
+    listShsSectors: builder.query({
+      query: () => ({ url: `/shs/shs-sectors/` }),
+    }),
+    listShsVendors: builder.query({
+      query: () => ({ url: `/shs/shs-vendors/` }),
+    }),
+    listShsStates: builder.query({
+      query: () => ({ url: `/shs/shs-states/` }),
+    }),
+    listShsRegions: builder.query({
+      query: () => ({ url: `/shs/shs-regions/` }),
+    }),
   }),
 })
 
@@ -82,4 +94,8 @@ export const {
   useDeactivateReasonsQuery,
   useGetReasonsQuery,
   useActivateCustomerMutation,
+  useListShsSectorsQuery,
+  useListShsVendorsQuery,
+  useListShsStatesQuery,
+  useListShsRegionsQuery,
 } = customerApiSlice

@@ -1,4 +1,3 @@
-import { all } from 'axios'
 import { apiSlice } from '../api/apiSlice'
 
 const ADMIN_SHS_URL_PATH = '/imperium-admin/shs/'

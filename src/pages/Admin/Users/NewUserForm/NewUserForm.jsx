@@ -37,7 +37,10 @@ const ModalForm = ({ toggleModal }) => {
     inviteUser({
       invitee_email,
       role: choice.value,
-      redirect_url: `${window.location.origin}/admin/accept-user`,
+      redirect_url:
+        choice.value === 'client'
+          ? `${window.location.origin}/accept-user`
+          : `${window.location.origin}/admin/accept-user`,
     })
   }
 
