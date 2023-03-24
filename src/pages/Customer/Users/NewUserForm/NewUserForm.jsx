@@ -26,7 +26,8 @@ const layout = {
 const ModalForm = ({ toggleModal }) => {
   const [roleDescription, setRoleDescription] = useState('')
 
-  const [inviteUser, { isLoading, isSuccess }] = useInviteUserMutation()
+  const [inviteUser, { isLoading, isSuccess, isError, error }] =
+    useInviteUserMutation()
 
   const [form] = Form.useForm()
   const onFinish = ({ invitee_email, role }) => {
@@ -98,7 +99,7 @@ const ModalForm = ({ toggleModal }) => {
           placeholder="Select Role"
           allowClear
         >
-          {['owner', 'viewer']?.map((role, index) => (
+          {['viewer']?.map((role, index) => (
             <Option key={`${role}-${index}`} value={role}>
               {role}
             </Option>

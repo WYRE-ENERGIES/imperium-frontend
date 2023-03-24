@@ -26,7 +26,6 @@ export const apexChartOptions = {
       'December',
     ],
     title: {
-      // text: 'Month',
       offsetY: 90,
     },
   },
