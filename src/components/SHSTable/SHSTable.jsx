@@ -4,26 +4,26 @@ import { BsDot } from 'react-icons/bs'
 import { EyeOutlined } from '@ant-design/icons'
 import { Link } from 'react-router-dom'
 import React from 'react'
+import TableFooter from '../TableFooter/TableFooter'
 import classes from './SHSTable.module.scss'
-import { data } from './tableData'
 
 const columns = [
   {
     title: 'Name',
-    dataIndex: 'name',
-    key: 'name',
+    dataIndex: 'client_name',
+    key: 'client_name',
   },
   {
     title: 'Energy Consumed',
-    key: 'energyConsumed',
-    dataIndex: 'energyConsumed',
-    render: (value) => value.toLocaleString(),
+    key: 'energy_consumed',
+    dataIndex: 'energy_consumed',
+    render: (value) => parseFloat(value.toLocaleString()).toFixed(1),
   },
   {
     title: 'Energy Generated',
-    key: 'energyGenerated',
-    dataIndex: 'energyGenerated',
-    render: (value) => value.toLocaleString(),
+    key: 'energy_generated',
+    dataIndex: 'energy_generated',
+    render: (value) => parseFloat(value.toLocaleString()).toFixed(1),
   },
   {
     title: 'Location',
@@ -32,8 +32,8 @@ const columns = [
     render: (value) => {
       return (
         <div className={classes.SHSTable__Location}>
-          <h3>{value.area}</h3>
-          <h4>{value.street}</h4>
+          <h3>{value}</h3>
+          {/* <h4>{value.street}</h4> */}
         </div>
       )
     },
@@ -70,10 +70,10 @@ const columns = [
     dataIndex: 'status',
     sorter: (a, b) => a.status - b.status,
     render: (value) => {
-      const color = value ? '#027A48' : '#606062'
+      const color = value.toLowerCase() === 'on' ? '#027A48' : '#606062'
       return (
         <Tag
-          color={value ? 'success' : '#E6E6E6'}
+          color={value.toLowerCase() === 'on' ? 'success' : '#E6E6E6'}
           key={value}
           style={{
             borderRadius: '10px',
@@ -86,7 +86,7 @@ const columns = [
           }}
         >
           <BsDot size={20} />
-          {value ? 'On' : 'Off'}
+          {value}
         </Tag>
       )
     },
@@ -102,7 +102,7 @@ const columns = [
   },
 ]
 
-const SHSTable = () => {
+const SHSTable = ({ data, isLoading = false, setPage }) => {
   return (
     <div className={classes.SHSTable}>
       <section className={classes.SHSTable__shsTableTitle}>
@@ -127,10 +127,23 @@ const SHSTable = () => {
       </section>
       <div style={{ width: '100%', overflow: 'scroll' }}>
         <Table
-          style={{ width: '100%' }}
+          style={{ width: '100%', overflow: 'scroll' }}
           columns={columns}
-          dataSource={data}
+          dataSource={data?.results}
           className={classes.SHSTable__table}
+          loading={isLoading}
+          pagination={{
+            hideOnSinglePage: true,
+          }}
+          footer={() => (
+            <TableFooter
+              pageNo={data?.page}
+              totalPages={data?.total_pages}
+              handleClick={setPage}
+              hasNext={data?.page === data?.total_pages}
+              hasPrev={!data?.total_pages || data?.page === 1}
+            />
+          )}
         />
       </div>
     </div>

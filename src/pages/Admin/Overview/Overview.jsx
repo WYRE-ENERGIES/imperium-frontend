@@ -1,9 +1,18 @@
-import { Button, List } from 'antd'
+import { Button, List, Spin } from 'antd'
 import React, { useEffect, useState } from 'react'
 import {
   additionalOverviewBarProps,
   additionalOverviewProps,
 } from '../../../components/Charts/data'
+import {
+  useGetAdminOverviewAnalyticsQuery,
+  useGetAdminOverviewCurrentVoltageQuery,
+  useGetOverviewActiveAlertQuery,
+  useGetOverviewEmissionDataQuery,
+  useGetOverviewEnergyDataQuery,
+  useGetOverviewSectorQuery,
+  useGetOverviewSolarHouseDataQuery,
+} from '../../../features/slices/overview/adminOverviewSlice'
 
 import AdminEnergyAnalytic from '../../../components/Widget/AdminEnergyAnalytic/AdminEnergyAnalytic'
 import AdminPageLayout from '../../../components/Layout/AdminPageLayout/AdminPageLayout'
@@ -17,11 +26,12 @@ import ShsDeviceMap from '../../../components/Map/ShsDeviceMap'
 import SimpleBarChart from '../../../components/Charts/SimpleBarChart/SimpleBarChart'
 import WidgetFilter from '../../../components/WidgetFilter/WidgetFilter'
 import classes from '../../Customer/Overview/Overview.module.scss'
-import { listData } from '../../../utils/data'
-import { useGetAdminOverviewAnalyticsQuery } from '../../../features/slices/overview/adminOverviewSlice'
 
 const Overview = () => {
-  const [pieChartData, setPieChartData] = useState([50, 75, 64, 35, 80, 27])
+  const [pieChartData, setPieChartData] = useState({
+    labels: [],
+    data: [],
+  })
   const [areaChartData, setAreaChartData] = useState([
     {
       name: 'Energy Consumed',
@@ -34,24 +44,28 @@ const Overview = () => {
   ])
   const [chartData, setChartData] = useState([
     {
-      name: 'Bad Battery Status',
-      data: [400, 500, 350, 420, 320, 500, 410, 430, 410, 500, 570, 400],
+      name: 'Emission Avoided',
+      data: [],
     },
   ])
   const [voltageChartData, setVoltageChartData] = useState([
     {
       name: 'Current',
-      data: [350, 400, 500, 420, 500, 570, 410, 430, 410, 500, 400, 320],
+      data: [],
     },
     {
       name: 'Voltage',
-      data: [300, 350, 450, 320, 450, 470, 310, 330, 310, 450, 300, 220],
+      data: [],
     },
   ])
 
   const [widgets, setWidgets] = useState([])
   const [page, setPage] = useState(1)
+  const [alertPage, setAlertPage] = useState(1)
   const [globalFilter, setGlobalFilter] = useState('yearly')
+  const [sectorId, setSectorId] = useState()
+  const [regionId, setRegionId] = useState()
+  const [alertData, setAlertData] = useState([])
 
   const {
     isFetching: isAnalyticsFetching,
@@ -61,6 +75,81 @@ const Overview = () => {
   } = useGetAdminOverviewAnalyticsQuery({
     filterBy: globalFilter,
   })
+
+  const {
+    isFetching: isAlertFetching,
+    isError: isAlertError,
+    error: alertError,
+    data: aData,
+  } = useGetOverviewActiveAlertQuery({
+    page: alertPage,
+    filterBy: globalFilter,
+    sectorId,
+    regionId,
+  })
+
+  const {
+    isFetching: isEmissionFetching,
+    isError: isEmissionError,
+    error: emissionError,
+    data: emissionData,
+  } = useGetOverviewEmissionDataQuery({
+    filterBy: globalFilter,
+    sectorId,
+    regionId,
+  })
+
+  const {
+    isFetching: isVoltageFetching,
+    isError: isVoltageError,
+    error: voltageError,
+    data: voltageData,
+  } = useGetAdminOverviewCurrentVoltageQuery({
+    filterBy: globalFilter,
+    sectorId,
+    regionId,
+  })
+
+  const {
+    isFetching: isSolarFetching,
+    isError: isSolarError,
+    error: solarError,
+    data: solarData,
+  } = useGetOverviewSolarHouseDataQuery({
+    page,
+    filterBy: globalFilter,
+    sectorId,
+    regionId,
+  })
+
+  const {
+    isFetching: isSectorFetching,
+    isSuccess: isSectorSuccess,
+    isError: isSectorError,
+    error: sectorError,
+    data: sectorData,
+  } = useGetOverviewSectorQuery({
+    filterBy: globalFilter,
+  })
+
+  const {
+    isFetching: isEnergyFetching,
+    isError: isEnergyError,
+    error: energyError,
+    data: energyData,
+  } = useGetOverviewEnergyDataQuery({
+    filterBy: globalFilter,
+    sectorId,
+    regionId,
+  })
+
+  useEffect(() => {
+    if (isSectorFetching) return
+
+    if (isSectorSuccess) {
+      setPieChartData(sectorData)
+    }
+  }, [isSectorFetching])
 
   useEffect(() => {
     if (isAnalyticsFetching) return
@@ -105,6 +194,45 @@ const Overview = () => {
     )
   }, [isAnalyticsFetching])
 
+  useEffect(() => {
+    if (alertPage == 1) setAlertData([])
+    if (isAlertFetching) return
+
+    if (isAlertError) {
+      setAlertData([])
+      return
+    }
+
+    if (aData?.results?.length) {
+      setAlertData((prev) => [...prev, ...aData.results])
+    }
+  }, [isAlertFetching])
+
+  useEffect(() => {
+    if (isEmissionFetching) return
+    if (isEmissionError) {
+      setChartData({
+        name: 'Emission avoided',
+        data: [],
+      })
+
+      return
+    }
+
+    setChartData([{ ...chartData[0], data: emissionData || [] }])
+  }, [isEmissionFetching, isEmissionError])
+
+  useEffect(() => {
+    if (isVoltageFetching) return
+
+    if (isVoltageError) {
+      setVoltageChartData([])
+      return
+    }
+
+    setVoltageChartData(voltageData)
+  }, [isVoltageFetching])
+
   return (
     <AdminPageLayout>
       <div className={classes.Overview}>
@@ -113,14 +241,31 @@ const Overview = () => {
         </section>
         <section className={classes.Overview__filters}>
           <WidgetFilter
-            selectFilterBy={(value) => setGlobalFilter(value)}
+            selectFilterBy={(value) => {
+              setAlertPage(1)
+              setGlobalFilter(value)
+            }}
             filterBy={globalFilter}
+            hasSectorFilter={true}
+            setRegionId={(val) => {
+              setAlertPage(1)
+              setRegionId(val)
+            }}
+            setSectorId={(val) => {
+              setAlertPage(1)
+              setSectorId(val)
+            }}
           />
         </section>
         <div className={classes.Overview__widgets}>{widgets}</div>
         <div className={classes.Overview__map}>{/* <ShsDeviceMap /> */}</div>
         <div className={classes.Overview__donutChart}>
-          <Donut chartData={pieChartData} title="Imperium Users by Sector" />
+          <Donut
+            labels={pieChartData.labels}
+            chartData={pieChartData.data}
+            title="Imperium Users by Sector"
+            loading={isSectorFetching}
+          />
         </div>
         <div className={classes.Overview__areaChart}>
           <div className={classes.Overview__chartHeader}>
@@ -136,7 +281,11 @@ const Overview = () => {
           />
         </div>
         <div className={classes.Overview__shsTable}>
-          <SHSTable />
+          <SHSTable
+            isLoading={isSolarFetching}
+            setPage={setPage}
+            data={solarData}
+          />
         </div>
         <div className={classes.Overview__bottom}>
           <div className={classes.Overview__bottomLeft}>
@@ -165,22 +314,32 @@ const Overview = () => {
           <div className={classes.Overview__alerts}>
             <h1>Active Alerts</h1>
             <div className={classes.Overview__alertList}>
-              <List
-                dataSource={listData}
-                renderItem={(item, index) => (
-                  <List.Item key={index}>
-                    <List.Item.Meta
-                      title={item.issue}
-                      description={item.name}
-                    />
-                    <p style={{ color: item.status ? '#5C9D48' : '#B42318' }}>
-                      {item.status ? 'Resolved' : 'Unresolved'}
-                    </p>
-                  </List.Item>
-                )}
-              />
+              {isAlertFetching ? (
+                <Spin />
+              ) : (
+                <List
+                  dataSource={alertData}
+                  renderItem={(item, index) => (
+                    <List.Item key={index}>
+                      <List.Item.Meta
+                        title={item.active_alert}
+                        description={item.shs_name}
+                      />
+                      <p style={{ color: item.status ? '#5C9D48' : '#B42318' }}>
+                        {item.status}
+                      </p>
+                    </List.Item>
+                  )}
+                />
+              )}
             </div>
-            <Button className={classes.Overview__alertBtn}>Show more</Button>
+            <Button
+              onClick={() => setAlertPage(aData?.page + 1)}
+              disabled={aData?.page === aData?.total_pages}
+              className={classes.Overview__alertBtn}
+            >
+              Show more
+            </Button>
           </div>
         </div>
       </div>

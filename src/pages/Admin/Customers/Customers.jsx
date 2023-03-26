@@ -88,7 +88,7 @@ const Customers = () => {
       title: 'Client',
       dataIndex: 'client',
       key: 'client',
-      sorter: (a, b) => a.name.localeCompare(b.name),
+      sorter: (a, b) => a.customer_name.localeCompare(b.customer_name),
       render: (_, record) => (
         <div className={classes.Customers__nameDiv}>
           <Switch
@@ -98,13 +98,13 @@ const Customers = () => {
           <ReactAvatar
             size={30}
             round={true}
-            name={record.customer_fullname || record.customer_email}
+            name={record.customer_name || record.customer_email}
             fgColor="#385E2B"
             color="#F0F7ED"
           />
           <div className={classes.Customers__names}>
             <h3 style={{ color: record.status ? '' : '#C4C4C4' }}>
-              {record.customer_fullname}
+              {record.customer_name}
             </h3>
             <h4 style={{ color: record.status ? '' : '#C4C4C4' }}>
               {record.customer_email}
@@ -117,7 +117,10 @@ const Customers = () => {
       title: 'Purchase Date',
       key: 'purchased_date',
       dataIndex: 'purchased_date',
-      sorter: (a, b) => a.purchased_date.localeCompare(b.purchased_date),
+      sorter: (a, b) =>
+        a.purchased_date
+          ? a.purchased_date.localeCompare(b.purchased_date)
+          : null,
       render: (value, record) => (
         <p style={{ color: record.status ? '' : '#C4C4C4' }}>
           {new Date(value).toLocaleDateString()}
