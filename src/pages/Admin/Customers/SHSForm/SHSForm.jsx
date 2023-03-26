@@ -17,6 +17,7 @@ import {
   useListShsVendorsQuery,
 } from '../../../../features/slices/customersSlice'
 
+import ButtonLoader from '../../../../components/ButtonLoader/ButtonLoader'
 import SearchDropdown from '../../../../components/SearchDropdown'
 import { ReactComponent as TicketIcon } from '../../../../assets/widget-icons/home-icon.svg'
 import classes from './SHSForm.module.scss'
@@ -71,18 +72,29 @@ const AddSHSForm = ({ toggleModal }) => {
     data: vendorData,
   } = useListShsVendorsQuery()
 
-  const [assignShs, { isLoading, isSuccess }] = useAssignShsMutation()
+  const [assignShs, { isLoading, isSuccess, isError, error }] =
+    useAssignShsMutation()
 
   const onFinish = (values) => {
-    // assignShs({
-    //   ...values,
-    //   purchased_date: purchaseDate,
-    //   client_email: 'inyang@libertyng.com',
-    // })
+    assignShs({
+      ...values,
+      purchased_date: purchaseDate,
+      client_email: search,
+    })
   }
 
   useEffect(() => {
-    if (!isLoading && isSuccess) {
+    if (isLoading) return
+
+    if (isError) {
+      toast.error(error.data.message[0], {
+        hideProgressBar: true,
+        autoClose: 3000,
+        theme: 'colored',
+      })
+    }
+
+    if (isSuccess) {
       toast.success('SHS Added', {
         hideProgressBar: true,
         autoClose: 3000,
@@ -90,7 +102,7 @@ const AddSHSForm = ({ toggleModal }) => {
       })
       toggleModal()
     }
-  }, [isLoading, isSuccess])
+  }, [isLoading, isSuccess, isError])
 
   if (!fetchingRegion && !regionError && regionData.results) {
     regions = regionData.results.map((region, index) => (
@@ -123,8 +135,6 @@ const AddSHSForm = ({ toggleModal }) => {
       </Option>
     ))
   }
-
-  console.log({ search, email: 'hovas72144@kaudat.com' })
 
   return (
     <Form
@@ -325,7 +335,7 @@ const AddSHSForm = ({ toggleModal }) => {
           Cancel
         </Button>
         <Button className={classes.AddSHSForm__submitBtn} htmlType="submit">
-          Proceed
+          {isLoading ? <ButtonLoader color="#fff" /> : 'Proceed'}
         </Button>
       </div>
       <ToastContainer />
