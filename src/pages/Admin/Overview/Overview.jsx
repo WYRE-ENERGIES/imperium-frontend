@@ -35,11 +35,11 @@ const Overview = () => {
   const [areaChartData, setAreaChartData] = useState([
     {
       name: 'Energy Consumed',
-      data: [],
+      data: [350, 400, 500, 420, 500, 570, 410, 430, 410, 500, 400, 320],
     },
     {
       name: 'Energy Generation',
-      data: [],
+      data: [300, 350, 450, 320, 450, 470, 310, 330, 310, 450, 300, 220],
     },
   ])
   const [chartData, setChartData] = useState([
@@ -206,7 +206,7 @@ const Overview = () => {
     if (aData?.results?.length) {
       setAlertData((prev) => [...prev, ...aData.results])
     }
-  }, [isAlertFetching, isAlertError])
+  }, [isAlertFetching])
 
   useEffect(() => {
     if (isEmissionFetching) return
@@ -231,26 +231,7 @@ const Overview = () => {
     }
 
     setVoltageChartData(voltageData)
-  }, [isVoltageFetching, isVoltageError])
-
-  useEffect(() => {
-    if (isEnergyFetching) return
-
-    if (isEnergyError) {
-      setAreaChartData([
-        {
-          name: 'Energy Consumed',
-          data: [],
-        },
-        {
-          name: 'Energy Generation',
-          data: [],
-        },
-      ])
-      return
-    }
-    setAreaChartData(energyData)
-  }, [isEnergyFetching, isEnergyError])
+  }, [isVoltageFetching])
 
   return (
     <AdminPageLayout>

@@ -91,12 +91,7 @@ const WidgetFilter = ({
           />
         </div>
 
-        <DatePicker
-          className={classes.WidgetFilter__date}
-          onChange={(d, ds) => selectFilterBy(ds || 'yearly')}
-          disabledDate={(current) => current && current > new Date()}
-          showToday={false}
-        />
+        <DatePicker className={classes.WidgetFilter__date} />
       </section>
       {hasSectorFilter ? (
         <>

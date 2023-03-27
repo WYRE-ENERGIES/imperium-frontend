@@ -75,7 +75,7 @@ const EnergyAnalytic = () => {
       setAreaChartData([capacityData.energyDifference])
       setChartData([capacityData.energyConsumed, capacityData.energyGenerated])
     }
-  }, [isCapacityFetching, capacityData])
+  }, [capacityData])
 
   useEffect(() => {
     if (isAnalyticsFetching) return
@@ -159,7 +159,7 @@ const EnergyAnalytic = () => {
             <Spin />
           ) : (
             <EnergyStatistics
-              duration={formatLabel(globalFilter)}
+              duration="For the last 12 months"
               chartData={chartData}
               areaChartData={areaChartData}
             />

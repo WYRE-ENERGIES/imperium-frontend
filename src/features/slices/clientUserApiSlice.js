@@ -23,19 +23,8 @@ export const clientUsersApiSlice = apiSlice.injectEndpoints({
         url: `/imperium-admin/shs/list-clients/?search=${search}`,
       }),
     }),
-    getClientDeviceList: builder.query({
-      query: () => {
-        const client_id = getItemFromLocalStorage('current_client')
-        return {
-          url: `${CLIENT_URL_PATH}list-shs-device/${client_id}/`,
-        }
-      },
-    }),
   }),
 })
 
-export const {
-  useGetUserClientListQuery,
-  useAdminGetClientListQuery,
-  useGetClientDeviceListQuery,
-} = clientUsersApiSlice
+export const { useGetUserClientListQuery, useAdminGetClientListQuery } =
+  clientUsersApiSlice

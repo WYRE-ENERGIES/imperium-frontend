@@ -139,26 +139,6 @@ export const adminOverviewSlice = apiSlice.injectEndpoints({
           url,
         }
       },
-      transformResponse: (response) => {
-        const energyGenerated = {
-          name: 'Energy Generated',
-          data: [],
-        }
-        const energyConsumed = {
-          name: 'Energy Consumed',
-          data: [],
-        }
-
-        Object.values(response[0]).forEach((stat, index) => {
-          if (index < 12) {
-            const { energy_generated, energy_consumed } = stat
-            energyGenerated.data.push(Math.floor(energy_generated) ?? 0)
-            energyConsumed.data.push(Math.floor(energy_consumed) ?? 0)
-          }
-        })
-
-        return [energyGenerated, energyConsumed]
-      },
     }),
   }),
 })
