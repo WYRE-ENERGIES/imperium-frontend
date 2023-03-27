@@ -1,5 +1,10 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { energyAnalyticColumns, energyFilterOptions } from '../../../utils/data'
+import {
+  useGetClientEnergyAnalyticsQuery,
+  useGetClientEnergyStatQuery,
+  useGetClientEnergyTableDataQuery,
+} from '../../../features/slices/energyAnalytic/clientEnergySlice'
 
 import EnergyAnalyticWidget from '../../../components/Widget/EnergyAnalytic/EnergyAnalyticWidget'
 import { ReactComponent as EnergyWidgetIcon } from '../../../assets/widget-icons/energy-icon.svg'
@@ -10,45 +15,103 @@ import SHSTableWithFilter from '../../../components/SHSTableWithFilter/SHSTableW
 import ShsCapacityDropdown from '../../../components/ShsCapacityDropdown/ShsCapacityDropdown'
 import StackedBarChart from '../../../components/Charts/StackedBarChart/StackedBarChart'
 import WidgetFilter from '../../../components/WidgetFilter/WidgetFilter'
+import WidgetLoader from '../../../components/Widget/WidgetLoader/WidgetLoader'
 import classes from './EnergyAnalytic.module.scss'
+import { formatLabel } from '../../../utils/helpers'
 import { tableData } from '../../../components/SHSTableWithFilter/data'
+import useDebounce from '../../../hooks/useDebounce'
 
 const EnergyAnalytic = () => {
   const [chartData, setChartData] = useState([
     {
       name: 'Energy Consumed',
-      data: [400, 500, 350, 420, 320, 500, 410, 430, 410, 500, 570, 400],
+      data: [],
     },
     {
       name: 'Energy Generated',
-      data: [400, 500, 230, 430, 260, 430, 390, 380, 390, 330, 430, 310],
+      data: [],
     },
   ])
+  const [search, setSearch] = useState('')
+  const [page, setPage] = useState(1)
+  const [globalFilter, setGlobalFilter] = useState('yearly')
+  const [widgets, setWidgets] = useState([])
+  const [deviceId, setDeviceId] = useState()
 
-  const widgets = [
+  const handleSearch = (e) => setSearch(e.target.value)
+  const debounceValue = useDebounce(search, 1000)
+
+  const { isFetching, isError, isSuccess, data } =
+    useGetClientEnergyTableDataQuery(
+      {
+        page,
+        search: debounceValue,
+        filterBy: globalFilter,
+        deviceId,
+      },
+      { skip: !deviceId },
+    )
+
+  const {
+    isFetching: isStatLoading,
+    isError: isStatError,
+    isSuccess: isStatSuccess,
+    data: statData,
+  } = useGetClientEnergyStatQuery(
     {
-      id: 1,
-      icon: EnergyWidgetIcon,
-      title: 'Total Energy Generation ',
-      range: 'For the year',
-      value: '100.241',
+      filterBy: globalFilter,
+      deviceId,
     },
-    {
-      id: 2,
-      icon: SEnergyWidgetIcon,
-      title: 'Total Energy Consumption',
-      range: 'For the year',
-      value: '50.82',
-    },
-  ].map((widget) => (
-    <EnergyAnalyticWidget
-      key={widget.id}
-      Icon={widget.icon}
-      range={widget.range}
-      title={widget.title}
-      value={widget.value}
-    />
-  ))
+    { skip: !deviceId },
+  )
+
+  const { isFetching: isAnalyticsLoading, data: analyticsData } =
+    useGetClientEnergyAnalyticsQuery(
+      {
+        filterBy: globalFilter,
+        deviceId,
+      },
+      { skip: !deviceId },
+    )
+
+  useEffect(() => {
+    if (isAnalyticsLoading) return
+
+    setWidgets(
+      [
+        {
+          id: 1,
+          icon: EnergyWidgetIcon,
+          title: 'Total Energy Generation ',
+          range: 'For the year',
+          value: parseFloat(analyticsData?.energy_generated?.toFixed(1)) || 0,
+        },
+        {
+          id: 2,
+          icon: SEnergyWidgetIcon,
+          title: 'Total Energy Consumption',
+          range: 'For the year',
+          value: parseFloat(analyticsData?.energy_consumed?.toFixed(1)) || 0,
+        },
+      ].map((widget) => (
+        <EnergyAnalyticWidget
+          key={widget.id}
+          Icon={widget.icon}
+          range={formatLabel(globalFilter)}
+          title={widget.title}
+          value={widget.value}
+        />
+      )),
+    )
+  }, [isAnalyticsLoading])
+
+  useEffect(() => {
+    if (isStatLoading) return
+
+    if (isStatSuccess) {
+      setChartData([statData.energyConsumed, statData.energyGenerated])
+    }
+  }, [isStatLoading, isStatSuccess])
 
   return (
     <PageLayout>
@@ -58,12 +121,17 @@ const EnergyAnalytic = () => {
       >
         <section className={classes.EnergyAnalytic__headerSection}>
           <PageBreadcrumb title="Energy Analytic" items={['Energy Analytic']} />
-          <ShsCapacityDropdown />
+          <ShsCapacityDropdown setDeviceId={setDeviceId} />
         </section>
         <section className={classes.EnergyAnalytic__filters}>
-          <WidgetFilter />
+          <WidgetFilter
+            selectFilterBy={(value) => setGlobalFilter(value)}
+            filterBy={globalFilter}
+          />
         </section>
-        <div className={classes.EnergyAnalytic__widgets}>{widgets}</div>
+        <div className={classes.EnergyAnalytic__widgets}>
+          {isAnalyticsLoading ? <WidgetLoader /> : widgets}
+        </div>
         <div className={classes.EnergyAnalytic__chart}>
           <StackedBarChart
             title="Energy Generation"
@@ -84,6 +152,7 @@ const EnergyAnalytic = () => {
             tableTitle="Energy Table"
             tagValue="kWh"
             filterOptions={energyFilterOptions}
+            handleSearch={handleSearch}
           />
         </div>
       </div>
