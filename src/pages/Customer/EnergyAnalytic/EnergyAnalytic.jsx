@@ -21,7 +21,6 @@ import { formatLabel } from '../../../utils/helpers'
 import { tableData } from '../../../components/SHSTableWithFilter/data'
 import useDebounce from '../../../hooks/useDebounce'
 
-// 220
 const EnergyAnalytic = () => {
   const [chartData, setChartData] = useState([
     {
@@ -37,33 +36,43 @@ const EnergyAnalytic = () => {
   const [page, setPage] = useState(1)
   const [globalFilter, setGlobalFilter] = useState('yearly')
   const [widgets, setWidgets] = useState([])
+  const [deviceId, setDeviceId] = useState()
 
   const handleSearch = (e) => setSearch(e.target.value)
   const debounceValue = useDebounce(search, 1000)
 
   const { isFetching, isError, isSuccess, data } =
-    useGetClientEnergyTableDataQuery({
-      page,
-      search: debounceValue,
-      filterBy: globalFilter,
-      deviceId: 220,
-    })
+    useGetClientEnergyTableDataQuery(
+      {
+        page,
+        search: debounceValue,
+        filterBy: globalFilter,
+        deviceId,
+      },
+      { skip: !deviceId },
+    )
 
   const {
     isFetching: isStatLoading,
     isError: isStatError,
     isSuccess: isStatSuccess,
     data: statData,
-  } = useGetClientEnergyStatQuery({
-    filterBy: globalFilter,
-    deviceId: 220,
-  })
+  } = useGetClientEnergyStatQuery(
+    {
+      filterBy: globalFilter,
+      deviceId,
+    },
+    { skip: !deviceId },
+  )
 
   const { isFetching: isAnalyticsLoading, data: analyticsData } =
-    useGetClientEnergyAnalyticsQuery({
-      filterBy: globalFilter,
-      deviceId: 220,
-    })
+    useGetClientEnergyAnalyticsQuery(
+      {
+        filterBy: globalFilter,
+        deviceId,
+      },
+      { skip: !deviceId },
+    )
 
   useEffect(() => {
     if (isAnalyticsLoading) return
@@ -112,7 +121,7 @@ const EnergyAnalytic = () => {
       >
         <section className={classes.EnergyAnalytic__headerSection}>
           <PageBreadcrumb title="Energy Analytic" items={['Energy Analytic']} />
-          <ShsCapacityDropdown />
+          <ShsCapacityDropdown setDeviceId={setDeviceId} />
         </section>
         <section className={classes.EnergyAnalytic__filters}>
           <WidgetFilter

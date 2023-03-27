@@ -10,7 +10,7 @@ const DropDownFilter = ({ options, onFilterChanged, value }) => {
       <Select
         value={value}
         placeholder="Filter by"
-        onChange={(e) => onFilterChanged(e)}
+        onChange={(e) => onFilterChanged(e || 'yearly')}
         size="large"
         allowClear
         className={classes.DropDownFilter__select}
