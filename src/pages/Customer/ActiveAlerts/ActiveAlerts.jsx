@@ -23,13 +23,13 @@ const ActiveAlerts = () => {
 
   const { data: shsDevicesData, isLoading: shsDevicesIsLoading } =
     useListClientShsDevicesQuery({
-      client_id: clientId,
+      client_id: 4,
     })
   const { data: activeAlerts, isLoading: activeAlertsIsLoading } =
     useGetCustomerActiveAlertsQuery({
-      client_id: clientId,
+      client_id: 4,
       page: page,
-      device_id: 1,
+      device_id: 20,
     })
   const columns = [
     {
@@ -86,6 +86,7 @@ const ActiveAlerts = () => {
   ]
 
   useEffect(() => {
+    console.log(shsDevicesData)
     setActiveAlertsTable(activeAlerts)
     setShsDevices(shsDevicesData)
   }, [shsDevicesData, activeAlerts])
@@ -131,7 +132,7 @@ const ActiveAlerts = () => {
               </div>
             </div>
           ) : (
-            <Loading data={'most recent alerts...'} />
+            'No data on active alerts'
           )}
         </section>
         <section className={classes.ActiveAlerts__Table}>
@@ -145,7 +146,7 @@ const ActiveAlerts = () => {
               }}
             />
           ) : (
-            <Loading data={'active alerts table...'} />
+            'No data on active alerts'
           )}
         </section>
       </section>
