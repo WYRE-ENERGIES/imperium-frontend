@@ -18,7 +18,13 @@ export const clientUsersApiSlice = apiSlice.injectEndpoints({
         }
       },
     }),
+    adminGetClientList: builder.query({
+      query: (search) => ({
+        url: `/imperium-admin/shs/list-clients/?search=${search}`,
+      }),
+    }),
   }),
 })
 
-export const { useGetUserClientListQuery } = clientUsersApiSlice
+export const { useGetUserClientListQuery, useAdminGetClientListQuery } =
+  clientUsersApiSlice

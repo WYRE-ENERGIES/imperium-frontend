@@ -45,7 +45,7 @@ export const customerApiSlice = apiSlice.injectEndpoints({
     }),
     assignShs: builder.mutation({
       query: (data) => ({
-        url: `${BASE_CUSTOMERS_URL}assign-shs/`,
+        url: `${BASE_CUSTOMERS_URL}assign/`,
         method: 'POST',
         body: data,
       }),

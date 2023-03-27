@@ -238,14 +238,6 @@ export const barChartOptions = {
 }
 
 export const adminPieChartOptions = {
-  labels: [
-    'Agriculture',
-    'Business',
-    'Education',
-    'Finance',
-    'Health',
-    'Others',
-  ],
   dataLabels: {
     enabled: false,
   },
