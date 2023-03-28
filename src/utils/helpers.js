@@ -77,9 +77,8 @@ const dateTimeOption = {
   month: 'long',
   day: 'numeric',
 }
-export const dateTimeConverter = (value) => {
+export const dateTimeConverter = (value, param) => {
   const dateTime = new Date(value).toLocaleTimeString('en-US', dateTimeOption)
-
   return dateTime
 }
 
@@ -100,5 +99,14 @@ export const DataStatistics = (data, key) => {
   ]
   return dataList.map((value) => (value?.[key] !== null ? value?.[key] : 0))
 }
+
+// export const RecentAlerts = (value) => {
+//   const today = new Date()
+//   const date = new Date(value)
+//   if (today === date) {
+//     return true
+//   }
+//   return false
+// }
 
 export const emptyLocalStorage = () => localStorage.clear()
