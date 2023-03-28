@@ -31,6 +31,15 @@ export const shsSlice = apiSlice.injectEndpoints({
       },
       transformErrorResponse: (response, meta, arg) => response.status,
     }),
+    getShsPerformance: build.query({
+      query: ({ id }) => {
+        return `${SHS_BASE_URL}performance-monitoring/${id}`
+      },
+      transformResponse: (response, meta, arg) => {
+        return response
+      },
+      transformErrorResponse: (response, meta, arg) => response.status,
+    }),
   }),
 })
 
@@ -38,4 +47,5 @@ export const {
   useGetEnergyGenerationQuery,
   useGetEnergyStatisticsQuery,
   useGetPanelsListQuery,
+  useGetShsPerformanceQuery,
 } = shsSlice

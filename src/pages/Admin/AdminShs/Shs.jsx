@@ -22,10 +22,12 @@ import {
   useGetEnergyGenerationQuery,
   useGetEnergyStatisticsQuery,
   useGetPanelsListQuery,
+  useGetShsPerformanceQuery,
 } from '../../../features/slices/shs/admin/shsSlice'
 import { useEffect } from 'react'
+import Loading from '../../../components/Loading/Loading'
 
-const DeviceInfo = () => {
+const DeviceInfo = ({ data }) => {
   return (
     <div className={classes.Shs__DeviceInfo}>
       <div>
@@ -35,27 +37,28 @@ const DeviceInfo = () => {
       <div>
         <div>
           <p>Device Name</p>
-          <p>Alday Banamex</p>
+
+          <p>{data?.device_name}</p>
         </div>
         <Divider />
         <div>
           <p>Device address</p>
-          <p>Number 10 ijaoye street, Jibowu, Lagos </p>
+          <p>{data?.device_address} </p>
         </div>
         <Divider />
         <div>
           <p>G.P.S address</p>
-          <p>10 Ijaoye St, Igbobi 101245, Lagos</p>
+          <p>{data?.gps_address}</p>
         </div>
         <Divider />
         <div className={classes.Shs__Gps}>
           <div>
             <p>Latitude</p>
-            <p>6.520940</p>
+            <p>{data?.latitude}</p>
           </div>
           <div>
             <p>Longitude</p>
-            <p>6.520940</p>
+            <p>{data?.longitude}</p>
           </div>
         </div>
       </div>
@@ -74,21 +77,24 @@ const CloseDeviceInfo = () => {
 const Shs = () => {
   const { id } = useParams()
   const [panels, setPanels] = useState([])
+  const [performance, setPerformance] = useState('')
+  const [client, setclient] = useState('---')
   const { data: energyGeneration, isLoading: energyGenerationLoading } =
     useGetEnergyGenerationQuery({ id: id })
-  console.log(energyGeneration)
+
   const { data: energyStatistics, isLoading: energyStatisticsLoading } =
     useGetEnergyStatisticsQuery({ id: id })
-  console.log(energyStatistics)
+
   const { data: panelList, isLoading: panelListLoading } =
     useGetPanelsListQuery({ id: id })
-  console.log(panelList)
+
+  const { data: performanceData, isLoading: performanceLoading } =
+    useGetShsPerformanceQuery({ id: id })
 
   const [open, setOpen] = useState(false)
   const handleOnCloseDeviceModal = (e) => {
     if (e.key === '2') {
       setOpen(false)
-      console.log(e.key)
     }
   }
 
@@ -96,9 +102,17 @@ const Shs = () => {
     setOpen(flag)
   }
 
+  useEffect(() => {
+    setPanels(panelList?.results)
+  }, [panelList])
+  useEffect(() => {
+    setPerformance(performanceData)
+    setclient(performanceData?.device_details.device_name)
+  }, [performanceData])
+
   const deviceDetails = [
     {
-      label: <DeviceInfo />,
+      label: <DeviceInfo data={performance?.device_details} />,
       key: '1',
     },
     {
@@ -106,24 +120,21 @@ const Shs = () => {
       key: '2',
     },
   ]
-  useEffect(() => {
-    setPanels(panelList?.results)
-  }, [panelList])
   return (
     <AdminPageLayout>
       <section className={classes.Shs}>
         <section className={classes.Shs__BreadCrumb}>
           {' '}
-          <div style={{ display: 'flex' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-around' }}>
             <PageBreadcrumb
-              title="Alday Banamex"
-              items={['Overview', '...', 'Alday Banamex']}
+              title={client}
+              items={['Overview', '...', client]}
             />
             <img
               src={caretdown}
               alt=""
               srcSet=""
-              style={{ margin: '-40px 0 0 10px' }}
+              style={{ margin: '-40px 0 0 1px' }}
             />
           </div>
           <PowerSwitch />
@@ -141,6 +152,7 @@ const Shs = () => {
                 <div className={classes.Shs__Monitoring}>
                   <div className={classes.Shs__PerformanceMonitor}>
                     <h1>Performance Monitoring </h1>
+
                     <Dropdown
                       className={classes.Shs__DeviceDropDown}
                       menu={{
@@ -160,102 +172,142 @@ const Shs = () => {
                     <p>
                       <span>1</span> SHS Capacity
                     </p>
-                    <h1>380 kVA/4.7 kW</h1>
+                    <h1>
+                      {performanceLoading
+                        ? '---'
+                        : performance
+                        ? performance?.capacity
+                        : 0}
+                      kVA/4.7 kW
+                    </h1>
                   </div>
                 </div>
                 <div className={classes.Shs__MonitoringData}>
-                  <Row
-                    gutter={{
-                      lg: 10,
-                    }}
-                  >
-                    <Col span={12}>
-                      <div className={classes.Shs__MonitoringDataSystem}>
-                        <div
-                          className={classes.Shs__MonitoringDataSystemStatus}
-                        >
-                          <div>
-                            <small>Status</small>
-                            <p>On</p>
-                          </div>
-                          <div>
-                            <small>System Load</small>
-                            <p>
-                              60%{' '}
-                              <small style={{ color: '#ABABAB' }}>
-                                (36 kw)
-                              </small>
-                            </p>
-                          </div>
-                          <div>
-                            <small>Source</small>
-                            <p>PHCN</p>
-                          </div>
-                        </div>
-                        <div>
-                          <div>
-                            <small>Battery Voltage</small>
-                            <p>12.7 volts</p>
-                          </div>
-                        </div>
-                        <div>
-                          <div>
-                            <small>Power Usage Today</small>
-                            <p>
-                              37. 3 kwh
-                              <span>
-                                <span>
-                                  <BiTrendingUp />+ 2.0 %
-                                </span>
-                              </span>
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    </Col>
-                    <Col span={12}>
-                      <div className={classes.Shs__MonitoringDataBattery}>
-                        <div className={classes.Shs__MonitoringDataBuilding}>
-                          <img src={building} alt="" srcSet="" />
-                          <div className={classes.Shs__MonitoringDataRadiation}>
-                            <div>
-                              <span>
-                                <BsFillSunFill color="#FAC515" /> 32°C
-                              </span>
-                            </div>
-                          </div>
-                        </div>
-                        <div>
+                  {performanceLoading ? (
+                    <Loading data={'shs performance'} />
+                  ) : performance ? (
+                    <Row
+                      gutter={{
+                        lg: 10,
+                      }}
+                    >
+                      <Col span={12}>
+                        <div className={classes.Shs__MonitoringDataSystem}>
                           <div
-                            className={classes.Shs__MonitoringDataBatteryStatus}
+                            className={classes.Shs__MonitoringDataSystemStatus}
                           >
                             <div>
-                              <div>
-                                <img src={batteryPercent} alt="" srcSet="" />
-                              </div>
-                              <div>
-                                <p>Battery Percent</p>
-                                <p>
-                                  <span>2</span> 80%
-                                </p>
-                              </div>
+                              <small>Status</small>
+                              <p
+                                style={{
+                                  color:
+                                    performance?.status === 'OFF'
+                                      ? ' #F04438'
+                                      : 'white',
+                                }}
+                              >
+                                {performance?.status}
+                              </p>
                             </div>
                             <div>
+                              <small>System Load</small>
+                              <p>
+                                {performance?.system_load}%{' '}
+                                <small style={{ color: '#ABABAB' }}>
+                                  (36 kw)
+                                </small>
+                              </p>
+                            </div>
+                            <div>
+                              <small>Source</small>
+                              <p>{performance?.source.toUpperCase()}</p>
+                            </div>
+                          </div>
+                          <div>
+                            <div>
+                              <small>Battery Voltage</small>
+                              <p>{performance?.battery_voltage || 0} volts</p>
+                            </div>
+                          </div>
+                          <div>
+                            <div>
+                              <small>Power Usage Today</small>
+                              <p>
+                                {performance?.power_usage_today} kwh
+                                <span>
+                                  <span>
+                                    <BiTrendingUp />+ 2.0 %
+                                  </span>
+                                </span>
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </Col>
+                      <Col span={12}>
+                        <div className={classes.Shs__MonitoringDataBattery}>
+                          <div className={classes.Shs__MonitoringDataBuilding}>
+                            <img src={building} alt="" srcSet="" />
+                            <div
+                              className={classes.Shs__MonitoringDataRadiation}
+                            >
                               <div>
-                                <img src={batteryStatus} alt="" srcSet="" />
+                                <span>
+                                  <BsFillSunFill color="#FAC515" /> 32°C
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                          <div>
+                            <div
+                              className={
+                                classes.Shs__MonitoringDataBatteryStatus
+                              }
+                            >
+                              <div>
+                                <div>
+                                  <img src={batteryPercent} alt="" srcSet="" />
+                                </div>
+                                <div>
+                                  <p>Battery Percent</p>
+                                  <p>
+                                    <span>2</span>{' '}
+                                    {performance?.battery_percent || 0}%
+                                  </p>
+                                </div>
                               </div>
                               <div>
-                                <p>Charging Status</p>
-                                <p>
-                                  <span>3</span> Charging
-                                </p>
+                                <div>
+                                  <img src={batteryStatus} alt="" srcSet="" />
+                                </div>
+                                <div>
+                                  <p>Charging Status</p>
+                                  <p
+                                    style={{
+                                      color:
+                                        performance?.charging_status === true
+                                          ? 'white'
+                                          : '#F04438',
+                                    }}
+                                  >
+                                    {performance?.charging_status === true ? (
+                                      <>
+                                        <span>3 </span> Charging
+                                      </>
+                                    ) : (
+                                      'Not charging'
+                                    )}
+                                  </p>
+                                </div>
                               </div>
                             </div>
                           </div>
                         </div>
-                      </div>
-                    </Col>
-                  </Row>
+                      </Col>
+                    </Row>
+                  ) : (
+                    'No data records'
+                  )}
                 </div>
               </div>
             </Col>
@@ -475,94 +527,107 @@ const Shs = () => {
             <Col span={8}>
               <div className={classes.Shs__EnergyPanel}>
                 <p>Panels</p>
-                <div>
-                  <div className={classes.Shs__PanelData}>
-                    <div>
-                      <Row style={{ padding: '0 15px 0 20px' }}>
-                        <Col style={{ marginRight: '6px' }}>
-                          {' '}
-                          <div>
-                            <img src={SolarPanel} alt="" srcSet="" />
-                          </div>
-                        </Col>
-                        <Col style={{ marginRight: '3px' }}>
-                          <div>
-                            <p style={{ marginTop: '25px' }}>Xaxier Panel</p>
-                            <p style={{ color: '#737373' }}>
-                              Panel Voltage: 3.3 kwh{' '}
-                            </p>
-                          </div>
-                        </Col>
-                        <Col
-                          style={{
-                            marginLeft: 'auto',
-                          }}
-                        >
-                          <div>
-                            <div className={classes.Shs__BoltIcon}>
-                              <p>
-                                {' '}
-                                <ThunderboltOutlined
-                                  style={{ color: '#EAAA08' }}
-                                  size={20}
-                                />
-                              </p>
-                              <p>12.4 kwh</p>
+
+                {panelListLoading ? (
+                  <Loading data={'panel list'} />
+                ) : panels ? (
+                  <div>
+                    {panels.map((panel, key) => (
+                      <div className={classes.Shs__PanelData} key={key}>
+                        <div>
+                          <Row style={{ padding: '0 15px 0 20px' }}>
+                            <Col style={{ marginRight: '6px' }}>
+                              {' '}
+                              <div>
+                                <img src={SolarPanel} alt="" srcSet="" />
+                              </div>
+                            </Col>
+                            <Col style={{ marginRight: '3px' }}>
+                              <div>
+                                <p style={{ marginTop: '25px' }}>
+                                  {panel?.device_name}
+                                </p>
+                                <p style={{ color: '#737373' }}>
+                                  Voltage: {panel?.panel_voltage} kwh{' '}
+                                </p>
+                              </div>
+                            </Col>
+                            <Col
+                              style={{
+                                marginLeft: 'auto',
+                              }}
+                            >
+                              <div>
+                                <div className={classes.Shs__BoltIcon}>
+                                  <p>
+                                    {' '}
+                                    <ThunderboltOutlined
+                                      style={{ color: '#EAAA08' }}
+                                      size={20}
+                                    />
+                                  </p>
+                                  <p>{panel?.panel_kwh} kwh</p>
+                                </div>
+                              </div>
+                            </Col>
+                          </Row>
+                          <Divider />
+                          <div className={classes.Shs__PanelShowMore}>
+                            <div>
+                              <p> Show more</p> <img src={panelarrow} alt="" />
                             </div>
                           </div>
-                        </Col>
-                      </Row>
-                      <Divider />
-                      <div className={classes.Shs__PanelShowMore}>
-                        <div>
-                          <p> Show more</p> <img src={panelarrow} alt="" />
                         </div>
                       </div>
-                    </div>
-                  </div>
-                  <div className={classes.Shs__PanelData}>
-                    <div>
-                      <Row style={{ padding: '0 15px 0 20px' }}>
-                        <Col style={{ marginRight: '6px' }}>
-                          {' '}
-                          <div>
-                            <img src={panelbattery} alt="" srcSet="" />
-                          </div>
-                        </Col>
-                        <Col style={{ marginRight: '3px' }}>
-                          <div>
-                            <p style={{ marginTop: '25px' }}>Battery Health</p>
-                            <p style={{ color: '#737373' }}>Good </p>
-                          </div>
-                        </Col>
-                        <Col
-                          style={{
-                            marginLeft: 'auto',
-                          }}
-                        >
-                          <div>
-                            <div className={classes.Shs__BoltIcon}>
-                              <p>
-                                {' '}
-                                <ThunderboltOutlined
-                                  style={{ color: '#EAAA08' }}
-                                  size={20}
-                                />
-                              </p>
-                              <p>Charging</p>
+                    ))}
+                    <div className={classes.Shs__PanelData}>
+                      <div>
+                        <Row style={{ padding: '0 15px 0 20px' }}>
+                          <Col style={{ marginRight: '6px' }}>
+                            {' '}
+                            <div>
+                              <img src={panelbattery} alt="" srcSet="" />
                             </div>
+                          </Col>
+                          <Col style={{ marginRight: '3px' }}>
+                            <div>
+                              <p style={{ marginTop: '25px' }}>
+                                Battery Health
+                              </p>
+                              <p style={{ color: '#737373' }}>Good </p>
+                            </div>
+                          </Col>
+                          <Col
+                            style={{
+                              marginLeft: 'auto',
+                            }}
+                          >
+                            <div>
+                              <div className={classes.Shs__BoltIcon}>
+                                <p>
+                                  {' '}
+                                  <ThunderboltOutlined
+                                    style={{ color: '#EAAA08' }}
+                                    size={20}
+                                  />
+                                </p>
+                                <p>Charging</p>
+                              </div>
+                            </div>
+                          </Col>
+                        </Row>
+                        <Divider />
+                        <div className={classes.Shs__PanelShowMore}>
+                          <div>
+                            <p> Show more</p> <img src={panelarrow} alt="" />
                           </div>
-                        </Col>
-                      </Row>
-                      <Divider />
-                      <div className={classes.Shs__PanelShowMore}>
-                        <div>
-                          <p> Show more</p> <img src={panelarrow} alt="" />
                         </div>
                       </div>
-                    </div>
+                    </div>{' '}
                   </div>
-                </div>
+                ) : (
+                  'No data records...'
+                )}
               </div>
             </Col>
           </Row>
