@@ -43,7 +43,9 @@ const PanelAnalytic = lazy(() =>
   import('./pages/Customer/PanelAnalytic/PanelAnalytic'),
 )
 
-const Shs = lazy(() => import('./pages/Customer/Shs/Shs'))
+const CustomerShsDetails = lazy(() =>
+  import('./pages/Customer/CustomerShs/Shs'),
+)
 const SignIn = lazy(() => import('./pages/Customer/Auth/SignIn/SignIn'))
 const SignUp = lazy(() => import('./pages/Customer/Auth/SignUp/SignUp'))
 const Support = lazy(() => import('./pages/Customer/Support/Support'))
@@ -94,6 +96,7 @@ const AdminSupport = lazy(() => import('./pages/Admin/Support/Support'))
 const AdminCustomer = lazy(() =>
   import('./pages/Admin/Customers/Customer/Customer'),
 )
+const AdminShsDetails = lazy(() => import('./pages/Admin/AdminShs/Shs'))
 const AdminSHS = lazy(() => import('./pages/Admin/SHS/SHS'))
 const AdminOverview = lazy(() => import('./pages/Admin/Overview/Overview'))
 const AdminVoltageCurrent = lazy(() =>
@@ -131,7 +134,7 @@ function App() {
               </Route>
               <Route path="overview">
                 <Route index element={<Overview />} />
-                <Route path="shs/:id" element={<Shs />} />
+                <Route path="shs/:id" element={<CustomerShsDetails />} />
               </Route>
               <Route path="support" element={<Support />} />
               <Route path="energy-analytic" element={<EnergyAnalytic />} />
@@ -176,7 +179,10 @@ function App() {
                   <Route path=":id" element={<AdminCustomer />} />
                 </Route>
                 <Route path="all-shs" element={<AdminSHS />} />
-                <Route path="overview" element={<AdminOverview />} />
+                <Route path="overview">
+                  <Route index element={<AdminOverview />} />
+                  <Route path="shs/:id" element={<AdminShsDetails />} />
+                </Route>
                 <Route
                   path="voltage-current-analytics"
                   element={<AdminVoltageCurrent />}
