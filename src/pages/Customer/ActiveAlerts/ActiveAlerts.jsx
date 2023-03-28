@@ -101,9 +101,6 @@ const ActiveAlerts = () => {
   ]
 
   useEffect(() => {
-    console.log('shs device id: ', shsDevicesData?.[0])
-    console.log('shs device active alerts: ', activeAlerts?.results.slice(0, 2))
-
     setActiveAlertsTable(activeAlerts)
     setShsDevices(shsDevicesData)
   }, [shsDevicesData, activeAlerts])
@@ -116,22 +113,14 @@ const ActiveAlerts = () => {
           <ShsCapacityDropdown />
         </section>
         <section className={classes.ActiveAlerts__Banner}>
-          {activeAlerts ? (
+          {activeAlertsIsLoading ? (
+            <Loading data={'active alerts'} />
+          ) : activeAlerts ? (
             <div>
               {' '}
               <div className={classes.ActiveAlerts__Status}>
                 <div>
-                  <h1>
-                    You have{' '}
-                    <span>
-                      {activeAlerts?.results
-                        .slice(0, 2)
-                        .filter((data, key) =>
-                          data?.time === today.getDate() ? data.length : '',
-                        )}
-                    </span>{' '}
-                    recent alerts
-                  </h1>
+                  <h1>You have recent alerts</h1>
                 </div>
                 <div>
                   <div className={classes.ActiveAlerts__Dot}></div>
@@ -160,11 +149,13 @@ const ActiveAlerts = () => {
               </div>
             </div>
           ) : (
-            'No data on active alerts'
+            'No active alerts'
           )}
         </section>
         <section className={classes.ActiveAlerts__Table}>
-          {activeAlertsTable ? (
+          {activeAlertsIsLoading ? (
+            <Loading data={'active alerts'} />
+          ) : (
             <ActiveAlertTable
               title={title}
               columns={columns}
@@ -173,8 +164,6 @@ const ActiveAlerts = () => {
                 position: ['none', 'none'],
               }}
             />
-          ) : (
-            'No data on active alerts'
           )}
         </section>
       </section>
