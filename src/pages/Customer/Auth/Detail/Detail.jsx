@@ -6,7 +6,6 @@ import LeftLayout from '../../../../components/Auth/Layout/LeftLayout/LeftLayout
 import RightLayout from '../../../../components/Auth/Layout/RightLayout/RightLayout'
 import classes from './Details.module.scss'
 import imageDesc from '../../../../../src/assets/Auth/Site Stats-amico 1.svg'
-import DetailForm from '../../../../components/Auth/Forms/Details/DetailsForm'
 import PageIndicator from '../../../../components/Auth/Forms/Widgets/FormPageIndicator'
 import { useCustomerUpdateDetailsMutation } from '../../../../features/slices/auth/customer/customerAuthApiSlice'
 import { useNavigate } from 'react-router-dom'

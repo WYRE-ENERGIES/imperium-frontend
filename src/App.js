@@ -22,8 +22,8 @@ const ActiveAlerts = lazy(() =>
 const Battery = lazy(() => import('./pages/Customer/Battery/Battery'))
 const Business = lazy(() => import('./pages/Customer/Auth/Business/Business'))
 const Detail = lazy(() => import('./pages/Customer/Auth/Detail/Detail'))
-const DisabledAccount = lazy(() =>
-  import('./pages/Customer/Error/DisabledAccount/DisabledAccount'),
+const ErroPage = lazy(() =>
+  import('../src/components/Error/DisabledAccount/ErrorPage'),
 )
 const ContactError = lazy(() =>
   import('./pages/Customer/Error/ContactError/ContactError'),
@@ -121,7 +121,7 @@ function App() {
             <Route path="forgot-password" element={<ForgotPasswordPage />} />
             <Route path="otp" element={<OTP />} />
             <Route path="new-password" element={<NewPasswordPage />} />
-            <Route path="disabled-account" element={<DisabledAccount />} />
+
             <Route path="contact-error" element={<ContactError />} />
             <Route element={<PrivateRoute />}>
               <Route path="account">
@@ -143,7 +143,9 @@ function App() {
             <Route path="accept-user" element={<UserInvitePage />} />
 
             {/* Admin routes */}
+
             <Route path="admin">
+              <Route path="/admin" element={<ErroPage />} />
               <Route path="sign-in" element={<AdminSignIn />} />
               <Route path="sign-up" element={<AdminSignUp />} />
               <Route path="forgot-password" element={<AdminForgotPassword />} />
@@ -183,8 +185,10 @@ function App() {
                 />
               </Route>
               <Route path="accept-user" element={<AdminUserInvitePage />} />
+              <Route />
             </Route>
           </Route>
+          <Route path="*" element={<ErroPage />} />
         </Routes>
       </Suspense>
     </Router>

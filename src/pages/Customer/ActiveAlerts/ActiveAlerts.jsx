@@ -6,7 +6,11 @@ import ShsCapacityDropdown from '../../../components/ShsCapacityDropdown/ShsCapa
 import alertIcon from '../../../../src/assets/widget-icons/alertIcon.svg'
 import classes from './ActiveAlerts.module.scss'
 import { useGetCustomerActiveAlertsQuery } from '../../../features/slices/activeAlerts/customer/customerActiveAlertSlice'
-import { getItemFromLocalStorage } from '../../../utils/helpers'
+import {
+  dateTimeConverter,
+  getItemFromLocalStorage,
+  RecentAlerts,
+} from '../../../utils/helpers'
 import { useListClientShsDevicesQuery } from '../../../features/slices/allShsSlice'
 import { useEffect } from 'react'
 import ActiveAlertTable from '../../../components/ActiveAlert/Table/ActiveAlertTable'
@@ -16,6 +20,7 @@ const ActiveAlerts = () => {
   const title = () => (
     <p style={{ fontWeight: '500', fontSize: '18px' }}>Active Alerts Table</p>
   )
+  const today = new Date()
   const clientId = getItemFromLocalStorage('current_client')
   const [activeAlertsTable, setActiveAlertsTable] = useState(1)
   const [shsDevices, setShsDevices] = useState(1)
@@ -29,7 +34,7 @@ const ActiveAlerts = () => {
     useGetCustomerActiveAlertsQuery({
       client_id: clientId,
       page: page,
-      device_id: 1,
+      device_id: 20,
     })
   const columns = [
     {
@@ -48,7 +53,7 @@ const ActiveAlerts = () => {
     },
     {
       title: 'Active Alert',
-      dataIndex: 'activeAlert',
+      dataIndex: 'active_alert',
       render: (text) => (
         <span
           style={{
@@ -60,18 +65,28 @@ const ActiveAlerts = () => {
       ),
     },
     {
+      key: 'time',
       title: 'Time',
       dataIndex: 'time',
+      render: (data) => (
+        <span
+          style={{
+            color: 'black',
+          }}
+        >
+          {dateTimeConverter(data)}
+        </span>
+      ),
     },
     {
       title: 'Event Description',
-      dataIndex: 'eventDescription',
+      dataIndex: 'event_description',
     },
     {
       title: 'Status',
       dataIndex: 'status',
       render: (status) => {
-        const color = status === 'Resolved' ? '#5C9D48' : '#D92D20'
+        const color = status === 'RESOLVED' ? '#5C9D48' : '#D92D20'
         return (
           <span
             style={{
@@ -89,6 +104,7 @@ const ActiveAlerts = () => {
     setActiveAlertsTable(activeAlerts)
     setShsDevices(shsDevicesData)
   }, [shsDevicesData, activeAlerts])
+
   return (
     <PageLayout>
       <section className={classes.ActiveAlerts}>
@@ -97,14 +113,14 @@ const ActiveAlerts = () => {
           <ShsCapacityDropdown />
         </section>
         <section className={classes.ActiveAlerts__Banner}>
-          {activeAlerts ? (
+          {activeAlertsIsLoading ? (
+            <Loading data={'active alerts'} />
+          ) : activeAlerts ? (
             <div>
               {' '}
               <div className={classes.ActiveAlerts__Status}>
                 <div>
-                  <h1>
-                    You have <span>2</span> recent alerts
-                  </h1>
+                  <h1>You have recent alerts</h1>
                 </div>
                 <div>
                   <div className={classes.ActiveAlerts__Dot}></div>
@@ -113,29 +129,33 @@ const ActiveAlerts = () => {
               </div>
               <div>
                 <div className={classes.ActiveAlerts__Description}>
-                  <div className={classes.ActiveAlerts__Error}>
-                    <p>
-                      <strong>Abnormal load </strong> Check that the load does
-                      not exceed requirement
-                    </p>
-                    <span>12:37pm</span>
-                  </div>
-                  <div className={classes.ActiveAlerts__Success}>
-                    <p>
-                      <strong>Low battery volage </strong> Check that the load
-                      does not exceed requirement
-                    </p>
-                    <span>12:37pm</span>
-                  </div>
+                  {activeAlerts?.results.slice(0, 2).map((data, key) => (
+                    <div
+                      className={
+                        data?.status === 'RESOLVED'
+                          ? classes.ActiveAlerts__Success
+                          : classes.ActiveAlerts__Error
+                      }
+                      key={key}
+                    >
+                      <p>
+                        <strong>{data?.active_alert} </strong>
+                        {data?.event_description}
+                      </p>
+                      <span>{dateTimeConverter(data?.time)}</span>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
           ) : (
-            <Loading data={'most recent alerts...'} />
+            'No active alerts'
           )}
         </section>
         <section className={classes.ActiveAlerts__Table}>
-          {activeAlertsTable ? (
+          {activeAlertsIsLoading ? (
+            <Loading data={'active alerts'} />
+          ) : (
             <ActiveAlertTable
               title={title}
               columns={columns}
@@ -144,8 +164,6 @@ const ActiveAlerts = () => {
                 position: ['none', 'none'],
               }}
             />
-          ) : (
-            <Loading data={'active alerts table...'} />
           )}
         </section>
       </section>

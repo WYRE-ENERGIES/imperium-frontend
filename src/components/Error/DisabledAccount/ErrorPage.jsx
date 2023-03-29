@@ -1,12 +1,12 @@
 import React from 'react'
 import ErrorLayout from '../Layout/ErrorLayout'
 import FormButton from '../../Auth/Forms/Widgets/FormButton'
-import classes from './DisabledAccount.module.scss'
+import classes from './ErrorPage.module.scss'
 import { Link } from 'react-router-dom'
 const DisabledAccountInfo = () => {
   return (
     <div>
-      <ErrorLayout>
+      <ErrorLayout width={'300px'}>
         <div className={classes.DisabledAccountInfo}>
           <div>
             <p className={classes.DisabledAccountInfo__Header}>

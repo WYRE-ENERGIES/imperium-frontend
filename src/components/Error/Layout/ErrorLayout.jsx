@@ -4,30 +4,49 @@ import ErrorImg from '../../../assets/Error/404 Error-amico 1.svg'
 import Layout from '../../Auth/Forms/AuthForm/PasswordReset/Layout/Layout'
 import classes from './ErrorLayout.module.scss'
 import { BiEnvelope } from 'react-icons/bi'
-const ErrorLayout = ({ children }) => {
+const ErrorLayout = ({ children, width }) => {
   return (
     <div className={classes.ErrorLayout}>
-      <Layout>
+      <Layout
+        widgets={{
+          header: 'Page Not Found',
+          tag: (
+            <span
+              style={{
+                color: '#5C9D48',
+                fontWeight: 'bolder',
+                textAlign: 'center',
+              }}
+            >
+              Error 404
+            </span>
+          ),
+        }}
+        admin={false}
+        footer={
+          <div className={classes.ErrorLayout__Footer}>
+            {' '}
+            <p>© imperium 2023</p>
+            <div className={classes.ErrorLayout__icon}>
+              <p>
+                <BiEnvelope size={18} />
+              </p>
+              <p>help@imperium.com</p>
+            </div>
+          </div>
+        }
+      >
         <div className={classes.ErrorLayout__Container}>
           <div className={classes.ErrorLayout__Content}>
-            <Row>
-              <Col span={12}>
+            <div className={classes.ErrorLayout__Form}>
+              <div style={{ width: '300px' }}>
                 <img src={ErrorImg} alt="" srcSet="" />
-              </Col>
-              <Col span={12}>{children}</Col>
-            </Row>
+              </div>
+              <div style={{ width: width }}>{children}</div>
+            </div>
           </div>
         </div>
       </Layout>
-      <div className={classes.ErrorLayout__footer}>
-        <p>© imperium 2023</p>
-        <p className={classes.ErrorLayout__icon}>
-          <p>
-            <BiEnvelope size={18} />
-          </p>
-          <p>help@imperium.com</p>
-        </p>
-      </div>
     </div>
   )
 }

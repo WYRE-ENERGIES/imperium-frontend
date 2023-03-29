@@ -77,9 +77,8 @@ const dateTimeOption = {
   month: 'long',
   day: 'numeric',
 }
-export const dateTimeConverter = (value) => {
+export const dateTimeConverter = (value, param) => {
   const dateTime = new Date(value).toLocaleTimeString('en-US', dateTimeOption)
-
   return dateTime
 }
 

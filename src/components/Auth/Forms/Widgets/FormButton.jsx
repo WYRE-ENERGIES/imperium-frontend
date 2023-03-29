@@ -13,7 +13,7 @@ const FormButton = ({ action, isLoading }) => {
     <div className={classes.Button}>
       <button type="submit" disabled={isLoading}>
         <span>
-          {isLoading && <Spin indicator={loadingIcon} />}
+          {isLoading ? <Spin indicator={loadingIcon} /> : ''}
           <small>{action}</small>
         </span>
       </button>
