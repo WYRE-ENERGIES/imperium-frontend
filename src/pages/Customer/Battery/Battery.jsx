@@ -1,3 +1,4 @@
+import React, { useState } from 'react'
 import {
   batteryTableData,
   batteryWidgetsData,
@@ -6,7 +7,6 @@ import {
 
 import PageBreadcrumb from '../../../components/PageBreadcrumb/PageBreadcrumb'
 import PageLayout from '../../../components/Layout/PageLayout'
-import React from 'react'
 import ShsCapacityDropdown from '../../../components/ShsCapacityDropdown/ShsCapacityDropdown'
 import TableWithFilter from '../../../components/SHSTableWithFilter/SHSTableWithFilter'
 import { Tag } from 'antd'
@@ -66,6 +66,7 @@ const columns = [
 ]
 
 const Battery = () => {
+  const [deviceId, setDeviceId] = useState()
   const widgets = batteryWidgetsData.map((widget) => (
     <Widget
       key={widget.id}
@@ -83,7 +84,7 @@ const Battery = () => {
       <div style={{ backgroundColor: '#FCFCFD' }} className={classes.Battery}>
         <section className={classes.Battery__headerSection}>
           <PageBreadcrumb title="Battery" items={['Battery']} />
-          <ShsCapacityDropdown />
+          <ShsCapacityDropdown setDeviceId={setDeviceId} />
         </section>
         <section className={classes.Battery__filters}>
           <WidgetFilter />

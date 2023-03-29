@@ -25,6 +25,7 @@ import SHSTable from '../../../components/SHSTable/SHSTable'
 import ShsDeviceMap from '../../../components/Map/ShsDeviceMap'
 import SimpleBarChart from '../../../components/Charts/SimpleBarChart/SimpleBarChart'
 import WidgetFilter from '../../../components/WidgetFilter/WidgetFilter'
+import WidgetLoader from '../../../components/Widget/WidgetLoader/WidgetLoader'
 import classes from '../../Customer/Overview/Overview.module.scss'
 
 const Overview = () => {
@@ -276,7 +277,9 @@ const Overview = () => {
             }}
           />
         </section>
-        <div className={classes.Overview__widgets}>{widgets}</div>
+        <div className={classes.Overview__widgets}>
+          {isAnalyticsFetching ? <WidgetLoader /> : widgets}
+        </div>
         <div className={classes.Overview__map}>{/* <ShsDeviceMap /> */}</div>
         <div className={classes.Overview__donutChart}>
           <Donut

@@ -18,7 +18,7 @@ import useWeather from '../../../hooks/useWeather'
 
 const PanelAnalytic = () => {
   const [coord, weatherResult, isLoading, error] = useWeather()
-  const [widgets, setWidgets] = useState({})
+  const [widgets, setWidgets] = useState(null)
   const [search, setSearch] = useState('')
   const [page, setPage] = useState(1)
   const [globalFilter, setGlobalFilter] = useState('yearly')
@@ -46,8 +46,12 @@ const PanelAnalytic = () => {
 
   useEffect(() => {
     if (isAnalyticsFetching) return
-    setWidgets(data)
-  }, [isAnalyticsFetching])
+    if (isAnalyticsError) {
+      setWidgets({})
+      return
+    }
+    setWidgets(analyticsData)
+  }, [isAnalyticsFetching, analyticsData])
 
   return (
     <AdminPageLayout>
@@ -65,7 +69,7 @@ const PanelAnalytic = () => {
           />
         </section>
         <div className={classes.PanelAnalytic__widgets}>
-          {isAnalyticsFetching ? (
+          {isAnalyticsFetching && !widgets ? (
             <WidgetLoader />
           ) : (
             <PanelWidgets data={widgets} isLoading={isAnalyticsFetching} />

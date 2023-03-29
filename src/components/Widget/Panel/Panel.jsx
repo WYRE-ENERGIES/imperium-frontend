@@ -10,7 +10,7 @@ import classes from './panel.module.scss'
 
 const PanelWidgets = ({ data, isLoading }) => {
   let widgets = []
-  if (!isLoading) {
+  if (!isLoading && data) {
     widgets = [
       {
         id: 1,
@@ -81,10 +81,11 @@ const PanelWidgets = ({ data, isLoading }) => {
             Today’s weather forecast <span>31</span>
           </div>
           <div>
-            CO2 avoided <span>{data?.co2 || 0}</span>
+            CO2 avoided{' '}
+            <span>{parseFloat(data?.weather_stats?.co2?.toFixed(1)) || 0}</span>
           </div>
           <div>
-            Total Panel <span>{data?.total_panel || 0}</span>
+            Total Panel <span>{data?.weather_stats?.total_panel || 0}</span>
           </div>
         </div>
         <div className={classes.Panel__weatherForecast}>
