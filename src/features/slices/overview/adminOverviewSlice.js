@@ -1,17 +1,17 @@
 import { apiSlice } from '../../api/apiSlice'
 
-const ADMIN_SHS_URL_PATH = '/imperium-admin/overview/'
+const ADMIN_OVERVIEW_URL_PATH = '/imperium-admin/overview/'
 
 export const adminOverviewSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getAdminOverviewAnalytics: builder.query({
       query: ({ filterBy }) => ({
-        url: `${ADMIN_SHS_URL_PATH}analytics/?order_by=${filterBy}`,
+        url: `${ADMIN_OVERVIEW_URL_PATH}analytics/?order_by=${filterBy}`,
       }),
     }),
     getOverviewActiveAlert: builder.query({
       query: ({ sectorId, regionId, filterBy, page }) => {
-        let url = `${ADMIN_SHS_URL_PATH}active-alert/?order_by=${filterBy}&page=${page}`
+        let url = `${ADMIN_OVERVIEW_URL_PATH}active-alert/?order_by=${filterBy}&page=${page}`
         if (sectorId) {
           url += `&device__sector_id=${sectorId}`
         }
@@ -27,7 +27,7 @@ export const adminOverviewSlice = apiSlice.injectEndpoints({
     }),
     getOverviewEmissionData: builder.query({
       query: ({ sectorId, regionId, filterBy }) => {
-        let url = `${ADMIN_SHS_URL_PATH}co2-emmission-avoided/?order_by=${filterBy}`
+        let url = `${ADMIN_OVERVIEW_URL_PATH}co2-emmission-avoided/?order_by=${filterBy}`
 
         if (sectorId) {
           url += `&device__sector_id=${sectorId}`
@@ -48,7 +48,7 @@ export const adminOverviewSlice = apiSlice.injectEndpoints({
     }),
     getAdminOverviewCurrentVoltage: builder.query({
       query: ({ sectorId, regionId, filterBy }) => {
-        let url = `${ADMIN_SHS_URL_PATH}voltage-current-statistics/?order_by=${filterBy}`
+        let url = `${ADMIN_OVERVIEW_URL_PATH}voltage-current-statistics/?order_by=${filterBy}`
 
         if (sectorId) {
           url += `&device__sector_id=${sectorId}`
@@ -83,7 +83,7 @@ export const adminOverviewSlice = apiSlice.injectEndpoints({
     }),
     getOverviewSolarHouseData: builder.query({
       query: ({ sectorId, regionId, filterBy, page }) => {
-        let url = `${ADMIN_SHS_URL_PATH}solar-house-system/?order_by=${filterBy}&page=${page}`
+        let url = `${ADMIN_OVERVIEW_URL_PATH}solar-house-system/?order_by=${filterBy}&page=${page}`
         if (sectorId) {
           url += `&device__sector_id=${sectorId}`
         }
@@ -107,7 +107,7 @@ export const adminOverviewSlice = apiSlice.injectEndpoints({
     }),
     getOverviewSector: builder.query({
       query: ({ filterBy }) => ({
-        url: `${ADMIN_SHS_URL_PATH}sectors/?order_by=${filterBy}`,
+        url: `${ADMIN_OVERVIEW_URL_PATH}sectors/?order_by=${filterBy}`,
       }),
       transformResponse: (response) => {
         const result = {
@@ -125,7 +125,7 @@ export const adminOverviewSlice = apiSlice.injectEndpoints({
     }),
     getOverviewEnergyData: builder.query({
       query: ({ sectorId, regionId, filterBy }) => {
-        let url = `${ADMIN_SHS_URL_PATH}energy-generated-consumption/?order_by=${filterBy}`
+        let url = `${ADMIN_OVERVIEW_URL_PATH}energy-generated-consumption/?order_by=${filterBy}`
 
         if (sectorId) {
           url += `&device__sector_id=${sectorId}`

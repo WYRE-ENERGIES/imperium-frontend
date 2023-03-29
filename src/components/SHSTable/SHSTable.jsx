@@ -121,7 +121,7 @@ const SHSTable = ({ data, isLoading = false, setPage }) => {
               lineHeight: '20px',
             }}
           >
-            {11} SHS
+            SHS
           </Tag>
         </h1>
       </section>
