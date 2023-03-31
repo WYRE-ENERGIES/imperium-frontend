@@ -696,7 +696,7 @@
     &__WidgetSection {
       width: auto;
       overflow-x: scroll;
-      scrollbar-width: none; /* Firefox */
+      scrollbar-width: none;
       scroll-behavior: smooth;
       &::-webkit-scrollbar {
         overflow: hidden;

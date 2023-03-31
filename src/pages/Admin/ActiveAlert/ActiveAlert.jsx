@@ -185,7 +185,7 @@ const ActiveAlert = () => {
   const [dataStatistics, setDataStatistics] = useState(null)
   const [errMs, setErrMsg] = useState('')
   const [table, setTable] = useState([])
-  const [pageNum, setPageNum] = useState(3)
+  const [pageNum, setPageNum] = useState(1)
   const [searchactiveAlerts, setSearchactiveAlerts] = useState('')
   const [isModalOpen, setIsModalOpen] = useState(false)
   const { data: activeAlerts, isLoading: isLoadingactiveAlerts } =
@@ -511,8 +511,10 @@ const ActiveAlert = () => {
             </div>
 
             <div className={classes.ActiveAlert__ActiveAlertNotificationList}>
-              {activeAlertsData?.results ? (
-                activeAlertsData?.results.slice(0, 3).map((alert, key) => (
+              {isLoadingactiveAlerts ? (
+                <Loading data={'active alerts...'} />
+              ) : activeAlerts ? (
+                activeAlerts?.results.slice(0, 3).map((alert, key) => (
                   <div key={key}>
                     <span>
                       <BsThreeDots />
@@ -524,7 +526,7 @@ const ActiveAlert = () => {
                   </div>
                 ))
               ) : (
-                <Loading data={'active alerts...'} />
+                'No active alerts'
               )}
             </div>
             <div
@@ -696,7 +698,9 @@ const ActiveAlert = () => {
           </div>
         </section>
         <section className={classes.ActiveAlert__ActiveAlertTable}>
-          {table ? (
+          {isLoadingactiveAlertsTable ? (
+            <Loading data={'table...'} />
+          ) : table ? (
             <ActiveAlertTable
               title={ativeAlertTableTitle}
               columns={columns}
@@ -704,7 +708,7 @@ const ActiveAlert = () => {
               setPageNum={setPageNum}
             />
           ) : (
-            <Loading data={'table...'} />
+            'No data for active alerts'
           )}
         </section>
       </section>

@@ -69,7 +69,7 @@ const prefix = (
 const VoltageCurrent = () => {
   const [chartData, setChartData] = useState(null)
   const [filter, setFilter] = useState('yearly')
-  const [tableFilter, setTableFilter] = useState('yearly')
+  const [tableFilter, setTableFilter] = useState('monthly')
   const [analytics, setAnalytics] = useState(null)
   const [pageNum, setPageNum] = useState(1)
   const [search, setSearch] = useState('')
@@ -175,7 +175,9 @@ const VoltageCurrent = () => {
             paddingBottom: '20px',
           }}
         >
-          {!statisticsisLoading ? (
+          {statisticsisLoading ? (
+            <Loading data={'Graph'} />
+          ) : dataStatistics ? (
             <Chart
               height="100%"
               options={{
@@ -247,11 +249,13 @@ const VoltageCurrent = () => {
               width="100%"
             />
           ) : (
-            <Loading data={'Graph'} />
+            'No data records found'
           )}
         </div>
         <div className={classes.VoltageCurrent__shsTable}>
-          {!tableisLoading ? (
+          {tableisLoading ? (
+            <Loading data={'Table'} />
+          ) : dataTable ? (
             <SHSTableWithFilter
               columns={columns}
               data={table?.results}
@@ -269,7 +273,7 @@ const VoltageCurrent = () => {
               )}
             />
           ) : (
-            <Loading data={'Table'} />
+            'No records found'
           )}
         </div>
       </div>

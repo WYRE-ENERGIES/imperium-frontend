@@ -40,6 +40,19 @@ export const shsSlice = apiSlice.injectEndpoints({
       },
       transformErrorResponse: (response, meta, arg) => response.status,
     }),
+    shsPowerSchedule: build.mutation({
+      query: ({ ShsPowerSchedule, deviceId }) => {
+        return {
+          url: `${SHS_BASE_URL}schedule/${deviceId}/`,
+          body: ShsPowerSchedule,
+          method: 'POST',
+        }
+      },
+      transformResponse: (response, meta, arg) => {
+        return response
+      },
+      transformErrorResponse: (response, meta, arg) => response,
+    }),
   }),
 })
 
@@ -48,4 +61,5 @@ export const {
   useGetEnergyStatisticsQuery,
   useGetPanelsListQuery,
   useGetShsPerformanceQuery,
+  useShsPowerScheduleMutation,
 } = shsSlice
