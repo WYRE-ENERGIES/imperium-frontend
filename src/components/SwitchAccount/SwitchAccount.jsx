@@ -1,12 +1,12 @@
 import { Button, Modal, Radio, Spin, Typography } from 'antd'
 import React, { useEffect, useState } from 'react'
+import { logOutUser, switchClient } from '../../features/slices/auth/authSlice'
 
 import { Link } from 'react-router-dom'
 import { MdLogout } from 'react-icons/md'
 import ReactAvatar from 'react-avatar'
 import { ReactComponent as TicketIcon } from '../../assets/logout-modal-icon.svg'
 import classes from './SwitchAccount.module.scss'
-import { switchClient } from '../../features/slices/auth/authSlice'
 import { useDispatch } from 'react-redux'
 import { useGetUserClientListQuery } from '../../features/slices/clientUserApiSlice'
 import { useNavigate } from 'react-router'
@@ -55,7 +55,7 @@ const Options = ({ name, email, username, value, selected }) => (
   </Radio>
 )
 
-const SwitchAccountContent = ({ toggleModal }) => {
+const SwitchAccountContent = ({ toggleModal, isAdmin }) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const [selected, setSelected] = useState(null)
@@ -68,6 +68,12 @@ const SwitchAccountContent = ({ toggleModal }) => {
   const onProceed = () => {
     dispatch(switchClient(selected))
     navigate(0)
+  }
+
+  const onLogout = () => {
+    const navigateTo = isAdmin ? '/admin/sign-in' : '/'
+    dispatch(logOutUser())
+    navigate(navigateTo)
   }
 
   const { isFetching, data, isError } = useGetUserClientListQuery()
@@ -107,9 +113,12 @@ const SwitchAccountContent = ({ toggleModal }) => {
           </Radio.Group>
           <div className={classes.SwitchAccount__btn}>
             <div>
-              <Link className={classes.SwitchAccount__logoutBtn} to="/">
+              <Button
+                className={classes.SwitchAccount__logoutBtn}
+                onClick={onLogout}
+              >
                 <MdLogout /> Log Out
-              </Link>
+              </Button>
             </div>
             <div className={classes.SwitchAccount__actionBtn}>
               <Button
@@ -135,7 +144,7 @@ const SwitchAccountContent = ({ toggleModal }) => {
   )
 }
 
-const SwitchAccount = ({ isOpen, toggleModal }) => {
+const SwitchAccount = ({ isOpen, toggleModal, isAdmin }) => {
   return (
     <Modal
       centered
@@ -160,7 +169,7 @@ const SwitchAccount = ({ isOpen, toggleModal }) => {
         </div>
       }
     >
-      <SwitchAccountContent toggleModal={toggleModal} />
+      <SwitchAccountContent toggleModal={toggleModal} isAdmin={isAdmin} />
     </Modal>
   )
 }

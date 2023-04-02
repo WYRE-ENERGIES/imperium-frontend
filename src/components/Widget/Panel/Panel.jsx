@@ -60,6 +60,9 @@ const PanelWidgets = ({
   result,
   weatherError,
 }) => {
+  const [weatherDetails, setWeatherDetails] = React.useState([])
+  const [city, setCity] = React.useState('')
+
   let widgets = []
   if (!isLoading && data) {
     widgets = [
@@ -154,7 +157,7 @@ const PanelWidgets = ({
               </span>
               <span>
                 <MdOutlineLocationOn size={14} color="#5C9D48" />
-                {!weatherLoading && result.city}{' '}
+                {!weatherLoading && result?.city}{' '}
               </span>
             </div>
           </div>
@@ -181,12 +184,12 @@ const PanelWidgets = ({
           >
             Failed to fetch weather report
           </h3>
-        ) : (
+        ) : result?.weatherReport.length ? (
           <div className={classes.Panel__weatherForecast}>
             <section>{weatherForecast}</section>
             <div></div>
           </div>
-        )}
+        ) : null}
       </div>
     </div>
   )

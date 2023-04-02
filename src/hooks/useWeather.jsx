@@ -55,11 +55,10 @@ const useWeather = () => {
             getCurrentDate(),
           )
           setWeatherResult({ weatherReport, city })
+          setIsLoading(false)
         }
       } catch (error) {
         setError(true)
-      } finally {
-        setIsLoading(false)
       }
     }
 
@@ -70,11 +69,10 @@ const useWeather = () => {
 
     if (weatherInfo) {
       setWeatherResult(weatherInfo)
+      setIsLoading(false)
     } else {
       fetchWeatherData()
     }
-
-    setIsLoading(false)
   }, [coord.lat, coord.long])
 
   return [coord, weatherResult, isLoading, error]
