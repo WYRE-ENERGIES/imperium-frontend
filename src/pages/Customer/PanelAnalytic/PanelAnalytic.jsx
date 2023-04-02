@@ -101,7 +101,7 @@ const PanelAnalytic = () => {
             data={data?.results}
             tableTitle="Panel Table"
             tagValue="kWh"
-            filterOptions={generalFilterOptions}
+            filterOptions={[]}
             isAdmin={true}
             handleSearch={handleSearch}
             isLoading={isFetching}

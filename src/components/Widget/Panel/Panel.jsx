@@ -60,9 +60,6 @@ const PanelWidgets = ({
   result,
   weatherError,
 }) => {
-  const [weatherDetails, setWeatherDetails] = React.useState([])
-  const [city, setCity] = React.useState('')
-
   let widgets = []
   if (!isLoading && data) {
     widgets = [
