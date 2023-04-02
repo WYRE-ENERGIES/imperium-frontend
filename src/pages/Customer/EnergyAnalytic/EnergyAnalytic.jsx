@@ -14,11 +14,11 @@ import { ReactComponent as SEnergyWidgetIcon } from '../../../assets/widget-icon
 import SHSTableWithFilter from '../../../components/SHSTableWithFilter/SHSTableWithFilter'
 import ShsCapacityDropdown from '../../../components/ShsCapacityDropdown/ShsCapacityDropdown'
 import StackedBarChart from '../../../components/Charts/StackedBarChart/StackedBarChart'
+import TableFooter from '../../../components/TableFooter/TableFooter'
 import WidgetFilter from '../../../components/WidgetFilter/WidgetFilter'
 import WidgetLoader from '../../../components/Widget/WidgetLoader/WidgetLoader'
 import classes from './EnergyAnalytic.module.scss'
 import { formatLabel } from '../../../utils/helpers'
-import { tableData } from '../../../components/SHSTableWithFilter/data'
 import useDebounce from '../../../hooks/useDebounce'
 
 const EnergyAnalytic = () => {
@@ -148,11 +148,21 @@ const EnergyAnalytic = () => {
         <div className={classes.EnergyAnalytic__shsTable}>
           <SHSTableWithFilter
             columns={energyAnalyticColumns}
-            data={tableData}
+            data={data?.results}
             tableTitle="Energy Table"
             tagValue="kWh"
-            filterOptions={energyFilterOptions}
+            filterOptions={[]}
             handleSearch={handleSearch}
+            isLoading={isFetching}
+            footer={() => (
+              <TableFooter
+                pageNo={data?.page}
+                totalPages={data?.total_pages}
+                handleClick={setPage}
+                hasNext={data?.page === data?.total_pages}
+                hasPrev={!data?.total_pages || data?.page === 1}
+              />
+            )}
           />
         </div>
       </div>

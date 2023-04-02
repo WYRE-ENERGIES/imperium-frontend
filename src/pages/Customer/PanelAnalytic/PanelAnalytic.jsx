@@ -86,7 +86,13 @@ const PanelAnalytic = () => {
           {isAnalyticsFetching && !widgets ? (
             <WidgetLoader />
           ) : (
-            <PanelWidgets data={widgets} isLoading={isAnalyticsFetching} />
+            <PanelWidgets
+              data={widgets}
+              isLoading={isAnalyticsFetching}
+              weatherLoading={isLoading}
+              result={weatherResult}
+              weatherError={error}
+            />
           )}
         </div>
         <div className={classes.PanelAnalytic__shsTable}>

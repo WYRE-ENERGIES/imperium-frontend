@@ -1,5 +1,6 @@
 import {
   getCurrentDate,
+  getHourFromDate,
   getItemFromLocalStorage,
   saveToLocalStorage,
 } from '../utils/helpers'
@@ -14,7 +15,7 @@ const useWeather = () => {
   })
   const [weatherResult, setWeatherResult] = useState()
   const [isLoading, setIsLoading] = useState(true)
-  const [error, setError] = useState(true)
+  const [error, setError] = useState(false)
 
   useEffect(() => {
     const fetchWeatherData = async () => {
@@ -31,11 +32,32 @@ const useWeather = () => {
           const result = await axios.get(
             `${process.env.REACT_APP_OPENWEATHER_API_BASEURL}/forecast/?lat=${coord.lat}&lon=${coord.long}&units=metric&APPID=${process.env.REACT_APP_OPENWEATHER_API_KEY}`,
           )
-          saveToLocalStorage('weather_info', result.data, getCurrentDate())
-          setWeatherResult(result.data)
+
+          const list = result?.data?.list
+          const weatherReport = []
+
+          for (let index = 0; index < 8; index++) {
+            const item = list[index]
+
+            weatherReport.push({
+              time: getHourFromDate(item.dt_txt),
+              season: item.sys.pod,
+              temp: item.main.temp,
+              weather: item.weather[0].main,
+              description: item.weather[0].description,
+            })
+          }
+          const city = result?.data?.city?.name
+
+          saveToLocalStorage(
+            'weather_info',
+            { weatherReport, city },
+            getCurrentDate(),
+          )
+          setWeatherResult({ weatherReport, city })
         }
       } catch (error) {
-        setError(error.message)
+        setError(true)
       } finally {
         setIsLoading(false)
       }
@@ -46,13 +68,13 @@ const useWeather = () => {
       getCurrentDate(),
     )
 
-    setIsLoading(true)
-
     if (weatherInfo) {
       setWeatherResult(weatherInfo)
     } else {
       fetchWeatherData()
     }
+
+    setIsLoading(false)
   }, [coord.lat, coord.long])
 
   return [coord, weatherResult, isLoading, error]

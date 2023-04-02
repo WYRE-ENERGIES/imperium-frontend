@@ -15,6 +15,14 @@ export const energyApiSlice = apiSlice.injectEndpoints({
 
         return { url }
       },
+      transformResponse: (response) => {
+        response.results = response.results.map((list) => ({
+          ...list,
+          key: list.date,
+        }))
+
+        return response
+      },
     }),
     getClientEnergyAnalytics: builder.query({
       query: ({ deviceId, filterBy = 'yearly' }) => {

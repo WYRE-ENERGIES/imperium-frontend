@@ -87,7 +87,7 @@ const Battery = () => {
           <ShsCapacityDropdown setDeviceId={setDeviceId} />
         </section>
         <section className={classes.Battery__filters}>
-          <WidgetFilter />
+          <WidgetFilter show={false} />
         </section>
         <div className={classes.Battery__widgets}>{widgets}</div>
         <div className={classes.Battery__shsTable}>
@@ -96,7 +96,7 @@ const Battery = () => {
             data={batteryTableData}
             tableTitle="Battery Table"
             tagValue="kWh"
-            filterOptions={generalFilterOptions}
+            filterOptions={[]}
           />
         </div>
       </div>

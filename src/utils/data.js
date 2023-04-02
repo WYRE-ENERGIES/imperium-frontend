@@ -1,86 +1,9 @@
 import { TbActivityHeartbeat, TbBolt, TbBoltOff } from 'react-icons/tb'
 
-import { ReactComponent as BentArrowWidgetIcon } from '../assets/widget-icons/bent-arrow.svg'
 import { ReactComponent as EnergyWidgetIcon } from '../assets/widget-icons/energy-icon.svg'
 import { ReactComponent as HomeWidgetIcon } from '../assets/widget-icons/home-icon.svg'
 import { RiseOutlined } from '@ant-design/icons'
 import { ReactComponent as SEnergyWidgetIcon } from '../assets/widget-icons/cancel-energy-con.svg'
-import { ReactComponent as SunWidgetIcon } from '../assets/widget-icons/sun.svg'
-
-export const panelData = [
-  {
-    id: 1,
-    key: 1,
-    date: 'January, 2023',
-    total_panel_voltage: 6.35,
-    total_panel_current: 14.36,
-    total_panel_power: 3.4,
-    total_panel_energy: 24.0,
-  },
-  {
-    id: 2,
-    key: 2,
-    date: 'December, 2022',
-    total_panel_voltage: 9.52,
-    total_panel_current: 21.52,
-    total_panel_power: 3.4,
-    total_panel_energy: 24.0,
-  },
-  {
-    id: 3,
-    key: 3,
-    date: 'November, 2022',
-    total_panel_voltage: 3.18,
-    total_panel_current: 7.18,
-    total_panel_power: 3.4,
-    total_panel_energy: 24.0,
-  },
-  {
-    id: 4,
-    key: 4,
-    date: 'October, 2022',
-    total_panel_voltage: 4.67,
-    total_panel_current: 9.01,
-    total_panel_power: 3.4,
-    total_panel_energy: 24.0,
-  },
-  {
-    id: 5,
-    key: 5,
-    date: 'September, 2022',
-    total_panel_voltage: 6.82,
-    total_panel_current: 14.74,
-    total_panel_power: 3.4,
-    total_panel_energy: 24.0,
-  },
-  {
-    id: 6,
-    key: 6,
-    date: 'August, 2022',
-    total_panel_voltage: 3.18,
-    total_panel_current: 7.18,
-    total_panel_power: 3.4,
-    total_panel_energy: 24.0,
-  },
-  {
-    id: 7,
-    key: 7,
-    date: 'July, 2022',
-    total_panel_voltage: 4.67,
-    total_panel_current: 9.01,
-    total_panel_power: 3.4,
-    total_panel_energy: 24.0,
-  },
-  {
-    id: 8,
-    key: 8,
-    date: 'June, 2022',
-    total_panel_voltage: 6.82,
-    total_panel_current: 14.74,
-    total_panel_power: 3.4,
-    total_panel_energy: 24.0,
-  },
-]
 
 export const generalFilterOptions = [
   { name: 'Yearly', value: 'yearly' },
@@ -96,56 +19,22 @@ export const energyFilterOptions = [
 
 export const energyAnalyticColumns = [
   {
-    title: 'Name',
-    dataIndex: 'name',
-    key: 'name',
+    title: 'Date',
+    dataIndex: 'date',
+    key: 'date',
+    render: (value) => new Date(value).toDateString(),
   },
   {
     title: 'Energy Consumed',
-    key: 'energyConsumed',
-    dataIndex: 'energyConsumed',
-    render: (value) => `${value.toLocaleString()} kwh`,
+    key: 'energy_consumed',
+    dataIndex: 'energy_consumed',
+    render: (value) => `${parseFloat(value?.toLocaleString())?.toFixed(1)} kwh`,
   },
   {
     title: 'Energy Generated',
-    key: 'energyGenerated',
-    dataIndex: 'energyGenerated',
-    render: (value) => `${value.toLocaleString()} kwh`,
-  },
-]
-
-export const panelWidgetsData = [
-  {
-    id: 1,
-    icon: EnergyWidgetIcon,
-    title: 'Panel Total Energy',
-    range: 'For the year',
-    value: '987.87',
-    valueCurrency: 'WH',
-  },
-  {
-    id: 2,
-    icon: BentArrowWidgetIcon,
-    title: 'Panel Voltage',
-    range: 'For the year',
-    value: '111.12',
-    valueCurrency: 'V',
-  },
-  {
-    id: 1,
-    icon: SEnergyWidgetIcon,
-    title: 'Panel Total Power',
-    range: 'For the year',
-    value: '790.06',
-    valueCurrency: 'W',
-  },
-  {
-    id: 1,
-    icon: SunWidgetIcon,
-    title: 'Panel Current',
-    range: 'For the year',
-    value: '987.87',
-    valueCurrency: 'A',
+    key: 'energy_generated',
+    dataIndex: 'energy_generated',
+    render: (value) => `${parseFloat(value?.toLocaleString())?.toFixed(1)} kwh`,
   },
 ]
 
