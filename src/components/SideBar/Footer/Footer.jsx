@@ -1,21 +1,20 @@
-import { HiOutlineRefresh } from 'react-icons/hi'
 import { MdLogout } from 'react-icons/md'
 import React from 'react'
 import ReactAvatar from 'react-avatar'
+import { RightOutlined } from '@ant-design/icons'
 import { logOutUser } from '../../../features/slices/auth/authSlice'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
 const Footer = ({ userName, toggleActivateShsModal, isAdmin }) => {
-  const navigate = useNavigate()
   const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   const onLogout = () => {
     const navigateTo = isAdmin ? '/admin/sign-in' : '/'
     dispatch(logOutUser())
     navigate(navigateTo)
   }
-
   return (
     <div
       style={{
@@ -27,17 +26,17 @@ const Footer = ({ userName, toggleActivateShsModal, isAdmin }) => {
     >
       <ReactAvatar size={30} round={true} name={userName} color="#C4C4C4" />
       <span>{userName}</span>
-      {!isAdmin ? (
-        <HiOutlineRefresh
-          style={{ cursor: 'pointer' }}
-          color="C4C4C4"
+      {isAdmin ? (
+        <MdLogout
+          style={{ cursor: 'pointer', color: 'red' }}
+          onClick={onLogout}
+        />
+      ) : (
+        <RightOutlined
+          style={{ color: '#808080' }}
           onClick={toggleActivateShsModal}
         />
-      ) : null}
-      <MdLogout
-        style={{ cursor: 'pointer', color: 'red' }}
-        onClick={onLogout}
-      />
+      )}
     </div>
   )
 }

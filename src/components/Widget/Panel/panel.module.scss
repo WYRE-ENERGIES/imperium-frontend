@@ -3,7 +3,6 @@
   flex: 1;
   justify-content: space-between;
   gap: 25px;
-  // height: fit-content;
 
   & > * {
     flex: 1;
@@ -15,16 +14,17 @@
     box-shadow: 0px 1px 3px rgba(16, 24, 40, 0.1),
       0px 1px 2px rgba(16, 24, 40, 0.06);
     border-radius: 8px;
+    height: 400px;
   }
 
   &__weatherDetails {
-    flex: 1;
     background: #18181b;
     border-radius: 8px 8px 0px 0px;
     font-weight: 500;
     font-size: 16px;
     line-height: 24px;
     color: #ffffff;
+    height: 107px;
 
     display: flex;
 
@@ -37,6 +37,13 @@
 
     & > *:first-child {
       flex: 2;
+
+      & > div {
+        display: flex;
+        gap: 15px;
+        align-items: center;
+        padding: 5px 0;
+      }
     }
 
     & > *:not(:first-child) {
@@ -63,8 +70,56 @@
     flex-direction: column-reverse;
 
     & > section {
-      overflow-y: scroll;
-      padding: 8px;
+      padding: 2px 0;
+      height: 85px;
+      display: flex;
+      gap: 10px;
+    }
+
+    & > div {
+      background: url(../../../assets/weather-icon.svg) center no-repeat #f0f7ed;
+      background-size: contain;
+      flex-grow: 1;
+      border-bottom: 1px solid #a9dd9a;
+      opacity: 0.4;
+    }
+  }
+}
+
+.WeatherForecast {
+  flex: 1;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+
+  &__time {
+    font-weight: 400;
+    line-height: 18px;
+    color: #000000;
+    margin-bottom: 0;
+    font-size: 16px;
+    font-style: normal;
+    font-family: 'Baloo 2';
+  }
+
+  &__temperature {
+    line-height: 20px;
+    color: #808080;
+    margin-bottom: 0;
+    position: relative;
+    font-size: 16px;
+    font-style: normal;
+    font-family: 'Baloo 2';
+
+    & > span {
+      position: absolute;
+      top: 0;
+      font-weight: 400;
+      font-size: 8px;
+      line-height: 12px;
+      margin-left: 2px;
     }
   }
 }
@@ -72,6 +127,25 @@
 @media only screen and (max-width: 820px) {
   .Panel {
     flex-direction: column;
+
+    & > * {
+      flex: none;
+    }
   }
 }
 
+@media only screen and (max-width: 425px) {
+  .WeatherForecast {
+    &__time {
+      font-size: 12px;
+    }
+
+    &__temperature {
+      font-size: 12px;
+
+      & > span {
+        font-size: 6px;
+      }
+    }
+  }
+}

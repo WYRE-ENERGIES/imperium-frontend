@@ -8,12 +8,20 @@ export const energyApiSlice = apiSlice.injectEndpoints({
     getClientEnergyTableData: builder.query({
       query: ({ page, search, filterBy = 'yearly', deviceId }) => {
         const clientId = getItemFromLocalStorage('current_client')
-        let url = `${BASE_ENERGY_URL}list-table/${clientId}/${deviceId}?page=${page}&order_by=${filterBy}`
+        let url = `${BASE_ENERGY_URL}list-table/${clientId}/${deviceId}/?page=${page}&order_by=${filterBy}`
         if (search) {
           url += `&search=${search}`
         }
 
         return { url }
+      },
+      transformResponse: (response) => {
+        response.results = response.results.map((list) => ({
+          ...list,
+          key: list.date,
+        }))
+
+        return response
       },
     }),
     getClientEnergyAnalytics: builder.query({

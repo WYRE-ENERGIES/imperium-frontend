@@ -38,6 +38,7 @@ const WidgetFilter = ({
   hasSectorFilter = false,
   setRegionId,
   setSectorId,
+  show = true,
 }) => {
   let sectors = []
   let regions = []
@@ -73,23 +74,26 @@ const WidgetFilter = ({
   return (
     <div className={classes.WidgetFilter}>
       <section className={classes.WidgetFilter__leftSection}>
-        <div className={classes.WidgetFilter__btnSection}>
-          <Group
-            value={filterBy}
-            onChange={(e) => selectFilterBy(e.target.value)}
-            className={classes.WidgetFilter__btn}
-          >
-            {radioButtonOptions}
-          </Group>
-        </div>
-
-        <div className={classes.WidgetFilter__btnSectionMobile}>
-          <DropDownFilter
-            options={options}
-            onFilterChanged={selectFilterBy}
-            value={filterBy}
-          />
-        </div>
+        {show && (
+          <>
+            <div className={classes.WidgetFilter__btnSection}>
+              <Group
+                value={filterBy}
+                onChange={(e) => selectFilterBy(e.target.value)}
+                className={classes.WidgetFilter__btn}
+              >
+                {radioButtonOptions}
+              </Group>
+            </div>
+            <div className={classes.WidgetFilter__btnSectionMobile}>
+              <DropDownFilter
+                options={options}
+                onFilterChanged={selectFilterBy}
+                value={filterBy}
+              />
+            </div>
+          </>
+        )}
 
         <DatePicker
           className={classes.WidgetFilter__date}

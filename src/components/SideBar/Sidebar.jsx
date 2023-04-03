@@ -110,6 +110,7 @@ const Sidebar = ({
           <SwitchAccount
             isOpen={showSwitchAccount}
             toggleModal={toggleActivateShsModal}
+            isAdmin={isAdmin}
           />
         ) : null}
       </Suspense>

@@ -1,5 +1,5 @@
-export const getCurrentDate = () => {
-  const date = new Date()
+export const getCurrentDate = (dateString) => {
+  const date = dateString ? new Date(dateString) : new Date()
   const day = date.getDate()
   const month = date.getMonth() + 1
   const year = date.getFullYear()
@@ -98,6 +98,16 @@ export const DataStatistics = (data, key) => {
     data?.[0]?.[12],
   ]
   return dataList.map((value) => (value?.[key] !== null ? value?.[key] : 0))
+}
+
+export const getHourFromDate = (dateString) => {
+  const dateObj = new Date(dateString)
+  const hour = dateObj.getHours()
+
+  const hour12 = hour % 12 || 12
+  const period = hour < 12 ? 'AM' : 'PM'
+
+  return `${hour12}${period}`
 }
 
 export const emptyLocalStorage = () => localStorage.clear()
