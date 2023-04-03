@@ -111,6 +111,7 @@
   }
 
   &__datePicker {
+    width: 100%;
     & > div > div {
       border: 1px solid #99c78a;
       &:hover {
@@ -129,7 +130,40 @@
     }
   }
 }
+
 li[role='menuitem']:hover {
   background: white !important;
   cursor: default !important;
+}
+
+li[class='ant-picker-now'] {
+  & > a[class='ant-picker-now-btn'] {
+    background: #385e2b;
+    border-radius: 4px;
+    color: white;
+    padding: 1px 5px;
+  }
+}
+li[class='ant-picker-ok'] {
+  & > button[type='button'] {
+    background: #385e2b !important;
+    border-radius: 4px;
+    color: white;
+    padding: 0 5px;
+  }
+}
+
+td[class^='ant-picker-cell']:hover {
+  & > div {
+    background: #385e2b;
+    border-radius: 50%;
+    color: white;
+  }
+}
+
+li[class='ant-picker-time-panel-cell']:hover {
+  & > div {
+    background: #385e2b !important;
+    color: white !important;
+  }
 }

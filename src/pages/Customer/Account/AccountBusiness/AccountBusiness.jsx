@@ -10,6 +10,7 @@ import {
 import { ErrorMessage } from '../../../../components/ErrorMessage/ErrorMessage'
 
 import uploadImg from '../../../../assets/widget-icons/bussinessuploadIcon.svg'
+import Loading from '../../../../components/Loading/Loading'
 
 const formData = new FormData()
 const BusinessForm = () => {
@@ -112,58 +113,64 @@ const AccountBusiness = () => {
           requiredMark="optional"
           initialValues={{ ...data }}
         >
-          <Row justify={'space-between'} gutter={20}>
-            <Col span={8}>
-              {' '}
-              <Form.Item
-                label="Business name"
-                name="business_name"
-                rules={[
-                  {
-                    required: true,
-                    message: 'Enter a business name!',
-                  },
-                ]}
-              >
-                <Input
-                  placeholder="My business name"
-                  className={classes.AccountBusiness__Input}
-                />
-              </Form.Item>
-            </Col>
-            <Col span={8}>
-              {' '}
-              <Form.Item
-                label="Company"
-                name="company_url"
-                rules={[
-                  {
-                    required: true,
-                    message: 'Enter company website URL.',
-                  },
-                ]}
-              >
-                <Input
-                  addonBefore={'http://'}
-                  className={classes.AccountBusiness__Company}
-                  placeholder="www.yourdomain.com"
-                />
-              </Form.Item>
-            </Col>
-            <Col span={8}>
-              <Form.Item>
-                <Row justify={'end'}>
-                  <Col span={18}>
-                    {' '}
-                    <FormButton
-                      isLoading={updatingBusiness}
-                      action={'Save changes'}
-                    />
-                  </Col>
-                </Row>
-              </Form.Item>
-            </Col>
-          </Row>
+          {gettingBusiness ? (
+            <Loading data={'business data'} />
+          ) : data ? (
+            <Row justify={'space-between'} gutter={20}>
+              <Col span={8}>
+                {' '}
+                <Form.Item
+                  label="Business name"
+                  name="business_name"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Enter a business name!',
+                    },
+                  ]}
+                >
+                  <Input
+                    placeholder="My business name"
+                    className={classes.AccountBusiness__Input}
+                  />
+                </Form.Item>
+              </Col>
+              <Col span={8}>
+                {' '}
+                <Form.Item
+                  label="Company"
+                  name="company_url"
+                  rules={[
+                    {
+                      required: true,
+                      message: 'Enter company website URL.',
+                    },
+                  ]}
+                >
+                  <Input
+                    addonBefore={'http://'}
+                    className={classes.AccountBusiness__Company}
+                    placeholder="www.yourdomain.com"
+                  />
+                </Form.Item>
+              </Col>
+              <Col span={8}>
+                <Form.Item>
+                  <Row justify={'end'}>
+                    <Col span={18}>
+                      {' '}
+                      <FormButton
+                        isLoading={updatingBusiness}
+                        action={'Save changes'}
+                      />
+                    </Col>
+                  </Row>
+                </Form.Item>
+              </Col>
+            </Row>
+          ) : (
+            'No data found for this user'
+          )}
         </Form>
       </div>
     </Account>

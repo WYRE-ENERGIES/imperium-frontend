@@ -1,35 +1,62 @@
-import { React, useState } from 'react'
+import { React, useEffect, useRef, useState } from 'react'
 import { BiPowerOff } from 'react-icons/bi'
 
 import classes from './PowerSwitch.module.scss'
 import { Dropdown, Modal, Space, notification, DatePicker, Divider } from 'antd'
 import cautionIcon from '../../../src/assets/widget-icons/caution.svg'
 import scheduleIcon from '../../../src/assets/widget-icons/scheduleIcon.svg'
-const openNotification = (startDate, endDate) => {
+import { useShsPowerScheduleMutation } from '../../features/slices/shs/admin/shsSlice'
+const openNotification = (text, date, action) => {
   notification.success({
-    message: 'Schedule Shutdown',
-    description: `Scheduled for shutdown at ${startDate} to ${endDate}`,
-
-    onClick: () => {
-      console.log('Notification Clicked!')
-    },
+    message: 'Shs Power Schedule',
+    description: `${text} ${action} at ${date}`,
   })
 }
-const PowerButton = ({ action, color }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false)
 
+const date = new Date()
+const dateTimeOption = {
+  timeZone: 'Africa/Accra',
+  hour12: true,
+  hour: 'numeric',
+  minute: 'numeric',
+  seconds: 'numeric',
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+}
+
+const ShsPowerSchedule = {}
+const PowerButton = ({ action, color, device, time }) => {
+  const [powerBtnModalOpen, setPowerBtnModalOpen] = useState(false)
+  const [selectedDate, setSelectedDate] = useState(false)
+  const [deviceId, setDeviceId] = useState('')
+  const [shsPowerSchedule, { data: powerScheduleRes, isLoading }] =
+    useShsPowerScheduleMutation()
   const showModal = () => {
-    setIsModalOpen(true)
+    setSelectedDate(ShsPowerSchedule.time)
+    setDeviceId(ShsPowerSchedule.deviceId)
+
+    setPowerBtnModalOpen(true)
   }
-  const handleOk = () => {
-    setIsModalOpen(false)
+  const handlePowerOption = async (action) => {
+    ShsPowerSchedule.schedule_type = action
+    ShsPowerSchedule.reason = 'Testing shs power'
+    setDeviceId(ShsPowerSchedule.deviceId)
+
+    try {
+      await shsPowerSchedule({ ShsPowerSchedule, deviceId }).unwrap()
+      setPowerBtnModalOpen(false)
+      openNotification('Scheduled for power', selectedDate, action)
+    } catch (error) {
+      return error
+    }
   }
   const handleCancel = () => {
-    setIsModalOpen(false)
+    setPowerBtnModalOpen(false)
   }
 
-  const actionColor = action === 'Power Off' ? '#B42318' : '#027A48'
-  const actionIcon = action === 'Power Off' ? cautionIcon : scheduleIcon
+  const actionColor = action === 'off' ? '#B42318' : '#027A48'
+  const actionIcon = action === 'off' ? cautionIcon : scheduleIcon
 
   return (
     <div>
@@ -38,11 +65,13 @@ const PowerButton = ({ action, color }) => {
         className={classes.PowerSwitch__OnAndOff}
         onClick={showModal}
       >
-        {action}
+        Power {action}
       </button>
       <Modal
-        open={isModalOpen}
-        onOk={handleOk}
+        open={powerBtnModalOpen}
+        onOk={() => {
+          handlePowerOption('cancel')
+        }}
         onCancel={handleCancel}
         className={classes.PowerSwitch__Modal}
         width={400}
@@ -50,15 +79,22 @@ const PowerButton = ({ action, color }) => {
       >
         <div className={classes.PowerSwitch__ModalContent}>
           <img src={actionIcon} alt="" srcSet="" />
-          <h1>{action}</h1>
+          <h1>Power {action}</h1>
           <p>
             If you proceed with this, the power supply in your house from
             Imperium Solar Housing System will{' '}
-            <span style={{ color: actionColor }}>{action}</span>
+            <span style={{ color: actionColor }}>power {action}</span> at{' '}
+            {selectedDate}
           </p>
           <div className={classes.PowerSwitch__Confirm}>
-            <button onClick={handleOk}>Cancel</button>
-            <button onClick={handleOk}>Proceed</button>
+            <button onClick={handleCancel}>Cancel</button>
+            <button
+              onClick={() => {
+                handlePowerOption(action)
+              }}
+            >
+              Proceed
+            </button>
           </div>
         </div>
       </Modal>
@@ -66,52 +102,41 @@ const PowerButton = ({ action, color }) => {
   )
 }
 
-const PowerSwitch = () => {
-  const { RangePicker } = DatePicker
+const PowerSwitch = ({ device_id }) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [startDate, setStartDate] = useState('')
-  const [endDate, setEndDate] = useState('')
-
-  const dateTimeOption = {
-    timeZone: 'Africa/Accra',
-    hour12: true,
-    hour: 'numeric',
-    minute: 'numeric',
-    seconds: 'numeric',
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  }
+  const [scheduleTime, setScheduleTime] = useState('')
 
   const showModal = () => {
     setIsModalOpen(true)
   }
-  const handleOk = (value) => {
+  const handlePowerSchedule = (value) => {
     setIsModalOpen(false)
-    openNotification(startDate, endDate)
   }
   const handleCancel = () => {
     setIsModalOpen(false)
   }
 
-  const onChange = (value, dateString) => {}
-  const onClick = ({ key }) => {
-    console.log('Power Button Onclick : ', key)
-  }
+  const handleScheduleTime = (e) => {
+    const date = new Date(e?.$d)
 
-  const onOk = (e) => {
-    const startSchedule = e[0].$d.toLocaleTimeString('en-US', dateTimeOption)
-    const endSchedule = e[1].$d.toLocaleTimeString('en-US', dateTimeOption)
-    setStartDate(startSchedule)
-    setEndDate(endSchedule)
+    setScheduleTime(e?.$d.toLocaleTimeString('en-US', dateTimeOption))
+    ShsPowerSchedule.scheduled_time = date.toISOString()
+    ShsPowerSchedule.deviceId = device_id
+    ShsPowerSchedule.time = e?.$d.toLocaleTimeString('en-US', dateTimeOption)
 
     showModal()
-    console.log('onOk testing: ', e[0])
   }
 
   const powerOptions = [
     {
-      label: <PowerButton action="Power Off" color={'#B42318'} />,
+      label: (
+        <PowerButton
+          action="off"
+          color={'#B42318'}
+          device={device_id}
+          time={scheduleTime}
+        />
+      ),
       key: '0',
     },
     {
@@ -131,14 +156,14 @@ const PowerSwitch = () => {
     },
 
     {
-      label: <PowerButton action="Power On" color={'#027A48'} />,
+      label: <PowerButton action="on" color={'#027A48'} />,
       key: '1',
     },
   ]
 
   const powerSchedule = [
     {
-      label: startDate ? (
+      label: scheduleTime ? (
         <div>
           <p
             style={{
@@ -148,13 +173,13 @@ const PowerSwitch = () => {
               color: '#606062',
             }}
           >
-            Would you like to edit the shutdown time created for{' '}
-            <strong>{startDate}</strong>{' '}
+            Would you like to edit the scheduled time created for{' '}
+            <strong>{scheduleTime}</strong>{' '}
           </p>
           <Divider />
           <div className={classes.PowerSwitch__EditShutDown}>
             <button
-              onClick={handleOk}
+              onClick={handleCancel}
               style={{
                 width: '134px',
                 height: '40px',
@@ -167,7 +192,7 @@ const PowerSwitch = () => {
               Cancel
             </button>
             <button
-              onClick={() => setStartDate('')}
+              onClick={() => setScheduleTime('')}
               style={{
                 width: '134px',
                 height: '40px',
@@ -185,17 +210,37 @@ const PowerSwitch = () => {
       ) : (
         <Space
           direction="vertical"
-          size={12}
+          size={5}
           className={classes.PowerSwitch__datePicker}
         >
-          <RangePicker
+          <DatePicker
             showTime={{
               format: 'hh:mm',
               showNow: true,
             }}
             format="DD-MM-YYYY HH:mm"
-            onChange={onChange}
-            onOk={onOk}
+            onOk={handleScheduleTime}
+            disabledDate={(current) => {
+              return current.isBefore(date)
+            }}
+            dateRender={(current) => {
+              const style = {
+                height: '100%',
+                width: '100%',
+                padding: '5px',
+              }
+              if (current.isSame(date, 'day')) {
+                style.color = 'white'
+                style.background = '#385E2B'
+                style.border = '1px solid #385E2B'
+                style.borderRadius = '50%'
+              }
+              return (
+                <div className={classes.PowerSwitch__Date} style={style}>
+                  <span>{current.date()}</span>
+                </div>
+              )
+            }}
           />
         </Space>
       ),
@@ -209,7 +254,6 @@ const PowerSwitch = () => {
           className={classes.PowerSwitch__PowerBtnDropDown}
           menu={{
             items: powerOptions,
-            onClick,
           }}
           trigger={['click']}
           placement="bottom"
@@ -231,16 +275,16 @@ const PowerSwitch = () => {
           placement="bottom"
           overlayStyle={{
             paddingTop: '10px',
-            width: '357px',
+            width: 'auto',
             paddingRight: '50px',
           }}
         >
-          <button>Schedule shutdown</button>
+          <button>Power Schedule </button>
         </Dropdown>
-        {endDate && (
+        {scheduleTime && (
           <Modal
             open={isModalOpen}
-            onOk={handleOk}
+            onOk={handlePowerSchedule}
             onCancel={handleCancel}
             className={classes.PowerSwitch__Modal}
             width={400}
@@ -252,13 +296,13 @@ const PowerSwitch = () => {
 
               <p>
                 If you proceed with this, the power supply in your house from
-                Imperium Solar Housing System will start up {startDate} and shut
-                down {endDate}?{' '}
+                Imperium Solar Housing System will be scheduled to power on or
+                power off at {scheduleTime}?{' '}
               </p>
 
               <div className={classes.PowerSwitch__Confirm}>
-                <button onClick={handleOk}>Cancel</button>
-                <button onClick={handleOk}>Proceed</button>
+                <button onClick={handlePowerSchedule}>Cancel</button>
+                <button onClick={handlePowerSchedule}>Proceed</button>
               </div>
             </div>
           </Modal>
