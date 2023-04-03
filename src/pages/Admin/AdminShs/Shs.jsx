@@ -14,7 +14,6 @@ import batteryStatus from '../../../assets/widget-icons/BatteryIcon2.svg'
 import building from '../../../assets/widget-icons/building.svg'
 import caretdown from '../../../assets/widget-icons/caretdown.svg'
 import classes from './Shs.module.scss'
-import panelarrow from '../../../assets/widget-icons/panelArrow.svg'
 import panelbattery from '../../../assets/widget-icons/panelBattery.svg'
 import AdminPageLayout from '../../../components/Layout/AdminPageLayout/AdminPageLayout'
 import { useParams } from 'react-router-dom'
@@ -23,7 +22,7 @@ import {
   useGetEnergyStatisticsQuery,
   useGetPanelsListQuery,
   useGetShsPerformanceQuery,
-} from '../../../features/slices/shs/admin/shsSlice'
+} from '../../../features/slices/shs/admin/adminShsSlice'
 import { useEffect } from 'react'
 import Loading from '../../../components/Loading/Loading'
 

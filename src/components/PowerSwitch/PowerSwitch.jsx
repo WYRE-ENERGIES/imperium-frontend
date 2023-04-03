@@ -5,7 +5,7 @@ import classes from './PowerSwitch.module.scss'
 import { Dropdown, Modal, Space, notification, DatePicker, Divider } from 'antd'
 import cautionIcon from '../../../src/assets/widget-icons/caution.svg'
 import scheduleIcon from '../../../src/assets/widget-icons/scheduleIcon.svg'
-import { useShsPowerScheduleMutation } from '../../features/slices/shs/admin/shsSlice'
+import { useShsPowerScheduleMutation } from '../../features/slices/shs/admin/adminShsSlice'
 const openNotification = (text, date, action) => {
   notification.success({
     message: 'Shs Power Schedule',

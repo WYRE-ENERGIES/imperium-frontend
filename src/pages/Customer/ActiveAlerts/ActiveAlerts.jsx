@@ -24,6 +24,7 @@ const ActiveAlerts = () => {
   const clientId = getItemFromLocalStorage('current_client')
   const [activeAlertsTable, setActiveAlertsTable] = useState(1)
   const [shsDevices, setShsDevices] = useState(1)
+  const [deviceId, setDeviceId] = useState(1)
   const [page, setPage] = useState(1)
 
   const { data: shsDevicesData, isLoading: shsDevicesIsLoading } =
@@ -110,7 +111,7 @@ const ActiveAlerts = () => {
       <section className={classes.ActiveAlerts}>
         <section className={classes.ActiveAlerts__headerSection}>
           <PageBreadcrumb title="Active Alert" items={['Active Alert']} />
-          <ShsCapacityDropdown />
+          <ShsCapacityDropdown setDeviceId={setDeviceId} />
         </section>
         <section className={classes.ActiveAlerts__Banner}>
           {activeAlertsIsLoading ? (
