@@ -72,6 +72,13 @@ export const activerAlertsSlice = apiSlice.injectEndpoints({
       },
       invalidatesTags: ['ActiveAlerts', 'ActiveAlertsAnaylytics'],
     }),
+    getShsDetails: build.query({
+      query: ({ shs_id }) => {
+        return {
+          url: `${BASE_URL}detail/${shs_id}`,
+        }
+      },
+    }),
   }),
 })
 
@@ -82,4 +89,5 @@ export const {
   useGetAdminActiveAlertsTableQuery,
   useCreateAdminActiveAlertsMutation,
   useGetAdminActiveAlertsLocationQuery,
+  useGetShsDetailsQuery,
 } = activerAlertsSlice

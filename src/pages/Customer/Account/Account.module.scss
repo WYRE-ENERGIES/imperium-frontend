@@ -45,7 +45,7 @@
   margin: 2rem 0;
   &__Init {
     font-weight: 500;
-    font-size: 40px;
+
     letter-spacing: -0.02em;
     background: #f0f7ed;
     border: 1px solid #66ab4f;
@@ -56,9 +56,9 @@
     outline-color: #dcecd5;
     display: flex;
     justify-content: center;
-
     p {
       margin-top: 2rem;
+      font-size: 40px;
     }
   }
 

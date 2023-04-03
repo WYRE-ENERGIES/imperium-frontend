@@ -25,17 +25,21 @@ const ActiveAlerts = () => {
   const [activeAlertsTable, setActiveAlertsTable] = useState(1)
   const [shsDevices, setShsDevices] = useState(1)
   const [page, setPage] = useState(1)
+  const [deviceId, setDeviceId] = useState()
 
   const { data: shsDevicesData, isLoading: shsDevicesIsLoading } =
     useListClientShsDevicesQuery({
       client_id: clientId,
     })
   const { data: activeAlerts, isLoading: activeAlertsIsLoading } =
-    useGetCustomerActiveAlertsQuery({
-      client_id: clientId,
-      page: page,
-      device_id: 20,
-    })
+    useGetCustomerActiveAlertsQuery(
+      {
+        client_id: clientId,
+        page: page,
+        device_id: deviceId,
+      },
+      { skip: !deviceId },
+    )
   const columns = [
     {
       title: ' ',
@@ -99,7 +103,7 @@ const ActiveAlerts = () => {
       },
     },
   ]
-
+  console.log(deviceId, activeAlerts)
   useEffect(() => {
     setActiveAlertsTable(activeAlerts)
     setShsDevices(shsDevicesData)
@@ -110,7 +114,7 @@ const ActiveAlerts = () => {
       <section className={classes.ActiveAlerts}>
         <section className={classes.ActiveAlerts__headerSection}>
           <PageBreadcrumb title="Active Alert" items={['Active Alert']} />
-          <ShsCapacityDropdown />
+          <ShsCapacityDropdown setDeviceId={setDeviceId} />
         </section>
         <section className={classes.ActiveAlerts__Banner}>
           {activeAlertsIsLoading ? (
@@ -120,7 +124,7 @@ const ActiveAlerts = () => {
               {' '}
               <div className={classes.ActiveAlerts__Status}>
                 <div>
-                  <h1>You have recent alerts</h1>
+                  <h1>You have {activeAlerts?.results} recent alerts</h1>
                 </div>
                 <div>
                   <div className={classes.ActiveAlerts__Dot}></div>
