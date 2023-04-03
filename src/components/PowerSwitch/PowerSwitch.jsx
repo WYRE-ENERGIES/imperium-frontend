@@ -6,6 +6,8 @@ import { Dropdown, Modal, Space, notification, DatePicker, Divider } from 'antd'
 import cautionIcon from '../../../src/assets/widget-icons/caution.svg'
 import scheduleIcon from '../../../src/assets/widget-icons/scheduleIcon.svg'
 import { useShsPowerScheduleMutation } from '../../features/slices/shs/admin/adminShsSlice'
+import { useCustomerShsPowerScheduleMutation } from '../../features/slices/shs/customer/customerShsSlice'
+import { getItemFromLocalStorage } from '../../utils/helpers'
 const openNotification = (text, date, action) => {
   notification.success({
     message: 'Shs Power Schedule',
@@ -26,12 +28,17 @@ const dateTimeOption = {
 }
 
 const ShsPowerSchedule = {}
-const PowerButton = ({ action, color, device, time }) => {
+const PowerButton = ({ action, color, device, time, user }) => {
+  const client_id = getItemFromLocalStorage('current_client')
   const [powerBtnModalOpen, setPowerBtnModalOpen] = useState(false)
   const [selectedDate, setSelectedDate] = useState(false)
   const [deviceId, setDeviceId] = useState('')
   const [shsPowerSchedule, { data: powerScheduleRes, isLoading }] =
     useShsPowerScheduleMutation()
+  const [
+    customerShsPowerSchedule,
+    { data: customerpowerScheduleRes, isLoading: isLoadingCustomerData },
+  ] = useCustomerShsPowerScheduleMutation()
   const showModal = () => {
     setSelectedDate(ShsPowerSchedule.time)
     setDeviceId(ShsPowerSchedule.deviceId)
@@ -42,13 +49,26 @@ const PowerButton = ({ action, color, device, time }) => {
     ShsPowerSchedule.schedule_type = action
     ShsPowerSchedule.reason = 'Testing shs power'
     setDeviceId(ShsPowerSchedule.deviceId)
-
-    try {
-      await shsPowerSchedule({ ShsPowerSchedule, deviceId }).unwrap()
-      setPowerBtnModalOpen(false)
-      openNotification('Scheduled for power', selectedDate, action)
-    } catch (error) {
-      return error
+    if (user === 'client') {
+      try {
+        await customerShsPowerSchedule({
+          ShsPowerSchedule,
+          deviceId,
+          client_id,
+        }).unwrap()
+        setPowerBtnModalOpen(false)
+        openNotification('Scheduled for power', selectedDate, action)
+      } catch (error) {
+        return error
+      }
+    } else {
+      try {
+        await shsPowerSchedule({ ShsPowerSchedule, deviceId }).unwrap()
+        setPowerBtnModalOpen(false)
+        openNotification('Scheduled for power', selectedDate, action)
+      } catch (error) {
+        return error
+      }
     }
   }
   const handleCancel = () => {
@@ -102,7 +122,7 @@ const PowerButton = ({ action, color, device, time }) => {
   )
 }
 
-const PowerSwitch = ({ device_id }) => {
+const PowerSwitch = ({ device_id, user }) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [scheduleTime, setScheduleTime] = useState('')
 
@@ -156,7 +176,7 @@ const PowerSwitch = ({ device_id }) => {
     },
 
     {
-      label: <PowerButton action="on" color={'#027A48'} />,
+      label: <PowerButton action="on" color={'#027A48'} user={user} />,
       key: '1',
     },
   ]

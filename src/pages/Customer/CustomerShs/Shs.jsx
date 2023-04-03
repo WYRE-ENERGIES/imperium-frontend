@@ -138,7 +138,7 @@ const Shs = () => {
               style={{ margin: '-40px 0 0 1px', width: '20px' }}
             />
           </div>
-          <PowerSwitch device_id={id} />
+          <PowerSwitch device_id={id} user={'client'} />
         </section>
         <section className={classes.Shs__EnergyPerfomance}>
           <div>
@@ -620,12 +620,6 @@ const Shs = () => {
                           </div>
                         </Col>
                       </Row>
-                      {/* <Divider />
-                      <div className={classes.Shs__PanelShowMore}>
-                        <div>
-                          <p> Show more</p> <img src={panelarrow} alt="" />
-                        </div>
-                      </div> */}
                     </div>
                   </div>{' '}
                 </div>

@@ -136,7 +136,7 @@ const Shs = () => {
               style={{ margin: '-40px 0 0 1px' }}
             />
           </div>
-          <PowerSwitch device_id={id} />
+          <PowerSwitch device_id={id} user={'admin'} />
         </section>
         <section className={classes.Shs__EnergyPerfomance}>
           <div>
