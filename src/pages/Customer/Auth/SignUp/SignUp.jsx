@@ -15,6 +15,9 @@ import ThirdPartyAuth from '../../../../components/Auth/Forms/Widgets/ThirdParty
 import FormFooter from '../../../../components/Auth/Forms/Widgets/FormFooter'
 import FormButton from '../../../../components/Auth/Forms/Widgets/FormButton'
 import { useCustomerRegisterMutation } from '../../../../features/slices/auth/customer/customerAuthApiSlice'
+import { ErrorMessage } from '../../../../components/ErrorMessage/ErrorMessage'
+import Error from '../../../../components/ErrorMessage/Error'
+import { useRef } from 'react'
 
 const SignUp = () => {
   const formDescription = {
@@ -22,12 +25,21 @@ const SignUp = () => {
     header: 'Sign into your account from any device.',
     tagline:
       'Have a better experience irrespective of the device, OS, screen size, orientation, and browser platform.',
-    ImgHeight: '2px',
   }
+  const pwdRef = useRef(null)
   const [errMsg, setErrMsg] = useState('')
+  const [pwdValid, setPwdValid] = useState(false)
   const [customerRegister, { isLoading }] = useCustomerRegisterMutation()
   const navigate = useNavigate()
-
+  const handlePasswordLength = (e) => {
+    if (e.target.value.length < 8) {
+      pwdRef.current.style.color = 'red'
+      setPwdValid(false)
+    } else if (e.target.value.length >= 8) {
+      pwdRef.current.style.color = 'gray'
+      setPwdValid(true)
+    }
+  }
   const accessToken = getItemFromLocalStorage('access')
   const onFinish = async (values) => {
     try {
@@ -36,15 +48,7 @@ const SignUp = () => {
       }).unwrap()
       navigate('/verification', { state: { email: values?.email } })
     } catch (err) {
-      if (err.status === 401) {
-        setErrMsg(err?.data?.detail)
-      } else if (err.status === 400) {
-        setErrMsg(err?.data?.email)
-      } else if (err.status === 500) {
-        setErrMsg('Cannot connect to server.')
-      } else {
-        setErrMsg('Check your internet connection')
-      }
+      setErrMsg(ErrorMessage(err))
     }
   }
 
@@ -82,18 +86,14 @@ const SignUp = () => {
                 layout="vertical"
                 requiredMark="optional"
               >
-                {errMsg && (
-                  <small className={classes.SignUpPage__Message}>
-                    {errMsg}
-                  </small>
-                )}
+                {errMsg && <Error Errormsg={errMsg} />}
 
                 <Form.Item
                   label={
                     <p
                       style={{
                         marginBottom: '2px',
-                        marginTop: '20px',
+                        marginTop: '10px',
                         fontSize: '13.5px',
                       }}
                     >
@@ -127,7 +127,17 @@ const SignUp = () => {
                       Password
                     </p>
                   }
-                  extra={'Must be at least 8 characters.'}
+                  extra={
+                    <p
+                      ref={pwdRef}
+                      style={{
+                        fontSize: '14px',
+                        marginBottom: '-10px',
+                      }}
+                    >
+                      Must be at least 8 characters.
+                    </p>
+                  }
                   name="password"
                   style={{ marginTop: '-1rem' }}
                   rules={[
@@ -138,21 +148,26 @@ const SignUp = () => {
                   ]}
                 >
                   <Input.Password
+                    onChange={handlePasswordLength}
                     className={classes.SignUpPage__Password}
                     placeholder="Enter a password"
                     style={{ marginTop: '-1px' }}
                   />
                 </Form.Item>
                 <Form.Item>
-                  <FormButton action={'Create account'} isLoading={isLoading} />
+                  <FormButton
+                    action={'Create account'}
+                    isLoading={isLoading}
+                    validate={!pwdValid}
+                  />
                 </Form.Item>
 
                 <FormFooter
                   extra={
-                    <p>
+                    <p style={{ fontSize: '14px', marginTop: '-16px' }}>
                       By selecting <strong>Create account</strong>. I agree to
                       imperium’s{' '}
-                      <span style={{ color: '#5C9D48' }}>
+                      <span style={{ color: '#5C9D48', fontSize: '14px' }}>
                         {' '}
                         privacy policy & terms
                       </span>
@@ -167,7 +182,7 @@ const SignUp = () => {
           </div>
         </LeftLayout>
         <RightLayout>
-          <div className={classes.SignUp__content}>
+          <div className={classes.SignUpPage__content}>
             <FormDescription content={formDescription} />
           </div>
           <div>

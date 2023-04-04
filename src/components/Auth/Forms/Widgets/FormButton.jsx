@@ -3,7 +3,7 @@ import { LoadingOutlined } from '@ant-design/icons'
 import { Spin } from 'antd'
 import classes from './Widget.module.scss'
 
-const FormButton = ({ action, isLoading }) => {
+const FormButton = ({ action, isLoading, validate }) => {
   const loadingIcon = (
     <LoadingOutlined
       style={{ fontSize: 24, marginRight: 10, color: 'white' }}
@@ -11,7 +11,7 @@ const FormButton = ({ action, isLoading }) => {
   )
   return (
     <div className={classes.Button}>
-      <button type="submit" disabled={isLoading}>
+      <button type="submit" disabled={isLoading || validate}>
         <span>
           {isLoading ? <Spin indicator={loadingIcon} /> : ''}
           <small>{action}</small>

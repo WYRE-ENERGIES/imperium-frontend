@@ -17,25 +17,22 @@ import ActiveAlertTable from '../../../components/ActiveAlert/Table/ActiveAlertT
 import Loading from '../../../components/Loading/Loading'
 
 const ActiveAlerts = () => {
-  const title = () => (
-    <p style={{ fontWeight: '500', fontSize: '18px' }}>Active Alerts Table</p>
-  )
   const today = new Date()
   const clientId = getItemFromLocalStorage('current_client')
   const [activeAlertsTable, setActiveAlertsTable] = useState(1)
-  const [shsDevices, setShsDevices] = useState(1)
   const [page, setPage] = useState(1)
+  const [shsId, setShsId] = useState()
 
-  const { data: shsDevicesData, isLoading: shsDevicesIsLoading } =
-    useListClientShsDevicesQuery({
-      client_id: clientId,
-    })
   const { data: activeAlerts, isLoading: activeAlertsIsLoading } =
-    useGetCustomerActiveAlertsQuery({
-      client_id: clientId,
-      page: page,
-      device_id: 20,
-    })
+    useGetCustomerActiveAlertsQuery(
+      {
+        client_id: clientId,
+        shs_id: shsId,
+        page: page,
+      },
+      { skip: !shsId },
+    )
+
   const columns = [
     {
       title: ' ',
@@ -102,15 +99,14 @@ const ActiveAlerts = () => {
 
   useEffect(() => {
     setActiveAlertsTable(activeAlerts)
-    setShsDevices(shsDevicesData)
-  }, [shsDevicesData, activeAlerts])
+  }, [activeAlerts])
 
   return (
     <PageLayout>
       <section className={classes.ActiveAlerts}>
         <section className={classes.ActiveAlerts__headerSection}>
           <PageBreadcrumb title="Active Alert" items={['Active Alert']} />
-          <ShsCapacityDropdown />
+          <ShsCapacityDropdown setDeviceId={setShsId} />
         </section>
         <section className={classes.ActiveAlerts__Banner}>
           {activeAlertsIsLoading ? (
@@ -120,7 +116,7 @@ const ActiveAlerts = () => {
               {' '}
               <div className={classes.ActiveAlerts__Status}>
                 <div>
-                  <h1>You have recent alerts</h1>
+                  <h1>You have {activeAlerts?.results.length} recent alerts</h1>
                 </div>
                 <div>
                   <div className={classes.ActiveAlerts__Dot}></div>
@@ -157,12 +153,10 @@ const ActiveAlerts = () => {
             <Loading data={'active alerts'} />
           ) : (
             <ActiveAlertTable
-              title={title}
+              title={'Active Alerts Table'}
               columns={columns}
               dataSource={activeAlertsTable}
-              pagination={{
-                position: ['none', 'none'],
-              }}
+              setPageNum={setPage}
             />
           )}
         </section>

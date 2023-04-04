@@ -6,6 +6,7 @@ import {
   useGetAdminActiveAlertsStatisticsQuery,
   useGetAdminActiveAlertsTableQuery,
   useCreateAdminActiveAlertsMutation,
+  useGetShsDetailsQuery,
 } from '../../../features/slices/activeAlerts/admin/adminActiveAlertSlice'
 import { MdFilterList } from 'react-icons/md'
 import {
@@ -31,7 +32,14 @@ import { DataStatistics, dateTimeConverter } from '../../../utils/helpers'
 import Loading from '../../../components/Loading/Loading'
 
 const ActiveAlertDetails = (data) => {
+  const { data: shsdata } = data
+
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [shsDropDown, setShsDropDown] = useState([])
+  const { data: shsDetails, isLoading: isLoadingshsDetails } =
+    useGetShsDetailsQuery({
+      shs_id: shsdata.shs_id,
+    })
 
   const showModal = () => {
     setIsModalOpen(true)
@@ -42,6 +50,16 @@ const ActiveAlertDetails = (data) => {
   const handleCancel = () => {
     setIsModalOpen(false)
   }
+  useEffect(() => {
+    setShsDropDown(
+      shsDetails.map((data) => {
+        return {
+          value: data?.active_alert,
+          label: data?.active_alert,
+        }
+      }),
+    )
+  }, [shsDetails])
 
   return (
     <div>
@@ -59,11 +77,11 @@ const ActiveAlertDetails = (data) => {
           <div className={classes.ActiveAlert__ModalContentInit}>
             <div>
               {' '}
-              <span>{data?.data?.shs_name[0]}</span>
-              <span>{data?.data?.shs_name[1]}</span>
+              <span>{shsdata?.shs_name[0]}</span>
+              <span>{shsdata?.shs_name[1]}</span>
             </div>
           </div>
-          <h1>{data?.data?.shs_name}</h1>
+          <h1>{shsdata?.shs_name}</h1>
           <p>{'Ikogbafav@gmail.com'}</p>
           <div>
             <div className={classes.ActiveAlert__ActiveAlertModalFilterStatus}>
@@ -78,21 +96,28 @@ const ActiveAlertDetails = (data) => {
                   >
                     <BsHouse size={20} color="#5C9D48" />
                   </div>
-                  <Select
-                    className={classes.ActiveAlert__ActiveAlertModalFormSelect}
-                    defaultValue={data?.data?.active_alert}
-                    style={{
-                      width: 150,
-                      border: 'none',
-                      color: 'white',
-                    }}
-                    dropdownStyle={{ background: 'white', width: '20px' }}
-                    showArrow={true}
-                  />
+                  {isLoadingshsDetails ? (
+                    'loading... '
+                  ) : (
+                    <Select
+                      className={
+                        classes.ActiveAlert__ActiveAlertModalFormSelect
+                      }
+                      defaultValue={shsDetails?.[0]?.active_alert}
+                      style={{
+                        width: 150,
+                        border: 'none',
+                        color: 'white',
+                      }}
+                      options={shsDropDown}
+                      dropdownStyle={{ background: 'white', width: '20px' }}
+                      showArrow={true}
+                    />
+                  )}
                 </Space>
               </div>
               <div className={classes.ActiveAlert__ActiveAlertModalStatus}>
-                <span>{data?.data?.status}</span>{' '}
+                <span>{shsdata?.status}</span>{' '}
                 <span>
                   <MdFilterList size={20} color="#5C9D48" />
                 </span>
@@ -100,9 +125,19 @@ const ActiveAlertDetails = (data) => {
             </div>
 
             <div className={classes.ActiveAlert__ActiveAlertModalShsInfo}>
-              <span>{data?.data?.active_alert}</span>
-              <span>{dateTimeConverter(data?.data?.time)}</span>
-              <span>{data?.data?.status}</span>
+              <div>
+                {' '}
+                <span>{shsdata?.active_alert}</span>
+                <span>{dateTimeConverter(shsdata?.time)}</span>
+                <span
+                  style={{
+                    color:
+                      shsdata?.status === 'UNRESOLVED' ? '#B42318' : '#5C9D48',
+                  }}
+                >
+                  {shsdata?.status}
+                </span>
+              </div>
             </div>
           </div>
           <div className={classes.ActiveAlert__ModalClose}>
