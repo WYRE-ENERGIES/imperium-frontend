@@ -6,8 +6,9 @@ import TableFooter from '../../TableFooter/TableFooter'
 const ActiveAlertTable = ({ dataSource, columns, title, setPageNum }) => {
   return (
     <div>
+      <p style={{ fontWeight: '500', fontSize: '18px' }}>{title}</p>
       <Table
-        title={title}
+        scroll={{ x: '100%' }}
         columns={columns}
         dataSource={dataSource?.results}
         footer={() => (
