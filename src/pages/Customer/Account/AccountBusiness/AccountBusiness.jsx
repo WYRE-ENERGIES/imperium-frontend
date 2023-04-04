@@ -116,8 +116,8 @@ const AccountBusiness = () => {
           {gettingBusiness ? (
             <Loading data={'business data'} />
           ) : data ? (
-            <Row justify={'space-between'} gutter={20}>
-              <Col span={8}>
+            <div className={classes.AccountBusiness__Form}>
+              <Col>
                 {' '}
                 <Form.Item
                   label="Business name"
@@ -135,7 +135,7 @@ const AccountBusiness = () => {
                   />
                 </Form.Item>
               </Col>
-              <Col span={8}>
+              <Col>
                 {' '}
                 <Form.Item
                   label="Company"
@@ -154,20 +154,18 @@ const AccountBusiness = () => {
                   />
                 </Form.Item>
               </Col>
-              <Col span={8}>
+              <Col>
                 <Form.Item>
-                  <Row justify={'end'}>
-                    <Col span={18}>
-                      {' '}
-                      <FormButton
-                        isLoading={updatingBusiness}
-                        action={'Save changes'}
-                      />
-                    </Col>
-                  </Row>
+                  <Col>
+                    {' '}
+                    <FormButton
+                      isLoading={updatingBusiness}
+                      action={'Save changes'}
+                    />
+                  </Col>
                 </Form.Item>
               </Col>
-            </Row>
+            </div>
           ) : (
             'No data found for this user'
           )}

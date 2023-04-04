@@ -34,8 +34,8 @@ const AccountPassword = () => {
           onFinish={onFinish}
           requiredMark="optional"
         >
-          <Row justify={'space-between'} gutter={32}>
-            <Col span={8}>
+          <div className={classes.AccountPassword__Form}>
+            <Col>
               {' '}
               <Form.Item
                 label={
@@ -63,7 +63,7 @@ const AccountPassword = () => {
                 />
               </Form.Item>
             </Col>
-            <Col span={8}>
+            <Col>
               {' '}
               <Form.Item
                 label={
@@ -91,7 +91,7 @@ const AccountPassword = () => {
                 />
               </Form.Item>
             </Col>
-            <Col span={8}>
+            <Col>
               <Form.Item
                 label={
                   <p
@@ -118,7 +118,7 @@ const AccountPassword = () => {
                 />
               </Form.Item>
             </Col>
-          </Row>
+          </div>
 
           <Form.Item>
             <Row justify={'end'} gutter={20}>
