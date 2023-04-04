@@ -106,9 +106,7 @@ const ActiveAlerts = () => {
       <section className={classes.ActiveAlerts}>
         <section className={classes.ActiveAlerts__headerSection}>
           <PageBreadcrumb title="Active Alert" items={['Active Alert']} />
-
           <ShsCapacityDropdown setDeviceId={setShsId} />
-
         </section>
         <section className={classes.ActiveAlerts__Banner}>
           {activeAlertsIsLoading ? (
