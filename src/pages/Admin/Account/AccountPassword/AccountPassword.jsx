@@ -7,6 +7,8 @@ import Account from '../Account'
 import PasswordKeyIcon from '../../../../assets/Auth/passwordIcon.svg'
 import { useAdminChangePasswordMutation } from '../../../../features/slices/auth/admin/adminAuthApiSlice'
 import { useNavigate } from 'react-router-dom'
+import { ErrorMessage } from '../../../../components/ErrorMessage/ErrorMessage'
+import Error from '../../../../components/ErrorMessage/Error'
 
 const AccountPassword = () => {
   const [errMsg, setErrMsg] = useState('')
@@ -21,9 +23,10 @@ const AccountPassword = () => {
   const [adminChangePassword, { isLoading }] = useAdminChangePasswordMutation()
 
   const onFinish = async (values) => {
-    setErrMsg('')
-    if (values.new_password !== values.confirm_password) {
-      setErrMsg('New passwords do not match!')
+    if (values.new_password === values.old_password) {
+      setErrMsg('Old password can not be new password.')
+    } else if (values.new_password !== values.confirm_password) {
+      setErrMsg("New passwords don't match")
     } else {
       try {
         await adminChangePassword({
@@ -34,15 +37,7 @@ const AccountPassword = () => {
         openNotification()
         navigate('/admin/account')
       } catch (err) {
-        if (err.status === 401) {
-          setErrMsg(err?.data?.message)
-        } else if (err.status === 400) {
-          setErrMsg(err?.data?.message)
-        } else if (err.status === 500) {
-          setErrMsg('Server could not be reached. Try later!')
-        } else {
-          setErrMsg('Check your internet connection')
-        }
+        setErrMsg(ErrorMessage(err))
       }
     }
   }
@@ -56,11 +51,9 @@ const AccountPassword = () => {
           onFinish={onFinish}
           requiredMark="optional"
         >
-          {errMsg && (
-            <small className={classes.AccountPassword__Message}>{errMsg}</small>
-          )}
-          <Row justify={'space-between'} gutter={20}>
-            <Col span={8}>
+          {errMsg && <Error Errormsg={errMsg} />}
+          <div className={classes.AccountPassword__Form}>
+            <Col>
               {' '}
               <Form.Item
                 label={
@@ -88,7 +81,7 @@ const AccountPassword = () => {
                 />
               </Form.Item>
             </Col>
-            <Col span={8}>
+            <Col>
               {' '}
               <Form.Item
                 label={
@@ -99,7 +92,7 @@ const AccountPassword = () => {
                       fontSize: '13.5px',
                     }}
                   >
-                    Password
+                    New Password
                   </p>
                 }
                 name="new_password"
@@ -116,7 +109,7 @@ const AccountPassword = () => {
                 />
               </Form.Item>
             </Col>
-            <Col span={8}>
+            <Col>
               <Form.Item
                 label={
                   <p
@@ -143,18 +136,15 @@ const AccountPassword = () => {
                 />
               </Form.Item>
             </Col>
-          </Row>
-
+          </div>
           <Form.Item>
-            <Row justify={'end'} gutter={20}>
-              <Col span={8}>
-                <FormButton
-                  type={'submit'}
-                  action={'Save changes'}
-                  isLoading={isLoading}
-                />
-              </Col>
-            </Row>
+            <Col>
+              <FormButton
+                type={'submit'}
+                action={'Save changes'}
+                isLoading={isLoading}
+              />
+            </Col>
           </Form.Item>
         </Form>
       </div>
