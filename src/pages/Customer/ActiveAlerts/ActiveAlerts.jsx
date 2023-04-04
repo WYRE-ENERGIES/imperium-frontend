@@ -17,6 +17,11 @@ import ActiveAlertTable from '../../../components/ActiveAlert/Table/ActiveAlertT
 import Loading from '../../../components/Loading/Loading'
 
 const ActiveAlerts = () => {
+  const title = () => {
+    return (
+      <p style={{ fontWeight: '500', fontSize: '18px' }}>Active Alerts Table</p>
+    )
+  }
   const today = new Date()
   const clientId = getItemFromLocalStorage('current_client')
   const [activeAlertsTable, setActiveAlertsTable] = useState(1)
@@ -153,7 +158,7 @@ const ActiveAlerts = () => {
             <Loading data={'active alerts'} />
           ) : (
             <ActiveAlertTable
-              title={'Active Alerts Table'}
+              title={title}
               columns={columns}
               dataSource={activeAlertsTable}
               setPageNum={setPage}
