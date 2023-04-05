@@ -41,8 +41,8 @@ export const activerAlertsSlice = apiSlice.injectEndpoints({
       transformErrorResponse: (response, meta, arg) => response.status,
     }),
     getAdminActiveAlertsTable: build.query({
-      query: () => {
-        return `${BASE_URL}table/`
+      query: ({ page }) => {
+        return `${BASE_URL}table/?page=${page}`
       },
       transformResponse: (response, meta, arg) => {
         return response
@@ -79,6 +79,13 @@ export const activerAlertsSlice = apiSlice.injectEndpoints({
         }
       },
     }),
+    getDeviceList: build.query({
+      query: ({ client_id }) => {
+        return {
+          url: `${BASE_URL}list-devices/${client_id}`,
+        }
+      },
+    }),
   }),
 })
 
@@ -90,4 +97,5 @@ export const {
   useCreateAdminActiveAlertsMutation,
   useGetAdminActiveAlertsLocationQuery,
   useGetShsDetailsQuery,
+  useGetDeviceListQuery,
 } = activerAlertsSlice

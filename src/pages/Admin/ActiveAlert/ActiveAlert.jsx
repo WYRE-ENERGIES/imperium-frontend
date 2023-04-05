@@ -7,6 +7,7 @@ import {
   useGetAdminActiveAlertsTableQuery,
   useCreateAdminActiveAlertsMutation,
   useGetShsDetailsQuery,
+  useGetDeviceListQuery,
 } from '../../../features/slices/activeAlerts/admin/adminActiveAlertSlice'
 import { MdFilterList } from 'react-icons/md'
 import {
@@ -35,7 +36,7 @@ const ActiveAlertDetails = (data) => {
   const { data: shsdata } = data
 
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [shsDropDown, setShsDropDown] = useState([])
+  const [shsDropDown, setShsDropDown] = useState()
   const { data: shsDetails, isLoading: isLoadingshsDetails } =
     useGetShsDetailsQuery({
       shs_id: shsdata.shs_id,
@@ -51,14 +52,9 @@ const ActiveAlertDetails = (data) => {
     setIsModalOpen(false)
   }
   useEffect(() => {
-    setShsDropDown(
-      shsDetails.map((data) => {
-        return {
-          value: data?.active_alert,
-          label: data?.active_alert,
-        }
-      }),
-    )
+    if (shsDetails) {
+      setShsDropDown(shsDetails)
+    }
   }, [shsDetails])
 
   return (
@@ -103,13 +99,22 @@ const ActiveAlertDetails = (data) => {
                       className={
                         classes.ActiveAlert__ActiveAlertModalFormSelect
                       }
-                      defaultValue={shsDetails?.[0]?.active_alert}
+                      defaultValue={shsDropDown?.[0]?.active_alert}
                       style={{
                         width: 150,
                         border: 'none',
                         color: 'white',
                       }}
-                      options={shsDropDown}
+                      options={
+                        shsDropDown
+                          ? shsDropDown.map((data) => {
+                              return {
+                                value: data?.active_alert,
+                                label: data?.active_alert,
+                              }
+                            })
+                          : ''
+                      }
                       dropdownStyle={{ background: 'white', width: '20px' }}
                       showArrow={true}
                     />
@@ -124,20 +129,31 @@ const ActiveAlertDetails = (data) => {
               </div>
             </div>
 
-            <div className={classes.ActiveAlert__ActiveAlertModalShsInfo}>
-              <div>
-                {' '}
-                <span>{shsdata?.active_alert}</span>
-                <span>{dateTimeConverter(shsdata?.time)}</span>
-                <span
-                  style={{
-                    color:
-                      shsdata?.status === 'UNRESOLVED' ? '#B42318' : '#5C9D48',
-                  }}
-                >
-                  {shsdata?.status}
-                </span>
-              </div>
+            <div>
+              {shsDropDown
+                ? shsDropDown.map((data, key) => (
+                    <div
+                      key={key}
+                      className={classes.ActiveAlert__ActiveAlertModalShsInfo}
+                    >
+                      <div>
+                        {' '}
+                        <span>{data?.active_alert}</span>
+                        <span>{dateTimeConverter(data?.time)}</span>
+                        <span
+                          style={{
+                            color:
+                              data?.status === 'UNRESOLVED'
+                                ? '#B42318'
+                                : '#5C9D48',
+                          }}
+                        >
+                          {data?.status}
+                        </span>
+                      </div>
+                    </div>
+                  ))
+                : ''}
             </div>
           </div>
           <div className={classes.ActiveAlert__ModalClose}>
@@ -237,10 +253,12 @@ const ActiveAlert = () => {
   const { data: statistics, isLoading: isLoadingStatistics } =
     useGetAdminActiveAlertsStatisticsQuery()
   const { data: dataTable, isLoading: isLoadingactiveAlertsTable } =
-    useGetAdminActiveAlertsTableQuery()
+    useGetAdminActiveAlertsTableQuery({ page: pageNum })
   const [createAdminActiveAlerts, { isLoading: isLoadingactiveAlertsCreate }] =
     useCreateAdminActiveAlertsMutation()
-
+  const { data: deviceList, isLoading: isLoadingdeviceList } =
+    useGetDeviceListQuery({ client_id: 24 })
+  console.log(deviceList)
   useEffect(() => {
     setActiveAlertData(activeAlerts)
     setActiveAlertDataAnalytics(activeAlertsAnalytics)
@@ -548,7 +566,7 @@ const ActiveAlert = () => {
             <div className={classes.ActiveAlert__ActiveAlertNotificationList}>
               {isLoadingactiveAlerts ? (
                 <Loading data={'active alerts...'} />
-              ) : activeAlerts ? (
+              ) : activeAlertsData ? (
                 activeAlerts?.results.slice(0, 3).map((alert, key) => (
                   <div key={key}>
                     <span>
