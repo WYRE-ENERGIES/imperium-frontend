@@ -18,6 +18,7 @@ import Widget from '../../../components/Widget/Widget/Widget'
 import WidgetFilter from '../../../components/WidgetFilter/WidgetFilter'
 import WidgetLoader from '../../../components/Widget/WidgetLoader/WidgetLoader'
 import classes from './Overview.module.scss'
+import { formatLabel } from '../../../utils/helpers'
 
 const Overview = () => {
   const [chartData, setChartData] = useState([
@@ -39,6 +40,7 @@ const Overview = () => {
     isError: isAnalyticsError,
     error: analyticsError,
     data: analyticsData,
+    refetch: refetchAnalytics,
   } = useGetClientOverviewAnalyticsQuery({
     filterBy: globalFilter,
   })
@@ -48,6 +50,7 @@ const Overview = () => {
     isError: isSolarError,
     error: solarError,
     data: solarData,
+    refetch: refetchSolar,
   } = useGetClientOverviewSolarHouseDataQuery({
     page,
     filterBy: globalFilter,
@@ -58,6 +61,7 @@ const Overview = () => {
     isError: isEnergyError,
     error: energyError,
     data: energyData,
+    refetch: refetchEnergy,
   } = useGetClientOverviewEnergyDataQuery({
     filterBy: globalFilter,
   })
@@ -96,7 +100,7 @@ const Overview = () => {
         <Widget
           key={widget.id}
           Icon={widget.icon}
-          range={widget.duration}
+          range={formatLabel(globalFilter)}
           valueCurrency={widget.valueCurrency}
           title={widget.title}
           value={widget.value}
@@ -123,6 +127,12 @@ const Overview = () => {
     }
     setChartData(energyData)
   }, [isEnergyFetching, isEnergyError])
+
+  useEffect(() => {
+    refetchAnalytics()
+    refetchSolar()
+    refetchEnergy()
+  }, [globalFilter])
 
   return (
     <PageLayout>
