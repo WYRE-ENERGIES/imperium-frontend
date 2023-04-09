@@ -41,7 +41,7 @@ const EnergyAnalytic = () => {
   const handleSearch = (e) => setSearch(e.target.value)
   const debounceValue = useDebounce(search, 1000)
 
-  const { isFetching, isError, isSuccess, data } =
+  const { isFetching, isError, isSuccess, data, refetch } =
     useGetClientEnergyTableDataQuery(
       {
         page,
@@ -57,6 +57,7 @@ const EnergyAnalytic = () => {
     isError: isStatError,
     isSuccess: isStatSuccess,
     data: statData,
+    refetch: statRefetch,
   } = useGetClientEnergyStatQuery(
     {
       filterBy: globalFilter,
@@ -65,14 +66,17 @@ const EnergyAnalytic = () => {
     { skip: !deviceId },
   )
 
-  const { isFetching: isAnalyticsLoading, data: analyticsData } =
-    useGetClientEnergyAnalyticsQuery(
-      {
-        filterBy: globalFilter,
-        deviceId,
-      },
-      { skip: !deviceId },
-    )
+  const {
+    isFetching: isAnalyticsLoading,
+    data: analyticsData,
+    refetch: refetchAnalytics,
+  } = useGetClientEnergyAnalyticsQuery(
+    {
+      filterBy: globalFilter,
+      deviceId,
+    },
+    { skip: !deviceId },
+  )
 
   useEffect(() => {
     if (isAnalyticsLoading) return
@@ -112,6 +116,14 @@ const EnergyAnalytic = () => {
       setChartData([statData.energyConsumed, statData.energyGenerated])
     }
   }, [isStatLoading, isStatSuccess])
+
+  useEffect(() => {
+    if (deviceId) {
+      refetch()
+      statRefetch()
+      refetchAnalytics()
+    }
+  }, [globalFilter])
 
   return (
     <PageLayout>

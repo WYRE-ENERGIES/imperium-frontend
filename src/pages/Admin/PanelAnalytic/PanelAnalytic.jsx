@@ -31,6 +31,7 @@ const PanelAnalytic = () => {
     error: tableError,
     data,
     isFetching,
+    refetch,
   } = useGetPanelTableDataQuery({
     page,
     search: debounceValue,
@@ -42,6 +43,7 @@ const PanelAnalytic = () => {
     isError: isAnalyticsError,
     error: analyticsError,
     data: analyticsData,
+    refetch: refetchAnalytics,
   } = useGetPanelPageAnalyticsQuery({ filterBy: globalFilter })
 
   useEffect(() => {
@@ -52,6 +54,11 @@ const PanelAnalytic = () => {
     }
     setWidgets(analyticsData)
   }, [isAnalyticsFetching, analyticsData])
+
+  useEffect(() => {
+    refetch()
+    refetchAnalytics()
+  }, [globalFilter])
 
   return (
     <AdminPageLayout>
@@ -72,7 +79,14 @@ const PanelAnalytic = () => {
           {isAnalyticsFetching && !widgets ? (
             <WidgetLoader />
           ) : (
-            <PanelWidgets data={widgets} isLoading={isAnalyticsFetching} />
+            <PanelWidgets
+              data={widgets}
+              isLoading={isAnalyticsFetching}
+              weatherLoading={isLoading}
+              result={weatherResult}
+              globalFilter={globalFilter}
+              weatherError={error}
+            />
           )}
         </div>
         <div className={classes.PanelAnalytic__shsTable}>

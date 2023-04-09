@@ -36,25 +36,14 @@ export const isAuthenticated = () => {
 }
 
 export const formatLabel = (value) => {
-  let label = ''
-  switch (value) {
-    case 'yearly':
-      label = 'For the last 12 months'
-      break
-    case 'monthly':
-      label = 'For the last month'
-      break
-    case 'weekly':
-      label = 'For the last 7 days'
-      break
-    case 'daily':
-      label = 'For the last 24 hours'
-      break
-    default:
-      label = 'For the last 12 months'
-      break
+  const labels = {
+    yearly: 'For the last 12 months',
+    monthly: 'For the last month',
+    weekly: 'For the last 7 days',
+    daily: 'For the last 24 hours',
   }
-  return label
+
+  return labels[value] || value
 }
 
 export const getUserFullName = () => {

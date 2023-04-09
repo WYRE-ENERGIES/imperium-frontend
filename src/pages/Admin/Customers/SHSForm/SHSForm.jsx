@@ -31,7 +31,7 @@ const AddSHSForm = ({ toggleModal }) => {
   const [form] = Form.useForm()
   const [purchaseDate, setPurchaseDate] = useState('')
   const [search, setSearch] = useState('')
-
+  const [err, setErr] = useState('')
   const handleChange = (value) => setSearch(value)
   const handleSearch = (value) => {
     setSearch(value)
@@ -75,34 +75,25 @@ const AddSHSForm = ({ toggleModal }) => {
   const [assignShs, { isLoading, isSuccess, isError, error }] =
     useAssignShsMutation()
 
-  const onFinish = (values) => {
-    assignShs({
-      ...values,
-      purchased_date: purchaseDate,
-      client_email: search,
-    })
-  }
+  const onFinish = async (values) => {
+    try {
+      await assignShs({
+        ...values,
+        purchased_date: purchaseDate,
+        client_email: search,
+      }).unwrap()
 
-  useEffect(() => {
-    if (isLoading) return
-
-    if (isError) {
-      toast.error(error.data.message[0], {
-        hideProgressBar: true,
-        autoClose: 3000,
-        theme: 'colored',
-      })
-    }
-
-    if (isSuccess) {
       toast.success('SHS Added', {
         hideProgressBar: true,
         autoClose: 3000,
         theme: 'colored',
       })
+
       toggleModal()
+    } catch (error) {
+      setErr('An Error occurred')
     }
-  }, [isLoading, isSuccess, isError])
+  }
 
   if (!fetchingRegion && !regionError && regionData.results) {
     regions = regionData.results.map((region, index) => (
@@ -156,6 +147,7 @@ const AddSHSForm = ({ toggleModal }) => {
           name="client_email"
           label="Customer Email"
           style={{ marginBottom: '12px', flex: 1 }}
+          rules={[{ required: true, message: 'Please enter a email address' }]}
         >
           <SearchDropdown
             value={search}
@@ -322,6 +314,9 @@ const AddSHSForm = ({ toggleModal }) => {
             className={classes.AddSHSForm__datePicker}
             showToday={false}
             onChange={(d, ds) => setPurchaseDate(ds)}
+            disabledDate={(current) =>
+              current && current.toDate() >= new Date()
+            }
           />
         </Form.Item>
       </div>

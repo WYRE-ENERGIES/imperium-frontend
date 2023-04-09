@@ -22,20 +22,14 @@ import Widget from '../../../components/Widget/Widget/Widget'
 import WidgetFilter from '../../../components/WidgetFilter/WidgetFilter'
 import classes from './Battery.module.scss'
 import useDebounce from '../../../hooks/useDebounce'
-
-// {
-//       "created_at": "2023-04-02T15:55:52.285Z",
-//       "battery_health": 0,
-//       "battery_voltage": "string",
-//       "battery_current": "string",
-//       "source": "nepa"
-//     }
+import { dateTimeConverter } from '../../../utils/helpers'
 
 const columns = [
   {
-    title: 'Monthly',
+    title: 'Date',
     dataIndex: 'created_at',
     key: 'created_at',
+    render: (value) => dateTimeConverter(value),
   },
   {
     title: 'Battery Health',
@@ -87,7 +81,9 @@ const Battery = () => {
   const [page, setPage] = useState(1)
   const [search, setSearch] = useState('')
   const [widgets, setWidgets] = useState([])
+  const [filterBy, setFilterBy] = useState('')
 
+  console.log('Battery -> filterBy', filterBy)
   const handleSearch = (e) => setSearch(e.target.value)
   const debounceValue = useDebounce(search, 1000)
 
@@ -96,6 +92,7 @@ const Battery = () => {
       page,
       search: debounceValue,
       deviceId,
+      filterBy,
     },
     { skip: !deviceId },
   )
@@ -156,13 +153,13 @@ const Battery = () => {
           <ShsCapacityDropdown setDeviceId={setDeviceId} />
         </section>
         <section className={classes.Battery__filters}>
-          <WidgetFilter show={false} />
+          <WidgetFilter show={false} selectFilterBy={setFilterBy} />
         </section>
         <div className={classes.Battery__widgets}>{widgets}</div>
         <div className={classes.Battery__shsTable}>
           <TableWithFilter
             columns={columns}
-            data={batteryTableData}
+            data={data?.results}
             tableTitle="Battery Table"
             tagValue="kWh"
             filterOptions={[]}

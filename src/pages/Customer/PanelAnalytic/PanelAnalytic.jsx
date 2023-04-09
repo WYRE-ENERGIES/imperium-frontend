@@ -37,6 +37,7 @@ const PanelAnalytic = () => {
     error: tableError,
     data,
     isFetching,
+    refetch,
   } = useGetClientPanelTableDataQuery(
     {
       page,
@@ -52,6 +53,7 @@ const PanelAnalytic = () => {
     isError: isAnalyticsError,
     error: analyticsError,
     data: analyticsData,
+    refetch: refetchAnalytics,
   } = useGetClientPanelPageAnalyticsQuery(
     { filterBy: globalFilter, deviceId },
     { skip: !deviceId },
@@ -65,6 +67,13 @@ const PanelAnalytic = () => {
     }
     setWidgets(analyticsData)
   }, [isAnalyticsFetching, analyticsData])
+
+  useEffect(() => {
+    if (deviceId) {
+      refetch()
+      refetchAnalytics()
+    }
+  }, [globalFilter])
 
   return (
     <PageLayout>
@@ -92,6 +101,7 @@ const PanelAnalytic = () => {
               weatherLoading={isLoading}
               result={weatherResult}
               weatherError={error}
+              globalFilter={globalFilter}
             />
           )}
         </div>
