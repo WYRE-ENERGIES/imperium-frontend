@@ -83,7 +83,6 @@ const Battery = () => {
   const [widgets, setWidgets] = useState([])
   const [filterBy, setFilterBy] = useState('')
 
-  console.log('Battery -> filterBy', filterBy)
   const handleSearch = (e) => setSearch(e.target.value)
   const debounceValue = useDebounce(search, 1000)
 
