@@ -68,7 +68,7 @@ const columns = [
     ),
     key: 'status',
     dataIndex: 'status',
-    sorter: (a, b) => a.status - b.status,
+    sorter: (a, b) => a.status.localeCompare(b.status),
     render: (value) => {
       const color = value.toLowerCase() === 'on' ? '#027A48' : '#606062'
       return (

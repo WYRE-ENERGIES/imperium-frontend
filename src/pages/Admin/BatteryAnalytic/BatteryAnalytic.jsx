@@ -25,7 +25,7 @@ import useDebounce from '../../../hooks/useDebounce'
 
 const columns = [
   {
-    title: 'Monthly',
+    title: 'SHS Name',
     dataIndex: 'shs_name',
     key: 'shs_name',
   },
@@ -126,17 +126,19 @@ const BatteryAnalytic = () => {
   const handleSearch = (e) => setSearch(e.target.value)
   const debounceValue = useDebounce(search, 1000)
 
-  const { isError, error, data, isFetching } = useGetBatteryTableDataQuery({
-    page,
-    search: debounceValue,
-    filterBy: globalFilter,
-  })
+  const { isError, error, data, isFetching, refetch } =
+    useGetBatteryTableDataQuery({
+      page,
+      search: debounceValue,
+      filterBy: globalFilter,
+    })
 
   const {
     isFetching: isAnalyticsFetching,
     isError: isAnalyticsError,
     error: analyticsError,
     data: analyticsData,
+    refetch: analyticsRefetch,
   } = useGetBatteryPageAnalyticsQuery({ filterBy: globalFilter })
 
   const {
@@ -145,6 +147,7 @@ const BatteryAnalytic = () => {
     isError: isStatisticsError,
     error: statisticsError,
     data: statisticsData,
+    refetch: statisticsRefetch,
   } = useGetBatteryStatisticsQuery({ filterBy: globalFilter })
 
   useEffect(() => {
@@ -193,7 +196,7 @@ const BatteryAnalytic = () => {
         <Widget
           key={widget.id}
           Icon={widget.icon}
-          duration={formatLabel(globalFilter)}
+          range={formatLabel(globalFilter)}
           title={widget.title}
           value={widget.value}
           valueCurrency={widget.valueCurrency}
@@ -202,6 +205,12 @@ const BatteryAnalytic = () => {
       )),
     )
   }, [isAnalyticsFetching])
+
+  useEffect(() => {
+    refetch()
+    analyticsRefetch()
+    statisticsRefetch()
+  }, [globalFilter])
 
   return (
     <AdminPageLayout>

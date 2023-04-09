@@ -48,17 +48,19 @@ const EnergyAnalytic = () => {
   const handleSearch = (e) => setSearch(e.target.value)
   const debounceValue = useDebounce(search, 1000)
 
-  const { isError, error, data, isFetching } = useGetEnergyTableDataQuery({
-    page,
-    search: debounceValue,
-    filterBy: globalFilter,
-  })
+  const { isError, error, data, isFetching, refetch } =
+    useGetEnergyTableDataQuery({
+      page,
+      search: debounceValue,
+      filterBy: globalFilter,
+    })
 
   const {
     isFetching: isAnalyticsFetching,
     isError: isAnalyticsError,
     error: analyticsError,
     data: analyticsData,
+    refetch: refetchAnalytics,
   } = useGetEnergyPageAnalyticsQuery({ filterBy: globalFilter })
 
   const {
@@ -66,6 +68,7 @@ const EnergyAnalytic = () => {
     isError: isCapacityError,
     error: capacityError,
     data: capacityData,
+    refetch: refetchCapacity,
   } = useGetEnergyStatisticsQuery({ filterBy: globalFilter })
 
   useEffect(() => {
@@ -117,6 +120,12 @@ const EnergyAnalytic = () => {
       )),
     )
   }, [isAnalyticsFetching])
+
+  useEffect(() => {
+    refetch()
+    refetchAnalytics()
+    refetchCapacity()
+  }, [globalFilter])
 
   return (
     <AdminPageLayout>

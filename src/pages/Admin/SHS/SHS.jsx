@@ -40,18 +40,21 @@ const SHS = () => {
     setOpenActivateShsModal(!openActivateShsModal)
   }
 
-  const { isError, error, data, isFetching } = useGetShsTableDataQuery({
-    page,
-    search: debounceValue,
-    filterBy: globalFilter,
-    tableFilter: tableFilter,
-  })
+  const { isError, error, data, isFetching, refetch } = useGetShsTableDataQuery(
+    {
+      page,
+      search: debounceValue,
+      filterBy: globalFilter,
+      tableFilter: tableFilter,
+    },
+  )
 
   const {
     isFetching: isAnalyticsFetching,
     isError: isAnalyticsError,
     error: analyticsError,
     data: analyticsData,
+    refetch: analyticRefetch,
   } = useGetAllShsPageAnalyticsQuery({ filterBy: globalFilter })
 
   useEffect(() => {
@@ -92,6 +95,11 @@ const SHS = () => {
       )),
     )
   }, [isAnalyticsFetching])
+
+  useEffect(() => {
+    refetch()
+    analyticRefetch()
+  }, [globalFilter])
 
   const columns = [
     {

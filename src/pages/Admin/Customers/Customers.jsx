@@ -51,7 +51,7 @@ const Customers = () => {
   const handleSearch = (e) => setSearch(e.target.value)
   const debounceValue = useDebounce(search, 1000)
 
-  const { isLoading, isError, error, data, isFetching } =
+  const { isLoading, isError, error, data, isFetching, refetch } =
     useGetAdminCustomersListQuery({
       page,
       search: debounceValue,
@@ -64,6 +64,7 @@ const Customers = () => {
     isError: isAnalyticsError,
     error: analyticsError,
     data: analyticsData,
+    refetch: analyticsRefetch,
   } = useGetCustomerPageAnalyticsQuery({ filterBy: globalFilter })
 
   const {
@@ -72,6 +73,7 @@ const Customers = () => {
     isError: isStatisticsError,
     error: statisticsError,
     data: statisticsData,
+    refetch: statisticsRefetch,
   } = useGetCustomerPageStatisticsQuery({ filterBy: globalFilter })
 
   useEffect(() => {
@@ -82,6 +84,12 @@ const Customers = () => {
 
     setChartData([cData])
   }, [statisticsData])
+
+  useEffect(() => {
+    refetch()
+    analyticsRefetch()
+    statisticsRefetch()
+  }, [globalFilter])
 
   const columns = [
     {

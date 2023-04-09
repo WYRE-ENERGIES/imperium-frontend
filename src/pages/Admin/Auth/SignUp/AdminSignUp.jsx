@@ -35,7 +35,7 @@ const AdminSignUp = () => {
         endpoint: '/imperium-admin/auth/register-user/',
       }).unwrap()
 
-      navigate('/admin/')
+      navigate('/admin/sign-in')
     } catch (err) {
       if (err.status === 401) {
         setErrMsg(err?.data?.detail)

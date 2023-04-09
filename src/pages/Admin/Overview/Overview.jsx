@@ -27,6 +27,7 @@ import SimpleBarChart from '../../../components/Charts/SimpleBarChart/SimpleBarC
 import WidgetFilter from '../../../components/WidgetFilter/WidgetFilter'
 import WidgetLoader from '../../../components/Widget/WidgetLoader/WidgetLoader'
 import classes from '../../Customer/Overview/Overview.module.scss'
+import { formatLabel } from '../../../utils/helpers'
 
 const Overview = () => {
   const [pieChartData, setPieChartData] = useState({
@@ -73,6 +74,7 @@ const Overview = () => {
     isError: isAnalyticsError,
     error: analyticsError,
     data: analyticsData,
+    refetch: refetchAnalytics,
   } = useGetAdminOverviewAnalyticsQuery({
     filterBy: globalFilter,
   })
@@ -82,6 +84,7 @@ const Overview = () => {
     isError: isAlertError,
     error: alertError,
     data: aData,
+    refetch: refetchAlert,
   } = useGetOverviewActiveAlertQuery({
     page: alertPage,
     filterBy: globalFilter,
@@ -94,6 +97,7 @@ const Overview = () => {
     isError: isEmissionError,
     error: emissionError,
     data: emissionData,
+    refetch: refetchEmission,
   } = useGetOverviewEmissionDataQuery({
     filterBy: globalFilter,
     sectorId,
@@ -105,6 +109,7 @@ const Overview = () => {
     isError: isVoltageError,
     error: voltageError,
     data: voltageData,
+    refetch: refetchVoltage,
   } = useGetAdminOverviewCurrentVoltageQuery({
     filterBy: globalFilter,
     sectorId,
@@ -116,6 +121,7 @@ const Overview = () => {
     isError: isSolarError,
     error: solarError,
     data: solarData,
+    refetch: refetchSolar,
   } = useGetOverviewSolarHouseDataQuery({
     page,
     filterBy: globalFilter,
@@ -129,6 +135,7 @@ const Overview = () => {
     isError: isSectorError,
     error: sectorError,
     data: sectorData,
+    refetch: refetchSector,
   } = useGetOverviewSectorQuery({
     filterBy: globalFilter,
   })
@@ -138,6 +145,7 @@ const Overview = () => {
     isError: isEnergyError,
     error: energyError,
     data: energyData,
+    refetch: refetchEnergy,
   } = useGetOverviewEnergyDataQuery({
     filterBy: globalFilter,
     sectorId,
@@ -159,7 +167,6 @@ const Overview = () => {
         {
           id: 1,
           title: 'Total Energy Generation',
-          duration: 'For the last 12 months',
           value:
             parseFloat(analyticsData?.total_installed_capacity?.toFixed(1)) ||
             0,
@@ -169,7 +176,6 @@ const Overview = () => {
         {
           id: 2,
           title: 'Total Energy Consumption',
-          duration: 'For the last 12 months',
           value:
             parseFloat(analyticsData?.total_energy_consumed?.toFixed(1)) || 0,
           valueCurrency: 'kWh',
@@ -178,14 +184,13 @@ const Overview = () => {
         {
           id: 3,
           title: 'Total Customers',
-          duration: 'For the last 12 months',
           value: parseFloat(analyticsData?.total_customers?.toFixed(1)) || 0,
           graph: GraphIcon2,
         },
       ].map((widget) => (
         <AdminEnergyAnalytic
           key={widget.id}
-          duration={widget.duration}
+          duration={formatLabel(globalFilter)}
           valueCurrency={widget.valueCurrency}
           title={widget.title}
           value={widget.value}
@@ -194,6 +199,16 @@ const Overview = () => {
       )),
     )
   }, [isAnalyticsFetching])
+
+  useEffect(() => {
+    refetchAnalytics()
+    refetchAlert()
+    refetchEmission()
+    refetchVoltage()
+    refetchSolar()
+    refetchSector()
+    refetchEnergy()
+  }, [globalFilter])
 
   useEffect(() => {
     if (alertPage == 1) setAlertData([])
