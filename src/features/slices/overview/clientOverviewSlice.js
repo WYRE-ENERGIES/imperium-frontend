@@ -37,7 +37,6 @@ export const clientOverviewSlice = apiSlice.injectEndpoints({
         }
       },
       transformResponse: (response) => {
-        console.log({ response })
         const energyGenerated = {
           name: 'Energy Generated',
           data: [],

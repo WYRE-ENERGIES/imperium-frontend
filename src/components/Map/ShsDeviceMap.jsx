@@ -1,21 +1,36 @@
-import { GoogleMap, Marker, useLoadScript } from '@react-google-maps/api'
+import { GoogleMap, MarkerF, useLoadScript } from '@react-google-maps/api'
 import React, { useMemo } from 'react'
+import Loading from '../Loading/Loading'
+import useCurrentCoordinate from '../../hooks/useCurrentCoordinate'
 
 const containerStyle = {
   width: '100%',
   height: '500px',
 }
 
+const libraries = ['places']
+
 const ShsDeviceMap = () => {
+  const { location, error } = useCurrentCoordinate()
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAP_API_KEY,
-    libraries: ['places'],
+    libraries,
   })
 
-  const center = useMemo(() => ({ lat: 43, lng: -80 }), [])
-  const options = useMemo(() => ({ clickableIcons: false }), [])
+  const center = useMemo(() => location, [location])
+  const options = useMemo(
+    () => ({
+      clickableIcons: false,
+      streetViewControl: false,
+      mapTypeControl: false,
+    }),
+    [],
+  )
 
   const onLoad = React.useCallback((map) => {}, [])
+
+  if (!isLoaded || !location) return <Loading />
+
   return (
     <div>
       <GoogleMap
@@ -25,7 +40,7 @@ const ShsDeviceMap = () => {
         onLoad={onLoad}
         options={options}
       >
-        <Marker position={center} />
+        <MarkerF position={center} />
       </GoogleMap>
     </div>
   )
