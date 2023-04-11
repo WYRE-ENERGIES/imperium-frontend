@@ -8,11 +8,13 @@ const containerStyle = {
   height: '500px',
 }
 
+const libraries = ['places']
+
 const ShsDeviceMap = () => {
   const { location, error } = useCurrentCoordinate()
   const { isLoaded } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAP_API_KEY,
-    libraries: ['places'],
+    libraries,
   })
 
   const center = useMemo(() => location, [location])
@@ -27,7 +29,7 @@ const ShsDeviceMap = () => {
 
   const onLoad = React.useCallback((map) => {}, [])
 
-  if (!isLoaded) return <Loading />
+  if (!isLoaded || !location) return <Loading />
 
   return (
     <div>

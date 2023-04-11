@@ -148,4 +148,11 @@
       }
     }
   }
+
+  .Panel {
+    &__weatherDetails {
+      flex-direction: column;
+      height: auto;
+    }
+  }
 }
