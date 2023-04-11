@@ -68,7 +68,6 @@ const useWeather = () => {
     )
 
     if (weatherInfo) {
-      console.log({ weatherInfo })
       setWeatherResult(weatherInfo)
       setIsLoading(false)
     } else {
