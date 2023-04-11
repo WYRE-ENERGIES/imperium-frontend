@@ -295,7 +295,9 @@ const Overview = () => {
         <div className={classes.Overview__widgets}>
           {isAnalyticsFetching ? <WidgetLoader /> : widgets}
         </div>
-        <div className={classes.Overview__map}>{/* <ShsDeviceMap /> */}</div>
+        <div className={classes.Overview__map}>
+          <ShsDeviceMap />
+        </div>
         <div className={classes.Overview__donutChart}>
           <Donut
             labels={pieChartData.labels}

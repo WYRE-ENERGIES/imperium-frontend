@@ -149,9 +149,9 @@ const Overview = () => {
         <div className={classes.Overview__widgets}>
           {isAnalyticsFetching ? <WidgetLoader /> : widgets}
         </div>
-        {/* <div className={classes.Overview__map}>
+        <div className={classes.Overview__map}>
           <ShsDeviceMap />
-        </div> */}
+        </div>
         <div className={classes.Overview__chart}>
           <StackedBarChart
             title="Energy Generation vs Energy Consumption"
