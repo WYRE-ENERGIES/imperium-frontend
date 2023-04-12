@@ -11,6 +11,8 @@ import {
 } from '../../features/slices/shs/admin/adminShsSlice'
 import { useCustomerShsPowerScheduleMutation } from '../../features/slices/shs/customer/customerShsSlice'
 import { dateTimeConverter, getItemFromLocalStorage } from '../../utils/helpers'
+import { ErrorMessage } from '../ErrorMessage/ErrorMessage'
+import Error from '../ErrorMessage/Error'
 
 const openNotification = (text, date, action) => {
   notification.success({
@@ -35,6 +37,7 @@ const ShsPowerSchedule = {}
 const PowerButton = ({ action, color, device, time, user }) => {
   const client_id = getItemFromLocalStorage('current_client')
   const [powerBtnModalOpen, setPowerBtnModalOpen] = useState(false)
+  const [errMsg, setErrMsg] = useState('')
   const [selectedDate, setSelectedDate] = useState(false)
   const [deviceId, setDeviceId] = useState('')
   const [shsPowerSchedule, { data: powerScheduleRes, isLoading }] =
@@ -60,7 +63,7 @@ const PowerButton = ({ action, color, device, time, user }) => {
         setPowerBtnModalOpen(false)
         openNotification('Scheduled for power', selectedDate, action)
       } catch (error) {
-        return error
+        setErrMsg(ErrorMessage(error))
       }
     } else {
       try {
@@ -68,7 +71,7 @@ const PowerButton = ({ action, color, device, time, user }) => {
         setPowerBtnModalOpen(false)
         openNotification('Scheduled for power', selectedDate, action)
       } catch (error) {
-        return error
+        setErrMsg(ErrorMessage(error))
       }
     }
   }
@@ -104,6 +107,9 @@ const PowerButton = ({ action, color, device, time, user }) => {
         <div className={classes.PowerSwitch__ModalContent}>
           <img src={actionIcon} alt="" srcSet="" />
           <h1>Power {action}</h1>
+          <div style={{ textAlign: 'center' }}>
+            {errMsg && <Error Errormsg={errMsg} />}
+          </div>
           <p>
             If you proceed with this, the power supply in your house from
             Imperium Solar Housing System will{' '}
