@@ -106,7 +106,7 @@ const Shs = () => {
   }, [panelList])
   useEffect(() => {
     setPerformance(performanceData)
-    setclient(performanceData?.device_details.device_name)
+    setclient(performanceData?.device_details.device_name || 'Device not found')
   }, [performanceData])
 
   const deviceDetails = [
@@ -124,17 +124,12 @@ const Shs = () => {
       <section className={classes.Shs}>
         <section className={classes.Shs__BreadCrumb}>
           {' '}
-          <div style={{ display: 'flex', justifyContent: 'space-around' }}>
+          <div style={{ display: 'flex' }}>
             <PageBreadcrumb
               title={client}
               items={['Overview', '...', client]}
             />
-            <img
-              src={caretdown}
-              alt=""
-              srcSet=""
-              style={{ margin: '-40px 0 0 1px' }}
-            />
+            <img src={caretdown} alt="caret" srcSet="" />
           </div>
           <PowerSwitch device_id={id} user={'admin'} />
         </section>
@@ -407,9 +402,7 @@ const Shs = () => {
         <section className={classes.Shs__EnergyStats}>
           <div>
             <div className={classes.Shs__EnergyChart}>
-              <div className={classes.Shs__EnergyChartShowMore}>
-                <div style={{ color: '#385E2B' }}>Show more</div>
-              </div>
+              <div className={classes.Shs__EnergyChartShowMore}></div>
               <Chart
                 height="100%"
                 options={{

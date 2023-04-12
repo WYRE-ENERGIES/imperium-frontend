@@ -180,7 +180,10 @@ function App() {
                   <Route index element={<AdminCustomers />} />
                   <Route path=":id" element={<AdminCustomer />} />
                 </Route>
-                <Route path="all-shs" element={<AdminSHS />} />
+                <Route path="all-shs">
+                  <Route index element={<AdminSHS />} />
+                  <Route path="shs/:id" element={<AdminShsDetails />} />
+                </Route>
                 <Route path="overview">
                   <Route index element={<AdminOverview />} />
                   <Route path="shs/:id" element={<AdminShsDetails />} />

@@ -27,7 +27,7 @@ import alertResolved from '../../../assets/widget-icons/yellowGraph.svg'
 import classes from './ActiveAlert.module.scss'
 import { SearchOutlined, CloudDownloadOutlined } from '@ant-design/icons'
 import { Link } from 'react-router-dom'
-import ActiveAlertTable from '../../../components/ActiveAlert/Table/ActiveAlertTable'
+import DataTable from '../../../components/ActiveAlert/Table/DataTable'
 import { useEffect } from 'react'
 import { DataStatistics, dateTimeConverter } from '../../../utils/helpers'
 import Loading from '../../../components/Loading/Loading'
@@ -237,12 +237,15 @@ const ActiveAlert = () => {
   const [errMs, setErrMsg] = useState('')
   const [table, setTable] = useState([])
   const [pageNum, setPageNum] = useState(1)
-  const [searchactiveAlerts, setSearchactiveAlerts] = useState('')
+  const [alertStatus, setAlertStatus] = useState('')
+  const [searchactiveAlertsTable, setSearchactiveAlertsTable] = useState('')
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const onSearchactiveAlertsTableChange = (e) => {
+    setSearchactiveAlertsTable(e.target.value)
+  }
   const { data: activeAlerts, isLoading: isLoadingactiveAlerts } =
     useGetAdminActiveAlertsQuery({
       page: pageNum,
-      search: searchactiveAlerts,
     })
 
   const {
@@ -253,12 +256,17 @@ const ActiveAlert = () => {
   const { data: statistics, isLoading: isLoadingStatistics } =
     useGetAdminActiveAlertsStatisticsQuery()
   const { data: dataTable, isLoading: isLoadingactiveAlertsTable } =
-    useGetAdminActiveAlertsTableQuery({ page: pageNum })
+    useGetAdminActiveAlertsTableQuery({
+      page: pageNum,
+      search: searchactiveAlertsTable,
+      status: alertStatus,
+    })
+
   const [createAdminActiveAlerts, { isLoading: isLoadingactiveAlertsCreate }] =
     useCreateAdminActiveAlertsMutation()
   const { data: deviceList, isLoading: isLoadingdeviceList } =
     useGetDeviceListQuery({ client_id: 24 })
-  console.log(deviceList)
+
   useEffect(() => {
     setActiveAlertData(activeAlerts)
     setActiveAlertDataAnalytics(activeAlertsAnalytics)
@@ -275,6 +283,11 @@ const ActiveAlert = () => {
   }
   const handleCancel = () => {
     setIsModalOpen(false)
+  }
+
+  const handleActiveAlertSort = (value) => {
+    console.log(value)
+    setAlertStatus(value)
   }
 
   const prefix = (
@@ -294,6 +307,7 @@ const ActiveAlert = () => {
           <Input
             placeholder="Search"
             size="large"
+            onChange={onSearchactiveAlertsTableChange}
             prefix={prefix}
             className={classes.ActiveAlert__SearchAndFilter}
           />
@@ -306,7 +320,7 @@ const ActiveAlert = () => {
             </div>
             <Select
               className={classes.ActiveAlert__ActiveAlertStatsFormSelect}
-              defaultValue="Months"
+              defaultValue=""
               style={{
                 width: 100,
                 border: 'none',
@@ -314,29 +328,27 @@ const ActiveAlert = () => {
               }}
               options={[
                 {
-                  value: 'Months',
-                  label: 'Months',
+                  value: '',
+                  label: 'All',
+                },
+                {
+                  value: 'RESOLVED',
+                  label: 'RESOLVED',
                   style: {
                     color: '#497A38',
                   },
                 },
                 {
-                  value: ' Weeks',
-                  label: ' Weeks',
+                  value: 'UNRESOLVED',
+                  label: 'UNRESOLVED',
                   style: {
-                    color: '#497A38',
-                  },
-                },
-                {
-                  value: 'Days',
-                  label: 'Days',
-                  style: {
-                    color: '#497A38',
+                    color: 'rgb(180, 35, 24)',
                   },
                 },
               ]}
               dropdownStyle={{ background: 'white' }}
               showArrow={false}
+              onChange={handleActiveAlertSort}
             />
           </Space>
         </div>
@@ -754,7 +766,7 @@ const ActiveAlert = () => {
           {isLoadingactiveAlertsTable ? (
             <Loading data={'table...'} />
           ) : table ? (
-            <ActiveAlertTable
+            <DataTable
               title={ativeAlertTableTitle}
               columns={columns}
               dataSource={table}

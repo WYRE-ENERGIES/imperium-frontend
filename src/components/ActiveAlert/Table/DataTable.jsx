@@ -1,9 +1,9 @@
 import { Table } from 'antd'
 import React from 'react'
-import classes from './ActiveAlertTable.module.scss'
+import classes from './DataTable.module.scss'
 import TableFooter from '../../TableFooter/TableFooter'
 
-const ActiveAlertTable = ({ dataSource, columns, title, setPageNum }) => {
+const DataTable = ({ dataSource, columns, title, setPageNum }) => {
   return (
     <div>
       <Table
@@ -28,4 +28,4 @@ const ActiveAlertTable = ({ dataSource, columns, title, setPageNum }) => {
   )
 }
 
-export default ActiveAlertTable
+export default DataTable
