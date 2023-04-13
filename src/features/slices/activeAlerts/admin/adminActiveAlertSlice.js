@@ -30,8 +30,8 @@ export const activerAlertsSlice = apiSlice.injectEndpoints({
       providesTags: ['ActiveAlertsAnaylytics'],
     }),
     getAdminActiveAlertsStatistics: build.query({
-      query: () => {
-        return `${BASE_URL}statistics/`
+      query: ({ filter }) => {
+        return `${BASE_URL}statistics/?order_by=${filter}`
       },
       transformResponse: (response, meta, arg) => {
         return response

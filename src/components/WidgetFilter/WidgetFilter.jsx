@@ -1,4 +1,4 @@
-import { DatePicker, Radio, Select } from 'antd'
+import { DatePicker, Radio, Select, Space } from 'antd'
 import React, { useState } from 'react'
 import {
   useListShsRegionsQuery,
@@ -95,12 +95,34 @@ const WidgetFilter = ({
           </>
         )}
 
-        <DatePicker
-          className={classes.WidgetFilter__date}
-          onChange={(d, ds) => selectFilterBy(ds || 'yearly')}
-          disabledDate={(current) => current && current > new Date()}
-          showToday={false}
-        />
+        <Space>
+          <DatePicker
+            className={classes.WidgetFilter__date}
+            onChange={(d, ds) => selectFilterBy(ds || 'yearly')}
+            showToday={false}
+            dateRender={(current) => {
+              const style = {
+                height: '100%',
+                width: '100%',
+                padding: '5px',
+              }
+              if (current.isSame(new Date(), 'day')) {
+                style.color = 'white'
+                style.background = '#385E2B'
+                style.border = '1px solid #385E2B'
+                style.borderRadius = '50%'
+              }
+              return (
+                <div
+                  className={classes.WidgetFilter__DateDisplay}
+                  style={style}
+                >
+                  <span>{current.date()}</span>
+                </div>
+              )
+            }}
+          />
+        </Space>
       </section>
       {hasSectorFilter ? (
         <>

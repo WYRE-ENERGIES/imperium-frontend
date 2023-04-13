@@ -27,7 +27,7 @@ import alertResolved from '../../../assets/widget-icons/yellowGraph.svg'
 import classes from './ActiveAlert.module.scss'
 import { SearchOutlined, CloudDownloadOutlined } from '@ant-design/icons'
 import { Link } from 'react-router-dom'
-import DataTable from '../../../components/ActiveAlert/Table/DataTable'
+import DataTable from '../../../components/Table/DataTable'
 import { useEffect } from 'react'
 import { DataStatistics, dateTimeConverter } from '../../../utils/helpers'
 import Loading from '../../../components/Loading/Loading'
@@ -238,10 +238,11 @@ const ActiveAlert = () => {
   const [table, setTable] = useState([])
   const [pageNum, setPageNum] = useState(1)
   const [alertStatus, setAlertStatus] = useState('')
-  const [searchactiveAlertsTable, setSearchactiveAlertsTable] = useState('')
+  const [statsFilter, setStatsFilter] = useState('yearly')
+  const [searchActiveAlertsTable, setSearchActiveAlertsTable] = useState('')
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const onSearchactiveAlertsTableChange = (e) => {
-    setSearchactiveAlertsTable(e.target.value)
+  const activeAlertTableSearch = (e) => {
+    setSearchActiveAlertsTable(e.target.value)
   }
   const { data: activeAlerts, isLoading: isLoadingactiveAlerts } =
     useGetAdminActiveAlertsQuery({
@@ -254,11 +255,11 @@ const ActiveAlert = () => {
   } = useGetAdminActiveAlertsAnalyticsQuery()
 
   const { data: statistics, isLoading: isLoadingStatistics } =
-    useGetAdminActiveAlertsStatisticsQuery()
+    useGetAdminActiveAlertsStatisticsQuery({ filter: statsFilter })
   const { data: dataTable, isLoading: isLoadingactiveAlertsTable } =
     useGetAdminActiveAlertsTableQuery({
       page: pageNum,
-      search: searchactiveAlertsTable,
+      search: searchActiveAlertsTable,
       status: alertStatus,
     })
 
@@ -272,7 +273,8 @@ const ActiveAlert = () => {
     setActiveAlertDataAnalytics(activeAlertsAnalytics)
     setTable(dataTable)
     setDataStatistics(statistics)
-  }, [activeAlerts, activeAlertsAnalytics, statistics, dataTable])
+    console.log(statsFilter)
+  }, [activeAlerts, activeAlertsAnalytics, statistics, dataTable, statsFilter])
 
   const showModal = () => {
     setIsModalOpen(true)
@@ -286,8 +288,10 @@ const ActiveAlert = () => {
   }
 
   const handleActiveAlertSort = (value) => {
-    console.log(value)
     setAlertStatus(value)
+  }
+  const handleActiveAlertStats = (value) => {
+    setStatsFilter(value)
   }
 
   const prefix = (
@@ -307,7 +311,7 @@ const ActiveAlert = () => {
           <Input
             placeholder="Search"
             size="large"
-            onChange={onSearchactiveAlertsTableChange}
+            onChange={activeAlertTableSearch}
             prefix={prefix}
             className={classes.ActiveAlert__SearchAndFilter}
           />
@@ -629,29 +633,15 @@ const ActiveAlert = () => {
                     }}
                     options={[
                       {
-                        value: 'Last 12 Months',
-                        label: 'Last 12 Months',
+                        value: 'yearly',
+                        label: 'Last 12 months',
                         style: {
                           color: '#497A38',
                         },
                       },
                       {
-                        value: 'Last 13 Months',
-                        label: 'Last 13 Months',
-                        style: {
-                          color: '#497A38',
-                        },
-                      },
-                      {
-                        value: 'Last 14 Months',
-                        label: 'Last 14 Months',
-                        style: {
-                          color: '#497A38',
-                        },
-                      },
-                      {
-                        value: 'Last 15 Months',
-                        label: 'Last 15 Months',
+                        value: 'weekly',
+                        label: 'Last week',
                         style: {
                           color: '#497A38',
                         },
@@ -659,6 +649,7 @@ const ActiveAlert = () => {
                     ]}
                     dropdownStyle={{ background: 'white' }}
                     showArrow={false}
+                    onChange={handleActiveAlertStats}
                   />
                 </Space>
               </div>

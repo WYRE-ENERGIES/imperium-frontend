@@ -5,7 +5,7 @@ import { useGetAdminActiveAlertsLocationQuery } from '../../../features/slices/a
 import AdminPageLayout from '../../../components/Layout/AdminPageLayout/AdminPageLayout'
 import PageBreadcrumb from '../../../components/PageBreadcrumb/PageBreadcrumb'
 import classes from './ActiveAlert.module.scss'
-import DataTable from '../../../components/ActiveAlert/Table/DataTable'
+import DataTable from '../../../components/Table/DataTable'
 import { SearchOutlined, CloudDownloadOutlined } from '@ant-design/icons'
 const LocationAlerts = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)

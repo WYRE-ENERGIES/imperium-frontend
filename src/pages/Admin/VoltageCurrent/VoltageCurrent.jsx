@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react'
 
 import { SearchOutlined } from '@ant-design/icons'
-import { Input } from 'antd'
-import { generalFilterOptions } from '../../../utils/data'
+import { Input, Space, Select, Tag } from 'antd'
 
 import {
   useGetAdminVoltageCurrentAnalyticsQuery,
@@ -12,7 +11,6 @@ import {
 import AdminPageLayout from '../../../components/Layout/AdminPageLayout/AdminPageLayout'
 import PageBreadcrumb from '../../../components/PageBreadcrumb/PageBreadcrumb'
 import Chart from 'react-apexcharts'
-import SHSTableWithFilter from '../../../components/SHSTableWithFilter/SHSTableWithFilter'
 import { ReactComponent as SunWidgetIcon } from '../../../assets/widget-icons/sun.svg'
 import { ReactComponent as EnergyWidgetIcon } from '../../../assets/widget-icons/energy.svg'
 import Widget from '../../../components/Widget/Widget/Widget'
@@ -24,8 +22,9 @@ import {
   dateTimeConverter,
   formatLabel,
 } from '../../../utils/helpers'
-import TableFooter from '../../../components/TableFooter/TableFooter'
 import Loading from '../../../components/Loading/Loading'
+import DataTable from '../../../components/Table/DataTable'
+import { MdFilterList } from 'react-icons/md'
 
 const columns = [
   {
@@ -87,9 +86,17 @@ const VoltageCurrent = () => {
       filter: tableFilter,
     })
 
+  const TableSearch = (e) => {
+    setSearch(e.target.value)
+  }
+  const handleTableFilter = (value) => {
+    setTableFilter(value)
+  }
+
   useEffect(() => {
     setAnalytics(dataAnalytics)
     setTable(dataTable)
+
     setChartData([
       {
         name: 'Current',
@@ -100,7 +107,7 @@ const VoltageCurrent = () => {
         data: DataStatistics(dataStatistics, 'month_voltage'),
       },
     ])
-  }, [dataAnalytics, dataTable, dataStatistics, pageNum])
+  }, [dataAnalytics, dataTable, dataStatistics, pageNum, filter])
   const adminVolatgeCurrentWidgetsData = [
     {
       id: 1,
@@ -139,6 +146,80 @@ const VoltageCurrent = () => {
       valuePercentage={widget.valuePercentage}
     />
   ))
+  const TableTitle = () => (
+    <div className={classes.VoltageCurrent__TableHeader}>
+      <p
+        style={{
+          fontWeight: '500',
+          fontSize: '18px',
+          display: 'flex',
+        }}
+      >
+        Voltage & Current Table{' '}
+        <Tag
+          style={{
+            backgroundColor: '#f0f7ed',
+            borderRadius: '16px',
+            color: '#497A38',
+            height: '24px',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            fontSize: '12px',
+            lineHeight: '20px',
+            margin: '4px 10px',
+          }}
+        >
+          KWH
+        </Tag>
+      </p>
+      <div className={classes.VoltageCurrent__TableHeaderFilter}>
+        <div>
+          <Input
+            placeholder="Search"
+            size="large"
+            onChange={TableSearch}
+            prefix={prefix}
+            className={classes.VoltageCurrent__SearchAndFilter}
+          />
+        </div>
+        <div className={classes.VoltageCurrent__TableFilter}>
+          <Space className={classes.VoltageCurrent__TableFilterInput}>
+            <div className={classes.VoltageCurrent__TablePrefixFilter}>
+              <MdFilterList size={20} />
+              <p>Filter</p>
+            </div>
+            <Select
+              className={classes.VoltageCurrent__StatsFormSelect}
+              defaultValue="Monthly"
+              style={{
+                width: 100,
+                border: 'none',
+                color: 'white',
+              }}
+              options={[
+                {
+                  value: 'yearly',
+                  label: 'Yearly',
+                },
+                {
+                  value: 'monthly',
+                  label: 'Monthly',
+                },
+                {
+                  value: 'weekly',
+                  label: 'Weekly',
+                },
+              ]}
+              dropdownStyle={{ background: 'white' }}
+              showArrow={false}
+              onChange={handleTableFilter}
+            />
+          </Space>
+        </div>
+      </div>
+    </div>
+  )
 
   return (
     <AdminPageLayout>
@@ -255,22 +336,12 @@ const VoltageCurrent = () => {
         <div className={classes.VoltageCurrent__shsTable}>
           {tableisLoading ? (
             <Loading data={'Table'} />
-          ) : dataTable ? (
-            <SHSTableWithFilter
+          ) : table ? (
+            <DataTable
+              title={TableTitle}
               columns={columns}
-              data={table?.results}
-              tableTitle="Voltage & Current Table"
-              tagValue="kWh"
-              filterOptions={generalFilterOptions}
-              footer={() => (
-                <TableFooter
-                  pageNo={table?.page}
-                  totalPages={table?.total_pages}
-                  handleClick={setPageNum}
-                  hasNext={table?.page === table?.total_pages}
-                  hasPrev={!table?.total_pages || table?.page === 1}
-                />
-              )}
+              dataSource={table}
+              setPageNum={setPageNum}
             />
           ) : (
             'No records found'

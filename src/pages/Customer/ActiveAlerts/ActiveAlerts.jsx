@@ -13,7 +13,7 @@ import {
 } from '../../../utils/helpers'
 import { useListClientShsDevicesQuery } from '../../../features/slices/allShsSlice'
 import { useEffect } from 'react'
-import DataTable from '../../../components/ActiveAlert/Table/DataTable'
+import DataTable from '../../../components/Table/DataTable'
 import Loading from '../../../components/Loading/Loading'
 
 const ActiveAlerts = () => {

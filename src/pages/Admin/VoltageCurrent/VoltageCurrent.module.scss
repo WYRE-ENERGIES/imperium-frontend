@@ -1,3 +1,5 @@
+@import '../../../components/Auth/Forms/variables.module';
+
 .VoltageCurrent {
   &__widgets {
     margin: 20px 0;
@@ -37,6 +39,94 @@
     }
     &:focus-within {
       border: 1px solid #b6d7ac !important;
+    }
+  }
+  &__TableHeader {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  &__TableHeaderFilter {
+    display: flex;
+    align-items: center;
+    gap: 17px;
+  }
+  &__TableFilter {
+    background: #ffffff;
+    border: 1px solid #d0d5dd;
+    box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05);
+    border-radius: 8px;
+    padding: 0 10px;
+  }
+  &__TablePrefixFilter {
+    display: flex;
+    align-items: center;
+
+    p {
+      margin-bottom: -2px;
+      font-weight: 400;
+      font-size: 16px;
+      margin: 0 3px;
+    }
+  }
+  &__SearchAndFilter {
+    font-size: 15px !important;
+    padding: $formElementPadding;
+    offset: 10px 30px;
+    font-family: $font-family;
+    border: 1px solid #c4c4c4;
+    box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05);
+    width: 320px;
+
+    &:hover {
+      border: 1px solid $light-green !important;
+    }
+
+    &:focus-within {
+      offset: $offset;
+      border: 1px solid $light-green;
+      box-shadow: $box-shadow-input;
+    }
+  }
+  &__StatsFormSelect {
+    font-size: 16px !important;
+    padding: 5px 0;
+    font-family: $font-family !important;
+    border: 1px solid #c4c4c4;
+    position: relative;
+    border-radius: 8px;
+
+    &:hover {
+      border: none !important;
+    }
+    &:focus-within {
+      offset: none;
+      border: none !important;
+      box-shadow: none;
+    }
+
+    div[class='ant-select-selector'] {
+      border: none !important;
+      outline: none !important;
+      box-shadow: none !important;
+      font-size: 16px;
+      color: #497a38 !important;
+    }
+  }
+}
+
+@media only screen and (max-width: 320px) {
+  .VoltageCurrent {
+    &__TableHeader {
+      display: block;
+    }
+    &__TableHeaderFilter {
+      display: block;
+    }
+    &__SearchAndFilter {
+      width: 100%;
+      margin: 10px 0;
     }
   }
 }

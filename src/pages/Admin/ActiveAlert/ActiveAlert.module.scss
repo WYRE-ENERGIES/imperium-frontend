@@ -649,7 +649,6 @@
   .Widget {
     margin-bottom: 10px;
   }
-
   .Widget:nth-child(1) {
     padding: 10px;
     width: auto;
@@ -675,7 +674,9 @@
     width: 70px;
     height: 26px;
   }
-
+  .Widget-Header {
+    display: block;
+  }
   .ActiveAlert {
     &__ActiveAlertNotificationListModal {
       margin-top: 7%;
@@ -713,9 +714,7 @@
     &__ActiveAlertNotification {
       margin-bottom: 10px;
     }
-    &__ActiveAlertStatsFilter {
-      display: none;
-    }
+
     &__ActiveAlertTableHeader {
       width: 100%;
       display: block;
@@ -765,11 +764,6 @@
         font-weight: 400;
         font-size: 11px;
       }
-    }
-
-    &__ActiveAlertTable {
-      width: 100%;
-      overflow-x: scroll;
     }
   }
 }

@@ -9,7 +9,7 @@ import AdminPageLayout from '../../../components/Layout/AdminPageLayout/AdminPag
 import PageBreadcrumb from '../../../components/PageBreadcrumb/PageBreadcrumb'
 import classes from './ActiveAlert.module.scss'
 import { SearchOutlined, CloudDownloadOutlined } from '@ant-design/icons'
-import DataTable from '../../../components/ActiveAlert/Table/DataTable'
+import DataTable from '../../../components/Table/DataTable'
 import { useEffect } from 'react'
 import Loading from '../../../components/Loading/Loading'
 
