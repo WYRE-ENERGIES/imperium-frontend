@@ -265,7 +265,7 @@
       width: 35%;
     }
   }
-  BreadCrumb &__EnergyChart {
+  &__EnergyChart {
     height: 425px;
     background: #ffffff;
     border: 1px solid #e6e6e6;
@@ -274,15 +274,7 @@
     border-radius: 8px;
     position: relative;
   }
-  &__EnergyChartShowMore {
-    z-index: 9;
-    position: absolute;
-    right: 22px;
-    top: 30px;
-    & > div:hover {
-      cursor: pointer;
-    }
-  }
+
   &__EnergyPanel {
     background: #ffffff;
     border: 1px solid #e6e6e6;

@@ -402,9 +402,8 @@ const Shs = () => {
         <section className={classes.Shs__EnergyStats}>
           <div>
             <div className={classes.Shs__EnergyChart}>
-              <div className={classes.Shs__EnergyChartShowMore}>show more</div>
               <Chart
-                height="500px"
+                height="100%"
                 options={{
                   title: {
                     text: 'Energy Consumed VS Energy Generated',
