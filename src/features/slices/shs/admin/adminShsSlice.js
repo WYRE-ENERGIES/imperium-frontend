@@ -48,10 +48,24 @@ export const shsSlice = apiSlice.injectEndpoints({
           method: 'POST',
         }
       },
+      invalidatesTags: ['shsSchedule'],
+      transformResponse: (response, meta, arg) => {
+        return response
+      },
+
+      transformErrorResponse: (response, meta, arg) => response,
+    }),
+    getShsDetails: build.query({
+      query: ({ deviceId }) => {
+        return {
+          url: `${SHS_BASE_URL}schedule/${deviceId}/detail/`,
+        }
+      },
       transformResponse: (response, meta, arg) => {
         return response
       },
       transformErrorResponse: (response, meta, arg) => response,
+      providesTags: ['shsSchedule'],
     }),
   }),
 })
@@ -62,4 +76,5 @@ export const {
   useGetPanelsListQuery,
   useGetShsPerformanceQuery,
   useShsPowerScheduleMutation,
+  useGetShsDetailsQuery,
 } = shsSlice
