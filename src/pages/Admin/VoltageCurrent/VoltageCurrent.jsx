@@ -90,6 +90,7 @@ const VoltageCurrent = () => {
   useEffect(() => {
     setAnalytics(dataAnalytics)
     setTable(dataTable)
+    console.log(filter)
     setChartData([
       {
         name: 'Current',
@@ -100,7 +101,7 @@ const VoltageCurrent = () => {
         data: DataStatistics(dataStatistics, 'month_voltage'),
       },
     ])
-  }, [dataAnalytics, dataTable, dataStatistics, pageNum])
+  }, [dataAnalytics, dataTable, dataStatistics, pageNum, filter])
   const adminVolatgeCurrentWidgetsData = [
     {
       id: 1,
