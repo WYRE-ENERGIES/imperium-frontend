@@ -13,7 +13,7 @@ import {
 } from '../../../utils/helpers'
 import { useListClientShsDevicesQuery } from '../../../features/slices/allShsSlice'
 import { useEffect } from 'react'
-import ActiveAlertTable from '../../../components/ActiveAlert/Table/ActiveAlertTable'
+import DataTable from '../../../components/ActiveAlert/Table/DataTable'
 import Loading from '../../../components/Loading/Loading'
 
 const ActiveAlerts = () => {
@@ -157,7 +157,7 @@ const ActiveAlerts = () => {
           {activeAlertsIsLoading ? (
             <Loading data={'active alerts'} />
           ) : (
-            <ActiveAlertTable
+            <DataTable
               title={title}
               columns={columns}
               dataSource={activeAlertsTable}

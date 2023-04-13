@@ -1,10 +1,15 @@
 @import '../../../components/Auth/Forms/variables.module';
 .Shs {
   box-sizing: border-box;
+
   &__BreadCrumb {
     display: flex;
     justify-content: space-between;
     font-family: $font-family;
+    img {
+      margin-top: -40px;
+      margin-left: -40px;
+    }
   }
 
   &__EnergyPerfomance {
@@ -260,7 +265,7 @@
       width: 35%;
     }
   }
-  &__EnergyChart {
+  BreadCrumb &__EnergyChart {
     height: 425px;
     background: #ffffff;
     border: 1px solid #e6e6e6;

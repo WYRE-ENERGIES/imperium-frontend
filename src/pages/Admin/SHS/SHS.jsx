@@ -48,7 +48,7 @@ const SHS = () => {
       tableFilter: tableFilter,
     },
   )
-
+  console.log(data)
   const {
     isFetching: isAnalyticsFetching,
     isError: isAnalyticsError,
@@ -238,7 +238,7 @@ const SHS = () => {
             fontSize: '14px',
             lineHeight: '20px',
           }}
-          to="#"
+          to={`shs/${record.id}`}
         >
           View
         </Link>

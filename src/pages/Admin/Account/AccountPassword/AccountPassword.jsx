@@ -35,7 +35,7 @@ const AccountPassword = () => {
           confirm_password: values.confirm_password,
         }).unwrap()
         openNotification()
-        navigate('/admin/account')
+        navigate('/admin/overview')
       } catch (err) {
         setErrMsg(ErrorMessage(err))
       }
