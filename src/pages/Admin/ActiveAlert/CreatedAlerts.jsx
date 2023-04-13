@@ -9,7 +9,7 @@ import AdminPageLayout from '../../../components/Layout/AdminPageLayout/AdminPag
 import PageBreadcrumb from '../../../components/PageBreadcrumb/PageBreadcrumb'
 import classes from './ActiveAlert.module.scss'
 import { SearchOutlined, CloudDownloadOutlined } from '@ant-design/icons'
-import ActiveAlertTable from '../../../components/ActiveAlert/Table/ActiveAlertTable'
+import DataTable from '../../../components/ActiveAlert/Table/DataTable'
 import { useEffect } from 'react'
 import Loading from '../../../components/Loading/Loading'
 
@@ -36,7 +36,10 @@ const CreatedAlerts = () => {
     })
   const [createAdminActiveAlerts, { isLoading: isLoadingactiveAlertsCreate }] =
     useCreateAdminActiveAlertsMutation()
-
+  const onSearchChange = (e) => {
+    console.log(e.target.value)
+    setSearchactiveAlerts(e.target.value)
+  }
   const handleCreateAlert = async (values) => {
     try {
       await createAdminActiveAlerts(values)
@@ -97,6 +100,7 @@ const CreatedAlerts = () => {
             placeholder="Search"
             size="large"
             prefix={prefix}
+            onChange={onSearchChange}
             className={classes.ActiveAlert__SearchAndFilter}
           />
         </div>
@@ -239,7 +243,7 @@ const CreatedAlerts = () => {
           {' '}
           <section className={classes.ActiveAlert__ActiveAlertCreateTable}>
             {table ? (
-              <ActiveAlertTable
+              <DataTable
                 title={ActiveAlertTableTitle}
                 columns={columns}
                 dataSource={table}

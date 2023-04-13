@@ -180,30 +180,6 @@ const Customers = () => {
         )
       },
     },
-    {
-      title: '',
-      key: 'action',
-      align: 'center',
-      render: (_, record) => {
-        const color = record.status ? '#808080' : '#B54708'
-        return (
-          <div className={classes.Customers__actions}>
-            <ExclamationCircleOutlined style={{ color }} />
-            <Link
-              to={`/admin/customers/${record.id}`}
-              style={{
-                color: record.status ? '#385E2B' : '#C4C4C4',
-                fontWeight: 600,
-                fontSize: '14px',
-                lineHeight: '20px',
-              }}
-            >
-              View
-            </Link>
-          </div>
-        )
-      },
-    },
   ]
 
   return (

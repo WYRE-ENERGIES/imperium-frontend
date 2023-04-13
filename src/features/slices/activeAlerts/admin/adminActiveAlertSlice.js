@@ -6,12 +6,10 @@ export const activerAlertsSlice = apiSlice.injectEndpoints({
   endpoints: (build) => ({
     getAdminActiveAlerts: build.query({
       query: ({ page, search }) => {
-        let url = `${BASE_URL}`
+        let url = `${BASE_URL}?page=${page}`
+
         if (search) {
           url += `&search=${search}`
-        }
-        if (page) {
-          url += `?page=${page}`
         }
         return url
       },
@@ -41,8 +39,15 @@ export const activerAlertsSlice = apiSlice.injectEndpoints({
       transformErrorResponse: (response, meta, arg) => response.status,
     }),
     getAdminActiveAlertsTable: build.query({
-      query: ({ page }) => {
-        return `${BASE_URL}table/?page=${page}`
+      query: ({ page, search, status }) => {
+        let url = `${BASE_URL}table/?page=${page}`
+        if (search) {
+          url += `&search=${search}`
+        }
+        if (status) {
+          url += `&status=${status}`
+        }
+        return url
       },
       transformResponse: (response, meta, arg) => {
         return response
