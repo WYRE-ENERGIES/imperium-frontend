@@ -1,7 +1,7 @@
 import { Table } from 'antd'
 import React from 'react'
 import classes from './DataTable.module.scss'
-import TableFooter from '../../TableFooter/TableFooter'
+import TableFooter from '../TableFooter/TableFooter'
 
 const DataTable = ({ dataSource, columns, title, setPageNum }) => {
   return (

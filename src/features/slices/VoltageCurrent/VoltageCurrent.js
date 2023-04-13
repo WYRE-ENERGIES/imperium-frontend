@@ -23,10 +23,13 @@ export const voltageCurrentSlice = apiSlice.injectEndpoints({
       transformErrorResponse: (response, meta, arg) => response.status,
     }),
     getAdminVoltageCurrentTable: build.query({
-      query: ({ page, search }) => {
-        let url = `${BASE_URL}table/?page=${page}`
+      query: ({ page, search, filter }) => {
+        let url = `${BASE_URL}table?page=${page}`
         if (search) {
           url += `&search=${search}`
+        }
+        if (search) {
+          url += `&order_by=${filter}`
         }
         return url
       },
