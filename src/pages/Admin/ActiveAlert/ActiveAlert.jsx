@@ -276,7 +276,6 @@ const ActiveAlert = () => {
     setActiveAlertDataAnalytics(activeAlertsAnalytics)
     setTable(dataTable)
     setDataStatistics(statistics)
-    console.log(statsFilter)
   }, [activeAlerts, activeAlertsAnalytics, statistics, dataTable, statsFilter])
 
   const showModal = () => {
