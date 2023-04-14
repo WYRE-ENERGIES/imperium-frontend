@@ -128,7 +128,6 @@ const Overview = () => {
     sectorId,
     regionId,
   })
-  console.log(solarData)
 
   const {
     isFetching: isSectorFetching,

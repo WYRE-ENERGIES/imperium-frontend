@@ -1,8 +1,4 @@
-import {
-  emptyLocalStorage,
-  removeItemFromLocalStorage,
-  saveToLocalStorage,
-} from '../../../utils/helpers'
+import { emptyLocalStorage, saveToLocalStorage } from '../../../utils/helpers'
 
 import { createSlice } from '@reduxjs/toolkit'
 
