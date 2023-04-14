@@ -48,7 +48,11 @@ const SignUp = () => {
       }).unwrap()
       navigate('/verification', { state: { email: values?.email } })
     } catch (err) {
-      setErrMsg(ErrorMessage(err))
+      if (err.status === 400) {
+        setErrMsg('User with this email already exists.')
+      } else {
+        setErrMsg(ErrorMessage(err))
+      }
     }
   }
 

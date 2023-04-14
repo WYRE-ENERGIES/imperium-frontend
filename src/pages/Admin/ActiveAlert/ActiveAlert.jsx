@@ -256,12 +256,15 @@ const ActiveAlert = () => {
 
   const { data: statistics, isLoading: isLoadingStatistics } =
     useGetAdminActiveAlertsStatisticsQuery({ filter: statsFilter })
-  const { data: dataTable, isLoading: isLoadingactiveAlertsTable } =
-    useGetAdminActiveAlertsTableQuery({
-      page: pageNum,
-      search: searchActiveAlertsTable,
-      status: alertStatus,
-    })
+  const {
+    data: dataTable,
+    isLoading: isLoadingTable,
+    isFetching: isFetchingTable,
+  } = useGetAdminActiveAlertsTableQuery({
+    page: pageNum,
+    search: searchActiveAlertsTable,
+    status: alertStatus,
+  })
 
   const [createAdminActiveAlerts, { isLoading: isLoadingactiveAlertsCreate }] =
     useCreateAdminActiveAlertsMutation()
@@ -754,7 +757,7 @@ const ActiveAlert = () => {
           </div>
         </section>
         <section className={classes.ActiveAlert__ActiveAlertTable}>
-          {isLoadingactiveAlertsTable ? (
+          {isLoadingTable ? (
             <Loading data={'table...'} />
           ) : table ? (
             <DataTable
@@ -762,6 +765,7 @@ const ActiveAlert = () => {
               columns={columns}
               dataSource={table}
               setPageNum={setPageNum}
+              isLoading={isFetchingTable}
             />
           ) : (
             'No data for active alerts'

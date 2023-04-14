@@ -1,19 +1,22 @@
 import React, { useState } from 'react'
 
 export const ErrorMessage = (error) => {
-  let errorMsg = 'Something went wrong, try again later.'
+  let errorMsg = 'Unable to connect to server. Please try again later.'
   switch (error.status) {
     case 401:
-      errorMsg = error?.data?.detail
+      errorMsg = 'Invalid credentials. Please provide valid authentication.'
+      break
+    case 403:
+      errorMsg = 'Unauthorized. You do not have permission to view this page.'
       break
     case 422:
-      errorMsg = error?.data?.detail
+      errorMsg = 'Invalid data: Please check your input and try again.'
       break
     case 400:
-      errorMsg = error?.data?.message
+      errorMsg = 'Invalid request. Please try again.'
       break
     case 500:
-      errorMsg = 'Cannot connect to server.'
+      errorMsg = 'Oops! Something went wrong. Please try again later.'
       break
   }
 

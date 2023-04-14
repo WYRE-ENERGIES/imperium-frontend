@@ -1,9 +1,16 @@
-import { Table } from 'antd'
+import { Spin, Table } from 'antd'
 import React from 'react'
-import classes from './DataTable.module.scss'
-import TableFooter from '../TableFooter/TableFooter'
+import { LoadingOutlined } from '@ant-design/icons'
 
-const DataTable = ({ dataSource, columns, title, setPageNum }) => {
+import TableFooter from '../TableFooter/TableFooter'
+import Loading from '../Loading/Loading'
+
+const DataTable = ({ dataSource, columns, title, setPageNum, isLoading }) => {
+  const loadingIcon = (
+    <LoadingOutlined
+      style={{ fontSize: 24, marginRight: 10, color: '#66ab4f' }}
+    />
+  )
   return (
     <div>
       <Table
@@ -22,6 +29,10 @@ const DataTable = ({ dataSource, columns, title, setPageNum }) => {
         )}
         pagination={{
           position: ['none', 'none'],
+        }}
+        loading={{
+          indicator: <Spin indicator={loadingIcon} />,
+          spinning: isLoading,
         }}
       />
     </div>
