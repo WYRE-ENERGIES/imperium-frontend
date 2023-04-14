@@ -238,7 +238,7 @@ const SHS = () => {
             fontSize: '14px',
             lineHeight: '20px',
           }}
-          to={`shs/${record.id}`}
+          to={`shs/${record.device_id}`}
         >
           View
         </Link>

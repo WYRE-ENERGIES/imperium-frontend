@@ -83,7 +83,7 @@ const Shs = () => {
 
   const { data: energyStatistics, isLoading: energyStatisticsLoading } =
     useGetEnergyStatisticsQuery({ id: id })
-
+  console.log(energyStatistics)
   const { data: panelList, isLoading: panelListLoading } =
     useGetPanelsListQuery({ id: id })
 

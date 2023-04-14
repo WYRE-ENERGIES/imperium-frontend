@@ -14,6 +14,8 @@ import RightLayout from '../../../../components/Auth/Layout/RightLayout/RightLay
 import imageDesc from '../../../../../src/assets/Auth/adminlogo.svg'
 import classes from './AdminSignIn.module.scss'
 import FormHeader from '../../../../components/Auth/Forms/Widgets/FormHeader'
+import { ErrorMessage } from '../../../../components/ErrorMessage/ErrorMessage'
+import Error from '../../../../components/ErrorMessage/Error'
 
 const AdminSignIn = () => {
   const formDescription = {
@@ -36,15 +38,7 @@ const AdminSignIn = () => {
       }).unwrap()
       navigate('/admin/overview')
     } catch (err) {
-      if (err.status === 401) {
-        setErrMsg(err?.data?.detail)
-      } else if (err.status === 400) {
-        setErrMsg(err?.data?.message)
-      } else if (err.status === 500) {
-        setErrMsg('Cannot connect to server.')
-      } else {
-        setErrMsg('Check your internet connection')
-      }
+      setErrMsg(ErrorMessage(err))
     }
   }
 
@@ -74,9 +68,7 @@ const AdminSignIn = () => {
               layout="vertical"
               requiredMark="optional"
             >
-              {errMsg && (
-                <small className={classes.UserForm__Message}>{errMsg}</small>
-              )}
+              {errMsg && <Error Errormsg={errMsg} />}
 
               <Form.Item
                 label={

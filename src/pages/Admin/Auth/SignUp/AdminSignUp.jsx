@@ -12,6 +12,8 @@ import classes from './AdminSignUp.module.scss'
 import { getItemFromLocalStorage } from '../../../../utils/helpers'
 import imageDesc from '../../../../../src/assets/Auth/adminlogo.svg'
 import { useRegisterUserMutation } from '../../../../features/slices/auth/authApiSlice'
+import Error from '../../../../components/ErrorMessage/Error'
+import { ErrorMessage } from '../../../../components/ErrorMessage/ErrorMessage'
 
 const AdminSignUp = () => {
   const formDescription = {
@@ -37,15 +39,7 @@ const AdminSignUp = () => {
 
       navigate('/admin/sign-in')
     } catch (err) {
-      if (err.status === 401) {
-        setErrMsg(err?.data?.detail)
-      } else if (err.status === 400) {
-        setErrMsg(err?.data?.message)
-      } else if (err.status === 500) {
-        setErrMsg('Cannot connect to server.')
-      } else {
-        setErrMsg('Check your internet connection')
-      }
+      setErrMsg(ErrorMessage(err))
     }
   }
 
@@ -77,9 +71,7 @@ const AdminSignUp = () => {
               layout="vertical"
               requiredMark="optional"
             >
-              {errMsg && (
-                <small className={classes.UserForm__Message}>{errMsg}</small>
-              )}
+              {errMsg && <Error Errormsg={errMsg} />}
 
               <Form.Item
                 label={

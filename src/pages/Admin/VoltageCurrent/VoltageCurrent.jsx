@@ -79,12 +79,15 @@ const VoltageCurrent = () => {
   const { data: dataStatistics, isLoading: statisticsisLoading } =
     useGetAdminVoltageCurrentStatisticsQuery()
 
-  const { data: dataTable, isLoading: tableisLoading } =
-    useGetAdminVoltageCurrentTableQuery({
-      page: pageNum,
-      search: search,
-      filter: tableFilter,
-    })
+  const {
+    data: dataTable,
+    isLoading: tableisLoading,
+    isFetching: tableisFetching,
+  } = useGetAdminVoltageCurrentTableQuery({
+    page: pageNum,
+    search: search,
+    filter: tableFilter,
+  })
 
   const TableSearch = (e) => {
     setSearch(e.target.value)
@@ -239,14 +242,7 @@ const VoltageCurrent = () => {
             filterBy={filter}
           />
         </section>
-        <section>
-          <Input
-            placeholder="Search SHS"
-            size="large"
-            prefix={prefix}
-            className={classes.VoltageCurrent__search}
-          />
-        </section>
+
         <div className={classes.VoltageCurrent__widgets}>{widgets}</div>
         <div
           style={{
@@ -342,6 +338,7 @@ const VoltageCurrent = () => {
               columns={columns}
               dataSource={table}
               setPageNum={setPageNum}
+              isLoading={tableisFetching}
             />
           ) : (
             'No records found'

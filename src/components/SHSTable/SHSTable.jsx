@@ -10,8 +10,8 @@ import classes from './SHSTable.module.scss'
 const columns = [
   {
     title: 'Name',
-    dataIndex: 'client_name',
-    key: 'client_name',
+    dataIndex: 'device_name',
+    key: 'device_name',
   },
   {
     title: 'Energy Consumed',
@@ -95,7 +95,7 @@ const columns = [
     title: '',
     key: 'action',
     render: (_, record) => (
-      <Link style={{ color: '#737373' }} to={`shs/${record.id}`}>
+      <Link style={{ color: '#737373' }} to={`shs/${record.device_id}`}>
         <EyeOutlined />
       </Link>
     ),

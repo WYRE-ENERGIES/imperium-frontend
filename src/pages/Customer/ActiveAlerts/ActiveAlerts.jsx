@@ -28,15 +28,18 @@ const ActiveAlerts = () => {
   const [page, setPage] = useState(1)
   const [shsId, setShsId] = useState()
 
-  const { data: activeAlerts, isLoading: activeAlertsIsLoading } =
-    useGetCustomerActiveAlertsQuery(
-      {
-        client_id: clientId,
-        shs_id: shsId,
-        page: page,
-      },
-      { skip: !shsId },
-    )
+  const {
+    data: activeAlerts,
+    isLoading: IsLoading,
+    isFetching: isFetching,
+  } = useGetCustomerActiveAlertsQuery(
+    {
+      client_id: clientId,
+      shs_id: shsId,
+      page: page,
+    },
+    { skip: !shsId },
+  )
 
   const columns = [
     {
@@ -114,7 +117,7 @@ const ActiveAlerts = () => {
           <ShsCapacityDropdown setDeviceId={setShsId} />
         </section>
         <section className={classes.ActiveAlerts__Banner}>
-          {activeAlertsIsLoading ? (
+          {IsLoading ? (
             <Loading data={'active alerts'} />
           ) : activeAlerts ? (
             <div>
@@ -154,7 +157,7 @@ const ActiveAlerts = () => {
           )}
         </section>
         <section className={classes.ActiveAlerts__Table}>
-          {activeAlertsIsLoading ? (
+          {IsLoading ? (
             <Loading data={'active alerts'} />
           ) : (
             <DataTable
@@ -162,6 +165,7 @@ const ActiveAlerts = () => {
               columns={columns}
               dataSource={activeAlertsTable}
               setPageNum={setPage}
+              isLoading={isFetching}
             />
           )}
         </section>
