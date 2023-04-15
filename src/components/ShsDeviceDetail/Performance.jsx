@@ -3,17 +3,32 @@ import classes from './Shs.module.scss'
 import { Dropdown } from 'antd'
 import { BiTrendingUp } from 'react-icons/bi'
 import { BsFillSunFill } from 'react-icons/bs'
+import { CloseOutlined } from '@ant-design/icons'
 import building from '../../assets/widget-icons/building.svg'
 import Loading from '../Loading/Loading'
+import DeviceInfo from './DeviceInfo'
 import batteryPercent from '../../assets/widget-icons/BatteryIcon1.svg'
 import batteryStatus from '../../assets/widget-icons/BatteryIcon2.svg'
 
-const Performance = ({
-  deviceDetails,
-  performanceLoading,
-  performanceData,
-  performance,
-}) => {
+const Performance = ({ performanceLoading, performance }) => {
+  const CloseDeviceInfo = () => {
+    return (
+      <span className={classes.Shs__CloseDeviceInfo}>
+        <CloseOutlined />
+      </span>
+    )
+  }
+  const deviceDetails = [
+    {
+      label: <DeviceInfo data={performance?.device_details} />,
+      key: '1',
+    },
+    {
+      label: <CloseDeviceInfo />,
+      key: '2',
+    },
+  ]
+
   const [openDeviceDetail, setOpenDeviceDetail] = useState(false)
 
   const handleOnCloseDeviceModal = (e) => {
@@ -29,7 +44,7 @@ const Performance = ({
       <div className={classes.Shs__MonitoringData}>
         {performanceLoading ? (
           <Loading data={'shs performance'} />
-        ) : performanceData ? (
+        ) : performance ? (
           <div className={classes.Shs__Section}>
             <div>
               <div className={classes.Shs__Monitoring}>

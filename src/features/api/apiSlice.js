@@ -1,5 +1,4 @@
 import { createApi } from '@reduxjs/toolkit/query/react'
-
 import { baseQueryWithPermissionCheck } from './baseQuery'
 
 export const apiSlice = createApi({
