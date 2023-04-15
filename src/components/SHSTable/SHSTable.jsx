@@ -127,7 +127,8 @@ const SHSTable = ({ data, isLoading = false, setPage }) => {
       </section>
       <div style={{ width: '100%', overflow: 'scroll' }}>
         <Table
-          style={{ width: '100%', overflow: 'scroll' }}
+          scroll={{ x: '100%' }}
+          // style={{ width: '100%', overflow: 'scroll' }}
           columns={columns}
           dataSource={data?.results}
           className={classes.SHSTable__table}
