@@ -148,7 +148,6 @@ function App() {
             {/* Admin routes */}
 
             <Route path="admin">
-              <Route path="shs/:id" element={<AdminShsDetails />} />
               <Route path="/admin" element={<ErroPage />} />
               <Route path="sign-in" element={<AdminSignIn />} />
               <Route path="sign-up" element={<AdminSignUp />} />
