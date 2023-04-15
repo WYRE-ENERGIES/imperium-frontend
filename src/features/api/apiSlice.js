@@ -1,7 +1,6 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import { createApi } from '@reduxjs/toolkit/query/react'
 
-import { getItemFromLocalStorage } from '../../utils/helpers'
-import { baseQueryWithPermissionCheck } from '../../components/baseQuery'
+import { baseQueryWithPermissionCheck } from './baseQuery'
 
 export const apiSlice = createApi({
   reducerPath: 'api',

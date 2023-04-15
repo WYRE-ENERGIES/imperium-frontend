@@ -1,11 +1,12 @@
 import { emptyLocalStorage, saveToLocalStorage } from '../../../utils/helpers'
-
+import jwt_decode from 'jwt-decode'
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
   isLoggedIn: false,
   token: null,
   currentClientId: null,
+  user_role: null,
 }
 const authSlice = createSlice({
   name: 'auth',
@@ -17,6 +18,7 @@ const authSlice = createSlice({
       state.token = token
       saveToLocalStorage('access', token)
       saveToLocalStorage('userInfo', user_info)
+      saveToLocalStorage('user_role', jwt_decode(token?.user_role))
 
       if (action.payload.client) {
         const { client } = action.payload

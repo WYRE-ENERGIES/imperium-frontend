@@ -167,3 +167,10 @@ li[class='ant-picker-time-panel-cell']:hover {
     color: white !important;
   }
 }
+
+@media only screen and (max-width: 320px) {
+  .PowerSwitch {
+    width: 100%;
+    justify-content: space-between;
+  }
+}

@@ -1,13 +1,7 @@
-@import '../../../components/Auth/Forms/variables.module';
+@import '../../components/Auth/Forms/variables.module';
 .Shs {
   box-sizing: border-box;
-  &__GridView {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 30px 0;
-    gap: 10px;
-  }
+
   &__BreadCrumb {
     display: flex;
     justify-content: space-between;
@@ -19,10 +13,16 @@
   }
 
   &__EnergyPerfomance {
-    width: 64%;
-  }
-  &__EnergyStats {
-    width: 35%;
+    width: 100%;
+    margin-top: 30px;
+
+    & > div:nth-child(1) {
+      width: 65%;
+      margin-right: 10px;
+    }
+    & > div:nth-child(2) {
+      width: 35%;
+    }
   }
   &__Performance {
     background: #1c1e28;
@@ -30,6 +30,15 @@
     border-radius: 8px;
     padding: 20px;
   }
+  &__Section {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    & > div {
+      width: 100%;
+    }
+  }
+
   &__Monitoring {
     display: flex;
     justify-content: space-between;
@@ -146,6 +155,7 @@
     }
   }
   &__PerformanceMonitor {
+    position: relative;
     p {
       color: #66ab4f;
       line-height: 32px;
@@ -210,8 +220,10 @@
     }
   }
   &__Capacity {
+    text-align: right;
+    color: white;
     p {
-      color: white;
+      font-size: 14px;
       span {
         display: inline-flex;
         align-items: center;
@@ -227,6 +239,10 @@
         bottom: 5px;
         margin-right: 5px;
       }
+    }
+    h1 {
+      font-size: 20px;
+      margin: -4px 0 17px 0;
     }
   }
   &__Generation {
@@ -251,6 +267,16 @@
     align-items: center;
   }
 
+  &__EnergyStats {
+    margin-top: 10px;
+    & > div:nth-child(1) {
+      width: 65%;
+      margin-right: 10px;
+    }
+    & > div:nth-child(2) {
+      width: 35%;
+    }
+  }
   &__EnergyChart {
     height: 425px;
     background: #ffffff;
@@ -259,7 +285,6 @@
       0px 1px 2px rgba(16, 24, 40, 0.06);
     border-radius: 8px;
     position: relative;
-    margin: 10px 0;
   }
 
   &__EnergyPanel {
@@ -270,7 +295,6 @@
     border-radius: 8px;
     height: 425px;
     padding: 30px 18px;
-    margin: 10px 0;
     p {
       font-size: 18px;
     }
@@ -337,55 +361,46 @@
     }
   }
 }
-
-@media only screen and (max-width: 768px) {
-  .Shs {
-    &__GridView {
-      display: block;
-      margin: 30px 0;
-    }
-    &__EnergyPerfomance {
-      width: 100%;
-    }
-    &__EnergyStats {
-      width: 100%;
-      display: flex;
-      margin-top: 10px;
-      gap: 10px;
-    }
-    &__Generation {
-      width: 100%;
-    }
-
-    &__EnergyPanel {
-      width: 110%;
-      margin: 0;
-      height: 335px;
-    }
-  }
-}
-
 @media only screen and (max-width: 320px) {
   .Shs {
-    &__BreadCrumb {
-      background-color: #f5f5f5;
-      border-radius: 8px;
-      padding: 12px;
+    &__Performance {
+      height: auto;
     }
-    &__PageBreadcrumb {
-      display: none !important;
-    }
-    &__EnergyStats {
-      width: 100%;
+    &__Section {
       display: block;
+      & > div {
+        width: 100%;
+      }
     }
-    &__EnergyPanel {
-      width: 100%;
-      margin-top: 10px;
-      height: 335px;
+    &__Capacity {
+      text-align: left;
     }
-    &__EnergyChart {
-      width: 100%;
+    &__MonitoringDataBatteryStatus {
+      display: block;
+      height: auto;
+      & > div {
+        justify-content: center;
+        gap: 10px;
+      }
+    }
+    &__MonitoringDataBattery {
+      height: auto;
+      img {
+        width: 100%;
+      }
+    }
+
+    &__MonitoringDataRadiation {
+      position: absolute;
+      background: #3e404b;
+      width: 73px;
+      padding: 8px 15px;
+      font-size: 10px;
+      & > div > span {
+        display: flex;
+        align-items: center;
+        font-size: 12px;
+      }
     }
   }
 }
