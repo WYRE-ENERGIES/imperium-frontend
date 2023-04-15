@@ -100,6 +100,9 @@ const WidgetFilter = ({
             className={classes.WidgetFilter__date}
             onChange={(d, ds) => selectFilterBy(ds || 'yearly')}
             showToday={false}
+            disabledDate={(current) => {
+              return current.isAfter(new Date(), 'day')
+            }}
             dateRender={(current) => {
               const style = {
                 height: '100%',

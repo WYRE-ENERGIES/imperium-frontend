@@ -96,7 +96,7 @@ const AdminSupport = lazy(() => import('./pages/Admin/Support/Support'))
 const AdminCustomer = lazy(() =>
   import('./pages/Admin/Customers/Customer/Customer'),
 )
-const AdminShsDetails = lazy(() => import('./pages/Admin/AdminShs/Shs'))
+const AdminShsDetails = lazy(() => import('./pages/Admin/ShsDevice/ShsDevice'))
 const AdminSHS = lazy(() => import('./pages/Admin/SHS/SHS'))
 const AdminOverview = lazy(() => import('./pages/Admin/Overview/Overview'))
 const AdminVoltageCurrent = lazy(() =>
