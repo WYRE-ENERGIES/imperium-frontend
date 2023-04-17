@@ -10,9 +10,10 @@ const Widget = ({
   value,
   valueCurrency,
   valuePercentage,
+  style,
 }) => {
   return (
-    <div className={classes.Widget}>
+    <div className={classes.Widget} style={style}>
       <Icon />
       <div className={classes.Widget__data}>
         <h1 className={classes.Widget__title}>{title}</h1>

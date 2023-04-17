@@ -88,7 +88,11 @@ const EnergyAnalytic = () => {
           id: 1,
           icon: TbBoltOff,
           title: 'Total Energy Consumed',
-          value: parseFloat(analyticsData?.energy_consumed?.toFixed(1)) || 0,
+          value: analyticsData?.energy_consumed
+            ? parseFloat(
+                analyticsData?.energy_consumed?.toFixed(1),
+              )?.toLocaleString()
+            : 0,
           valueCurrency: 'kWh',
           graphColor: '#65AA4F',
         },
@@ -96,7 +100,11 @@ const EnergyAnalytic = () => {
           id: 2,
           icon: TbActivityHeartbeat,
           title: 'Total Energy Generated',
-          value: parseFloat(analyticsData?.energy_generated?.toFixed(1)) || 0,
+          value: analyticsData?.energy_generated
+            ? parseFloat(
+                analyticsData?.energy_generated?.toFixed(1),
+              )?.toLocaleString()
+            : 0,
           valueCurrency: 'kWh',
           graphColor: '#C9E00C',
         },
@@ -105,7 +113,9 @@ const EnergyAnalytic = () => {
           icon: RiseOutlined,
           title: 'Energy Difference',
           valueCurrency: 'kWh',
-          value: parseFloat(analyticsData?.capacity?.toFixed(1)) || 0,
+          value: analyticsData?.capacity
+            ? parseFloat(analyticsData?.capacity?.toFixed(1))?.toLocaleString()
+            : 0,
         },
       ].map((widget) => (
         <AdminEnergyAnalytic

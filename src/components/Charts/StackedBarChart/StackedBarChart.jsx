@@ -2,6 +2,7 @@ import Chart from 'react-apexcharts'
 import React from 'react'
 import { apexChartOptions } from '../data'
 import classes from './StackedBarChart.module.scss'
+import { chartLabelFormatter } from '../../../utils/helpers'
 
 const StackedBarChart = ({
   title,
@@ -49,6 +50,9 @@ const StackedBarChart = ({
             ...apexChartOptions.yaxis,
             title: {
               text: yLabelTitle,
+            },
+            labels: {
+              formatter: (value) => chartLabelFormatter(value),
             },
           },
         }}

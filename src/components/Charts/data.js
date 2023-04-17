@@ -1,3 +1,5 @@
+import { chartLabelFormatter } from '../../utils/helpers'
+
 export const apexChartOptions = {
   chart: {
     stacked: true,
@@ -12,18 +14,18 @@ export const apexChartOptions = {
   },
   xaxis: {
     categories: [
-      'January',
-      'February',
-      'March',
-      'April',
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
       'May',
-      'June',
-      'July',
-      'August',
-      'September',
-      'October',
-      'November',
-      'December',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
     ],
     title: {
       offsetY: 90,
@@ -56,18 +58,18 @@ export const groupedChartOptions = {
   },
   xaxis: {
     categories: [
-      'January',
-      'February',
-      'March',
-      'April',
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
       'May',
-      'June',
-      'July',
-      'August',
-      'September',
-      'October',
-      'November',
-      'December',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
     ],
   },
   plotOptions: {
@@ -302,14 +304,10 @@ export const additionalOverviewBarProps = {
   ...barChartOptions,
   xaxis: {
     ...barChartOptions.xaxis,
-    title: {
-      text: 'Month',
-      offsetY: 90,
-    },
   },
   yaxis: {
-    title: {
-      text: 'CO2 (Kg)',
+    labels: {
+      formatter: (value) => chartLabelFormatter(value),
     },
   },
 }

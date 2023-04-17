@@ -167,24 +167,33 @@ const Overview = () => {
         {
           id: 1,
           title: 'Total Energy Generation',
-          value:
-            parseFloat(analyticsData?.total_installed_capacity?.toFixed(1)) ||
-            0,
+          value: analyticsData?.total_installed_capacity
+            ? parseFloat(
+                analyticsData?.total_installed_capacity?.toFixed(1),
+              )?.toLocaleString()
+            : 0,
           valueCurrency: 'kWh',
           graph: GraphIcon2,
         },
         {
           id: 2,
           title: 'Total Energy Consumption',
-          value:
-            parseFloat(analyticsData?.total_energy_consumed?.toFixed(1)) || 0,
+          value: analyticsData?.total_energy_consumed
+            ? parseFloat(
+                analyticsData?.total_energy_consumed?.toFixed(1),
+              )?.toLocaleString()
+            : 0,
           valueCurrency: 'kWh',
           graph: GraphIcon,
         },
         {
           id: 3,
           title: 'Total Customers',
-          value: parseFloat(analyticsData?.total_customers?.toFixed(1)) || 0,
+          value: analyticsData?.total_customers
+            ? parseFloat(
+                analyticsData?.total_customers?.toFixed(1),
+              )?.toLocaleString()
+            : 0,
           graph: GraphIcon2,
         },
       ].map((widget) => (
@@ -313,11 +322,15 @@ const Overview = () => {
               View report
             </Button>
           </div>
-          <AreaChart
-            chartData={areaChartData}
-            chartProps={{ height: '100%', width: '100%' }}
-            optionProps={additionalOverviewProps}
-          />
+          {isEnergyFetching ? (
+            <Spin />
+          ) : (
+            <AreaChart
+              chartData={areaChartData}
+              chartProps={{ height: '100%', width: '100%' }}
+              optionProps={additionalOverviewProps}
+            />
+          )}
         </div>
         <div className={classes.Overview__shsTable}>
           <SHSTable
@@ -329,25 +342,33 @@ const Overview = () => {
         <div className={classes.Overview__bottom}>
           <div className={classes.Overview__bottomLeft}>
             <div className={classes.Overview__bottomChart}>
-              <SimpleBarChart
-                title="CO2 Emission Avoided"
-                chartData={chartData}
-                colors={['#66AB4F']}
-                borderRadius={5}
-                columnWidth={50}
-                optionProps={additionalOverviewBarProps}
-              />
+              {isEmissionFetching ? (
+                <Spin />
+              ) : (
+                <SimpleBarChart
+                  title="CO2 Emission Avoided"
+                  chartData={chartData}
+                  colors={['#66AB4F']}
+                  borderRadius={5}
+                  columnWidth={50}
+                  optionProps={additionalOverviewBarProps}
+                />
+              )}
             </div>
             <div className={classes.Overview__bottomAreaChart}>
-              <AreaChart
-                chartData={voltageChartData}
-                chartProps={{ height: '100%', width: '100%' }}
-                optionProps={{
-                  ...additionalOverviewProps,
-                  title: { text: 'Voltage & Current Statistic ' },
-                  colors: ['#385E2B', '#7F56D9'],
-                }}
-              />
+              {isVoltageFetching ? (
+                <Spin />
+              ) : (
+                <AreaChart
+                  chartData={voltageChartData}
+                  chartProps={{ height: '100%', width: '100%' }}
+                  optionProps={{
+                    ...additionalOverviewProps,
+                    title: { text: 'Voltage & Current Statistic ' },
+                    colors: ['#385E2B', '#7F56D9'],
+                  }}
+                />
+              )}
             </div>
           </div>
           <div className={classes.Overview__alerts}>

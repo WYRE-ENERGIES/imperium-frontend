@@ -1,6 +1,7 @@
 import Chart from 'react-apexcharts'
 import React from 'react'
 import { areaChartOptions } from '../data'
+import { chartLabelFormatter } from '../../../utils/helpers'
 
 const AreaChart = ({
   chartData,
@@ -17,6 +18,11 @@ const AreaChart = ({
             mode: themeMode,
           },
           ...optionProps,
+          yaxis: {
+            labels: {
+              formatter: (value) => chartLabelFormatter(value),
+            },
+          },
         }}
         series={chartData}
         {...chartProps}

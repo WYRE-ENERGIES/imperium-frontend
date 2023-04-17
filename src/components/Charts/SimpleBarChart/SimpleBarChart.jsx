@@ -1,6 +1,7 @@
 import Chart from 'react-apexcharts'
 import React from 'react'
 import { barChartOptions } from '../data'
+import { chartLabelFormatter } from '../../../utils/helpers'
 
 const SimpleBarChart = ({
   title,
@@ -25,6 +26,11 @@ const SimpleBarChart = ({
         },
         title: {
           text: title,
+        },
+        yaxis: {
+          labels: {
+            formatter: (value) => chartLabelFormatter(value),
+          },
         },
         ...optionProps,
       }}
