@@ -113,14 +113,18 @@ const Battery = () => {
           title: 'Battery Status',
           range: 'For the year',
           value: 'Good',
-          valuePercentage: analyticsData?.kw || 98,
+          valuePercentage: analyticsData?.kw
+            ? analyticsData?.kw.toLocaleString()
+            : 98,
         },
         {
           id: 2,
           icon: SEnergyWidgetIcon,
           title: 'Battery Voltage',
           range: 'For the year',
-          value: parseFloat(analyticsData?.voltage?.toFixed(1)) || 0,
+          value: analyticsData?.voltage
+            ? parseFloat(analyticsData?.voltage?.toFixed(1)).toLocaleString()
+            : 0,
           valueCurrency: 'V',
         },
         {
@@ -128,7 +132,9 @@ const Battery = () => {
           icon: HomeWidgetIcon,
           title: 'Battery Current',
           range: 'For the year',
-          value: parseFloat(analyticsData?.current?.toFixed(1)) || 0,
+          value: analyticsData?.current
+            ? parseFloat(analyticsData?.current?.toFixed(1)).toLocaleString()
+            : 0,
           valueCurrency: 'A',
         },
       ].map((widget) => (

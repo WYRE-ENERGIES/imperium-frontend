@@ -88,14 +88,22 @@ const EnergyAnalytic = () => {
           icon: EnergyWidgetIcon,
           title: 'Total Energy Generation ',
           range: 'For the year',
-          value: parseFloat(analyticsData?.energy_generated?.toFixed(1)) || 0,
+          value: analyticsData?.energy_generated
+            ? parseFloat(
+                analyticsData?.energy_generated?.toFixed(1),
+              ).toLocaleString()
+            : 0,
         },
         {
           id: 2,
           icon: SEnergyWidgetIcon,
           title: 'Total Energy Consumption',
           range: 'For the year',
-          value: parseFloat(analyticsData?.energy_consumed?.toFixed(1)) || 0,
+          value: analyticsData?.energy_consumed
+            ? parseFloat(
+                analyticsData?.energy_consumed?.toFixed(1),
+              ).toLocaleString()
+            : 0,
         },
       ].map((widget) => (
         <EnergyAnalyticWidget

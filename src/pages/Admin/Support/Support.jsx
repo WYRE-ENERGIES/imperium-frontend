@@ -190,17 +190,21 @@ const Support = () => {
       {
         icon: TicketIcon,
         name: 'All Tickets',
-        value: analyticsData?.all || 0,
+        value: analyticsData?.all ? analyticsData?.all?.toLocaleString() : 0,
       },
       {
         icon: UnResolvedIcon,
         name: 'Unresolved Tickets',
-        value: analyticsData?.unresolved || 0,
+        value: analyticsData?.unresolved
+          ? analyticsData?.unresolved?.toLocaleString()
+          : 0,
       },
       {
         icon: ResolvedIcon,
         name: 'Resolved Tickets',
-        value: analyticsData?.resolved || 0,
+        value: analyticsData?.resolved
+          ? analyticsData?.resolved?.toLocaleString()
+          : 0,
       },
     ].map((ticket, index) => (
       <SupportWidget

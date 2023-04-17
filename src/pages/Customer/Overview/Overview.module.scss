@@ -80,7 +80,6 @@
     justify-content: space-between;
     gap: 24px;
     padding: 0px;
-    background: #ffffff;
 
     & > * {
       flex: 1;
@@ -99,22 +98,25 @@
   }
 
   &__bottomChart {
-    padding: 20px;
+    padding: 10px;
     border: 1px solid #eaecf0;
     box-shadow: 0px 1px 3px rgba(16, 24, 40, 0.1),
       0px 1px 2px rgba(16, 24, 40, 0.06);
     border-radius: 12px;
+    background: #fff;
   }
 
   &__bottomAreaChart {
-    padding: 20px;
+    padding: 10px;
     border: 1px solid #eaecf0;
     box-shadow: 0px 1px 3px rgba(16, 24, 40, 0.1),
       0px 1px 2px rgba(16, 24, 40, 0.06);
     border-radius: 12px;
+    background: #fff;
   }
 
   &__alerts {
+    background: #fff;
     height: 712px;
     padding: 20px;
     border: 1px solid #eaecf0;

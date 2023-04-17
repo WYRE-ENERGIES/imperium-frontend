@@ -117,7 +117,7 @@ const VoltageCurrent = () => {
       icon: SunWidgetIcon,
       title: 'Voltage',
       range: formatLabel(filter),
-      value: analytics?.voltage || 0,
+      value: analytics?.voltage ? analytics?.voltage?.toLocaleString() : 0,
       valueCurrency: 'V',
     },
     {
@@ -125,7 +125,7 @@ const VoltageCurrent = () => {
       icon: SunWidgetIcon,
       title: 'Current',
       range: formatLabel(filter),
-      value: analytics?.current || 0,
+      value: analytics?.current ? analytics?.current?.toLocaleString() : 0,
       valueCurrency: 'V',
     },
     {
@@ -133,7 +133,7 @@ const VoltageCurrent = () => {
       icon: EnergyWidgetIcon,
       title: 'Energy',
       range: formatLabel(filter),
-      value: analytics?.kw || 0,
+      value: analytics?.kw ? analytics?.kw?.toLocaleString() : 0,
       valueCurrency: 'KWh',
     },
   ]

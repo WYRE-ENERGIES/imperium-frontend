@@ -65,14 +65,20 @@ const SHS = () => {
           id: 1,
           title: 'Total Energy Consumped',
           duration: 'For the last 12 months',
-          value: analyticsData?.total_shs || 0,
+          value: analyticsData?.total_shs
+            ? analyticsData?.total_shs?.toLocaleString()
+            : 0,
           graphColor: '#65AA4F',
         },
         {
           id: 2,
           title: 'Total Energy Generated',
           duration: 'For the last 12 months',
-          value: parseFloat(analyticsData?.energy_generated?.toFixed(1)) || 0,
+          value: analyticsData?.energy_generated
+            ? parseFloat(
+                analyticsData?.energy_generated?.toFixed(1),
+              )?.toLocaleString()
+            : 0,
           valueCurrency: 'kWh',
           graphColor: '#C9E00C',
         },
@@ -80,7 +86,9 @@ const SHS = () => {
           id: 3,
           title: 'Total Capacity',
           duration: 'For the last 12 months',
-          value: parseFloat(analyticsData?.capacity?.toFixed(1)) || 0,
+          value: analyticsData?.capacity
+            ? parseFloat(analyticsData?.capacity?.toFixed(1))?.toLocaleString()
+            : 0,
           graphColor: '#5714E4',
         },
       ].map((widget) => (

@@ -1,6 +1,7 @@
 import Chart from 'react-apexcharts'
 import React from 'react'
 import { groupedChartOptions } from '../data'
+import { chartLabelFormatter } from '../../../utils/helpers'
 
 const GroupedBarChart = ({ chartData, colors, borderRadius, columnWidth }) => {
   return (
@@ -22,6 +23,11 @@ const GroupedBarChart = ({ chartData, colors, borderRadius, columnWidth }) => {
               ...groupedChartOptions.plotOptions.bar,
               borderRadius,
               columnWidth,
+            },
+          },
+          yaxis: {
+            labels: {
+              formatter: (value) => chartLabelFormatter(value),
             },
           },
         }}

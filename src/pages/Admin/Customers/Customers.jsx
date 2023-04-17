@@ -209,14 +209,22 @@ const Customers = () => {
             <TotalClientWidget
               title="All Added Users"
               Icon={UsersIcon}
-              count={analyticsData?.users || 0}
+              count={
+                analyticsData?.users
+                  ? analyticsData?.users?.toLocaleString()
+                  : 0
+              }
               duration={formatLabel(globalFilter)}
               linkTo="/admin/users"
               loading={isAnalyticsLoading || isAnalyticsFetching}
             />
             <TotalClientWidget
               title="Total Imperium Client"
-              count={analyticsData?.clients || 0}
+              count={
+                analyticsData?.clients
+                  ? analyticsData?.clients?.toLocaleString()
+                  : 0
+              }
               duration={formatLabel(globalFilter)}
               loading={isAnalyticsLoading || isAnalyticsFetching}
             />

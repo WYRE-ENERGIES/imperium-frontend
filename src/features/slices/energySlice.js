@@ -50,7 +50,7 @@ export const energyApiSlice = apiSlice.injectEndpoints({
           const { energy_consumed, energy_generated, capacity } = result
           energyConsumed.data.push(Math.round(energy_consumed) ?? 0)
           energyGenerated.data.push(Math.round(energy_generated) ?? 0)
-          energyDifference.data.push(capacity ?? 0)
+          energyDifference.data.push(Math.round(capacity) ?? 0)
         })
 
         return {
