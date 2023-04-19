@@ -18,7 +18,8 @@ import { useCustomerRegisterMutation } from '../../../../features/slices/auth/cu
 import { ErrorMessage } from '../../../../components/ErrorMessage/ErrorMessage'
 import Error from '../../../../components/ErrorMessage/Error'
 import { useRef } from 'react'
-
+import validator from 'validator'
+import { ExclamationCircleOutlined } from '@ant-design/icons'
 const SignUp = () => {
   const formDescription = {
     image: imageDesc,
@@ -27,8 +28,10 @@ const SignUp = () => {
       'Have a better experience irrespective of the device, OS, screen size, orientation, and browser platform.',
   }
   const pwdRef = useRef(null)
+  const emailRef = useRef()
   const [errMsg, setErrMsg] = useState('')
   const [pwdValid, setPwdValid] = useState(false)
+  const [email, setEmail] = useState('')
   const [customerRegister, { isLoading }] = useCustomerRegisterMutation()
   const navigate = useNavigate()
   const handlePasswordLength = (e) => {
@@ -40,6 +43,7 @@ const SignUp = () => {
       setPwdValid(true)
     }
   }
+
   const accessToken = getItemFromLocalStorage('access')
   const onFinish = async (values) => {
     try {
@@ -61,6 +65,16 @@ const SignUp = () => {
       navigate('/overview')
     }
   })
+  useEffect(() => {
+    if (validator.isEmail(email)) {
+      emailRef.current.innerHTML = 'Email valid'
+      emailRef.current.style.color = 'green'
+    } else {
+      emailRef.current.innerHTML = ' Enter a valid email'
+      emailRef.current.style.color = 'gray'
+      setEmail('')
+    }
+  }, [email, setEmail])
 
   return (
     <section className={classes.SignUpPage}>
@@ -112,11 +126,23 @@ const SignUp = () => {
                     },
                   ]}
                   required
+                  extra={
+                    <p
+                      ref={emailRef}
+                      style={{
+                        fontSize: '12px',
+                        marginBottom: '-10px',
+                      }}
+                    >
+                      emailRef.current
+                    </p>
+                  }
                 >
                   <Input
                     className={classes.SignUpPage__Input}
                     placeholder="Enter your email"
                     style={{ marginTop: '-1rem' }}
+                    onChange={(e) => setEmail(e.target.value)}
                   />
                 </Form.Item>
                 <Form.Item
@@ -135,7 +161,7 @@ const SignUp = () => {
                     <p
                       ref={pwdRef}
                       style={{
-                        fontSize: '14px',
+                        fontSize: '12px',
                         marginBottom: '-10px',
                       }}
                     >
@@ -162,7 +188,7 @@ const SignUp = () => {
                   <FormButton
                     action={'Create account'}
                     isLoading={isLoading}
-                    validate={!pwdValid}
+                    validate={!email || !pwdValid}
                   />
                 </Form.Item>
 
