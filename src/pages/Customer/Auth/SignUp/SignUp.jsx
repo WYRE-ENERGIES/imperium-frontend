@@ -89,7 +89,7 @@ const SignUp = () => {
               />
             </div>
             <div>
-              <ThirdPartyAuth />
+              <ThirdPartyAuth signIn={false} />
             </div>
             <div>
               <Form

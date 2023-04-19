@@ -61,7 +61,7 @@ const SignIn = () => {
               />
             </div>
             <div>
-              <ThirdPartyAuth />
+              <ThirdPartyAuth signIn={true} />
             </div>
             <div>
               <Form

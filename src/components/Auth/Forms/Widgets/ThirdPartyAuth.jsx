@@ -3,12 +3,12 @@ import React from 'react'
 
 import googleIcon from '../../../../../src/assets/Auth/google.svg'
 import classes from './Widget.module.scss'
-const ThirdPartyAuth = () => {
+const ThirdPartyAuth = ({ signIn }) => {
   return (
     <div className={classes.ThirdPartyAuth}>
       <button>
         <img src={googleIcon} alt="google icon" />
-        <p>Sign in with Google</p>
+        <p>Sign {signIn ? 'In' : 'Up'} with Google</p>
       </button>
       <div className={classes.ThirdPartyAuth__divider}>
         <Divider>or</Divider>

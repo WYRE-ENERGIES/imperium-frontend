@@ -11,7 +11,7 @@ const FormNavbar = ({
   btnColor2 = '#497a38',
 }) => {
   const logo = btnColor1 === '#FFFF' ? CustomerLogo : AdminLogo
-  const signInPage = logo === CustomerLogo ? '/' : '/admin'
+  const signInPage = logo === CustomerLogo ? '/' : '/admin/sign-in'
   const signUpPage = logo === CustomerLogo ? '/sign-up' : '/admin/sign-up'
   return (
     <div className={classes.Navbar}>
