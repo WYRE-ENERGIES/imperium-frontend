@@ -1,15 +1,14 @@
-import { Col, Row } from 'antd'
 import React from 'react'
 import ErrorImg from '../../../assets/Error/404 Error-amico 1.svg'
 import Layout from '../../Auth/Forms/AuthForm/PasswordReset/Layout/Layout'
 import classes from './ErrorLayout.module.scss'
 import { BiEnvelope } from 'react-icons/bi'
-const ErrorLayout = ({ children, width }) => {
+const ErrorLayout = (props) => {
   return (
     <div className={classes.ErrorLayout}>
       <Layout
         widgets={{
-          header: 'Page Not Found',
+          header: props.status === 404 ? 'Page Not Found' : 'Access Denied',
           tag: (
             <span
               style={{
@@ -18,7 +17,7 @@ const ErrorLayout = ({ children, width }) => {
                 textAlign: 'center',
               }}
             >
-              Error 404
+              Error {props.status}
             </span>
           ),
         }}
@@ -42,7 +41,7 @@ const ErrorLayout = ({ children, width }) => {
               <div style={{ width: '300px' }}>
                 <img src={ErrorImg} alt="" srcSet="" />
               </div>
-              <div style={{ width: width }}>{children}</div>
+              <div style={{ width: props?.width }}>{props.children}</div>
             </div>
           </div>
         </div>

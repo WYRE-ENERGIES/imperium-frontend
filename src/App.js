@@ -109,7 +109,10 @@ const AdminUserInvitePage = lazy(() =>
 )
 
 const PrivateRoute = lazy(() => import('./utils/PrivateRoute'))
-
+const USER_ROLE = {
+  accessOne: 'admin',
+  accessTwo: 'client',
+}
 function App() {
   return (
     <Router>
@@ -126,7 +129,7 @@ function App() {
             <Route path="new-password" element={<NewPasswordPage />} />
 
             <Route path="contact-error" element={<ContactError />} />
-            <Route element={<PrivateRoute />}>
+            <Route element={<PrivateRoute pathTo={USER_ROLE.accessTwo} />}>
               <Route path="account">
                 <Route path="business" element={<AccountBusiness />} />
                 <Route index path="details" element={<AccountDetails />} />
@@ -148,13 +151,13 @@ function App() {
             {/* Admin routes */}
 
             <Route path="admin">
-              <Route path="/admin" element={<ErroPage />} />
+              <Route path="/admin" element={<ErroPage status={404} />} />
               <Route path="sign-in" element={<AdminSignIn />} />
               <Route path="sign-up" element={<AdminSignUp />} />
               <Route path="forgot-password" element={<AdminForgotPassword />} />
               <Route path="new-password" element={<AdminResetPassword />} />
               <Route path="otp" element={<AdminOtp />} />
-              <Route element={<PrivateRoute pathTo="admin" />}>
+              <Route element={<PrivateRoute pathTo={USER_ROLE.accessOne} />}>
                 <Route path="account" element={<AdminAccount />} />
                 <Route path="active-alerts">
                   <Route index element={<AdminActiveAlert />} />
@@ -197,7 +200,7 @@ function App() {
               <Route />
             </Route>
           </Route>
-          <Route path="*" element={<ErroPage />} />
+          <Route path="*" element={<ErroPage status={404} />} />
         </Routes>
       </Suspense>
     </Router>

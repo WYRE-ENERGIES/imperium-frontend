@@ -126,7 +126,7 @@ const ContactErrorForm = () => {
                   />
                 </Form.Item>
                 <Form.Item>
-                  <FormButton action={'Submit'} isLoading={true} />
+                  <FormButton action={'Submit'} />
                 </Form.Item>
               </Form>
             </div>

@@ -91,10 +91,22 @@ export const activerAlertsSlice = apiSlice.injectEndpoints({
         }
       },
     }),
+    getExportData: build.query({
+      query: () => {
+        return {
+          url: `${BASE_URL}export/`,
+        }
+      },
+      transformResponse: (response, meta, arg) => {
+        return response
+      },
+      transformErrorResponse: (response, meta, arg) => response,
+    }),
   }),
 })
 
 export const {
+  useGetExportDataQuery,
   useGetAdminActiveAlertsQuery,
   useGetAdminActiveAlertsAnalyticsQuery,
   useGetAdminActiveAlertsStatisticsQuery,

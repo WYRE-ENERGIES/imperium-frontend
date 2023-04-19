@@ -18,7 +18,7 @@ const authSlice = createSlice({
       state.token = token
       saveToLocalStorage('access', token)
       saveToLocalStorage('userInfo', user_info)
-      saveToLocalStorage('user_role', jwt_decode(token?.user_role))
+      saveToLocalStorage('user_role', jwt_decode(token)?.user_role)
 
       if (action.payload.client) {
         const { client } = action.payload
