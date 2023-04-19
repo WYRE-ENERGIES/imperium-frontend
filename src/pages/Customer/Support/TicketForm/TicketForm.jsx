@@ -64,13 +64,17 @@ const ModalForm = ({ toggleModal, ticketData }) => {
     if (isSuccess || isUpdateSuccess) {
       toast.success(ticketData.id ? 'Ticket Updated' : 'Ticket created', {
         hideProgressBar: true,
-        autoClose: 3000,
+        autoClose: 1000,
         theme: 'colored',
       })
 
-      toggleModal()
+      toast.onChange((e) => {
+        if (e.status === 'removed') {
+          toggleModal()
+          form.resetFields()
+        }
+      })
     }
-    form.resetFields()
   }, [isLoading, isSuccess, isUpdating, isUpdateSuccess])
 
   useEffect(() => {

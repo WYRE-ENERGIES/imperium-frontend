@@ -168,6 +168,7 @@ const Battery = () => {
             tableTitle="Battery Table"
             tagValue="kWh"
             filterOptions={[]}
+            showSearch={false}
             handleSearch={handleSearch}
             isLoading={isFetching}
             footer={() => (

@@ -19,6 +19,7 @@ const SHSTableWithFilter = ({
   isLoading = false,
   handleSearch,
   onFilterChanged,
+  showSearch = true,
 }) => {
   return (
     <div className={classes.SHSTable}>
@@ -54,6 +55,7 @@ const SHSTableWithFilter = ({
           btnAction={btnAction}
           handleSearch={handleSearch}
           onFilterChanged={onFilterChanged}
+          showSearch={showSearch}
         />
       </section>
       <Table

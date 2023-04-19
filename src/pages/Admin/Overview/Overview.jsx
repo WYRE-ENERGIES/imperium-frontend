@@ -5,8 +5,10 @@ import {
   additionalOverviewProps,
 } from '../../../components/Charts/data'
 import {
+  useGetActiveUsersQuery,
   useGetAdminOverviewAnalyticsQuery,
   useGetAdminOverviewCurrentVoltageQuery,
+  useGetMapDataQuery,
   useGetOverviewActiveAlertQuery,
   useGetOverviewEmissionDataQuery,
   useGetOverviewEnergyDataQuery,
@@ -151,6 +153,17 @@ const Overview = () => {
     sectorId,
     regionId,
   })
+
+  const {
+    isFetching: isActiveUserFetching,
+    isError: isActiveUserError,
+    error: activeUserError,
+    data: activeUserData,
+  } = useGetActiveUsersQuery({
+    filterBy: globalFilter,
+  })
+
+  console.log('activeUserData', activeUserData)
 
   useEffect(() => {
     if (isSectorFetching) return

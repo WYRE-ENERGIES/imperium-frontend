@@ -160,6 +160,28 @@ export const adminOverviewSlice = apiSlice.injectEndpoints({
         return [energyGenerated, energyConsumed]
       },
     }),
+    getMapData: builder.query({
+      query: ({ sectorId, regionId, filterBy }) => {
+        let url = `${ADMIN_OVERVIEW_URL_PATH}map/?order_by=${filterBy}`
+
+        if (sectorId) {
+          url += `&device__sector_id=${sectorId}`
+        }
+
+        if (regionId) {
+          url += `&device__region_id=${regionId}`
+        }
+
+        return {
+          url,
+        }
+      },
+    }),
+    getActiveUsers: builder.query({
+      query: ({ filterBy }) => ({
+        url: `${ADMIN_OVERVIEW_URL_PATH}active-users/?order_by=${filterBy}`,
+      }),
+    }),
   }),
 })
 
@@ -171,4 +193,6 @@ export const {
   useGetOverviewSolarHouseDataQuery,
   useGetOverviewSectorQuery,
   useGetOverviewEnergyDataQuery,
+  useGetMapDataQuery,
+  useGetActiveUsersQuery,
 } = adminOverviewSlice
