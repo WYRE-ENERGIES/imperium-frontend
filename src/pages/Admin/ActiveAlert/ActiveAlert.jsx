@@ -1,4 +1,13 @@
-import { Tag, Select, Space, Input, Modal, Divider, Form } from 'antd'
+import {
+  Tag,
+  Select,
+  Space,
+  Input,
+  Modal,
+  Divider,
+  Form,
+  notification,
+} from 'antd'
 import React, { useState } from 'react'
 import {
   useGetAdminActiveAlertsQuery,
@@ -8,6 +17,7 @@ import {
   useCreateAdminActiveAlertsMutation,
   useGetShsDetailsQuery,
   useGetDeviceListQuery,
+  useGetExportDataQuery,
 } from '../../../features/slices/activeAlerts/admin/adminActiveAlertSlice'
 import { MdFilterList } from 'react-icons/md'
 import {
@@ -241,6 +251,7 @@ const ActiveAlert = () => {
   const [statsFilter, setStatsFilter] = useState('yearly')
   const [searchActiveAlertsTable, setSearchActiveAlertsTable] = useState('')
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [exportFile, setExport] = useState(false)
   const activeAlertTableSearch = (e) => {
     setSearchActiveAlertsTable(e.target.value)
   }
@@ -270,6 +281,8 @@ const ActiveAlert = () => {
     useCreateAdminActiveAlertsMutation()
   const { data: deviceList, isLoading: isLoadingdeviceList } =
     useGetDeviceListQuery({ client_id: 24 })
+  const { data: exportData, isLoading: exportDataisLoading } =
+    useGetExportDataQuery({ skip: false })
 
   useEffect(() => {
     setActiveAlertData(activeAlerts)
@@ -304,6 +317,8 @@ const ActiveAlert = () => {
       }}
     />
   )
+
+  const handleFileExport = async () => {}
 
   const ativeAlertTableTitle = () => (
     <div className={classes.ActiveAlert__ActiveAlertTableHeader}>
@@ -359,7 +374,7 @@ const ActiveAlert = () => {
           </Space>
         </div>
         <div className={classes.ActiveAlert__ActiveAlertTableFilterExport}>
-          <button>
+          <button onClick={handleFileExport}>
             {' '}
             <CloudDownloadOutlined />
             <span style={{ marginLeft: '2px', color: '#C4C4C4' }}>Export</span>
@@ -368,11 +383,17 @@ const ActiveAlert = () => {
       </div>
     </div>
   )
-
+  const openNotification = (description) => {
+    notification.success({
+      message: 'Alert created',
+      description: `${description}`,
+    })
+  }
   const handleCreateAlert = async (values) => {
     try {
       await createAdminActiveAlerts(values)
       setIsModalOpen(false)
+      openNotification(values.event_description)
     } catch (err) {
       if (err.status === 401) {
         setErrMsg(err?.data?.detail)

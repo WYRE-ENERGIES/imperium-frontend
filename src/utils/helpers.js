@@ -110,3 +110,8 @@ export const chartLabelFormatter = (value) => {
 
   return value
 }
+
+export const userRole = () => {
+  const USER_ROLE = getItemFromLocalStorage('user_role')
+  return USER_ROLE
+}
