@@ -25,6 +25,7 @@ const SearchAndFilter = ({
   btnAction,
   handleSearch,
   onFilterChanged,
+  showSearch,
 }) => {
   const options = filterOptions?.map((option, index) => (
     <Option key={index} value={option.value}>
@@ -34,13 +35,15 @@ const SearchAndFilter = ({
 
   return (
     <div className={classes.SearchAndFilter}>
-      <Input
-        placeholder="Search"
-        size="large"
-        prefix={prefix}
-        className={classes.SearchAndFilter__search}
-        onChange={handleSearch}
-      />
+      {showSearch && (
+        <Input
+          placeholder="Search"
+          size="large"
+          prefix={prefix}
+          className={classes.SearchAndFilter__search}
+          onChange={handleSearch}
+        />
+      )}
       <Suspense fallback={<h4>loading</h4>}>
         {filterOptions?.length ? (
           <DropDownFilter onFilterChanged={onFilterChanged} options={options} />

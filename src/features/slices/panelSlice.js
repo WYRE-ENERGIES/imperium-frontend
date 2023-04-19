@@ -57,6 +57,11 @@ export const panelApiSlice = apiSlice.injectEndpoints({
         }
       },
     }),
+    exportPanelData: builder.query({
+      query: ({ filterBy }) => ({
+        url: `${BASE_PANEL_URL}list-table/export/?order_by=${filterBy}`,
+      }),
+    }),
   }),
 })
 
@@ -65,4 +70,5 @@ export const {
   useGetPanelPageAnalyticsQuery,
   useGetClientPanelTableDataQuery,
   useGetClientPanelPageAnalyticsQuery,
+  useExportPanelDataQuery,
 } = panelApiSlice

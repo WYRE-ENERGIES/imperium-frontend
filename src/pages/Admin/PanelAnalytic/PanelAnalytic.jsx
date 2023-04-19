@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { generalFilterOptions, panelColumns } from '../../../utils/data'
 import {
+  useExportPanelDataQuery,
   useGetPanelPageAnalyticsQuery,
   useGetPanelTableDataQuery,
 } from '../../../features/slices/panelSlice'
@@ -15,6 +16,7 @@ import WidgetLoader from '../../../components/Widget/WidgetLoader/WidgetLoader'
 import classes from '../../Customer/PanelAnalytic/PanelAnalytic.module.scss'
 import useDebounce from '../../../hooks/useDebounce'
 import useWeather from '../../../hooks/useWeather'
+// import ReactHTMLTableToExcel from 'react-html-table-to-excel'
 
 const PanelAnalytic = () => {
   const [coord, weatherResult, isLoading, error] = useWeather()
@@ -37,6 +39,14 @@ const PanelAnalytic = () => {
     search: debounceValue,
     filterBy: globalFilter,
   })
+
+  // const {
+  //   isError: isExportError,
+  //   error: exportError,
+  //   data: exportData,
+  // } = useExportPanelDataQuery({
+  //   filterBy: globalFilter,
+  // })
 
   const {
     isFetching: isAnalyticsFetching,
