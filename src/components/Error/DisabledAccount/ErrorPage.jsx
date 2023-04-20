@@ -13,7 +13,7 @@ const DisabledAccountInfo = ({ status }) => {
   const navigateTo = user_role === 'admin' ? '/' : '/admin/sign-in'
 
   const handleOnClick = () => {
-    if (user_role) {
+    if (getItemFromLocalStorage('access')) {
       emptyLocalStorage()
       navigate(navigateTo)
     } else {

@@ -30,10 +30,10 @@ const FormFileUpload = ({ fileName, fileSize, fileUploadingProgress }) => {
         </div>
       </div>
       <div className={classes.FormFileUpload__fileUploadDeleteIcon}>
-        <div>
+        {/* <div>
           {' '}
           <FaTrashAlt color="#808080" />
-        </div>
+        </div> */}
       </div>
     </div>
   )

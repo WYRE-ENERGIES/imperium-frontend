@@ -43,7 +43,7 @@ const Business = () => {
     name: 'file',
     multiple: false,
     progress: { showInfo: false },
-    showUploadList: false,
+    showUploadList: true,
     maxCount: 1,
     headers: {
       authorization: `Bearer ${token}`,
