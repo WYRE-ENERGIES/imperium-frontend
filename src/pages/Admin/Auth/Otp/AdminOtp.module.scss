@@ -27,6 +27,13 @@
     color: red;
     font-size: 14px;
   }
+  &__Resend {
+    text-align: center;
+    margin-top: 10px;
+    button:hover {
+      cursor: pointer;
+    }
+  }
 }
 
 @media only screen and (max-width: 320px) {

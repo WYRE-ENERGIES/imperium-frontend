@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { Form } from 'antd'
+import { Form, notification } from 'antd'
 import OTPInput from 'otp-input-react'
 import { useAdminOtpMutation } from '../../../../features/slices/auth/admin/adminAuthApiSlice'
+import { useAdminforgotPasswordMutation } from '../../../../features/slices/auth/admin/adminAuthApiSlice'
 import Layout from '../../../../components/Auth/Forms/AuthForm/PasswordReset/Layout/Layout'
 import FormButton from '../../../../components/Auth/Forms/Widgets/FormButton'
 import icon from '../../../../assets/Auth/Group 18.svg'
@@ -13,11 +14,38 @@ const AdminOTP = () => {
   const [adminOtp, { isLoading }] = useAdminOtpMutation()
   const navigate = useNavigate()
   const email = useLocation()
-
+  const [adminforgotPassword, { isLoading: otpResendLoading }] =
+    useAdminforgotPasswordMutation()
+  const openNotification = (email) => {
+    notification.success({
+      message: 'OTP sent!',
+      description: `OPT resent to ${email}`,
+    })
+  }
+  const handleResendOtp = async () => {
+    try {
+      await adminforgotPassword({
+        email: email?.state?.email,
+      }).unwrap()
+      openNotification(email?.state?.email)
+    } catch (err) {
+      let errorMsg = ''
+      if (err.status === 401) {
+        errorMsg += err?.data?.email?.message || err?.data?.email
+        setErrMsg(errorMsg)
+      } else if (err.status === 400) {
+        setErrMsg(err?.data?.email?.message || err?.data?.email)
+      } else if (err.status === 500) {
+        setErrMsg('Server could not be reached. Try later!')
+      } else {
+        setErrMsg('Check your internet connection')
+      }
+    }
+  }
   const onFinish = async (values) => {
     try {
       await adminOtp({
-        email: email.state.email,
+        email: email?.state?.email,
         otp_code: OTP,
       }).unwrap()
       navigate('/admin/new-password', { state: { email: email.state.email } })
@@ -70,14 +98,15 @@ const AdminOTP = () => {
             />
           </div>
 
-          <FormButton action={'Continue'} isLoading={isLoading} />
+          <FormButton
+            action={'Continue'}
+            isLoading={isLoading || otpResendLoading}
+          />
         </Form>
-        <section
-          className={classes.Otp__Resend}
-          style={{ textAlign: 'center', marginTop: '10px' }}
-        >
+        <section className={classes.Otp__Resend}>
           {`Didn't get Code ?`}
           <button
+            onClick={handleResendOtp}
             style={{
               color: '#385E2B',
               fontWeight: 'bold',

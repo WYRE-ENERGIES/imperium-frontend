@@ -4,17 +4,49 @@ import OTPInput from 'otp-input-react'
 import Layout from '../../../../components/Auth/Forms/AuthForm/PasswordReset/Layout/Layout'
 import icon from '../../../../assets/Auth/Group 18.svg'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { useCustomerOtpMutation } from '../../../../features/slices/auth/customer/customerAuthApiSlice'
+import {
+  useCustomerOtpMutation,
+  useCustomerforgotPasswordMutation,
+} from '../../../../features/slices/auth/customer/customerAuthApiSlice'
 import FormButton from '../../../../components/Auth/Forms/Widgets/FormButton'
 import classes from './Otp.module.scss'
-import { Form } from 'antd'
+import { Form, notification } from 'antd'
 
 const OTP = () => {
   const [OTP, setOTP] = useState('')
   const [errMsg, setErrMsg] = useState('')
-  const [adminOtp, { isLoading }] = useCustomerOtpMutation()
+  const [adminOtp, { isLoading: otpisLoading }] = useCustomerOtpMutation()
   const navigate = useNavigate()
   const email = useLocation()
+  const [customerforgotPassword, { isLoading: resetOtpisLoading }] =
+    useCustomerforgotPasswordMutation()
+  const openNotification = (email) => {
+    notification.success({
+      message: 'OTP sent!',
+      description: `OPT resent to ${email}`,
+    })
+  }
+
+  const handleResendOtp = async () => {
+    try {
+      await customerforgotPassword({
+        email: email?.state?.email,
+      }).unwrap()
+      openNotification(email?.state?.email)
+    } catch (err) {
+      let errorMsg = ''
+      if (err.status === 401) {
+        errorMsg += err?.data?.email?.message || err?.data?.email
+        setErrMsg(errorMsg)
+      } else if (err.status === 400) {
+        setErrMsg(err?.data?.email?.message || err?.data?.email)
+      } else if (err.status === 500) {
+        setErrMsg('Server could not be reached. Try later!')
+      } else {
+        setErrMsg('Check your internet connection')
+      }
+    }
+  }
   const onFinish = async () => {
     try {
       await adminOtp({
@@ -46,9 +78,9 @@ const OTP = () => {
           footer: (
             <div style={{ textAlign: 'center', marginTop: '5px' }}>
               Didn’t receive code?{' '}
-              <Link to={'/forgot-password'} style={{ textDecoration: 'none' }}>
+              <button onClick={handleResendOtp} className={classes.Otp__Resend}>
                 <span style={{ color: '#294620' }}>Resend</span>
-              </Link>
+              </button>
             </div>
           ),
         }}
@@ -78,7 +110,10 @@ const OTP = () => {
             />
           </div>
 
-          <FormButton action={'Continue'} isLoading={isLoading} />
+          <FormButton
+            action={'Continue'}
+            isLoading={otpisLoading || resetOtpisLoading}
+          />
         </Form>
       </Layout>
     </div>

@@ -58,7 +58,7 @@ const AdminSignUp = () => {
               header={'Create Account'}
               tagline={'Let’s get started with imperium today'}
             />
-            <ThirdPartyAuth />
+            <ThirdPartyAuth signIn={false} />
             <Form
               name="admin-login"
               labelCol={8}
@@ -173,7 +173,7 @@ const AdminSignUp = () => {
                 }
                 footer={'Already have an account?'}
                 action={'Log In'}
-                footerlink={'/admin'}
+                footerlink={'/admin/sign-in'}
               />
             </Form>
           </div>

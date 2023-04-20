@@ -71,7 +71,7 @@ const SignUp = () => {
       emailRef.current.style.color = 'green'
     } else {
       emailRef.current.innerHTML = ' Enter a valid email'
-      emailRef.current.style.color = 'gray'
+      emailRef.current.style.color = ''
       setEmail('')
     }
   }, [email, setEmail])
@@ -89,7 +89,7 @@ const SignUp = () => {
               />
             </div>
             <div>
-              <ThirdPartyAuth />
+              <ThirdPartyAuth signIn={false} />
             </div>
             <div>
               <Form

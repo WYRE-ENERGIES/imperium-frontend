@@ -1,4 +1,4 @@
-import { Col, Form, Input, Row } from 'antd'
+import { Col, Form, Input, Row, notification } from 'antd'
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import FormButton from '../../../../components/Auth/Forms/Widgets/FormButton'
@@ -29,7 +29,12 @@ const AccountDetails = () => {
     useCustomerGetDetailsQuery()
   const [customerUpdateDetails, { data, isLoading }] =
     useCustomerUpdateDetailsMutation()
-
+  const openNotification = () => {
+    notification.success({
+      message: 'Successful',
+      description: `Details successfully updated.`,
+    })
+  }
   const onFinish = async (values) => {
     try {
       await customerUpdateDetails({
@@ -39,6 +44,7 @@ const AccountDetails = () => {
         ...userInfo,
         ...values,
       })
+      openNotification()
     } catch (err) {
       setErrMsg(ErrorMessage(err))
     }

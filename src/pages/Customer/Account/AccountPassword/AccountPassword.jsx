@@ -1,4 +1,4 @@
-import { Col, Form, Input, Row } from 'antd'
+import { Col, Form, Input, Row, notification } from 'antd'
 import React, { useState } from 'react'
 import FormButton from '../../../../components/Auth/Forms/Widgets/FormButton'
 import classes from './AccountPassword.module.scss'
@@ -13,12 +13,19 @@ const AccountPassword = () => {
   const [errMsg, setErrMsg] = useState('')
   const [customerChangePassword, { isLoading }] =
     useCustomerChangePasswordMutation()
+  const openNotification = () => {
+    notification.success({
+      message: 'Successful',
+      description: `Password successfully updated.`,
+    })
+  }
   const onFinish = async (values) => {
     console.log('Finish:', values)
     try {
       await customerChangePassword({
         credentials: values,
       }).unwrap()
+      openNotification()
     } catch (err) {
       setErrMsg(ErrorMessage(err))
     }

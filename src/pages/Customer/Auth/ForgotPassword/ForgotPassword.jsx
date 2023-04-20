@@ -13,7 +13,7 @@ const ForgotPasswordPage = () => {
   const openNotification = (email) => {
     notification.success({
       message: 'OTP sent!',
-      description: `OPT has been sent to ${email}`,
+      description: `OTP has been sent to ${email}`,
     })
   }
   const navigate = useNavigate()

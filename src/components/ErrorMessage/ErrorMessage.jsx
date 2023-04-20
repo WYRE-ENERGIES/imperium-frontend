@@ -13,7 +13,7 @@ export const ErrorMessage = (error) => {
       errorMsg = 'Invalid data: Please check your input and try again.'
       break
     case 400:
-      errorMsg = 'Invalid request. Please try again.'
+      errorMsg = 'Invalid credentials. Please provide valid authentication.'
       break
     case 500:
       errorMsg = 'Oops! Something went wrong. Please try again later.'
