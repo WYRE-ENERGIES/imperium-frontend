@@ -13,35 +13,36 @@ import PowerDateTimeEdit from './PowerDateTimeEdit'
 
 const PowerSwitch = ({ device_id, user }) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [shsPowerSchedule, setShsPowerSchedule] = useState({
+  const [directPowerOption, setDirectPowerOption] = useState(true)
+  const [shsData, setShsData] = useState({
     scheduled_time: '',
     schedule_type: '',
     reason: '',
   })
-  const [scheduleTime, setScheduleTime] = useState('')
+  const [scheduledTime, setScheduledTime] = useState('')
   const { data, isLoading } = useGetShsDetailsQuery({ deviceId: device_id })
 
-  const showModal = () => {
+  const scheduledTimeModal = () => {
     setIsModalOpen(true)
   }
-  const handlePowerSchedule = () => {
+  const handleProceedWithSchedule = () => {
     setIsModalOpen(false)
   }
 
-  const handleScheduleTime = (e) => {
+  const handleScheduledTime = (e) => {
     const date = new Date(e?.$d)
-    setScheduleTime(dateTimeConverter(e?.$d))
-    setShsPowerSchedule({
-      ...shsPowerSchedule,
+    setScheduledTime(dateTimeConverter(e?.$d))
+    setShsData({
+      ...shsData,
       scheduled_time: date.toISOString(),
     })
-
-    showModal()
+    scheduledTimeModal()
+    setDirectPowerOption(false)
   }
 
   useEffect(() => {
     if (data) {
-      setScheduleTime(dateTimeConverter(data?.scheduled))
+      setScheduledTime(dateTimeConverter(data?.scheduled))
     }
   }, [data])
 
@@ -51,15 +52,16 @@ const PowerSwitch = ({ device_id, user }) => {
         <PowerButton
           action="off"
           color={'#B42318'}
-          device={device_id}
+          device_id={device_id}
           user={user}
-          time={scheduleTime || null}
-          shsPowerSchedule={shsPowerSchedule}
-          setShsPowerSchedule={setShsPowerSchedule}
+          scheduledTime={scheduledTime || null}
+          shsData={shsData}
+          directPowerOption={directPowerOption}
         />
       ),
       key: '0',
     },
+
     {
       label: (
         <p
@@ -82,10 +84,10 @@ const PowerSwitch = ({ device_id, user }) => {
           action="on"
           color={'#027A48'}
           user={user}
-          device={device_id}
-          time={scheduleTime || null}
-          shsPowerSchedule={shsPowerSchedule}
-          setShsPowerSchedule={setShsPowerSchedule}
+          device_id={device_id}
+          scheduledTime={scheduledTime || null}
+          shsData={shsData}
+          directPowerOption={directPowerOption}
         />
       ),
       key: '1',
@@ -94,14 +96,14 @@ const PowerSwitch = ({ device_id, user }) => {
 
   const powerSchedule = [
     {
-      label: scheduleTime ? (
+      label: scheduledTime ? (
         <PowerDateTimeEdit
-          scheduleTime={scheduleTime}
+          scheduledTime={scheduledTime}
           setIsModalOpen={setIsModalOpen}
-          setScheduleTime={setScheduleTime}
+          setScheduledTime={setScheduledTime}
         />
       ) : (
-        <PowerDatePicker handleScheduleTime={handleScheduleTime} />
+        <PowerDatePicker handleScheduledTime={handleScheduledTime} />
       ),
     },
   ]
@@ -140,10 +142,10 @@ const PowerSwitch = ({ device_id, user }) => {
         >
           <button>Power Schedule </button>
         </Dropdown>
-        {scheduleTime && (
+        {scheduledTime && (
           <Modal
             open={isModalOpen}
-            onOk={handlePowerSchedule}
+            onOk={handleProceedWithSchedule}
             onCancel={() => setIsModalOpen(false)}
             className={classes.PowerSwitch__Modal}
             width={400}
@@ -156,12 +158,12 @@ const PowerSwitch = ({ device_id, user }) => {
               <p>
                 If you proceed with this, the power supply in your house from
                 Imperium Solar Housing System will be scheduled to power on or
-                power off at {scheduleTime}?{' '}
+                power off at {scheduledTime}?{' '}
               </p>
 
               <div className={classes.PowerSwitch__Confirm}>
-                <button onClick={handlePowerSchedule}>Cancel</button>
-                <button onClick={handlePowerSchedule}>Proceed</button>
+                <button onClick={handleProceedWithSchedule}>Cancel</button>
+                <button onClick={handleProceedWithSchedule}>Proceed</button>
               </div>
             </div>
           </Modal>

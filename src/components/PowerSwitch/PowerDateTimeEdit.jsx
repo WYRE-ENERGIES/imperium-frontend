@@ -2,9 +2,9 @@ import React from 'react'
 import classes from './PowerSwitch.module.scss'
 import { Divider } from 'antd'
 const PowerDateTimeEdit = ({
-  scheduleTime,
+  scheduledTime,
   setIsModalOpen,
-  setScheduleTime,
+  setScheduledTime,
 }) => {
   return (
     <div>
@@ -14,10 +14,11 @@ const PowerDateTimeEdit = ({
           textAlign: 'center',
           paddingTop: '10px',
           color: '#606062',
+          fontSize: '15px',
         }}
       >
         Would you like to edit the scheduled time created for{' '}
-        <strong>{scheduleTime}</strong>{' '}
+        <strong>{scheduledTime}</strong>{' '}
       </p>
       <Divider />
       <div className={classes.PowerSwitch__EditShutDown}>
@@ -35,7 +36,7 @@ const PowerDateTimeEdit = ({
           Cancel
         </button>
         <button
-          onClick={() => setScheduleTime('')}
+          onClick={() => setScheduledTime('')}
           style={{
             width: '134px',
             height: '40px',

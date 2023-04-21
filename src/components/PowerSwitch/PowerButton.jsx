@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useAdminShsPowerScheduleMutation } from '../../features/slices/shs/admin/adminShsSlice'
 import { Modal, notification } from 'antd'
 import { useCustomerShsPowerScheduleMutation } from '../../features/slices/shs/customer/customerShsSlice'
-import { getItemFromLocalStorage } from '../../utils/helpers'
+import { dateTimeConverter, getItemFromLocalStorage } from '../../utils/helpers'
 import { ErrorMessage } from '../ErrorMessage/ErrorMessage'
 import Error from '../ErrorMessage/Error'
 import classes from './PowerSwitch.module.scss'
@@ -12,12 +12,31 @@ import scheduleIcon from '../../../src/assets/widget-icons/scheduleIcon.svg'
 const PowerButton = ({
   action,
   color,
-  device,
-  time,
+  device_id,
+  scheduledTime,
   user,
-  shsPowerSchedule,
-  setShsPowerSchedule,
+  shsData,
+  directPowerOption,
 }) => {
+  const actionColor = action === 'off' ? '#B42318' : '#027A48'
+  const actionIcon = action === 'off' ? cautionIcon : scheduleIcon
+
+  const dateTimeNow = new Date()
+  const scheduleShsPowerToNow = dateTimeNow.toISOString()
+
+  const client_id = getItemFromLocalStorage('current_client')
+  const [powerBtnModalOpen, setPowerBtnModalOpen] = useState(false)
+  const [errMsg, setErrMsg] = useState('')
+  const [deviceId, setDeviceId] = useState('')
+  const [powerOption, setPowerOption] = useState(null)
+
+  const [adminShsPowerSchedule, { data, isLoading: isLoadingAdminData }] =
+    useAdminShsPowerScheduleMutation()
+  const [customerShsPowerSchedule, { isLoading: isLoadingCustomerData }] =
+    useCustomerShsPowerScheduleMutation()
+  const showPowerModal = () => {
+    setPowerBtnModalOpen(true)
+  }
   const openNotification = (date, action) => {
     notification.success({
       message: 'Shs Power Schedule',
@@ -25,37 +44,32 @@ const PowerButton = ({
     })
   }
 
-  const client_id = getItemFromLocalStorage('current_client')
-  const [powerBtnModalOpen, setPowerBtnModalOpen] = useState(false)
-  const [errMsg, setErrMsg] = useState('')
-  const [selectedDate, setSelectedDate] = useState(false)
-  const [deviceId, setDeviceId] = useState('')
-  const [adminShsPowerSchedule, { isLoading: isLoadingAdminData }] =
-    useAdminShsPowerScheduleMutation()
-  const [customerShsPowerSchedule, { isLoading: isLoadingCustomerData }] =
-    useCustomerShsPowerScheduleMutation()
-  const showPowerModal = () => {
-    setPowerBtnModalOpen(true)
-  }
-
   const handlePowerOption = async (action) => {
+    const data = powerOption
+      ? {
+          ...shsData,
+          schedule_type: action,
+          scheduled_time: scheduleShsPowerToNow,
+        }
+      : { ...shsData, schedule_type: action }
+
     if (user === 'client') {
       try {
         await customerShsPowerSchedule({
-          shsPowerSchedule,
+          data,
           deviceId,
           client_id,
         }).unwrap()
         setPowerBtnModalOpen(false)
-        openNotification(selectedDate, action)
+        openNotification(dateTimeConverter(data?.scheduled_time), action)
       } catch (error) {
         setErrMsg(ErrorMessage(error))
       }
-    } else {
+    } else if (user === 'admin') {
       try {
-        await adminShsPowerSchedule({ shsPowerSchedule, deviceId }).unwrap()
+        await adminShsPowerSchedule({ data, deviceId }).unwrap()
         setPowerBtnModalOpen(false)
-        openNotification(selectedDate, action)
+        openNotification(dateTimeConverter(data?.scheduled_time), action)
       } catch (error) {
         setErrMsg(ErrorMessage(error))
       }
@@ -65,13 +79,10 @@ const PowerButton = ({
     setPowerBtnModalOpen(false)
   }
 
-  const actionColor = action === 'off' ? '#B42318' : '#027A48'
-  const actionIcon = action === 'off' ? cautionIcon : scheduleIcon
   useEffect(() => {
-    setDeviceId(device)
-    setSelectedDate(time)
-    setShsPowerSchedule({ ...shsPowerSchedule, schedule_type: action })
-  }, [device, time])
+    setDeviceId(device_id)
+    setPowerOption(directPowerOption)
+  }, [directPowerOption])
 
   return (
     <div>
@@ -101,7 +112,8 @@ const PowerButton = ({
           <p>
             If you proceed with this, the power supply in your house from
             Imperium Solar Housing System will{' '}
-            <span style={{ color: actionColor }}>power {action}</span> at {time}
+            <span style={{ color: actionColor }}>power {action}</span> at{' '}
+            {directPowerOption ? dateTimeConverter(dateTimeNow) : scheduledTime}
           </p>
           <div className={classes.PowerSwitch__Confirm}>
             <button onClick={handleCancel}>Cancel</button>
@@ -110,7 +122,11 @@ const PowerButton = ({
                 handlePowerOption(action)
               }}
             >
-              Proceed
+              {isLoadingAdminData
+                ? 'Loading...'
+                : isLoadingCustomerData
+                ? 'Loading...'
+                : 'Proceed'}
             </button>
           </div>
         </div>

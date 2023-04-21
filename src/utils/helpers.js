@@ -57,7 +57,6 @@ export const getUserFullName = () => {
 }
 
 const dateTimeOption = {
-  timeZone: 'Africa/Accra',
   hour12: true,
   hour: 'numeric',
   minute: 'numeric',

@@ -131,6 +131,8 @@ const Overview = () => {
     regionId,
   })
 
+  console.log(solarData)
+
   const {
     isFetching: isSectorFetching,
     isSuccess: isSectorSuccess,
@@ -162,8 +164,6 @@ const Overview = () => {
   } = useGetActiveUsersQuery({
     filterBy: globalFilter,
   })
-
-  console.log('activeUserData', activeUserData)
 
   useEffect(() => {
     if (isSectorFetching) return

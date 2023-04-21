@@ -13,6 +13,7 @@ import Shs from '../../../components/ShsDeviceDetail/Shs'
 
 const ShsDevice = () => {
   const { id } = useParams()
+
   const [panels, setPanels] = useState([
     {
       device_name: '300',
@@ -54,14 +55,20 @@ const ShsDevice = () => {
   useEffect(() => {
     setPerformance(performanceData)
     setEnergyStatistics(energyStatisticsData)
-    setclient(performanceData?.device_details.device_name || 'Device not found')
+    setclient(performanceData?.device_details?.device_name)
   }, [performanceData, energyStatisticsData])
 
   return (
     <AdminPageLayout>
       <Shs
-        id={id}
-        client={client}
+        device_id={id}
+        client={
+          performanceLoading
+            ? 'loading device...'
+            : client
+            ? client
+            : 'No device found'
+        }
         user={'admin'}
         performance={performance}
         performanceLoading={performanceLoading}
