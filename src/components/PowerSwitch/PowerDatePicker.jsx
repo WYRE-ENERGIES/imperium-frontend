@@ -1,7 +1,7 @@
 import { DatePicker, Space } from 'antd'
 import React from 'react'
 import classes from './PowerSwitch.module.scss'
-const PowerDatePicker = ({ handleScheduleTime }) => {
+const PowerDatePicker = ({ handleScheduledTime }) => {
   const date = new Date()
 
   return (
@@ -16,7 +16,7 @@ const PowerDatePicker = ({ handleScheduleTime }) => {
           showNow: true,
         }}
         format="DD-MM-YYYY HH:mm"
-        onOk={handleScheduleTime}
+        onOk={handleScheduledTime}
         disabledDate={(current) => {
           return current.isBefore(date)
         }}

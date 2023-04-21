@@ -3,16 +3,16 @@ import { Tag } from 'antd'
 import React from 'react'
 import PageBreadcrumb from '../PageBreadcrumb/PageBreadcrumb'
 import PowerSwitch from '../PowerSwitch/PowerSwitch'
-import caretdown from '../../assets/widget-icons/caretdown.svg'
 import classes from './Shs.module.scss'
 import Loading from '../Loading/Loading'
 import Performance from './Performance'
 import Panel from './Panel'
 
 import ShsChart from './ShsChart'
+import { RxCaretDown } from 'react-icons/rx'
 
 const Shs = ({
-  id,
+  device_id,
   client,
   performance,
   performanceLoading,
@@ -52,14 +52,14 @@ const Shs = ({
     <section className={classes.Shs}>
       <section className={classes.Shs__BreadCrumb}>
         {' '}
-        <div
-          style={{ display: 'flex' }}
-          className={classes.Shs__PageBreadcrumb}
-        >
+        <div className={classes.Shs__PageBreadcrumb}>
           <PageBreadcrumb title={client} items={['Overview', '...', client]} />
-          <img src={caretdown} alt="caret" srcSet="" />
+
+          <div className={classes.Shs__PageBreadcrumbCaret}>
+            <RxCaretDown size={70} />
+          </div>
         </div>
-        <PowerSwitch device_id={id} user={user} />
+        <PowerSwitch device_id={device_id} user={user} />
       </section>
       <div className={classes.Shs__GridView}>
         <section className={classes.Shs__EnergyPerfomance}>
