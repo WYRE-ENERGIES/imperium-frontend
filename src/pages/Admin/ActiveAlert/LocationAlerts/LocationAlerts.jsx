@@ -6,7 +6,6 @@ import classes from './LocationAlerts.module.scss'
 import DataTable from '../../../../components/Table/DataTable'
 import ClientData from './ClientData'
 const LocationAlerts = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false)
   const [locationData, setLocationData] = useState([])
   const [pageNum, setPageNum] = useState(1)
   const [search, setSearch] = useState('')
@@ -58,9 +57,9 @@ const LocationAlerts = () => {
 
   return (
     <AdminPageLayout>
-      <section>
+      <section className={classes.Location}>
         {' '}
-        <section className={classes.ActiveAlert__CreateActiveAlerts}>
+        <section>
           <div>
             <PageBreadcrumb
               title={'Active Alert'}
@@ -70,7 +69,7 @@ const LocationAlerts = () => {
         </section>
         <section>
           {' '}
-          <section className={classes.ActiveAlert__ActiveAlertLocationTable}>
+          <section className={classes.Location__ActiveAlertLocationTable}>
             <DataTable
               title={'Location Alerts'}
               columns={columns}

@@ -23,7 +23,7 @@ const OTP = () => {
   const openNotification = (email) => {
     notification.success({
       message: 'OTP sent!',
-      description: `OPT resent to ${email}`,
+      description: `OTP resent to ${email}`,
     })
   }
 
