@@ -90,7 +90,7 @@ const VoltageCurrent = () => {
 
   const { data: dataStatistics, isLoading: statisticsisLoading } =
     useGetAdminVoltageCurrentStatisticsQuery()
-
+  console.log('dataStatistics : ', dataStatistics)
   const {
     data: dataTable,
     isLoading: tableisLoading,
@@ -107,22 +107,24 @@ const VoltageCurrent = () => {
   const handleTableFilter = (value) => {
     setTableFilter(value)
   }
-  console.log(chartData)
   useEffect(() => {
+    console.log('chartData : ', chartData)
+    console.log('dataStatistics : ', dataStatistics)
     setAnalytics(dataAnalytics)
     setTable(dataTable)
 
     setChartData([
       {
         name: 'Current',
-        data: DataStatistics(dataStatistics, 'month_current'),
+        data: DataStatistics(dataStatistics, 'month_current') || [],
       },
       {
         name: 'Voltage',
-        data: DataStatistics(dataStatistics, 'month_voltage'),
+        data: DataStatistics(dataStatistics, 'month_voltage') || [],
       },
     ])
   }, [dataAnalytics, dataTable, dataStatistics, pageNum, filter])
+
   const widgets = [
     {
       id: 1,
@@ -163,76 +165,22 @@ const VoltageCurrent = () => {
   ))
   const TableTitle = () => (
     <div className={classes.VoltageCurrent__TableHeader}>
-      <p
+      <Tag
         style={{
-          fontWeight: '500',
-          fontSize: '18px',
+          backgroundColor: '#f0f7ed',
+          borderRadius: '16px',
+          color: '#497A38',
+          height: '24px',
           display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          fontSize: '12px',
+          lineHeight: '20px',
+          margin: '4px 10px',
         }}
       >
-        Voltage & Current Table{' '}
-        <Tag
-          style={{
-            backgroundColor: '#f0f7ed',
-            borderRadius: '16px',
-            color: '#497A38',
-            height: '24px',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            fontSize: '12px',
-            lineHeight: '20px',
-            margin: '4px 10px',
-          }}
-        >
-          KWH
-        </Tag>
-      </p>
-      <div className={classes.VoltageCurrent__TableHeaderFilter}>
-        <div>
-          <Input
-            placeholder="Search"
-            size="large"
-            onChange={TableSearch}
-            prefix={prefix}
-            className={classes.VoltageCurrent__SearchAndFilter}
-          />
-        </div>
-        <div className={classes.VoltageCurrent__TableFilter}>
-          <Space className={classes.VoltageCurrent__TableFilterInput}>
-            <div className={classes.VoltageCurrent__TablePrefixFilter}>
-              <MdFilterList size={20} />
-              <p>Filter</p>
-            </div>
-            <Select
-              className={classes.VoltageCurrent__StatsFormSelect}
-              defaultValue="Monthly"
-              style={{
-                width: 100,
-                border: 'none',
-                color: 'white',
-              }}
-              options={[
-                {
-                  value: 'yearly',
-                  label: 'Yearly',
-                },
-                {
-                  value: 'monthly',
-                  label: 'Monthly',
-                },
-                {
-                  value: 'weekly',
-                  label: 'Weekly',
-                },
-              ]}
-              dropdownStyle={{ background: 'white' }}
-              showArrow={false}
-              onChange={handleTableFilter}
-            />
-          </Space>
-        </div>
-      </div>
+        KWH
+      </Tag>
     </div>
   )
 
@@ -347,11 +295,16 @@ const VoltageCurrent = () => {
             <Loading data={'Table'} />
           ) : table ? (
             <DataTable
-              title={TableTitle}
+              title={{
+                title: ' Voltage & Current Table',
+                unit: <TableTitle />,
+              }}
               columns={columns}
               dataSource={table}
               setPageNum={setPageNum}
               isLoading={tableisFetching}
+              searchTable={setSearch}
+              url={'imperium-admin/active-alert/export'}
             />
           ) : (
             'No records found'

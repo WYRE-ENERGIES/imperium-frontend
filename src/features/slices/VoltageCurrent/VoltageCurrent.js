@@ -20,7 +20,7 @@ export const voltageCurrentSlice = apiSlice.injectEndpoints({
       transformResponse: (response, meta, arg) => {
         return response
       },
-      transformErrorResponse: (response, meta, arg) => response.status,
+      transformErrorResponse: (response, meta, arg) => response,
     }),
     getAdminVoltageCurrentTable: build.query({
       query: ({ page, search, filter }) => {

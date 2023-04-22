@@ -92,6 +92,9 @@
       color: #497a38 !important;
     }
   }
+  &__TableHeaderAndUnit {
+    display: flex;
+  }
 }
 
 @media only screen and (max-width: 768px) {
