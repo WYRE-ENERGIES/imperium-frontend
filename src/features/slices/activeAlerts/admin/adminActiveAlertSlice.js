@@ -95,6 +95,7 @@ export const activerAlertsSlice = apiSlice.injectEndpoints({
       query: () => {
         return {
           url: `${BASE_URL}export/`,
+          // responseType: 'text/csv',
         }
       },
       transformResponse: (response, meta, arg) => {

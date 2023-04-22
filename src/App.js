@@ -59,13 +59,13 @@ const UserInvitePage = lazy(() =>
 
 // Admin Routes
 const AdminActiveAlert = lazy(() =>
-  import('./pages/Admin/ActiveAlert/ActiveAlert'),
+  import('./pages/Admin/ActiveAlert/ActiveAlerts/ActiveAlert'),
 )
 const AdminActiveAlertCreated = lazy(() =>
-  import('./pages/Admin/ActiveAlert/CreatedAlerts'),
+  import('./pages/Admin/ActiveAlert/CreatedAlerts/CreatedAlerts'),
 )
 const AdminActiveAlertLocation = lazy(() =>
-  import('./pages/Admin/ActiveAlert/LocationAlerts'),
+  import('./pages/Admin/ActiveAlert/LocationAlerts/LocationAlerts'),
 )
 
 const AdminForgotPassword = lazy(() =>

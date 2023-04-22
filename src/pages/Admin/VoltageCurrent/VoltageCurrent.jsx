@@ -66,15 +66,27 @@ const prefix = (
 )
 
 const VoltageCurrent = () => {
-  const [chartData, setChartData] = useState(null)
+  const [chartData, setChartData] = useState([
+    {
+      name: 'Current',
+      data: [],
+    },
+    {
+      name: 'Voltage',
+      data: [],
+    },
+  ])
   const [filter, setFilter] = useState('yearly')
   const [tableFilter, setTableFilter] = useState('monthly')
   const [analytics, setAnalytics] = useState(null)
   const [pageNum, setPageNum] = useState(1)
   const [search, setSearch] = useState('')
   const [table, setTable] = useState([])
-  const { data: dataAnalytics, isLoading: DataAnaylyticsisLoading } =
-    useGetAdminVoltageCurrentAnalyticsQuery({ filter: filter })
+  const {
+    data: dataAnalytics,
+    isLoading: DataAnaylyticsisLoading,
+    isFetching: dataAnalyticsisFetching,
+  } = useGetAdminVoltageCurrentAnalyticsQuery({ filter: filter })
 
   const { data: dataStatistics, isLoading: statisticsisLoading } =
     useGetAdminVoltageCurrentStatisticsQuery()
@@ -95,7 +107,7 @@ const VoltageCurrent = () => {
   const handleTableFilter = (value) => {
     setTableFilter(value)
   }
-
+  console.log(chartData)
   useEffect(() => {
     setAnalytics(dataAnalytics)
     setTable(dataTable)
@@ -111,7 +123,7 @@ const VoltageCurrent = () => {
       },
     ])
   }, [dataAnalytics, dataTable, dataStatistics, pageNum, filter])
-  const adminVolatgeCurrentWidgetsData = [
+  const widgets = [
     {
       id: 1,
       icon: SunWidgetIcon,
@@ -136,9 +148,7 @@ const VoltageCurrent = () => {
       value: analytics?.kw ? analytics?.kw?.toLocaleString() : 0,
       valueCurrency: 'KWh',
     },
-  ]
-
-  const widgets = adminVolatgeCurrentWidgetsData.map((widget) => (
+  ].map((widget) => (
     <Widget
       key={widget.id}
       Icon={widget.icon}
@@ -147,6 +157,8 @@ const VoltageCurrent = () => {
       value={widget.value}
       valueCurrency={widget.valueCurrency}
       valuePercentage={widget.valuePercentage}
+      isLoading={DataAnaylyticsisLoading}
+      isFetching={dataAnalyticsisFetching}
     />
   ))
   const TableTitle = () => (
@@ -241,6 +253,7 @@ const VoltageCurrent = () => {
             selectFilterBy={(value) => setFilter(value)}
             filterBy={filter}
           />
+          {/* )} */}
         </section>
 
         <div className={classes.VoltageCurrent__widgets}>{widgets}</div>

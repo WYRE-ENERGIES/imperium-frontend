@@ -1,21 +1,106 @@
-import { Spin, Table } from 'antd'
+import { Input, Select, Space, Spin, Table } from 'antd'
 import React from 'react'
-import { LoadingOutlined } from '@ant-design/icons'
-
+import { LoadingOutlined, SearchOutlined } from '@ant-design/icons'
 import TableFooter from '../TableFooter/TableFooter'
-import Loading from '../Loading/Loading'
+import classes from './Table.module.scss'
+import { MdFilterList } from 'react-icons/md'
+import ExportFileButton from '../ExportButton/ExportFileButton'
 
-const DataTable = ({ dataSource, columns, title, setPageNum, isLoading }) => {
+const DataTable = ({
+  dataSource,
+  columns,
+  title,
+  setPageNum,
+  isLoading,
+  sortTable,
+  searchTable,
+  url,
+}) => {
   const loadingIcon = (
     <LoadingOutlined
       style={{ fontSize: 24, marginRight: 10, color: '#66ab4f' }}
     />
   )
+  const prefix = (
+    <SearchOutlined
+      style={{
+        fontSize: 16,
+        color: '#808080',
+      }}
+    />
+  )
+  const ativeAlertTableTitle = () => (
+    <section className={classes.DataTable__Header}>
+      <div className={classes.DataTable__TableHeader}>
+        <p style={{ fontWeight: '500', fontSize: '18px' }}>{title}</p>
+        <div className={classes.DataTable__TableHeaderFilter}>
+          <div>
+            <Input
+              placeholder="Search"
+              size="large"
+              onChange={(e) => searchTable(e.target.value)}
+              prefix={prefix}
+              className={classes.DataTable__SearchAndFilter}
+            />
+          </div>
+          {sortTable ? (
+            <div className={classes.DataTable__TableFilter}>
+              <Space className={classes.DataTable__TableFilterInput}>
+                <div className={classes.DataTable__TablePrefixFilter}>
+                  <MdFilterList size={20} />
+                  <p>Sort by</p>
+                </div>
+                <Select
+                  className={classes.DataTable__FormSelect}
+                  defaultValue=""
+                  style={{
+                    width: 100,
+                    border: 'none',
+                    color: 'white',
+                  }}
+                  options={[
+                    {
+                      value: '',
+                      label: 'All',
+                    },
+                    {
+                      value: 'RESOLVED',
+                      label: 'RESOLVED',
+                      style: {
+                        color: '#497A38',
+                      },
+                    },
+                    {
+                      value: 'UNRESOLVED',
+                      label: 'UNRESOLVED',
+                      style: {
+                        color: 'rgb(180, 35, 24)',
+                      },
+                    },
+                  ]}
+                  dropdownStyle={{ background: 'white' }}
+                  showArrow={false}
+                  onChange={(value) => {
+                    sortTable(value)
+                  }}
+                />
+              </Space>
+            </div>
+          ) : (
+            ''
+          )}
+          <div className={classes.DataTable__TableFilterExport}>
+            <ExportFileButton url={url} />
+          </div>
+        </div>
+      </div>
+    </section>
+  )
   return (
-    <div>
+    <div className={classes.DataTable}>
       <Table
         scroll={{ x: '100%' }}
-        title={title}
+        title={ativeAlertTableTitle}
         columns={columns}
         dataSource={dataSource?.results}
         footer={() => (
