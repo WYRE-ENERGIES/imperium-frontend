@@ -1,0 +1,86 @@
+@import '../../../../components/Auth/Forms/variables.module';
+.Notifcation {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  width: 70%;
+
+  &__ActiveAlertNotification {
+    height: auto;
+    background: #ffffff;
+    border: 1px solid #dcecd5;
+    border-radius: 8px;
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+    flex: 1;
+    padding: 20px;
+  }
+  &__ActiveAlertNotificationHeader {
+    display: flex;
+    justify-content: space-between;
+    h1 {
+      font-weight: 500;
+      font-size: 18px;
+      line-height: 28px;
+      color: #18181b;
+    }
+  }
+
+  &__ActiveAlertNotificationList {
+    margin-top: 20px;
+  }
+
+  &__ActiveAlertNotificationList > div {
+    background: #fef3f2;
+    border: 1px solid #dcecd5;
+    border-radius: 16px;
+    padding: 15px 20px 10px 20px;
+    height: auto;
+    margin: 15px 0;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    p:nth-child(2n-1) {
+      font-weight: 500;
+      font-size: 16px;
+    }
+    p:nth-child(2n) {
+      font-weight: 400;
+      font-size: 14px;
+      color: #454545;
+      line-height: 20px;
+    }
+  }
+
+  &__ActiveAlertNotificationList > div > span {
+    float: right;
+  }
+  &__ActiveAlertNotificationViewBtn {
+    display: flex;
+    justify-content: flex-end;
+    a {
+      background: #ffffff;
+      border: 1px solid #84bb72;
+      box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05);
+      border-radius: 8px;
+      padding: 8px 14px;
+      color: #84bb72;
+      &:hover {
+        background: #385e2b;
+        color: white;
+        transition: 0.5s all;
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 320px) {
+  .Notifcation {
+    width: 100%;
+    margin-top: -15px;
+  }
+}

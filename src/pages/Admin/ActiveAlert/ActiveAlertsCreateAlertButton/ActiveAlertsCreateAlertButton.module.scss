@@ -1,0 +1,94 @@
+@import '../../../../components/Auth/Forms/variables.module';
+.CreatedAlertModal {
+  button {
+    display: flex;
+    align-items: center;
+    width: 114px;
+    height: 36px;
+    background: #385e2b;
+    border: 1px solid #385e2b;
+    box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05);
+    border-radius: 8px;
+    color: white;
+    font-weight: 600;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+  &__AddAlertInput {
+    background: #f2f2f2;
+    border: 1px solid #c4c4c4;
+    box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05);
+    border-radius: 8px;
+    padding: 10px 10px;
+
+    &:hover {
+      offset: $offset;
+      border: 1px solid $light-green !important;
+      box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05), 0px 0px 0px 4px #f0f7ed;
+    }
+    &:focus-within {
+      offset: $offset;
+      border: 1px solid $light-green !important;
+      box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05), 0px 0px 0px 4px #f0f7ed;
+    }
+  }
+  &__AddAlertInput {
+    background: #f2f2f2;
+    border: 1px solid #c4c4c4;
+    box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05);
+    border-radius: 8px;
+    padding: 10px 10px;
+
+    &:hover {
+      offset: $offset;
+      border: 1px solid $light-green !important;
+      box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05), 0px 0px 0px 4px #f0f7ed;
+    }
+    &:focus-within {
+      offset: $offset;
+      border: 1px solid $light-green !important;
+      box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05), 0px 0px 0px 4px #f0f7ed;
+    }
+  }
+  &__AddAlertBtn {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    button {
+      height: 44px;
+      flex: 1;
+      box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05);
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 16px;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+    button:nth-child(1) {
+      background: #ffffff;
+      border: 1px solid #c4c4c4;
+    }
+    button:nth-child(2) {
+      background: #385e2b;
+      border: 1px solid #385e2b;
+      color: white;
+    }
+  }
+  &__ActiveAlertAddAlertHeaderSection {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  &__ActiveAlertAddAlertHeader {
+    margin-top: -10px;
+    background: #dcecd5;
+    border: 8px solid #f0f7ed;
+    border-radius: 28px;
+    height: 48px;
+    padding: 9px;
+    width: 48px;
+  }
+}

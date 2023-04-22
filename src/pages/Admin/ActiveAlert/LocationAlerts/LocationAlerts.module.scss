@@ -1,0 +1,32 @@
+.ClientData {
+  &__ActiveAlertClient {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    gap: 10px;
+    p {
+      font-weight: 500;
+      margin-bottom: -5px;
+      color: #363636;
+    }
+    span {
+      color: #606062;
+    }
+  }
+  &__ModalContentInit {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    & > div {
+      background: #dcecd5;
+      border-radius: 30px;
+      font-weight: 400;
+      font-size: 16px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 40px;
+      height: 40px;
+    }
+  }
+}
