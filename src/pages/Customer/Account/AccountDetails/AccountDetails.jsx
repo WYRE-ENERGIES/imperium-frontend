@@ -27,6 +27,7 @@ const AccountDetails = () => {
   const [errMsg, setErrMsg] = useState('')
   const { data: userData, isLoading: detailLoading } =
     useCustomerGetDetailsQuery()
+
   const [customerUpdateDetails, { data, isLoading }] =
     useCustomerUpdateDetailsMutation()
   const openNotification = () => {

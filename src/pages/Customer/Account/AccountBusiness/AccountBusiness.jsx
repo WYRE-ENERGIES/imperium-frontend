@@ -84,8 +84,8 @@ const AccountBusiness = () => {
 
   const [customerBusiness, { isLoading: updatingBusiness }] =
     useCustomerBusinessMutation()
-  const { data, isLoading: gettingBusiness } = useCustomerGetBusinessQuery()
-
+  const { userdata, isLoading: gettingBusiness } = useCustomerGetBusinessQuery()
+  console.log(userdata)
   const [errMsg, setErrMsg] = useState('')
   const [businessName, setBusinessName] = useState('')
   const [companyLogo, setCompanyLogo] = useState(null)
@@ -106,16 +106,16 @@ const AccountBusiness = () => {
     <Account type={'business'} content={<BusinessForm />}>
       <div className={classes.AccountBusiness}>
         {' '}
-        <Form
-          form={form}
-          layout="vertical"
-          onFinish={onFinish}
-          requiredMark="optional"
-          initialValues={{ ...data }}
-        >
-          {gettingBusiness ? (
-            <Loading data={'business data'} />
-          ) : data ? (
+        {gettingBusiness ? (
+          <Loading data={'business data'} />
+        ) : userdata ? (
+          <Form
+            form={form}
+            layout="vertical"
+            onFinish={onFinish}
+            requiredMark="optional"
+            initialValues={{ ...userdata }}
+          >
             <div className={classes.AccountBusiness__Form}>
               <Col>
                 {' '}
@@ -165,11 +165,11 @@ const AccountBusiness = () => {
                   </Col>
                 </Form.Item>
               </Col>
-            </div>
-          ) : (
-            'No data found for this user'
-          )}
-        </Form>
+            </div>{' '}
+          </Form>
+        ) : (
+          'No data found for this user'
+        )}
       </div>
     </Account>
   )

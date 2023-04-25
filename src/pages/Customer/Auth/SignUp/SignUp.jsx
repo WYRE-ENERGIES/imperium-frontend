@@ -20,6 +20,7 @@ import Error from '../../../../components/ErrorMessage/Error'
 import { useRef } from 'react'
 import validator from 'validator'
 import { ExclamationCircleOutlined } from '@ant-design/icons'
+import { passwordLengthValidation } from '../../../../components/RegEx/RegEx'
 const SignUp = () => {
   const formDescription = {
     image: imageDesc,
@@ -34,16 +35,6 @@ const SignUp = () => {
   const [emailValid, setEmailValid] = useState(false)
   const [customerRegister, { isLoading }] = useCustomerRegisterMutation()
   const navigate = useNavigate()
-  const handlePasswordLength = (e) => {
-    if (e.target.value.length < 8) {
-      pwdRef.current.style.color = 'red'
-      setPwdValid(false)
-    } else if (e.target.value.length >= 8) {
-      pwdRef.current.style.color = 'green'
-      pwdRef.current.innerHTML = 'Password valid !'
-      setPwdValid(true)
-    }
-  }
 
   const handleEmailValidation = (e) => {
     if (validator.isEmail(e.target.value)) {
@@ -179,7 +170,9 @@ const SignUp = () => {
                   ]}
                 >
                   <Input.Password
-                    onChange={handlePasswordLength}
+                    onChange={(e) =>
+                      passwordLengthValidation(e, pwdRef, setPwdValid)
+                    }
                     className={classes.SignUpPage__Password}
                     placeholder="Enter a password"
                     style={{ marginTop: '-1px' }}

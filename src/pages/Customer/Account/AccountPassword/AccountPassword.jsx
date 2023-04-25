@@ -7,6 +7,7 @@ import passwordKeyIcon from '../../../../assets/Auth/passwordIcon.svg'
 import { useCustomerChangePasswordMutation } from '../../../../features/slices/auth/customer/customerAuthApiSlice'
 import { ErrorMessage } from '../../../../components/ErrorMessage/ErrorMessage'
 import Error from '../../../../components/ErrorMessage/Error'
+import { useRef } from 'react'
 
 const AccountPassword = () => {
   const [form] = Form.useForm()
