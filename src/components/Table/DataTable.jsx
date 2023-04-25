@@ -32,7 +32,17 @@ const DataTable = ({
   const ativeAlertTableTitle = () => (
     <section className={classes.DataTable__Header}>
       <div className={classes.DataTable__TableHeader}>
-        <p style={{ fontWeight: '500', fontSize: '18px' }}>{title}</p>
+        <div className={classes.DataTable__TableHeaderAndUnit}>
+          {' '}
+          <p style={{ fontWeight: '500', fontSize: '18px' }}>
+            {title?.title ? title?.title : title}
+          </p>
+          {title?.unit ? (
+            <p style={{ fontWeight: '500', fontSize: '18px' }}>{title?.unit}</p>
+          ) : (
+            ''
+          )}
+        </div>
         <div className={classes.DataTable__TableHeaderFilter}>
           <div>
             <Input

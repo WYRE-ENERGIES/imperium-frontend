@@ -8,7 +8,14 @@ import classes from './SideDrawer.module.scss'
 import { getUserFullName } from '../../utils/helpers'
 import styles from '../SideBar/Sidebar.module.scss'
 
-const SideDrawer = ({ isAdmin, show, toggle, menuItems, bottomItems }) => {
+const SideDrawer = ({
+  isAdmin,
+  show,
+  toggle,
+  menuItems,
+  bottomItems,
+  auth,
+}) => {
   const [showSwitchAccount, setShowSwitchAccount] = useState(false)
 
   const toggleActivateShsModal = () => {
@@ -50,11 +57,15 @@ const SideDrawer = ({ isAdmin, show, toggle, menuItems, bottomItems }) => {
           }}
         />
         <Divider />
-        <Footer
-          userName={getUserFullName()}
-          toggleActivateShsModal={toggleActivateShsModal}
-          isAdmin={isAdmin}
-        />
+        {auth ? (
+          <Footer
+            userName={getUserFullName()}
+            toggleActivateShsModal={toggleActivateShsModal}
+            isAdmin={isAdmin}
+          />
+        ) : (
+          ''
+        )}
       </div>
 
       <Suspense fallback={<h4>Loading...</h4>}>

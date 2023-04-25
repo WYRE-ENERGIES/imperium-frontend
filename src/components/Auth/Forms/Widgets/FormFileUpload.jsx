@@ -16,24 +16,13 @@ const FormFileUpload = ({ fileName, fileSize, fileUploadingProgress }) => {
         </div>
         <div className={classes.FormFileUpload__Info}>
           <div className={classes.FormFileUpload__Text}>
-            <Text
-              ellipsis={{ rows: 1, tooltip: { fileName } }}
-              className={classes.FormFileUpload__FileName}
-            >
-              {fileName}
-            </Text>
+            <Text className={classes.FormFileUpload__FileName}>{fileName}</Text>
             <p className={classes.FormFileUpload__FileSize}>{fileSize} kb</p>
             <div className={classes.FormFileUpload__FileUploadProgress}>
               <Progress percent={fileUploadingProgress} strokeColor="#385E2B" />
             </div>
           </div>
         </div>
-      </div>
-      <div className={classes.FormFileUpload__fileUploadDeleteIcon}>
-        {/* <div>
-          {' '}
-          <FaTrashAlt color="#808080" />
-        </div> */}
       </div>
     </div>
   )

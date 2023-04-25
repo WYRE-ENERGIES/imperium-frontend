@@ -2,6 +2,7 @@ import { BsBattery } from 'react-icons/bs'
 import React from 'react'
 import { Skeleton, Tag } from 'antd'
 import classes from './Widget.module.scss'
+import Loading from '../../Loading/Loading'
 
 const Widget = ({
   Icon,
@@ -26,7 +27,7 @@ const Widget = ({
           <div className={classes.Widget__valueSection}>
             <h1 className={classes.Widget__value}>
               {isFetching ? (
-                'Loading...'
+                <Loading data={'...'} />
               ) : (
                 <>
                   {value} <span>{valueCurrency}</span>

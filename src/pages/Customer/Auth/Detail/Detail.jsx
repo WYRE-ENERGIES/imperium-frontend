@@ -38,15 +38,6 @@ const Details = () => {
   const navigate = useNavigate()
   const [customerUpdateDetails, { isLoading }] =
     useCustomerUpdateDetailsMutation()
-  const handlePhoneRegEx = (e, ref, message) => {
-    phoneValidation(e, ref, message)
-  }
-  const handleNameRegEx = (e, ref, message) => {
-    nameValidation(e, ref, message)
-  }
-  const handleAddressRegEx = (e, ref, message) => {
-    addressValidation(e, ref, message)
-  }
 
   const onFinish = async (values) => {
     try {
@@ -59,12 +50,7 @@ const Details = () => {
       setErrMsg(ErrorMessage(err))
     }
   }
-  useEffect(() => {
-    fnameRef.current.innerHTML = ''
-    lnameRef.current.innerHTML = ''
-    phoneRef.current.innerHTML = ''
-    addyRef.current.innerHTML = ''
-  })
+
   return (
     <div className={classes.DetailsForm}>
       <Row>
@@ -76,7 +62,10 @@ const Details = () => {
                 tagline={'Please fill in some details'}
               />
             </div>
-            {errMsg && <Error Errormsg={errMsg} />}
+            <div style={{ marginBottom: '10px' }}>
+              {' '}
+              {errMsg && <Error Errormsg={errMsg} />}
+            </div>
             <Form
               name="details"
               labelCol={8}
@@ -113,7 +102,7 @@ const Details = () => {
                       marginTop: '5px',
                     }}
                   >
-                    fnameRef.current
+                    Enter aphabetic characters. Only the hypen (-) is allowed.
                   </p>
                 }
               >
@@ -156,7 +145,7 @@ const Details = () => {
                       marginTop: '5px',
                     }}
                   >
-                    lnameRef.current
+                    Enter aphabetic characters. Only the hypen (-) is allowed.
                   </p>
                 }
               >
@@ -165,7 +154,7 @@ const Details = () => {
                     nameValidation(
                       e,
 
-                      fnameRef,
+                      lnameRef,
 
                       'Please enter only alphabetic characters',
                     )
@@ -199,7 +188,7 @@ const Details = () => {
                       marginTop: '5px',
                     }}
                   >
-                    phoneRef.current
+                    Exmaple : +234...
                   </p>
                 }
               >
@@ -238,7 +227,7 @@ const Details = () => {
                       marginTop: '5px',
                     }}
                   >
-                    addyRef.current
+                    Enter aphabetic characters. Only the hypen (-) is allowed.
                   </p>
                 }
               >

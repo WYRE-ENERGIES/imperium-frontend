@@ -1,7 +1,7 @@
 import { Form, Input, Row, Upload, message } from 'antd'
 import React from 'react'
 import FormDescription from '../../../../components/Auth/Forms/Widgets/FormDescription'
-
+import { FaTrashAlt } from 'react-icons/fa'
 import LeftLayout from '../../../../components/Auth/Layout/LeftLayout/LeftLayout'
 import RightLayout from '../../../../components/Auth/Layout/RightLayout/RightLayout'
 import classes from './Business.module.scss'
@@ -18,6 +18,8 @@ import FormFileUpload from '../../../../components/Auth/Forms/Widgets/FormFileUp
 import { ErrorMessage } from '../../../../components/ErrorMessage/ErrorMessage'
 import Error from '../../../../components/ErrorMessage/Error'
 import { getItemFromLocalStorage } from '../../../../utils/helpers'
+import { useRef } from 'react'
+import { urlValidation } from '../../../../components/RegEx/RegEx'
 
 const Business = () => {
   const formDescription = {
@@ -27,8 +29,11 @@ const Business = () => {
       'Set an automatic shut down for the power supply in your house from Imperium Solar Housing System remotely.',
     ImgHeight: '3px',
   }
+  const fileTypes = ['svg', 'png', 'gif', 'jpg']
   const [customerBusiness, { isLoading }] = useCustomerBusinessMutation()
   const navigate = useNavigate()
+  const fileUploadRef = useRef()
+  const urlRef = useRef()
   const [errMsg, setErrMsg] = useState('')
   const [fileUpload, setFileUpload] = useState(false)
   const [fileUploadingProgress, setfileUploadingProgress] = useState(0)
@@ -43,19 +48,35 @@ const Business = () => {
     name: 'file',
     multiple: false,
     progress: { showInfo: false },
-    showUploadList: true,
+    showUploadList: false,
     maxCount: 1,
     headers: {
       authorization: `Bearer ${token}`,
     },
+    beforeUpload(file) {
+      setUpLoadedFile(file)
+    },
 
     onChange(info) {
-      const { status } = info.file
+      const { status, name, size, percent } = info.file
       if (status == 'uploading') {
-        setFileUpload(true)
-        setfileName(info.file.name)
-        setfileSize(info.file.size)
-        setfileUploadingProgress(info.file.percent)
+        const fileExt = info.file.originFileObj.type.split('/')[1]
+        if (fileTypes.find((file) => file === fileExt)) {
+          setFileUpload(true)
+          setfileName(name)
+          setfileSize(size)
+          setfileUploadingProgress(percent)
+          fileUploadRef.current.style.color = 'green'
+          fileUploadRef.current.innerHTML = 'File uploaded !'
+        } else if (fileTypes.find((file) => file != fileExt)) {
+          setfileName('')
+          setfileSize('')
+          setfileUploadingProgress(0)
+          fileUploadRef.current.style.color = 'red'
+          fileUploadRef.current.innerHTML = 'File extension not supported'
+        } else {
+          fileUploadRef.current.style.color = ''
+        }
       }
       if (status === 'done') {
         setFileUpload(true)
@@ -72,6 +93,7 @@ const Business = () => {
     }
     return e?.fileList
   }
+
   const onFinish = async (values) => {
     formData.append('company_logo', upLoadedFile)
     formData.append('business_name', values.business_name)
@@ -135,18 +157,46 @@ const Business = () => {
                   }
                   name="campany_url"
                   required
+                  extra={
+                    <p ref={urlRef} style={{ fontSize: '14px' }}>
+                      Example: www.mydomain.com
+                    </p>
+                  }
                 >
                   <Input
-                    addonBefore={'http://'}
+                    onChange={(e) => urlValidation(e, urlRef, 'Invalid url')}
+                    addonBefore={'https://'}
                     className={classes.Business__Company}
                     placeholder="www.yourdomain.com"
                   />
                 </Form.Item>
+                {fileUpload ? (
+                  <div className={classes.Business__fileUploadDelete}>
+                    <div
+                      className={classes.Business__fileUploadDeleteIcon}
+                      onClick={() => setFileUpload(false)}
+                    >
+                      {' '}
+                      <FaTrashAlt color="#808080" />
+                    </div>
+                  </div>
+                ) : (
+                  ''
+                )}
                 <Form.Item
                   required
                   label="Upload Company Logo"
                   style={{ marginTop: '-10px' }}
-                  className={classes.Business__FileUpload}
+                  className={
+                    fileUpload
+                      ? classes.Business__FileUploaded
+                      : classes.Business__FileUpload
+                  }
+                  extra={
+                    <p ref={fileUploadRef} style={{ fontSize: '14px' }}>
+                      Supported format PNG,JPG,SVG and GIF
+                    </p>
+                  }
                 >
                   <Form.Item
                     name="file"
@@ -167,13 +217,15 @@ const Business = () => {
                     >
                       <div>
                         {fileUpload ? (
-                          <FormFileUpload
-                            fileName={fileName}
-                            fileSize={size}
-                            fileUploadingProgress={Math.round(
-                              fileUploadingProgress,
-                            )}
-                          />
+                          <div className={classes.Business__FormFileUpload}>
+                            <FormFileUpload
+                              fileName={fileName}
+                              fileSize={size}
+                              fileUploadingProgress={Math.round(
+                                fileUploadingProgress,
+                              )}
+                            />
+                          </div>
                         ) : (
                           <div className={classes.Business__Text}>
                             {' '}
@@ -208,6 +260,7 @@ const Business = () => {
                     </Dragger>
                   </Form.Item>
                 </Form.Item>
+
                 <Form.Item>
                   <FormButton action={'Continue'} isLoading={isLoading} />
                 </Form.Item>

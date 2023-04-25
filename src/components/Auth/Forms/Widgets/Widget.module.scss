@@ -204,6 +204,13 @@ $buttonPadding: 14px 48px;
     width: 230px;
     margin-top: 10px;
   }
+  &__fileUploadDeleteIcon {
+    position: absolute;
+    z-index: 10;
+    &:hover {
+      cursor: pointer;
+    }
+  }
 }
 
 @media only screen and (max-width: 768px) {
@@ -230,6 +237,10 @@ $buttonPadding: 14px 48px;
     &__FileUploadProgress {
       width: 100%;
       margin-top: 10px;
+    }
+    &__FileUploaded {
+      position: relative;
+      z-index: 1;
     }
   }
 }
