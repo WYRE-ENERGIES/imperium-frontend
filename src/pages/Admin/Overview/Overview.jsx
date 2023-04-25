@@ -163,6 +163,17 @@ const Overview = () => {
     filterBy: globalFilter,
   })
 
+  const {
+    isFetching: isMapFetching,
+    isError: isMapError,
+    error: mapError,
+    data: mapData,
+  } = useGetMapDataQuery({
+    filterBy: globalFilter,
+    sectorId,
+    regionId,
+  })
+
   useEffect(() => {
     if (isSectorFetching) return
 
@@ -316,7 +327,7 @@ const Overview = () => {
           {isAnalyticsFetching ? <WidgetLoader /> : widgets}
         </div>
         <div className={classes.Overview__map}>
-          <ShsDeviceMap />
+          <ShsDeviceMap isLoading={isMapFetching} data={mapData?.results} />
         </div>
         <div className={classes.Overview__donutChart}>
           <Donut

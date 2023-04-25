@@ -41,11 +41,16 @@ const Customers = () => {
   const [search, setSearch] = useState('')
   const [page, setPage] = useState(1)
   const [globalFilter, setGlobalFilter] = useState('yearly')
+  const [switchValue, setSwitchValue] = useState(false)
 
   const toggleModal = () => setOpenModal(!openModal)
   const toggleActivateCustomerModal = (record) => {
     setSelectedUser(record)
     setOpenActivateCustomerModal(!openActivateCustomerModal)
+  }
+  const handleCancelActivateCustomerModal = () => {
+    setOpenModal(!openModal)
+    setSwitchValue(!switchValue)
   }
 
   const handleSearch = (e) => setSearch(e.target.value)
@@ -97,29 +102,37 @@ const Customers = () => {
       dataIndex: 'client',
       key: 'client',
       sorter: (a, b) => a.customer_name.localeCompare(b.customer_name),
-      render: (_, record) => (
-        <div className={classes.Customers__nameDiv}>
-          <Switch
-            defaultChecked={record.status}
-            onChange={() => toggleActivateCustomerModal(record)}
-          />
-          <ReactAvatar
-            size={30}
-            round={true}
-            name={record.customer_name || record.customer_email}
-            fgColor="#385E2B"
-            color="#F0F7ED"
-          />
-          <div className={classes.Customers__names}>
-            <h3 style={{ color: record.status ? '' : '#C4C4C4' }}>
-              {record.customer_name}
-            </h3>
-            <h4 style={{ color: record.status ? '' : '#C4C4C4' }}>
-              {record.customer_email}
-            </h4>
+      render: (_, record) => {
+        setSwitchValue(record.status)
+        console.log({ switchValue, re: record.status })
+        return (
+          <div className={classes.Customers__nameDiv}>
+            <Switch
+              defaultChecked={record.status}
+              value={switchValue}
+              onChange={() => {
+                setSwitchValue(!record.status)
+                toggleActivateCustomerModal(record)
+              }}
+            />
+            <ReactAvatar
+              size={30}
+              round={true}
+              name={record.customer_name || record.customer_email}
+              fgColor="#385E2B"
+              color="#F0F7ED"
+            />
+            <div className={classes.Customers__names}>
+              <h3 style={{ color: record.status ? '' : '#C4C4C4' }}>
+                {record.customer_name}
+              </h3>
+              <h4 style={{ color: record.status ? '' : '#C4C4C4' }}>
+                {record.customer_email}
+              </h4>
+            </div>
           </div>
-        </div>
-      ),
+        )
+      },
     },
     {
       title: 'Purchase Date',
@@ -262,6 +275,7 @@ const Customers = () => {
             user={selectedUser}
             isOpen={openActivateCustomerModal}
             toggleModal={toggleActivateCustomerModal}
+            cancelModal={handleCancelActivateCustomerModal}
           />
         )}
       </Suspense>

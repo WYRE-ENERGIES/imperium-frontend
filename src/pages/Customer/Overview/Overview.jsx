@@ -3,6 +3,7 @@ import {
   useGetClientOverviewAnalyticsQuery,
   useGetClientOverviewEnergyDataQuery,
   useGetClientOverviewSolarHouseDataQuery,
+  useGetMapDataQuery,
 } from '../../../features/slices/overview/clientOverviewSlice'
 
 import { ReactComponent as EnergyWidgetIcon } from '../../../assets/widget-icons/energy-icon.svg'
@@ -65,6 +66,13 @@ const Overview = () => {
   } = useGetClientOverviewEnergyDataQuery({
     filterBy: globalFilter,
   })
+
+  const {
+    isFetching: isMapFetching,
+    isError: isMapError,
+    error: mapError,
+    data: mapData,
+  } = useGetMapDataQuery()
 
   useEffect(() => {
     if (isAnalyticsFetching) return
@@ -150,7 +158,7 @@ const Overview = () => {
           {isAnalyticsFetching ? <WidgetLoader /> : widgets}
         </div>
         <div className={classes.Overview__map}>
-          <ShsDeviceMap />
+          <ShsDeviceMap isLoading={isMapFetching} data={mapData?.results} />
         </div>
         <div className={classes.Overview__chart}>
           <StackedBarChart

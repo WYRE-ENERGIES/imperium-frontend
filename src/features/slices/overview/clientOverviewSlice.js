@@ -57,6 +57,12 @@ export const clientOverviewSlice = apiSlice.injectEndpoints({
         return [energyGenerated, energyConsumed]
       },
     }),
+    getMapData: builder.query({
+      query: () => {
+        const clientId = getItemFromLocalStorage('current_client')
+        return { url: `${OVERVIEW_URL_PATH}map/${clientId}` }
+      },
+    }),
   }),
 })
 
@@ -64,4 +70,5 @@ export const {
   useGetClientOverviewAnalyticsQuery,
   useGetClientOverviewSolarHouseDataQuery,
   useGetClientOverviewEnergyDataQuery,
+  useGetMapDataQuery,
 } = clientOverviewSlice
