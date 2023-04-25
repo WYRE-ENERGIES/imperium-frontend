@@ -1,5 +1,6 @@
 import {
   BarChartOutlined,
+  LockOutlined,
   SettingOutlined,
   ThunderboltOutlined,
   UserOutlined,

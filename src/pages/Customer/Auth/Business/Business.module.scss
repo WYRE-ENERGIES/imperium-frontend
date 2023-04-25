@@ -31,6 +31,7 @@
       margin-top: -1px;
     }
   }
+
   &__Skip {
     font-size: 18px;
     text-align: center;
@@ -48,6 +49,28 @@
       p {
         color: $dark-green !important;
       }
+    }
+  }
+  &__FileUploaded {
+    position: relative;
+    z-index: -1;
+  }
+
+  &__FormFileUpload {
+    display: flex;
+  }
+
+  &__fileUploadDelete {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    top: 70px;
+    right: 15px;
+    justify-content: end;
+  }
+  &__fileUploadDeleteIcon {
+    &:hover {
+      cursor: pointer;
     }
   }
 
@@ -69,27 +92,26 @@
     }
   }
   &__Desc {
-    width: 400px;
+    width: 450px;
     img {
-      width: 365px;
+      width: 250px;
       margin-top: -15%;
     }
 
     h1 {
       margin-top: -30px;
-      padding: 0 70px;
+      padding: 0 50px;
       line-height: 44px;
     }
 
     p {
-      padding: 0 25px;
+      padding: 0 8px;
       line-height: 24px;
       margin-top: -2px;
     }
-
-    &__Indicator {
-      margin-top: -2.5rem;
-    }
+  }
+  &__Indicator {
+    margin-top: -4rem;
   }
 }
 

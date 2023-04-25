@@ -31,7 +31,7 @@ const SignUp = () => {
   const emailRef = useRef()
   const [errMsg, setErrMsg] = useState('')
   const [pwdValid, setPwdValid] = useState(false)
-  const [email, setEmail] = useState('')
+  const [emailValid, setEmailValid] = useState(false)
   const [customerRegister, { isLoading }] = useCustomerRegisterMutation()
   const navigate = useNavigate()
   const handlePasswordLength = (e) => {
@@ -39,11 +39,22 @@ const SignUp = () => {
       pwdRef.current.style.color = 'red'
       setPwdValid(false)
     } else if (e.target.value.length >= 8) {
-      pwdRef.current.style.color = 'gray'
+      pwdRef.current.style.color = 'green'
+      pwdRef.current.innerHTML = 'Password valid !'
       setPwdValid(true)
     }
   }
 
+  const handleEmailValidation = (e) => {
+    if (validator.isEmail(e.target.value)) {
+      emailRef.current.innerHTML = 'Email valid !'
+      emailRef.current.style.color = 'green'
+      setEmailValid(true)
+    } else if (!validator.isEmail(e.target.value)) {
+      emailRef.current.style.color = 'red'
+      setEmailValid(false)
+    }
+  }
   const accessToken = getItemFromLocalStorage('access')
   const onFinish = async (values) => {
     try {
@@ -65,16 +76,6 @@ const SignUp = () => {
       navigate('/overview')
     }
   })
-  useEffect(() => {
-    if (validator.isEmail(email)) {
-      emailRef.current.innerHTML = 'Email valid'
-      emailRef.current.style.color = 'green'
-    } else {
-      emailRef.current.innerHTML = ' Enter a valid email'
-      emailRef.current.style.color = ''
-      setEmail('')
-    }
-  }, [email, setEmail])
 
   return (
     <section className={classes.SignUpPage}>
@@ -134,7 +135,7 @@ const SignUp = () => {
                         marginBottom: '-10px',
                       }}
                     >
-                      emailRef.current
+                      Enter a valid email
                     </p>
                   }
                 >
@@ -142,7 +143,7 @@ const SignUp = () => {
                     className={classes.SignUpPage__Input}
                     placeholder="Enter your email"
                     style={{ marginTop: '-1rem' }}
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={(e) => handleEmailValidation(e)}
                   />
                 </Form.Item>
                 <Form.Item
@@ -188,7 +189,7 @@ const SignUp = () => {
                   <FormButton
                     action={'Create account'}
                     isLoading={isLoading}
-                    validate={!email || !pwdValid}
+                    validate={!emailValid || !pwdValid}
                   />
                 </Form.Item>
 

@@ -11,8 +11,10 @@ import {
 import FormButton from '../../../../components/Auth/Forms/Widgets/FormButton'
 import classes from './Otp.module.scss'
 import { Form, notification } from 'antd'
+import { ArrowLeftOutlined } from '@ant-design/icons'
 
 const OTP = () => {
+  const admin = false
   const [OTP, setOTP] = useState('')
   const [errMsg, setErrMsg] = useState('')
   const [adminOtp, { isLoading: otpisLoading }] = useCustomerOtpMutation()
@@ -74,7 +76,9 @@ const OTP = () => {
         widgets={{
           icon: icon,
           header: 'OTP Verification',
-          tag: `Enter OTP sent to ${email.state.email}`,
+          tag: email?.state?.email
+            ? `Enter OTP sent to ${email?.state?.email}`
+            : 'You need to provide an email to receive OTP.',
           footer: (
             <div style={{ textAlign: 'center', marginTop: '5px' }}>
               Didn’t receive code?{' '}
@@ -84,7 +88,7 @@ const OTP = () => {
             </div>
           ),
         }}
-        admin={false}
+        admin={admin}
       >
         <Form
           name="admin-otp"
@@ -99,6 +103,22 @@ const OTP = () => {
           requiredMark="optional"
         >
           {errMsg && <small className={classes.Otp__Message}>{errMsg}</small>}
+          {email?.state?.email ? (
+            ''
+          ) : (
+            <Link
+              style={{
+                background: '#f0f7ed',
+                padding: '6px 10px ',
+                color: '#528a3f',
+                borderRadius: '8px',
+                fontSize: '14px',
+              }}
+              to={admin ? '/admin/forgot-password' : '/forgot-password'}
+            >
+              <ArrowLeftOutlined /> Enter email
+            </Link>
+          )}
           <div className={classes.Otp__Input}>
             <OTPInput
               value={OTP}
@@ -113,6 +133,7 @@ const OTP = () => {
           <FormButton
             action={'Continue'}
             isLoading={otpisLoading || resetOtpisLoading}
+            validate={email?.state?.email ? false : true}
           />
         </Form>
       </Layout>
