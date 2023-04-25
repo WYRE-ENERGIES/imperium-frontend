@@ -41,3 +41,15 @@ export const phoneValidation = (e, ref, message) => {
     ref.current.style.color = 'red'
   }
 }
+
+export const passwordLengthValidation = (e, pwdRef, setPwdValid) => {
+  if (e.target.value.length < 8) {
+    pwdRef.current.style.color = 'red'
+    pwdRef.current.innerHTML = 'Password too short.'
+    setPwdValid(false)
+  } else if (e.target.value.length >= 8) {
+    pwdRef.current.style.color = 'green'
+    pwdRef.current.innerHTML = 'Password valid !'
+    setPwdValid(true)
+  }
+}

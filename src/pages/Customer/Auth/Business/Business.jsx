@@ -1,5 +1,6 @@
 import { Form, Input, Row, Upload, message } from 'antd'
 import React from 'react'
+import jwt_decode from 'jwt-decode'
 import FormDescription from '../../../../components/Auth/Forms/Widgets/FormDescription'
 import { FaTrashAlt } from 'react-icons/fa'
 import LeftLayout from '../../../../components/Auth/Layout/LeftLayout/LeftLayout'
@@ -17,7 +18,10 @@ import uploadImg from '../../../../../src/assets/Auth/Featured icon.svg'
 import FormFileUpload from '../../../../components/Auth/Forms/Widgets/FormFileUpload'
 import { ErrorMessage } from '../../../../components/ErrorMessage/ErrorMessage'
 import Error from '../../../../components/ErrorMessage/Error'
-import { getItemFromLocalStorage } from '../../../../utils/helpers'
+import {
+  getItemFromLocalStorage,
+  saveToLocalStorage,
+} from '../../../../utils/helpers'
 import { useRef } from 'react'
 import { urlValidation } from '../../../../components/RegEx/RegEx'
 
@@ -95,13 +99,16 @@ const Business = () => {
   }
 
   const onFinish = async (values) => {
+    const urlHttp = 'https://' + values.campany_url
+    console.log(urlHttp)
     formData.append('company_logo', upLoadedFile)
     formData.append('business_name', values.business_name)
-    formData.append('company_url', values.campany_url)
+    formData.append('company_url', urlHttp)
 
     try {
       await customerBusiness(formData).unwrap()
-      navigate('/')
+      saveToLocalStorage('user_role', jwt_decode(token)?.user_role)
+      navigate('/overview')
     } catch (err) {
       setErrMsg(ErrorMessage(err))
     }

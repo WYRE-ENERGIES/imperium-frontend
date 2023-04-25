@@ -57,15 +57,12 @@ const SideDrawer = ({
           }}
         />
         <Divider />
-        {auth ? (
-          <Footer
-            userName={getUserFullName()}
-            toggleActivateShsModal={toggleActivateShsModal}
-            isAdmin={isAdmin}
-          />
-        ) : (
-          ''
-        )}
+
+        <Footer
+          userName={getUserFullName()}
+          toggleActivateShsModal={toggleActivateShsModal}
+          isAdmin={isAdmin}
+        />
       </div>
 
       <Suspense fallback={<h4>Loading...</h4>}>
