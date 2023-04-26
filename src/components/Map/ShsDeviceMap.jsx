@@ -44,14 +44,14 @@ const ShsDeviceMap = ({ isLoading, data = [] }) => {
       <MarkerF
         key={index}
         position={{
-          lat: item?.coordinates?.lat || center.lat,
-          lng: item?.coordinates?.lon || center.lng,
+          lat: item?.coordinates?.lat,
+          lng: item?.coordinates?.lon,
         }}
         icon={{
-          url: GoodIcon,
+          url: item?.device_status === 'on' ? GoodIcon : BadIcon,
           scaledSize: new window.google.maps.Size(40, 40),
         }}
-        onMouseOver={() => setHoveredMarker({ item })}
+        onMouseOver={() => setHoveredMarker(item)}
         onMouseOut={() => setHoveredMarker(null)}
       />
     ))
@@ -70,7 +70,10 @@ const ShsDeviceMap = ({ isLoading, data = [] }) => {
         {markers}
         {hoveredMarker && (
           <OverlayView
-            position={{ lat: hoveredMarker.lat, lng: hoveredMarker.lng }}
+            position={{
+              lat: hoveredMarker?.coordinates?.lat,
+              lng: hoveredMarker?.coordinates?.lon,
+            }}
             mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}
             getPixelPositionOffset={(width, height) => ({
               x: -(width / 2),
@@ -78,12 +81,32 @@ const ShsDeviceMap = ({ isLoading, data = [] }) => {
             })}
           >
             <div className={classes.MapStyle}>
-              <h5>{hoveredMarker.device_address}</h5>
+              <h5>{hoveredMarker?.device_address}</h5>
               <p>
-                Energy Today: <span>{hoveredMarker.energy_today} kWh</span>
+                Energy Today:{' '}
+                <span
+                  style={{
+                    color:
+                      hoveredMarker?.device_status === 'on'
+                        ? '#497a38'
+                        : '#bf1717',
+                  }}
+                >
+                  {hoveredMarker?.energy_today} kWh
+                </span>
               </p>
               <p>
-                Battery Percentage <span>{hoveredMarker.battery_percent}%</span>
+                Battery Percentage{' '}
+                <span
+                  style={{
+                    color:
+                      hoveredMarker?.device_status === 'on'
+                        ? '#497a38'
+                        : '#bf1717',
+                  }}
+                >
+                  {hoveredMarker?.battery_percent}%
+                </span>
               </p>
             </div>
           </OverlayView>
