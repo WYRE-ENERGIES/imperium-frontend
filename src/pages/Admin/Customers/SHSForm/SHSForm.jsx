@@ -286,6 +286,7 @@ const AddSHSForm = ({ toggleModal }) => {
           <Input
             placeholder={`Enter device capacity`}
             className={classes.AddSHSForm__input}
+            type="number"
           />
         </Form.Item>
       </div>

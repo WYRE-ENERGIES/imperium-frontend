@@ -39,7 +39,8 @@
     }
   }
 
-  & input[type='text'] {
+  & input[type='text'],
+  & input[type='number'] {
     height: 44px;
     padding: 10px 16px;
   }
