@@ -6,12 +6,9 @@ import { ReactComponent as MenuBar } from '../../../../assets/Auth/menubar.svg'
 import { Link } from 'react-router-dom'
 import SideDrawer from '../../../SideDrawer'
 import {
-  BarChartOutlined,
+  AlignLeftOutlined,
   CustomerServiceOutlined,
   LockOutlined,
-  SettingOutlined,
-  ThunderboltOutlined,
-  UserOutlined,
 } from '@ant-design/icons'
 import classes from './Widget.module.scss'
 
@@ -21,16 +18,17 @@ const FormNavbar = ({
   btnColor1 = '#FFFF',
   btnColor2 = '#497a38',
 }) => {
-  const signUp = btnColor1 === '#FFFF' ? '/sign-up' : '/admin/sign-up'
-  const signIn = btnColor1 === '#FFFF' ? '/' : '/admin/sign-ip'
-
   const [showSidebar, setShowSideBar] = useState(false)
 
   const sideBarDisplay = () => {
     setShowSideBar(!showSidebar)
   }
   const userUnauthorideSideBar = [
-    { icon: LockOutlined, title: 'Sign In', linkTo: signIn },
+    {
+      icon: LockOutlined,
+      title: 'Sign In',
+      linkTo: btnColor1 === '#FFFF' ? '/' : '/admin/sign-in',
+    },
     {
       icon: CustomerServiceOutlined,
       title: 'Contact Support',
@@ -49,16 +47,22 @@ const FormNavbar = ({
           <img src={btnColor1 === '#FFFF' ? CustomerLogo : AdminLogo} alt="" />
         </div>
         <div className={classes.Navbar__btn}>
-          <Link style={{ background: btnColor1, color: txtColor1 }} to={signUp}>
+          <Link
+            style={{ background: btnColor1, color: txtColor1 }}
+            to={btnColor1 === '#FFFF' ? '/sign-up' : '/admin/sign-up'}
+          >
             Sign Up
           </Link>
-          <Link style={{ background: btnColor2, color: txtColor2 }} to={signIn}>
+          <Link
+            style={{ background: btnColor2, color: txtColor2 }}
+            to={btnColor1 === '#FFFF' ? '/' : '/admin/sign-in'}
+          >
             Sign In
           </Link>
         </div>
-        <div className={classes.Navbar__Menubtn}>
+        <div className={classes.Navbar__Menubtn} onClick={sideBarDisplay}>
           {' '}
-          <MenuBar onClick={sideBarDisplay} />
+          <AlignLeftOutlined style={{ color: '#66ab4f' }} />
           <SideDrawer
             show={showSidebar}
             toggle={sideBarDisplay}

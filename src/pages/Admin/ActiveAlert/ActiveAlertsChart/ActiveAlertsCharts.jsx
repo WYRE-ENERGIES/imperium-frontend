@@ -8,23 +8,9 @@ import { DataStatistics } from '../../../../utils/helpers'
 import Loading from '../../../../components/Loading/Loading'
 
 const ActiveAlertsCharts = () => {
-  const [dataStatistics, setDataStatistics] = useState([
-    {
-      name: 'Unresolved alert',
-      data: [],
-    },
-    {
-      name: 'Resolved alert',
-      data: [],
-    },
-  ])
   const [statsFilter, setStatsFilter] = useState('weekly')
   const { data: statistics, isLoading: isLoadingStatistics } =
     useGetAdminActiveAlertsStatisticsQuery({ filter: statsFilter })
-
-  useEffect(() => {
-    setDataStatistics(statistics)
-  }, [statistics])
 
   return (
     <section className={classes.ActiveAlertsCharts}>
@@ -88,16 +74,18 @@ const ActiveAlertsCharts = () => {
           </div>
         </div>
         <div className={classes.ActiveAlertsCharts__ActiveAlertStatsGraph}>
-          {dataStatistics ? (
+          {isLoadingStatistics ? (
+            <Loading data={'graph...'} />
+          ) : (
             <Chart
               series={[
                 {
                   name: 'Unresolved alert',
-                  data: DataStatistics(dataStatistics, 'unresolved'),
+                  data: DataStatistics(statistics, 'unresolved'),
                 },
                 {
                   name: 'Resolved alert',
-                  data: DataStatistics(dataStatistics, 'resolved'),
+                  data: DataStatistics(statistics, 'resolved'),
                 },
               ]}
               options={{
@@ -180,8 +168,6 @@ const ActiveAlertsCharts = () => {
               height="350px"
               width="100%"
             />
-          ) : (
-            <Loading data={'graph...'} />
           )}
         </div>
       </div>

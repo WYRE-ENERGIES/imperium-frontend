@@ -85,7 +85,9 @@ export const DataStatistics = (data, key) => {
     data?.[0]?.[11],
     data?.[0]?.[12],
   ]
-  return dataList.map((value) => (value?.[key] !== null ? value?.[key] : 0))
+  return dataList.map((value) =>
+    value?.[key] === undefined || null ? 0 : value?.[key],
+  )
 }
 
 export const getHourFromDate = (dateString) => {

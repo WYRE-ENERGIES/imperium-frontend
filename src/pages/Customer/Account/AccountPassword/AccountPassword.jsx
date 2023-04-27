@@ -82,10 +82,10 @@ const AccountPassword = () => {
                       fontSize: '13.5px',
                     }}
                   >
-                    Password
+                    New Password
                   </p>
                 }
-                name="new_password1"
+                name="new_password"
                 style={{ marginTop: '-1rem' }}
                 required
               >
@@ -112,7 +112,7 @@ const AccountPassword = () => {
                     Confirm Password
                   </p>
                 }
-                name="new_password2"
+                name="confirm_password"
                 style={{ marginTop: '-1rem' }}
                 required
               >
@@ -127,13 +127,14 @@ const AccountPassword = () => {
               </Form.Item>
             </Col>
           </div>
-
           <Form.Item>
-            <Row justify={'end'} gutter={20}>
-              <Col span={8}>
-                <FormButton action={'Save changes'} isLoading={isLoading} />
-              </Col>
-            </Row>
+            <Col>
+              <FormButton
+                type={'submit'}
+                action={'Save changes'}
+                isLoading={isLoading}
+              />
+            </Col>
           </Form.Item>
         </Form>
       </div>

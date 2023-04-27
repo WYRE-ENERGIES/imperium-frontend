@@ -2,8 +2,10 @@ import React, { useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { Form, notification } from 'antd'
 import OTPInput from 'otp-input-react'
-import { useAdminOtpMutation } from '../../../../features/slices/auth/admin/adminAuthApiSlice'
-import { useAdminforgotPasswordMutation } from '../../../../features/slices/auth/admin/adminAuthApiSlice'
+import {
+  useAdminOtpMutation,
+  useAdminOtpResendMutation,
+} from '../../../../features/slices/auth/admin/adminAuthApiSlice'
 import Layout from '../../../../components/Auth/Forms/AuthForm/PasswordReset/Layout/Layout'
 import FormButton from '../../../../components/Auth/Forms/Widgets/FormButton'
 import icon from '../../../../assets/Auth/Group 18.svg'
@@ -14,8 +16,8 @@ const AdminOTP = () => {
   const [adminOtp, { isLoading }] = useAdminOtpMutation()
   const navigate = useNavigate()
   const email = useLocation()
-  const [adminforgotPassword, { isLoading: otpResendLoading }] =
-    useAdminforgotPasswordMutation()
+  const [adminOtpResend, { isLoading: otpResendLoading }] =
+    useAdminOtpResendMutation()
   const openNotification = (email) => {
     notification.success({
       message: 'OTP sent!',
@@ -24,7 +26,7 @@ const AdminOTP = () => {
   }
   const handleResendOtp = async () => {
     try {
-      await adminforgotPassword({
+      await adminOtpResend({
         email: email?.state?.email,
       }).unwrap()
       openNotification(email?.state?.email)

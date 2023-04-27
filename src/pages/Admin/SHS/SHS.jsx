@@ -291,6 +291,8 @@ const SHS = () => {
               />
             )}
             onFilterChanged={(e) => setTableFilter(e)}
+            url={'imperium-admin/shs/list-table-export/'}
+            tableName={'shs_table'}
           />
         </div>
       </div>

@@ -15,6 +15,7 @@ const DataTable = ({
   sortTable,
   searchTable,
   url,
+  tableName,
 }) => {
   const loadingIcon = (
     <LoadingOutlined
@@ -99,9 +100,11 @@ const DataTable = ({
           ) : (
             ''
           )}
-          <div className={classes.DataTable__TableFilterExport}>
-            <ExportFileButton url={url} />
-          </div>
+          {url && (
+            <div>
+              <ExportFileButton url={url} tableName={tableName} />
+            </div>
+          )}
         </div>
       </div>
     </section>

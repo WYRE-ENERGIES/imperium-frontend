@@ -273,6 +273,8 @@ const BatteryAnalytic = () => {
                 hasPrev={!data?.total_pages || data?.page === 1}
               />
             )}
+            url={'batteryAnalytics.com'}
+            tableName={'battery_table'}
           />
         </div>
       </div>

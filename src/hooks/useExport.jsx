@@ -30,7 +30,8 @@ const useExPort = (url) => {
         setDownloadUrl(downloadUrl)
       })
       .catch((error) => {
-        setError(error)
+        setLoading(false)
+        setError(error?.message)
       })
   }, [url])
   return {
