@@ -85,7 +85,7 @@ const AccountPassword = () => {
                     New Password
                   </p>
                 }
-                name="new_password"
+                name="new_password1"
                 style={{ marginTop: '-1rem' }}
                 required
               >
@@ -112,7 +112,7 @@ const AccountPassword = () => {
                     Confirm Password
                   </p>
                 }
-                name="confirm_password"
+                name="new_password2"
                 style={{ marginTop: '-1rem' }}
                 required
               >
