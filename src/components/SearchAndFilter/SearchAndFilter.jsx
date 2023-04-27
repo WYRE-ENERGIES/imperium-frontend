@@ -3,6 +3,7 @@ import { CloudDownloadOutlined, SearchOutlined } from '@ant-design/icons'
 import React, { Suspense, lazy } from 'react'
 
 import classes from './SearchAndFilter.module.scss'
+import ExportFileButton from '../ExportButton/ExportFileButton'
 
 const DropDownFilter = lazy(() => import('../DropDownFilter/DropDownFilter'))
 
@@ -26,7 +27,10 @@ const SearchAndFilter = ({
   handleSearch,
   onFilterChanged,
   showSearch,
+  url,
+  tableName,
 }) => {
+  console.log(url, tableName, isAdmin)
   const options = filterOptions?.map((option, index) => (
     <Option key={index} value={option.value}>
       {option.name}
@@ -49,12 +53,7 @@ const SearchAndFilter = ({
           <DropDownFilter onFilterChanged={onFilterChanged} options={options} />
         ) : null}
       </Suspense>
-      {isAdmin && (
-        <Button className={classes.SearchAndFilter__exportBtn}>
-          <CloudDownloadOutlined />
-          Export
-        </Button>
-      )}
+      {isAdmin && <ExportFileButton url={url} tableName={tableName} />}
       {hasBtn && (
         <Button
           onClick={btnAction}

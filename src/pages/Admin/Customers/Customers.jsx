@@ -265,6 +265,8 @@ const Customers = () => {
                 hasPrev={!data?.total_pages || data?.page === 1}
               />
             )}
+            url={'imperium-admin/shs-assign/list-customers/export/'}
+            tableName={'all_customers'}
           />
         </div>
       </div>

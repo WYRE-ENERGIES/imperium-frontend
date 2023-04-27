@@ -118,7 +118,10 @@ const SignIn = () => {
                     </p>
                   }
                   extra={
-                    <Link to={'/forgot-password/'} style={{ color: 'grey' }}>
+                    <Link
+                      to={'/forgot-password/'}
+                      style={{ color: 'grey', fontSize: '14px' }}
+                    >
                       Can’t remember password ?
                     </Link>
                   }

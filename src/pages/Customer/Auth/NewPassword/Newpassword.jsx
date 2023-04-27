@@ -79,7 +79,7 @@ const NewPasswordPage = () => {
                 passwordLengthValidation(e, pwdRef1, setPwdValid)
               }
               className={classes.NewPassword__Password}
-              placeholder="nisha@uitrend.com"
+              placeholder="New password"
             />
           </Form.Item>
           <Form.Item
@@ -103,7 +103,7 @@ const NewPasswordPage = () => {
                 passwordLengthValidation(e, pwdRef2, setPwdValid)
               }
               className={classes.NewPassword__Password}
-              placeholder="nisha@uitrend.com"
+              placeholder="Confirm password"
             />
           </Form.Item>
           <FormButton

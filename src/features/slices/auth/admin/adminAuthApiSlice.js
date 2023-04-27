@@ -1,11 +1,12 @@
 import { apiSlice } from '../../../api/apiSlice'
 
+const BASE_URL = '/imperium-admin/'
 export const authApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     adminforgotPassword: builder.mutation({
       query: (email) => {
         return {
-          url: '/imperium-admin/auth/forgot-password/',
+          url: `${BASE_URL}auth/forgot-password/`,
           method: 'POST',
           body: email,
         }
@@ -14,7 +15,16 @@ export const authApiSlice = apiSlice.injectEndpoints({
     adminOtp: builder.mutation({
       query: (credentials) => {
         return {
-          url: '/imperium-admin/auth/forgot-password/confirm/',
+          url: `${BASE_URL}auth/forgot-password/confirm/`,
+          method: 'POST',
+          body: credentials,
+        }
+      },
+    }),
+    adminOtpResend: builder.mutation({
+      query: (credentials) => {
+        return {
+          url: `${BASE_URL}auth/forgot-password/resend/`,
           method: 'POST',
           body: credentials,
         }
@@ -23,7 +33,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
     adminNewPassword: builder.mutation({
       query: (credentials) => {
         return {
-          url: '/imperium-admin/auth/forgot-password/complete/',
+          url: `${BASE_URL}auth/forgot-password/complete/`,
           method: 'POST',
           body: credentials,
         }
@@ -32,7 +42,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
     adminChangePassword: builder.mutation({
       query: (credentials) => {
         return {
-          url: '/imperium-admin/settings/change-password/',
+          url: `${BASE_URL}settings/change-password/`,
           method: 'PATCH',
           body: credentials,
         }
@@ -46,4 +56,5 @@ export const {
   useAdminOtpMutation,
   useAdminNewPasswordMutation,
   useAdminChangePasswordMutation,
+  useAdminOtpResendMutation,
 } = authApiSlice

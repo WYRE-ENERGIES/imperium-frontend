@@ -161,7 +161,7 @@ const ActiveAlerts = () => {
             <Loading data={'active alerts'} />
           ) : (
             <DataTable
-              title={title}
+              title={'Active Alerts Table'}
               columns={columns}
               dataSource={activeAlertsTable}
               setPageNum={setPage}

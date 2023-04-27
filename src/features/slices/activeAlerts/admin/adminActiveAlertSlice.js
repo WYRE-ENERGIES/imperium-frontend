@@ -91,18 +91,6 @@ export const activerAlertsSlice = apiSlice.injectEndpoints({
         }
       },
     }),
-    getExportData: build.query({
-      query: () => {
-        return {
-          url: `${BASE_URL}export/`,
-          // responseType: 'text/csv',
-        }
-      },
-      transformResponse: (response, meta, arg) => {
-        return response
-      },
-      transformErrorResponse: (response, meta, arg) => response,
-    }),
   }),
 })
 

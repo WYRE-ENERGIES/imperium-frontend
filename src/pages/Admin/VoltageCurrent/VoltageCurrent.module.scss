@@ -105,6 +105,7 @@
 
 @media only screen and (max-width: 320px) {
   .VoltageCurrent {
+    overflow-x: hidden;
     &__TableHeader {
       display: block;
     }
@@ -114,6 +115,13 @@
     &__SearchAndFilter {
       width: 100%;
       margin: 10px 0;
+    }
+    &__widgets {
+      margin: 0;
+      overflow-x: scroll;
+      &::-webkit-scrollbar {
+        overflow: hidden;
+      }
     }
   }
 }

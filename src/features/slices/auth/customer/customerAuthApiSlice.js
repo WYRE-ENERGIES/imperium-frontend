@@ -33,7 +33,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
     customerNewPassword: builder.mutation({
       query: (credentials) => {
         return {
-          url: '/auth/forgot-password/complete/',
+          url: '/auth/complete-reset-password/',
           method: 'POST',
           body: credentials,
         }

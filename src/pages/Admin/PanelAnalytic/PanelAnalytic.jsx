@@ -118,6 +118,8 @@ const PanelAnalytic = () => {
                 hasPrev={!data?.total_pages || data?.page === 1}
               />
             )}
+            url={'imperium-admin/panel/list-table/export/'}
+            tableName={'panel-table'}
           />
         </div>
       </div>

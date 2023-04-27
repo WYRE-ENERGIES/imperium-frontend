@@ -116,7 +116,7 @@ const ActiveAlert = () => {
         <section className={classes.ActiveAlert__ActiveAlertTable}>
           {isLoadingTable ? (
             <Loading data={'table...'} />
-          ) : table ? (
+          ) : (
             <DataTable
               title={'Active Alerts Table'}
               columns={columns}
@@ -126,9 +126,8 @@ const ActiveAlert = () => {
               setPageNum={setPageNum}
               isLoading={isFetchingTable}
               url={'imperium-admin/active-alert/table/export'}
+              tableName={'active_alerts_table'}
             />
-          ) : (
-            'No data for active alerts'
           )}
         </section>
       </section>

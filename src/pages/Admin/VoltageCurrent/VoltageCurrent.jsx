@@ -24,7 +24,6 @@ import {
 } from '../../../utils/helpers'
 import Loading from '../../../components/Loading/Loading'
 import DataTable from '../../../components/Table/DataTable'
-import { MdFilterList } from 'react-icons/md'
 
 const columns = [
   {
@@ -56,15 +55,6 @@ const columns = [
   },
 ]
 
-const prefix = (
-  <SearchOutlined
-    style={{
-      fontSize: 16,
-      color: '#808080',
-    }}
-  />
-)
-
 const VoltageCurrent = () => {
   const [chartData, setChartData] = useState([
     {
@@ -90,7 +80,7 @@ const VoltageCurrent = () => {
 
   const { data: dataStatistics, isLoading: statisticsisLoading } =
     useGetAdminVoltageCurrentStatisticsQuery()
-  console.log('dataStatistics : ', dataStatistics)
+
   const {
     data: dataTable,
     isLoading: tableisLoading,
@@ -101,15 +91,7 @@ const VoltageCurrent = () => {
     filter: tableFilter,
   })
 
-  const TableSearch = (e) => {
-    setSearch(e.target.value)
-  }
-  const handleTableFilter = (value) => {
-    setTableFilter(value)
-  }
   useEffect(() => {
-    console.log('chartData : ', chartData)
-    console.log('dataStatistics : ', dataStatistics)
     setAnalytics(dataAnalytics)
     setTable(dataTable)
 
@@ -201,7 +183,6 @@ const VoltageCurrent = () => {
             selectFilterBy={(value) => setFilter(value)}
             filterBy={filter}
           />
-          {/* )} */}
         </section>
 
         <div className={classes.VoltageCurrent__widgets}>{widgets}</div>
@@ -293,7 +274,7 @@ const VoltageCurrent = () => {
         <div className={classes.VoltageCurrent__shsTable}>
           {tableisLoading ? (
             <Loading data={'Table'} />
-          ) : table ? (
+          ) : (
             <DataTable
               title={{
                 title: ' Voltage & Current Table',
@@ -305,9 +286,8 @@ const VoltageCurrent = () => {
               isLoading={tableisFetching}
               searchTable={setSearch}
               url={'imperium-admin/active-alert/export'}
+              tableName={'voltage_and_current_table'}
             />
-          ) : (
-            'No records found'
           )}
         </div>
       </div>
