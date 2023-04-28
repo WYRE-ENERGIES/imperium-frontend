@@ -38,7 +38,7 @@ const SignIn = () => {
       }).unwrap()
       navigate('/overview')
     } catch (err) {
-      setErrMsg(ErrorMessage(err))
+      setErrMsg(ErrorMessage(err?.data?.message || err?.data?.email))
     }
   }
 
@@ -79,22 +79,12 @@ const SignIn = () => {
                 {errMsg && <Error Errormsg={errMsg} />}
 
                 <Form.Item
-                  label={
-                    <p
-                      style={{
-                        marginBottom: '2px',
-                        marginTop: '20px',
-                        fontSize: '13.5px',
-                      }}
-                    >
-                      Email
-                    </p>
-                  }
+                  label="Email"
                   name="email"
                   rules={[
                     {
                       required: true,
-                      message: 'This field is required.',
+                      message: <small>This field is required.</small>,
                     },
                   ]}
                   required
@@ -106,17 +96,7 @@ const SignIn = () => {
                   />
                 </Form.Item>
                 <Form.Item
-                  label={
-                    <p
-                      style={{
-                        marginTop: '10px',
-                        marginBottom: '-10px',
-                        fontSize: '13.5px',
-                      }}
-                    >
-                      Password
-                    </p>
-                  }
+                  label="Password"
                   extra={
                     <Link
                       to={'/forgot-password/'}
@@ -126,11 +106,10 @@ const SignIn = () => {
                     </Link>
                   }
                   name="password"
-                  style={{ marginTop: '-1rem' }}
                   rules={[
                     {
                       required: true,
-                      message: 'This field is required.',
+                      message: <small>This field is required.</small>,
                     },
                   ]}
                 >

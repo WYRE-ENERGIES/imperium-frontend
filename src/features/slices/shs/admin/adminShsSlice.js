@@ -53,10 +53,10 @@ export const shsSlice = apiSlice.injectEndpoints({
       providesTags: ['shsSchedule'],
     }),
     adminShsPowerSchedule: build.mutation({
-      query: ({ ShsPowerSchedule, deviceId }) => {
+      query: ({ data, deviceId }) => {
         return {
           url: `${SHS_BASE_URL}schedule/${deviceId}/`,
-          body: ShsPowerSchedule,
+          body: data,
           method: 'POST',
         }
       },

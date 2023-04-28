@@ -37,8 +37,10 @@ const Verification = () => {
         otp: values.otp,
       }).unwrap()
       navigate('/details')
+      saveToLocalStorage('userInfo', { email: email.state.email })
     } catch (err) {
-      setErrMsg(ErrorMessage(err))
+      console.log(err)
+      setErrMsg(ErrorMessage(err?.data?.detail))
     }
   }
 
@@ -57,7 +59,7 @@ const Verification = () => {
             <div>
               <FormHeader
                 header={'Verification Code Sent'}
-                tagline={` We just sent you a temporary one time pin to ${email?.state?.email}. Please check your inbox!`}
+                tagline={` We just sent a temporary one time pin to ${email?.state?.email}. Please check your inbox!`}
               />
             </div>
             <Form
@@ -98,6 +100,7 @@ const Verification = () => {
                   className={classes.Verification__Input}
                   placeholder="Enter code"
                   style={{ marginTop: '-1rem' }}
+                  maxLength={4}
                 />
               </Form.Item>
 

@@ -1,55 +1,68 @@
 const nameRegEx = /^[a-zA-Z-]+$/g
-const phoneRegEx = /((\+(234)[789])|(0)([789]))[0-1]\d{8}/
-// const phoneRegEx = /((\+(234)[789]))[0-1]\d{8}/
-const urlRegEx = /(www)[.][a-zA-Z]+[.]([a-z]{3})+/
+const phoneRegEx = /(\+(234)[789])[0-1]\d{8}/
+const urlRegEx = /^(www)[.][a-z0-9]+[.]([a-z]{2,3})/
+
 const addressRegEx = /^[^!@#$%^*_+]+$/
-export const addressValidation = (e, ref, message) => {
+const emailRegEx = /[a-z0-9]+[@][a-z]+[.](\D{2,3})/
+
+export const emailValidation = (e, ref, message, setFormValid) => {
+  if (emailRegEx.test(e.target.value)) {
+    ref.current.innerHTML = ''
+    setFormValid(true)
+  } else if (!emailRegEx.test(e.target.value)) {
+    ref.current.innerHTML = message
+    ref.current.style.color = 'red'
+    setFormValid(false)
+  }
+}
+export const addressValidation = (e, ref, message, setFormValid) => {
   if (addressRegEx.test(e.target.value)) {
     ref.current.innerHTML = ''
+    setFormValid(true)
   } else if (!addressRegEx.test(e.target.value)) {
     ref.current.innerHTML = message
     ref.current.style.color = 'red'
+    setFormValid(false)
   }
 }
-export const nameValidation = (e, ref, message) => {
+export const nameValidation = (e, ref, message, setFormValid) => {
   if (nameRegEx.test(e.target.value)) {
     ref.current.innerHTML = ''
+    setFormValid(true)
   } else if (!nameRegEx.test(e.target.value)) {
     ref.current.innerHTML = message
     ref.current.style.color = 'red'
+    setFormValid(false)
   }
 }
-export const urlValidation = (e, ref, message) => {
+export const urlValidation = (e, ref, message, setFormValid) => {
   if (urlRegEx.test(e.target.value)) {
     ref.current.innerHTML = ''
+    setFormValid(true)
   } else if (!urlRegEx.test(e.target.value)) {
     ref.current.innerHTML = message
     ref.current.style.color = 'red'
+    setFormValid(false)
   }
 }
-export const phoneValidation = (e, ref, message) => {
+export const phoneValidation = (e, ref, message, setFormValid) => {
   if (phoneRegEx.test(e.target.value)) {
     ref.current.innerHTML = ''
+    setFormValid(true)
   } else if (!phoneRegEx.test(e.target.value)) {
     ref.current.innerHTML = message
     ref.current.style.color = 'red'
-  } else if (e.target.value.length > 14) {
-    ref.current.innerHTML = 'Limited Exceed'
-    ref.current.style.color = 'red'
-  } else if (e.target.value.length < 14) {
-    ref.current.innerHTML = 'Incorrect phone number'
-    ref.current.style.color = 'red'
+    setFormValid(false)
   }
 }
 
-export const passwordLengthValidation = (e, pwdRef, setPwdValid) => {
+export const passwordLengthValidation = (e, pwdRef, message, setFormValid) => {
   if (e.target.value.length < 8) {
     pwdRef.current.style.color = 'red'
-    pwdRef.current.innerHTML = 'Password too short.'
-    setPwdValid(false)
+    pwdRef.current.innerHTML = message
+    setFormValid(false)
   } else if (e.target.value.length >= 8) {
-    pwdRef.current.style.color = 'green'
-    pwdRef.current.innerHTML = 'Password valid !'
-    setPwdValid(true)
+    pwdRef.current.innerHTML = ''
+    setFormValid(true)
   }
 }

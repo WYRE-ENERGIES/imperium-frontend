@@ -17,7 +17,7 @@ const PowerSwitch = ({ device_id, user }) => {
   const [shsData, setShsData] = useState({
     scheduled_time: '',
     schedule_type: '',
-    reason: '',
+    reason: 'Testing Shs time schedule',
   })
   const [scheduledTime, setScheduledTime] = useState('')
   const { data, isLoading } = useGetShsDetailsQuery({ deviceId: device_id })

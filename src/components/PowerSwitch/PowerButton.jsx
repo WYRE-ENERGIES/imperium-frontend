@@ -66,6 +66,7 @@ const PowerButton = ({
         setErrMsg(ErrorMessage(error))
       }
     } else if (user === 'admin') {
+      console.log(data)
       try {
         await adminShsPowerSchedule({ data, deviceId }).unwrap()
         setPowerBtnModalOpen(false)
