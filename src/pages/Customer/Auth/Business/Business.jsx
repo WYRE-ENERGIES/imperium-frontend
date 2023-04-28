@@ -1,6 +1,6 @@
 import { Form, Input, Row, Upload, message } from 'antd'
 import React from 'react'
-import jwt_decode from 'jwt-decode'
+
 import FormDescription from '../../../../components/Auth/Forms/Widgets/FormDescription'
 import { FaTrashAlt } from 'react-icons/fa'
 import LeftLayout from '../../../../components/Auth/Layout/LeftLayout/LeftLayout'
@@ -43,6 +43,7 @@ const Business = () => {
   const [fileUploadingProgress, setfileUploadingProgress] = useState(0)
   const [fileName, setfileName] = useState('')
   const [fileSize, setfileSize] = useState(0)
+  const [formValid, setFormValid] = useState(false)
   const [upLoadedFile, setUpLoadedFile] = useState('')
   const { Dragger } = Upload
   const token = getItemFromLocalStorage('access')
@@ -71,15 +72,18 @@ const Business = () => {
           setfileSize(size)
           setfileUploadingProgress(percent)
           fileUploadRef.current.style.color = 'green'
-          fileUploadRef.current.innerHTML = 'File uploaded !'
+          fileUploadRef.current.innerHTML = 'File upload successful!'
+          setFormValid(true)
         } else if (fileTypes.find((file) => file != fileExt)) {
           setfileName('')
           setfileSize('')
           setfileUploadingProgress(0)
           fileUploadRef.current.style.color = 'red'
           fileUploadRef.current.innerHTML = 'File extension not supported'
+          setFormValid(false)
         } else {
           fileUploadRef.current.style.color = ''
+          setFormValid(false)
         }
       }
       if (status === 'done') {
@@ -100,17 +104,17 @@ const Business = () => {
 
   const onFinish = async (values) => {
     const urlHttp = 'https://' + values.campany_url
-    console.log(urlHttp)
+
     formData.append('company_logo', upLoadedFile)
     formData.append('business_name', values.business_name)
     formData.append('company_url', urlHttp)
 
     try {
       await customerBusiness(formData).unwrap()
-      saveToLocalStorage('user_role', jwt_decode(token)?.user_role)
+
       navigate('/overview')
     } catch (err) {
-      setErrMsg(ErrorMessage(err))
+      setErrMsg(ErrorMessage(err?.data?.company_url))
     }
   }
   return (
@@ -140,11 +144,7 @@ const Business = () => {
               >
                 {errMsg && <Error Errormsg={errMsg} />}
 
-                <Form.Item
-                  label={<p style={{ marginBottom: '-30px' }}>Business Name</p>}
-                  name="business_name"
-                  required
-                >
+                <Form.Item label="Business name" name="business_name" required>
                   <Input
                     className={classes.Business__Input}
                     style={{ marginBottom: '-30px' }}
@@ -152,26 +152,15 @@ const Business = () => {
                   />
                 </Form.Item>
                 <Form.Item
-                  label={
-                    <p
-                      style={{
-                        marginTop: '-10px',
-                        marginBottom: '-3px',
-                      }}
-                    >
-                      Company
-                    </p>
-                  }
+                  label="Company"
                   name="campany_url"
                   required
-                  extra={
-                    <p ref={urlRef} style={{ fontSize: '14px' }}>
-                      Example: www.mydomain.com
-                    </p>
-                  }
+                  extra={<small ref={urlRef}></small>}
                 >
                   <Input
-                    onChange={(e) => urlValidation(e, urlRef, 'Invalid url')}
+                    onChange={(e) =>
+                      urlValidation(e, urlRef, 'Invalid url', setFormValid)
+                    }
                     addonBefore={'https://'}
                     className={classes.Business__Company}
                     placeholder="www.yourdomain.com"
@@ -181,7 +170,10 @@ const Business = () => {
                   <div className={classes.Business__fileUploadDelete}>
                     <div
                       className={classes.Business__fileUploadDeleteIcon}
-                      onClick={() => setFileUpload(false)}
+                      onClick={() => {
+                        setFileUpload(false)
+                        fileUploadRef.current.innerHTML = ''
+                      }}
                     >
                       {' '}
                       <FaTrashAlt color="#808080" />
@@ -193,17 +185,13 @@ const Business = () => {
                 <Form.Item
                   required
                   label="Upload Company Logo"
-                  style={{ marginTop: '-10px' }}
+                  style={{ marginTop: fileUpload ? '-50px' : '-25px' }}
                   className={
                     fileUpload
                       ? classes.Business__FileUploaded
                       : classes.Business__FileUpload
                   }
-                  extra={
-                    <p ref={fileUploadRef} style={{ fontSize: '14px' }}>
-                      Supported format PNG,JPG,SVG and GIF
-                    </p>
-                  }
+                  extra={<small ref={fileUploadRef}></small>}
                 >
                   <Form.Item
                     name="file"
@@ -213,9 +201,6 @@ const Business = () => {
                   >
                     <Dragger
                       {...fileUploadProps}
-                      beforeUpload={(file) => {
-                        setUpLoadedFile(file)
-                      }}
                       name="file"
                       style={{
                         border: '1px solid #E6E6E6',
@@ -268,8 +253,12 @@ const Business = () => {
                   </Form.Item>
                 </Form.Item>
 
-                <Form.Item>
-                  <FormButton action={'Continue'} isLoading={isLoading} />
+                <Form.Item style={{ marginTop: '-25px' }}>
+                  <FormButton
+                    action={'Continue'}
+                    isLoading={isLoading}
+                    validate={!formValid}
+                  />
                 </Form.Item>
 
                 <FormFooter
@@ -278,9 +267,9 @@ const Business = () => {
                       style={{
                         color: 'gray',
                         fontWeight: 'bolder',
-                        fontSize: '16px',
+                        fontSize: '14px',
                       }}
-                      to={'/'}
+                      to="/"
                     >
                       Skip
                     </Link>

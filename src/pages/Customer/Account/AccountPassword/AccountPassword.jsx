@@ -8,9 +8,13 @@ import { useCustomerChangePasswordMutation } from '../../../../features/slices/a
 import { ErrorMessage } from '../../../../components/ErrorMessage/ErrorMessage'
 import Error from '../../../../components/ErrorMessage/Error'
 import { useRef } from 'react'
+import { passwordLengthValidation } from '../../../../components/RegEx/RegEx'
 
 const AccountPassword = () => {
   const [form] = Form.useForm()
+  const pwdRef1 = useRef(null)
+  const pwdRef2 = useRef(null)
+  const [formValid, setFormValid] = useState(false)
   const [errMsg, setErrMsg] = useState('')
   const [customerChangePassword, { isLoading }] =
     useCustomerChangePasswordMutation()
@@ -21,15 +25,20 @@ const AccountPassword = () => {
     })
   }
   const onFinish = async (values) => {
-    console.log('Finish:', values)
-    try {
-      await customerChangePassword({
-        credentials: values,
-      }).unwrap()
-      openNotification()
-    } catch (err) {
-      setErrMsg(ErrorMessage(err))
-    }
+    if (values.new_password1 === values.old_password) {
+      setErrMsg('Old password can not be new password.')
+    } else if (values.new_password1 !== values.new_password2) {
+      setErrMsg("New passwords don't match")
+    } else
+      try {
+        await customerChangePassword({
+          credentials: values,
+        }).unwrap()
+        setErrMsg('')
+        openNotification()
+      } catch (err) {
+        setErrMsg(ErrorMessage(err?.data?.old_password?.message))
+      }
   }
   return (
     <Account props={'password'}>
@@ -46,20 +55,16 @@ const AccountPassword = () => {
             <Col>
               {' '}
               <Form.Item
-                label={
-                  <p
-                    style={{
-                      marginTop: '10px',
-                      marginBottom: '-10px',
-                      fontSize: '13.5px',
-                    }}
-                  >
-                    Old Password
-                  </p>
-                }
+                label="Old password"
                 name="old_password"
                 style={{ marginTop: '-1rem' }}
-                required
+                rules={[
+                  {
+                    required: true,
+                    message: <small>This filed is required</small>,
+                  },
+                ]}
+                extra={<small>Password should match current password</small>}
               >
                 <Input.Password
                   prefix={
@@ -74,20 +79,17 @@ const AccountPassword = () => {
             <Col>
               {' '}
               <Form.Item
-                label={
-                  <p
-                    style={{
-                      marginTop: '10px',
-                      marginBottom: '-10px',
-                      fontSize: '13.5px',
-                    }}
-                  >
-                    New Password
-                  </p>
-                }
+                label="New password"
                 name="new_password1"
                 style={{ marginTop: '-1rem' }}
                 required
+                extra={<small ref={pwdRef1}></small>}
+                rules={[
+                  {
+                    required: true,
+                    message: <small>This filed is required</small>,
+                  },
+                ]}
               >
                 <Input.Password
                   prefix={
@@ -96,25 +98,30 @@ const AccountPassword = () => {
                   className={classes.AccountPassword__Password}
                   placeholder="Enter new password"
                   style={{ marginTop: '-1px' }}
+                  onChange={(e) =>
+                    passwordLengthValidation(
+                      e,
+                      pwdRef1,
+                      'Must be at least 8 characters.',
+                      setFormValid,
+                    )
+                  }
                 />
               </Form.Item>
             </Col>
             <Col>
               <Form.Item
-                label={
-                  <p
-                    style={{
-                      marginTop: '10px',
-                      marginBottom: '-10px',
-                      fontSize: '13.5px',
-                    }}
-                  >
-                    Confirm Password
-                  </p>
-                }
+                label="Confirm password"
                 name="new_password2"
                 style={{ marginTop: '-1rem' }}
                 required
+                extra={<small ref={pwdRef2}></small>}
+                rules={[
+                  {
+                    required: true,
+                    message: <small>This filed is required</small>,
+                  },
+                ]}
               >
                 <Input.Password
                   prefix={
@@ -123,6 +130,14 @@ const AccountPassword = () => {
                   className={classes.AccountPassword__Password}
                   placeholder="Confirm new password"
                   style={{ marginTop: '-1px' }}
+                  onChange={(e) =>
+                    passwordLengthValidation(
+                      e,
+                      pwdRef2,
+                      'Must be at least 8 characters.',
+                      setFormValid,
+                    )
+                  }
                 />
               </Form.Item>
             </Col>

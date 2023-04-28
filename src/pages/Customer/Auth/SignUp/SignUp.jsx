@@ -18,9 +18,10 @@ import { useCustomerRegisterMutation } from '../../../../features/slices/auth/cu
 import { ErrorMessage } from '../../../../components/ErrorMessage/ErrorMessage'
 import Error from '../../../../components/ErrorMessage/Error'
 import { useRef } from 'react'
-import validator from 'validator'
-import { ExclamationCircleOutlined } from '@ant-design/icons'
-import { passwordLengthValidation } from '../../../../components/RegEx/RegEx'
+import {
+  emailValidation,
+  passwordLengthValidation,
+} from '../../../../components/RegEx/RegEx'
 const SignUp = () => {
   const formDescription = {
     image: imageDesc,
@@ -31,21 +32,10 @@ const SignUp = () => {
   const pwdRef = useRef(null)
   const emailRef = useRef()
   const [errMsg, setErrMsg] = useState('')
-  const [pwdValid, setPwdValid] = useState(false)
-  const [emailValid, setEmailValid] = useState(false)
+  const [formValid, setFormValid] = useState(false)
   const [customerRegister, { isLoading }] = useCustomerRegisterMutation()
   const navigate = useNavigate()
 
-  const handleEmailValidation = (e) => {
-    if (validator.isEmail(e.target.value)) {
-      emailRef.current.innerHTML = 'Email valid !'
-      emailRef.current.style.color = 'green'
-      setEmailValid(true)
-    } else if (!validator.isEmail(e.target.value)) {
-      emailRef.current.style.color = 'red'
-      setEmailValid(false)
-    }
-  }
   const accessToken = getItemFromLocalStorage('access')
   const onFinish = async (values) => {
     try {
@@ -95,17 +85,7 @@ const SignUp = () => {
                 {errMsg && <Error Errormsg={errMsg} />}
 
                 <Form.Item
-                  label={
-                    <p
-                      style={{
-                        marginBottom: '2px',
-                        marginTop: '10px',
-                        fontSize: '13.5px',
-                      }}
-                    >
-                      Email
-                    </p>
-                  }
+                  label="Email"
                   name="email"
                   rules={[
                     {
@@ -114,71 +94,53 @@ const SignUp = () => {
                     },
                   ]}
                   required
-                  extra={
-                    <p
-                      ref={emailRef}
-                      style={{
-                        fontSize: '12px',
-                        marginBottom: '-10px',
-                      }}
-                    >
-                      Enter a valid email
-                    </p>
-                  }
+                  extra={<small ref={emailRef}></small>}
                 >
                   <Input
                     className={classes.SignUpPage__Input}
                     placeholder="Enter your email"
                     style={{ marginTop: '-1rem' }}
-                    onChange={(e) => handleEmailValidation(e)}
+                    onChange={(e) =>
+                      emailValidation(
+                        e,
+                        emailRef,
+                        'Invalid email address',
+                        setFormValid,
+                      )
+                    }
                   />
                 </Form.Item>
                 <Form.Item
-                  label={
-                    <p
-                      style={{
-                        marginTop: '10px',
-                        marginBottom: '-10px',
-                        fontSize: '13.5px',
-                      }}
-                    >
-                      Password
-                    </p>
-                  }
-                  extra={
-                    <p
-                      ref={pwdRef}
-                      style={{
-                        fontSize: '12px',
-                        marginBottom: '-10px',
-                      }}
-                    >
-                      Must be at least 8 characters.
-                    </p>
-                  }
+                  label="Password"
+                  extra={<small ref={pwdRef}></small>}
                   name="password"
-                  style={{ marginTop: '-1rem' }}
+                  style={{ marginTop: '-1.5rem' }}
                   rules={[
                     {
                       required: true,
-                      message: 'This field is required.',
+                      message: <small>This filed is required</small>,
                     },
                   ]}
                 >
                   <Input.Password
                     onChange={(e) =>
-                      passwordLengthValidation(e, pwdRef, setPwdValid)
+                      passwordLengthValidation(
+                        e,
+                        pwdRef,
+                        'Must be at least 8 characters.',
+                        setFormValid,
+                      )
                     }
                     className={classes.SignUpPage__Password}
                     placeholder="Enter a password"
                     style={{ marginTop: '-1px' }}
                   />
                 </Form.Item>
-                <Form.Item>
+                <Form.Item style={{ marginTop: '-20px' }}>
                   <FormButton
                     action={'Create account'}
                     isLoading={isLoading}
-                    validate={!emailValid || !pwdValid}
+                    validate={!formValid}
                   />
                 </Form.Item>
 

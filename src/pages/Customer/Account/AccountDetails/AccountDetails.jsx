@@ -1,5 +1,5 @@
 import { Col, Form, Input, Row, notification } from 'antd'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import FormButton from '../../../../components/Auth/Forms/Widgets/FormButton'
 import Error from '../../../../components/ErrorMessage/Error'
@@ -15,16 +15,23 @@ import {
 } from '../../../../utils/helpers'
 import Account from '../Account'
 import classes from './AccounctDetails.module.scss'
+import {
+  addressValidation,
+  nameValidation,
+  phoneValidation,
+} from '../../../../components/RegEx/RegEx'
 const AccountDetails = () => {
   const [form] = Form.useForm()
   const userInfo = getItemFromLocalStorage('userInfo')
 
-  const navigate = useNavigate()
-  const [firstName, setFirstName] = useState('')
-  const [lastName, setLastName] = useState('')
-  const [phone, setPhone] = useState('')
-  const [address, setAddress] = useState('')
+  const fnameRef = useRef('')
+  const lnameRef = useRef('')
+  const phoneRef = useRef('')
+  const addyRef = useRef('')
+
   const [errMsg, setErrMsg] = useState('')
+
+  const [formValid, setFormValid] = useState(false)
   const { data: userData, isLoading: detailLoading } =
     useCustomerGetDetailsQuery()
 
@@ -51,13 +58,6 @@ const AccountDetails = () => {
     }
   }
 
-  useEffect(() => {
-    setFirstName(userData?.first_name)
-    setLastName(userData?.last_name)
-    setPhone(userData?.phone)
-    setAddress(userData?.address)
-  }, [userData])
-
   return (
     <Account props={'details'}>
       <div className={classes.AccountDetails}>
@@ -79,14 +79,25 @@ const AccountDetails = () => {
                   name="first_name"
                   rules={[
                     {
-                      required: firstName ? false : true,
+                      required: userData?.first_name ? false : true,
                       message: 'Enter a First Name!',
                     },
                   ]}
+                  extra={<small ref={fnameRef}></small>}
                 >
                   <Input
                     placeholder="Enter first name"
                     className={classes.AccountDetails__Input}
+                    onChange={(e) =>
+                      nameValidation(
+                        e,
+
+                        fnameRef,
+
+                        "Numbers and '!@#$%^&*()+=_`' are not valid characters.",
+                        setFormValid,
+                      )
+                    }
                   />
                 </Form.Item>
               </Col>
@@ -97,14 +108,25 @@ const AccountDetails = () => {
                   name="last_name"
                   rules={[
                     {
-                      required: lastName ? false : true,
+                      required: userData?.last_name ? false : true,
                       message: 'Enter a Last Name!',
                     },
                   ]}
+                  extra={<small ref={lnameRef}></small>}
                 >
                   <Input
                     className={classes.AccountDetails__Input}
                     placeholder="Enter last name"
+                    onChange={(e) =>
+                      nameValidation(
+                        e,
+
+                        lnameRef,
+
+                        "Numbers and '!@#$%^&*()+=_`' are not valid characters.",
+                        setFormValid,
+                      )
+                    }
                   />
                 </Form.Item>
               </Col>
@@ -115,15 +137,27 @@ const AccountDetails = () => {
                   name="phone"
                   rules={[
                     {
-                      required: phone ? false : true,
+                      required: userData?.phone ? false : true,
                       message: 'Please your phone number!',
                     },
                   ]}
+                  extra={<small ref={phoneRef}></small>}
                 >
                   <Input
+                    maxLength={14}
                     className={classes.AccountDetails__Phone}
                     addonBefore="+ 234"
                     placeholder="Enter phone number"
+                    onChange={(e) =>
+                      phoneValidation(
+                        e,
+
+                        phoneRef,
+
+                        'Invalid phone number',
+                        setFormValid,
+                      )
+                    }
                   />
                 </Form.Item>
               </Col>
@@ -134,19 +168,32 @@ const AccountDetails = () => {
               name="address"
               rules={[
                 {
-                  required: address ? false : true,
+                  required: userData?.address ? false : true,
                   message: 'Enter a valid address!',
                 },
               ]}
+              extra={<small ref={addyRef}></small>}
             >
               <Input
+                onChange={(e) =>
+                  addressValidation(
+                    e,
+                    addyRef,
+                    "'!@#$%^&*()+=-_`' are not valid characters.",
+                    setFormValid,
+                  )
+                }
                 className={classes.AccountDetails__Address}
                 placeholder="Enter your address"
               />
             </Form.Item>
 
             <Form.Item>
-              <FormButton action={'Save'} isLoading={isLoading} />
+              <FormButton
+                action={'Save'}
+                isLoading={isLoading}
+                validate={!formValid}
+              />
             </Form.Item>
           </Form>
         ) : (

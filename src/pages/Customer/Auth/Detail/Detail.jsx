@@ -1,7 +1,7 @@
 import { Row, Form, Input } from 'antd'
 import React, { useEffect, useRef, useState } from 'react'
 import FormDescription from '../../../../components/Auth/Forms/Widgets/FormDescription'
-
+import jwt_decode from 'jwt-decode'
 import LeftLayout from '../../../../components/Auth/Layout/LeftLayout/LeftLayout'
 import RightLayout from '../../../../components/Auth/Layout/RightLayout/RightLayout'
 import classes from './Details.module.scss'
@@ -13,7 +13,10 @@ import FormButton from '../../../../components/Auth/Forms/Widgets/FormButton'
 import FormHeader from '../../../../components/Auth/Forms/Widgets/FormHeader'
 import Error from '../../../../components/ErrorMessage/Error'
 import { ErrorMessage } from '../../../../components/ErrorMessage/ErrorMessage'
-import { saveToLocalStorage } from '../../../../utils/helpers'
+import {
+  getItemFromLocalStorage,
+  saveToLocalStorage,
+} from '../../../../utils/helpers'
 import {
   addressValidation,
   nameValidation,
@@ -32,6 +35,8 @@ const Details = () => {
   const lnameRef = useRef('')
   const phoneRef = useRef('')
   const addyRef = useRef('')
+  const userInfo = getItemFromLocalStorage('userInfo')
+  const token = getItemFromLocalStorage('access')
 
   const [errMsg, setErrMsg] = useState('')
   const [formValid, setFormValid] = useState(false)
@@ -45,11 +50,14 @@ const Details = () => {
         credentials: values,
       }).unwrap()
       navigate('/business')
-      saveToLocalStorage('userInfo', values)
+      saveToLocalStorage('userInfo', { ...userInfo, ...values })
     } catch (err) {
       setErrMsg(ErrorMessage(err))
     }
   }
+  useEffect(() => {
+    saveToLocalStorage('user_role', jwt_decode(token)?.user_role)
+  })
 
   return (
     <div className={classes.DetailsForm}>
@@ -80,31 +88,17 @@ const Details = () => {
             >
               <Form.Item
                 className={classes.DetailsForm__Elem}
-                label={
-                  <p style={{ marginBottom: '-10px', marginTop: '5px' }}>
-                    First Name
-                  </p>
-                }
+                label="First name"
                 name="first_name"
                 required
                 rules={[
                   {
                     required: true,
-                    message: 'This field is required.',
+                    message: <small>This field is required.</small>,
                   },
                 ]}
-                extra={
-                  <p
-                    ref={fnameRef}
-                    style={{
-                      fontSize: '12px',
-                      marginBottom: '-10px',
-                      marginTop: '5px',
-                    }}
-                  >
-                    Enter aphabetic characters. Only the hypen (-) is allowed.
-                  </p>
-                }
+                extra={<small ref={fnameRef}></small>}
+                style={{ marginTop: '10px' }}
               >
                 <Input
                   onChange={(e) =>
@@ -113,7 +107,8 @@ const Details = () => {
 
                       fnameRef,
 
-                      'Please enter only alphabetic characters',
+                      "Numbers and '!@#$%^&*()+=_`' are not valid characters.",
+                      setFormValid,
                     )
                   }
                   className={classes.DetailsForm__Input}
@@ -123,40 +118,25 @@ const Details = () => {
               </Form.Item>
               <Form.Item
                 className={classes.DetailsForm__Elem}
-                label={
-                  <p style={{ marginBottom: '-10px', marginTop: '-5px' }}>
-                    Last Name
-                  </p>
-                }
+                label="Last name"
                 name="last_name"
                 required
                 rules={[
                   {
                     required: true,
-                    message: 'This field is required.',
+                    message: <small>This field is required.</small>,
                   },
                 ]}
-                extra={
-                  <p
-                    ref={lnameRef}
-                    style={{
-                      fontSize: '12px',
-                      marginBottom: '-10px',
-                      marginTop: '5px',
-                    }}
-                  >
-                    Enter aphabetic characters. Only the hypen (-) is allowed.
-                  </p>
-                }
+                extra={<small ref={lnameRef}></small>}
+                style={{ marginTop: '-25px' }}
               >
                 <Input
                   onChange={(e) =>
                     nameValidation(
                       e,
-
                       lnameRef,
-
-                      'Please enter only alphabetic characters',
+                      "Numbers and '!@#$%^&*()+=_`' are not valid characters.",
+                      setFormValid,
                     )
                   }
                   className={classes.DetailsForm__Input}
@@ -166,89 +146,66 @@ const Details = () => {
               </Form.Item>
               <Form.Item
                 className={classes.DetailsForm__Elem}
-                label={
-                  <p style={{ marginTop: '-7px', marginBottom: '-10px' }}>
-                    Phone Number
-                  </p>
-                }
+                label="Phone number"
                 name="phone"
                 required
                 rules={[
                   {
                     required: true,
-                    message: 'This field is required.',
+                    message: <small>This field is required.</small>,
                   },
                 ]}
-                extra={
-                  <p
-                    ref={phoneRef}
-                    style={{
-                      fontSize: '12px',
-                      marginBottom: '-10px',
-                      marginTop: '5px',
-                    }}
-                  >
-                    Exmaple : +234...
-                  </p>
-                }
+                extra={<small ref={phoneRef}></small>}
+                style={{ marginTop: '-25px' }}
               >
                 <Input
-                  maxLength={15}
+                  maxLength={14}
                   onChange={(e) =>
                     phoneValidation(
                       e,
                       phoneRef,
 
-                      'Enter a valid phone number.',
+                      'Invalid phone number',
+                      setFormValid,
                     )
                   }
                   className={classes.DetailsForm__Input}
                   style={{ marginBottom: '1px', marginTop: '-10xp' }}
-                  placeholder="Example +234-XXX-XXXX"
+                  placeholder=" +234-123-4567-890"
                 />
               </Form.Item>
               <Form.Item
                 className={classes.DetailsForm__Elem}
-                label={<p>Address</p>}
+                label="Address"
                 name="address"
                 required
                 rules={[
                   {
                     required: true,
-                    message: 'This field is required.',
+                    message: <small>This field is required.</small>,
                   },
                 ]}
-                extra={
-                  <p
-                    ref={addyRef}
-                    style={{
-                      fontSize: '12px',
-                      marginBottom: '-10px',
-                      marginTop: '5px',
-                    }}
-                  >
-                    Enter aphabetic characters. Only the hypen (-) is allowed.
-                  </p>
-                }
+                extra={<small ref={addyRef}></small>}
+                style={{ marginTop: '-25px' }}
               >
                 <Input.TextArea
                   onChange={(e) =>
                     addressValidation(
                       e,
                       addyRef,
-                      'No use of special characters.',
+                      "'!@#$%^&*()+=-_`' are not valid characters.",
+                      setFormValid,
                     )
                   }
                   className={classes.DetailsForm__Input}
-                  style={{ marginTop: '-20px' }}
                   placeholder="Enter a Address..."
                 />
               </Form.Item>
-              <Form.Item>
+              <Form.Item style={{ marginTop: '-25px' }}>
                 <FormButton
                   action={'Continue'}
                   isLoading={isLoading}
-                  // validate={!formValid}
+                  validate={!formValid}
                 />
               </Form.Item>
             </Form>

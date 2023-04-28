@@ -42,10 +42,13 @@
   }
 
   &__FileUpload {
-    span:hover {
-      border: 1px solid #99c78a;
-      background: #f9fcf8;
+    span {
       border-radius: 8px;
+    }
+    span:hover {
+      // border: 20px solid #99c78a;
+      background: #f9fcf8;
+
       p {
         color: $dark-green !important;
       }
@@ -64,7 +67,7 @@
     position: relative;
     z-index: 2;
     display: flex;
-    top: 70px;
+    top: 25px;
     right: 15px;
     justify-content: end;
   }

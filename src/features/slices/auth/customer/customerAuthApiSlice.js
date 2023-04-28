@@ -60,6 +60,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
           body: formData,
         }
       },
+      invalidatesTags: ['CustomerBusiness'],
     }),
     customerGetBusiness: builder.query({
       query: () => {
@@ -68,6 +69,7 @@ export const authApiSlice = apiSlice.injectEndpoints({
           method: 'GET',
         }
       },
+      providesTags: ['CustomerBusiness'],
     }),
     customerGetDetails: builder.query({
       query: () => {

@@ -37,6 +37,7 @@ const Verification = () => {
         otp: values.otp,
       }).unwrap()
       navigate('/details')
+      saveToLocalStorage('userInfo', { email: email.state.email })
     } catch (err) {
       console.log(err)
       setErrMsg(ErrorMessage(err?.data?.detail))

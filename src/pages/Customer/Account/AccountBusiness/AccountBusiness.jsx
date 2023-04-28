@@ -1,5 +1,5 @@
-import { Col, Form, Input, Row, Upload, message } from 'antd'
-import React, { useState } from 'react'
+import { Col, Form, Input, notification, Upload, message } from 'antd'
+import React, { useRef, useState } from 'react'
 import FormButton from '../../../../components/Auth/Forms/Widgets/FormButton'
 import classes from './AccountBusiness.module.scss'
 import Account from '../Account'
@@ -11,9 +11,11 @@ import { ErrorMessage } from '../../../../components/ErrorMessage/ErrorMessage'
 
 import uploadImg from '../../../../assets/widget-icons/bussinessuploadIcon.svg'
 import Loading from '../../../../components/Loading/Loading'
+import Error from '../../../../components/ErrorMessage/Error'
+import { urlValidation } from '../../../../components/RegEx/RegEx'
 
 const formData = new FormData()
-const BusinessForm = () => {
+const BusinessForm = ({ img }) => {
   const [upLoadedFile, setUpLoadedFile] = useState('')
 
   const { Dragger } = Upload
@@ -26,6 +28,7 @@ const BusinessForm = () => {
 
     beforeUpload(file) {
       setUpLoadedFile(file)
+      formData.append('company_logo', file)
     },
     onChange(info) {
       const { status } = info.file
@@ -39,7 +42,7 @@ const BusinessForm = () => {
         formData.append('company_logo', upLoadedFile)
 
         message.success(`${info.file.name} 
-                               file uploaded failed`)
+                               file uploaded successfully`)
       }
     },
   }
@@ -47,7 +50,13 @@ const BusinessForm = () => {
     <Form>
       <Form.Item>
         <Form.Item name="dragger" valuePropName="l" noStyle>
-          <div className={classes.AccountBusiness__FileUpload}>
+          <div
+            className={classes.AccountBusiness__FileUpload}
+            style={{
+              backgroundImage: `url("${img}")`,
+              backgroundSize: 'cover',
+            }}
+          >
             <Dragger
               {...fileUploadProps}
               name="files"
@@ -81,34 +90,42 @@ const BusinessForm = () => {
 
 const AccountBusiness = () => {
   const [form] = Form.useForm()
-
+  const urlRef = useRef()
+  const [errMsg, setErrMsg] = useState('')
+  const [formValid, setFormValid] = useState(false)
   const [customerBusiness, { isLoading: updatingBusiness }] =
     useCustomerBusinessMutation()
-  const { userdata, isLoading: gettingBusiness } = useCustomerGetBusinessQuery()
-  console.log(userdata)
-  const [errMsg, setErrMsg] = useState('')
-  const [businessName, setBusinessName] = useState('')
-  const [companyLogo, setCompanyLogo] = useState(null)
-  const [companyUrl, setCompanyUrl] = useState('')
-
+  const { data: userdata, isLoading: businessIsLoading } =
+    useCustomerGetBusinessQuery()
+  const openNotification = () => {
+    notification.success({
+      message: 'Successful',
+      description: `Business successfully updated.`,
+    })
+  }
   const onFinish = async (values) => {
     formData.append('business_name', values.business_name)
-    formData.append('company_url', values.campany_url)
+    formData.append('company_url', 'https://' + values.company_url)
 
     try {
       await customerBusiness(formData).unwrap()
+      setErrMsg('')
+      openNotification()
     } catch (err) {
-      setErrMsg(ErrorMessage(err))
+      setErrMsg(ErrorMessage(err?.data?.company_url))
     }
   }
 
   return (
-    <Account type={'business'} content={<BusinessForm />}>
+    <Account
+      type={'business'}
+      content={<BusinessForm img={userdata?.company_logo} />}
+    >
       <div className={classes.AccountBusiness}>
         {' '}
-        {gettingBusiness ? (
+        {businessIsLoading ? (
           <Loading data={'business data'} />
-        ) : userdata ? (
+        ) : (
           <Form
             form={form}
             layout="vertical"
@@ -117,6 +134,7 @@ const AccountBusiness = () => {
             initialValues={{ ...userdata }}
           >
             <div className={classes.AccountBusiness__Form}>
+              {errMsg && <Error Errormsg={errMsg} />}
               <Col>
                 {' '}
                 <Form.Item
@@ -125,7 +143,7 @@ const AccountBusiness = () => {
                   rules={[
                     {
                       required: true,
-                      message: 'Enter a business name!',
+                      message: <small>Enter a business name.</small>,
                     },
                   ]}
                 >
@@ -143,14 +161,19 @@ const AccountBusiness = () => {
                   rules={[
                     {
                       required: true,
-                      message: 'Enter company website URL.',
+                      message: <small>Enter company website URL.</small>,
                     },
                   ]}
+                  extra={<small ref={urlRef}></small>}
+                  style={{ marginTop: '20px' }}
                 >
                   <Input
-                    addonBefore={'http://'}
+                    addonBefore={'https://'}
                     className={classes.AccountBusiness__Company}
                     placeholder="www.yourdomain.com"
+                    onChange={(e) =>
+                      urlValidation(e, urlRef, 'Invalid url', setFormValid)
+                    }
                   />
                 </Form.Item>
               </Col>
@@ -161,14 +184,13 @@ const AccountBusiness = () => {
                     <FormButton
                       isLoading={updatingBusiness}
                       action={'Save changes'}
+                      validate={!formValid}
                     />
                   </Col>
                 </Form.Item>
               </Col>
             </div>{' '}
           </Form>
-        ) : (
-          'No data found for this user'
         )}
       </div>
     </Account>
