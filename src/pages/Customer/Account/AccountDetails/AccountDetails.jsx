@@ -54,7 +54,7 @@ const AccountDetails = () => {
       })
       openNotification()
     } catch (err) {
-      setErrMsg(ErrorMessage(err))
+      setErrMsg(ErrorMessage(err?.data?.message))
     }
   }
 
