@@ -42,7 +42,7 @@ const Layout = ({
               <FormHeader header={widgets?.header} tagline={widgets?.tag} />
             </div>
           </div>
-          <div>{children}</div>
+          <div>{children} </div>
           <div>{widgets?.footer}</div>
         </div>
       </div>

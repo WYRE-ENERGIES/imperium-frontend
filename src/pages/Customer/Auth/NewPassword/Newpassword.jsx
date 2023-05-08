@@ -28,7 +28,8 @@ const NewPasswordPage = () => {
           password: values.password1,
           confirm_password: values.password2,
         }).unwrap()
-        navigate('/admin/')
+        console.log('Password changed')
+        navigate('/')
       } catch (err) {
         setErrMsg(ErrorMessage(err))
       }
@@ -68,15 +69,16 @@ const NewPasswordPage = () => {
               },
             ]}
             required
-            extra={
-              <p ref={pwdRef1} style={{ fontSize: '14px' }}>
-                Must be more than 8 characters
-              </p>
-            }
+            extra={<p ref={pwdRef1} style={{ fontSize: '14px' }}></p>}
           >
             <Input.Password
               onChange={(e) =>
-                passwordLengthValidation(e, pwdRef1, setPwdValid)
+                passwordLengthValidation(
+                  e,
+                  pwdRef1,
+                  'Must be more than 8 characters ',
+                  setPwdValid,
+                )
               }
               className={classes.NewPassword__Password}
               placeholder="New password"
@@ -92,15 +94,16 @@ const NewPasswordPage = () => {
               },
             ]}
             required
-            extra={
-              <p ref={pwdRef2} style={{ fontSize: '14px' }}>
-                Must be more than 8 characters
-              </p>
-            }
+            extra={<p ref={pwdRef2} style={{ fontSize: '14px' }}></p>}
           >
             <Input.Password
               onChange={(e) =>
-                passwordLengthValidation(e, pwdRef2, setPwdValid)
+                passwordLengthValidation(
+                  e,
+                  pwdRef2,
+                  'Must be more than 8 characters ',
+                  setPwdValid,
+                )
               }
               className={classes.NewPassword__Password}
               placeholder="Confirm password"

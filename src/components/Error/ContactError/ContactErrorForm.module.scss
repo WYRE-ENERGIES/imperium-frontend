@@ -95,3 +95,12 @@
     }
   }
 }
+
+@media only screen and (max-width: 320px) {
+  .ContactErrorForm {
+    width: 100%;
+  }
+  &__FormContent {
+    width: 100%;
+  }
+}

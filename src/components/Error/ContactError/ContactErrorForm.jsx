@@ -24,6 +24,17 @@ const ContactErrorForm = () => {
       value: 'Payment',
     },
   ]
+  const priority = [
+    {
+      value: 'High',
+    },
+    {
+      value: 'Medium',
+    },
+    {
+      value: 'Low',
+    },
+  ]
   const nextPage = useNavigate()
 
   const handleOnCreateAccountBtn = () => {
@@ -40,7 +51,7 @@ const ContactErrorForm = () => {
   }
   return (
     <div>
-      <ErrorLayout width={'530px'}>
+      <ErrorLayout width={'auto'}>
         <div className={classes.ContactErrorForm}>
           <div className={classes.ContactErrorForm__FormContent}>
             <div>
@@ -93,7 +104,7 @@ const ContactErrorForm = () => {
                         style={{
                           width: '246px',
                         }}
-                        options={options}
+                        options={priority}
                       />
                     </Form.Item>
                   </Col>
