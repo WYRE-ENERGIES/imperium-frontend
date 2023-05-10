@@ -159,7 +159,8 @@ const Details = () => {
                 style={{ marginTop: '-25px' }}
               >
                 <Input
-                  maxLength={14}
+                  maxLength={11}
+                  addonBefore="+ 234"
                   onChange={(e) =>
                     phoneValidation(
                       e,
@@ -169,9 +170,9 @@ const Details = () => {
                       setFormValid,
                     )
                   }
-                  className={classes.DetailsForm__Input}
+                  className={classes.DetailsForm__Phone}
                   style={{ marginBottom: '1px', marginTop: '-10xp' }}
-                  placeholder=" +234-123-4567-890"
+                  placeholder=" 08012345678"
                 />
               </Form.Item>
               <Form.Item

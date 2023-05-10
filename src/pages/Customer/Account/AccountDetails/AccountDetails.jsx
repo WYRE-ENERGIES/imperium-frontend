@@ -67,7 +67,6 @@ const AccountDetails = () => {
             form={form}
             onFinish={onFinish}
             layout="vertical"
-            requiredMark="optional"
             initialValues={{ ...userData }}
           >
             {errMsg && <Error Errormsg={errMsg} />}
