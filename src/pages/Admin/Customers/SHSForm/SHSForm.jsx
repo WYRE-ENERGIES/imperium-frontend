@@ -91,7 +91,12 @@ const AddSHSForm = ({ toggleModal }) => {
 
       toggleModal()
     } catch (error) {
-      setErr('An Error occurred')
+      const { data } = error
+      if (data) {
+        setErr(data)
+      } else {
+        setErr('An Error occurred')
+      }
     }
   }
 
@@ -147,7 +152,6 @@ const AddSHSForm = ({ toggleModal }) => {
           name="client_email"
           label="Customer Email"
           style={{ marginBottom: '12px', flex: 1 }}
-          rules={[{ required: true, message: 'Please enter a email address' }]}
         >
           <SearchDropdown
             value={search}
@@ -156,6 +160,9 @@ const AddSHSForm = ({ toggleModal }) => {
             handleChange={handleChange}
             handleSearch={handleSearch}
           />
+          {err && err.client_email && (
+            <Text type="danger">{err.client_email}</Text>
+          )}
         </Form.Item>
 
         <Form.Item
@@ -322,6 +329,7 @@ const AddSHSForm = ({ toggleModal }) => {
         </Form.Item>
       </div>
 
+      {err && err.message && <Text type="danger">{err.message}</Text>}
       <div className={classes.AddSHSForm__btn}>
         <Button
           className={classes.AddSHSForm__cancelBtn}

@@ -33,11 +33,9 @@ const PanelAnalytic = () => {
     error: tableError,
     data,
     isFetching,
-    refetch,
   } = useGetPanelTableDataQuery({
     page,
     search: debounceValue,
-    filterBy: globalFilter,
   })
 
   // const {
@@ -66,7 +64,6 @@ const PanelAnalytic = () => {
   }, [isAnalyticsFetching, analyticsData])
 
   useEffect(() => {
-    refetch()
     refetchAnalytics()
   }, [globalFilter])
 
@@ -109,15 +106,15 @@ const PanelAnalytic = () => {
             isAdmin={true}
             handleSearch={handleSearch}
             isLoading={isFetching}
-            footer={() => (
-              <TableFooter
-                pageNo={data?.page}
-                totalPages={data?.total_pages}
-                handleClick={setPage}
-                hasNext={data?.page === data?.total_pages}
-                hasPrev={!data?.total_pages || data?.page === 1}
-              />
-            )}
+            // footer={() => (
+            //   <TableFooter
+            //     pageNo={data?.page}
+            //     totalPages={data?.total_pages}
+            //     handleClick={setPage}
+            //     hasNext={data?.page === data?.total_pages}
+            //     hasPrev={!data?.total_pages || data?.page === 1}
+            //   />
+            // )}
             url={'imperium-admin/panel/list-table/export/'}
             tableName={'panel-table'}
           />

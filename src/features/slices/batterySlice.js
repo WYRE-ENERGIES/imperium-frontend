@@ -6,7 +6,7 @@ export const batteryApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getBatteryTableData: builder.query({
       query: ({ page, search, filterBy }) => {
-        let url = `${BASE_BATTERY_URL}list-table/?page=${page}&order_by=${filterBy}`
+        let url = `${BASE_BATTERY_URL}list-table/?page=${page}`
         if (search) {
           url += `&search=${search}`
         }

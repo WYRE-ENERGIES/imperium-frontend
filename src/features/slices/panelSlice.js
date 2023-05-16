@@ -8,7 +8,7 @@ export const panelApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getPanelTableData: builder.query({
       query: ({ page, search, filterBy }) => {
-        let url = `${BASE_PANEL_URL}list-table/?page=${page}&order_by=${filterBy}`
+        let url = `${BASE_PANEL_URL}list-table/?page=${page}`
         if (search) {
           url += `&search=${search}`
         }
