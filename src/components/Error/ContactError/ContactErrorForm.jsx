@@ -7,7 +7,7 @@ import classes from './ContactErrorForm.module.scss'
 import { BiCheck, BiEnvelope } from 'react-icons/bi'
 import { BiPhone } from 'react-icons/bi'
 const ContactErrorForm = () => {
-  const options = [
+  const errorMessage = [
     {
       value: 'Location',
     },
@@ -22,6 +22,28 @@ const ContactErrorForm = () => {
     },
     {
       value: 'Payment',
+    },
+  ]
+  const priority = [
+    {
+      value: 'High',
+    },
+    {
+      value: 'Medium',
+    },
+    {
+      value: 'Low',
+    },
+  ]
+  const shs = [
+    {
+      value: 'Device_1',
+    },
+    {
+      value: 'Device_2',
+    },
+    {
+      value: 'Device_3',
     },
   ]
   const nextPage = useNavigate()
@@ -79,7 +101,7 @@ const ContactErrorForm = () => {
                         style={{
                           width: '246px',
                         }}
-                        options={options}
+                        options={errorMessage}
                       />
                     </Form.Item>
                   </Col>
@@ -93,7 +115,7 @@ const ContactErrorForm = () => {
                         style={{
                           width: '246px',
                         }}
-                        options={options}
+                        options={priority}
                       />
                     </Form.Item>
                   </Col>
@@ -107,7 +129,7 @@ const ContactErrorForm = () => {
                     style={{
                       width: '100%',
                     }}
-                    options={options}
+                    options={shs}
                   />
                 </Form.Item>
                 <Form.Item
