@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, Suspense, lazy } from 'react'
 import {
   useGetClientOverviewAnalyticsQuery,
   useGetClientOverviewEnergyDataQuery,
@@ -8,7 +8,6 @@ import {
 
 import { ReactComponent as EnergyWidgetIcon } from '../../../assets/widget-icons/energy-icon.svg'
 import { ReactComponent as HomeWidgetIcon } from '../../../assets/widget-icons/home-icon.svg'
-import InstructionModal from './InstructionModal/InstructionModal'
 import PageBreadcrumb from '../../../components/PageBreadcrumb/PageBreadcrumb'
 import PageLayout from '../../../components/Layout/PageLayout'
 import { ReactComponent as SEnergyWidgetIcon } from '../../../assets/widget-icons/cancel-energy-con.svg'
@@ -19,7 +18,11 @@ import Widget from '../../../components/Widget/Widget/Widget'
 import WidgetFilter from '../../../components/WidgetFilter/WidgetFilter'
 import WidgetLoader from '../../../components/Widget/WidgetLoader/WidgetLoader'
 import classes from './Overview.module.scss'
-import { formatLabel } from '../../../utils/helpers'
+import { formatLabel, getItemFromLocalStorage } from '../../../utils/helpers'
+
+const InstructionModal = lazy(() =>
+  import('./InstructionModal/InstructionModal'),
+)
 
 const Overview = () => {
   const [chartData, setChartData] = useState([
@@ -35,6 +38,7 @@ const Overview = () => {
   const [widgets, setWidgets] = useState([])
   const [page, setPage] = useState(1)
   const [globalFilter, setGlobalFilter] = useState('yearly')
+  const [open, setOpen] = useState(false)
 
   const {
     isFetching: isAnalyticsFetching,
@@ -73,6 +77,13 @@ const Overview = () => {
     error: mapError,
     data: mapData,
   } = useGetMapDataQuery()
+
+  useEffect(() => {
+    const current_client = getItemFromLocalStorage('current_client')
+    if (!current_client) {
+      setOpen(true)
+    }
+  }, [])
 
   useEffect(() => {
     if (isAnalyticsFetching) return
@@ -144,44 +155,53 @@ const Overview = () => {
 
   return (
     <PageLayout>
-      <div style={{ backgroundColor: '#FCFCFD' }} className={classes.Overview}>
-        <section className={classes.Overview__headerSection}>
-          <PageBreadcrumb title="Overview" items={['Overview']} />
-        </section>
-        <section className={classes.Overview__filters}>
-          <WidgetFilter
-            selectFilterBy={(value) => setGlobalFilter(value)}
-            filterBy={globalFilter}
-          />
-        </section>
-        <div className={classes.Overview__widgets}>
-          {isAnalyticsFetching ? <WidgetLoader /> : widgets}
+      {open ? (
+        <div></div>
+      ) : (
+        <div
+          style={{ backgroundColor: '#FCFCFD' }}
+          className={classes.Overview}
+        >
+          <section className={classes.Overview__headerSection}>
+            <PageBreadcrumb title="Overview" items={['Overview']} />
+          </section>
+          <section className={classes.Overview__filters}>
+            <WidgetFilter
+              selectFilterBy={(value) => setGlobalFilter(value)}
+              filterBy={globalFilter}
+            />
+          </section>
+          <div className={classes.Overview__widgets}>
+            {isAnalyticsFetching ? <WidgetLoader /> : widgets}
+          </div>
+          <div className={classes.Overview__map}>
+            <ShsDeviceMap isLoading={isMapFetching} data={mapData?.results} />
+          </div>
+          <div className={classes.Overview__chart}>
+            <StackedBarChart
+              title="Energy Generation vs Energy Consumption"
+              chartData={chartData}
+              colors={['#66AB4F', '#497A38']}
+              borderRadius={10}
+              columnWidth={30}
+              legendPosition="top"
+              legendHorizontalAlign="right"
+              yLabelTitle="kWh"
+              xLabelTitle="Month"
+            />
+          </div>
+          <div className={classes.Overview__shsTable}>
+            <SHSTable
+              isLoading={isSolarFetching}
+              setPage={setPage}
+              data={solarData}
+            />
+          </div>
         </div>
-        <div className={classes.Overview__map}>
-          <ShsDeviceMap isLoading={isMapFetching} data={mapData?.results} />
-        </div>
-        <div className={classes.Overview__chart}>
-          <StackedBarChart
-            title="Energy Generation vs Energy Consumption"
-            chartData={chartData}
-            colors={['#66AB4F', '#497A38']}
-            borderRadius={10}
-            columnWidth={30}
-            legendPosition="top"
-            legendHorizontalAlign="right"
-            yLabelTitle="kWh"
-            xLabelTitle="Month"
-          />
-        </div>
-        <div className={classes.Overview__shsTable}>
-          <SHSTable
-            isLoading={isSolarFetching}
-            setPage={setPage}
-            data={solarData}
-          />
-        </div>
-      </div>
-      {/* <InstructionModal /> */}
+      )}
+      <Suspense fallback={<h4>Loading...</h4>}>
+        {open && <InstructionModal open={open} />}
+      </Suspense>
     </PageLayout>
   )
 }

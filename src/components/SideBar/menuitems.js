@@ -1,23 +1,25 @@
 import {
   BarChartOutlined,
-  LockOutlined,
   SettingOutlined,
   ThunderboltOutlined,
   UserOutlined,
 } from '@ant-design/icons'
-import {
-  BsBarChartFill,
-  BsBarChartLineFill,
-  BsBattery,
-  BsBell,
-  BsSunset,
-} from 'react-icons/bs'
+import { BsBarChartFill, BsBattery, BsBell, BsSunset } from 'react-icons/bs'
 import { FiHome, FiUsers } from 'react-icons/fi'
 
 import { HiOutlineSupport } from 'react-icons/hi'
 import { Link } from 'react-router-dom'
 import React from 'react'
 import styles from './Sidebar.module.scss'
+
+export const unverifiedUserMenuItems = [
+  { icon: BarChartOutlined, title: 'Overview', linkTo: '/overview' },
+].map((item) => ({
+  key: `${item.linkTo}`,
+  icon: React.createElement(item.icon),
+  className: styles.SidebarMenuItem,
+  label: <Link to={item.linkTo}>{item.title}</Link>,
+}))
 
 export const userMenuItems = [
   { icon: BarChartOutlined, title: 'Overview', linkTo: '/overview' },
