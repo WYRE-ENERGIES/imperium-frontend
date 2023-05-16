@@ -30,7 +30,8 @@ const NewPasswordPage = () => {
         }).unwrap()
         navigate('/admin/')
       } catch (err) {
-        setErrMsg(ErrorMessage(err))
+        console.log(err)
+        setErrMsg(ErrorMessage(err?.data?.message))
       }
     }
   }
@@ -76,7 +77,12 @@ const NewPasswordPage = () => {
           >
             <Input.Password
               onChange={(e) =>
-                passwordLengthValidation(e, pwdRef1, setPwdValid)
+                passwordLengthValidation(
+                  e,
+                  pwdRef1,
+                  'Password not more than 8 charcaters',
+                  setPwdValid,
+                )
               }
               className={classes.NewPassword__Password}
               placeholder="New password"
@@ -100,7 +106,12 @@ const NewPasswordPage = () => {
           >
             <Input.Password
               onChange={(e) =>
-                passwordLengthValidation(e, pwdRef2, setPwdValid)
+                passwordLengthValidation(
+                  e,
+                  pwdRef2,
+                  'Password not more than 8 charcaters',
+                  setPwdValid,
+                )
               }
               className={classes.NewPassword__Password}
               placeholder="Confirm password"

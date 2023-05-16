@@ -21,7 +21,7 @@ const PowerSwitch = ({ device_id, user }) => {
   })
   const [scheduledTime, setScheduledTime] = useState('')
   const { data, isLoading } = useGetShsDetailsQuery({ deviceId: device_id })
-
+  console.log('data : ', data)
   const scheduledTimeModal = () => {
     setIsModalOpen(true)
   }
