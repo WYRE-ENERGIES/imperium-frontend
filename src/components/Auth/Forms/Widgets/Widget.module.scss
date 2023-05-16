@@ -48,6 +48,7 @@ $buttonPadding: 14px 48px;
   button {
     display: flex;
     justify-content: center;
+    align-items: center;
     width: 100%;
     background: white;
     padding: -2px;
@@ -56,9 +57,9 @@ $buttonPadding: 14px 48px;
     border: 1px solid #c4c4c4;
     box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05);
 
-    img {
-      margin-top: 1px;
-    }
+    // img {
+    //   margin-top: 8px;
+    // }
 
     p {
       margin-top: 14px;
