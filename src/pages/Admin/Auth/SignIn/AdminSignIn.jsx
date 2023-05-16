@@ -38,7 +38,7 @@ const AdminSignIn = () => {
       }).unwrap()
       navigate('/admin/overview')
     } catch (err) {
-      setErrMsg(ErrorMessage(err))
+      setErrMsg(ErrorMessage(err?.data?.message))
     }
   }
 

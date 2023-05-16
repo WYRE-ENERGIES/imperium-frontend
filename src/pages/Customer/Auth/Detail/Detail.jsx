@@ -52,7 +52,7 @@ const Details = () => {
       navigate('/business')
       saveToLocalStorage('userInfo', { ...userInfo, ...values })
     } catch (err) {
-      setErrMsg(ErrorMessage(err))
+      setErrMsg(ErrorMessage(err?.data?.message))
     }
   }
   useEffect(() => {
