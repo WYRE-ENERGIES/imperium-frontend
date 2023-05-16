@@ -51,6 +51,17 @@ const ModalForm = ({ toggleModal }) => {
     }
   }, [isLoading, isSuccess, toggleModal])
 
+  useEffect(() => {
+    if (!isLoading && isError) {
+      const { data } = error
+      toast.error(data.detail || 'An error occurred', {
+        hideProgressBar: true,
+        autoClose: 3000,
+        theme: 'colored',
+      })
+    }
+  }, [isLoading, isError])
+
   return (
     <Form
       {...layout}
