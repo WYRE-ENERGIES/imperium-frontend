@@ -217,7 +217,7 @@ const DisableClientForm = ({ user, toggleModal }) => {
   )
 }
 
-const ActivateCustomer = ({ user, isOpen, toggleModal }) => {
+const ActivateCustomer = ({ user, isOpen, toggleModal, cancelModal }) => {
   const [showForm, setShowForm] = useState(false)
   const toggleForm = () => setShowForm(!showForm)
 

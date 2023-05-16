@@ -6,7 +6,7 @@ export const customerApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getAdminCustomersList: builder.query({
       query: ({ page, search, filterBy }) => {
-        let url = `${BASE_CUSTOMERS_URL}?page=${page}&order_by=${filterBy}`
+        let url = `${BASE_CUSTOMERS_URL}?page=${page}`
         if (search) {
           url += `&search=${search}`
         }

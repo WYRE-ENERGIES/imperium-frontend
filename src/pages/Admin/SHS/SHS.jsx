@@ -40,15 +40,13 @@ const SHS = () => {
     setOpenActivateShsModal(!openActivateShsModal)
   }
 
-  const { isError, error, data, isFetching, refetch } = useGetShsTableDataQuery(
-    {
-      page,
-      search: debounceValue,
-      filterBy: globalFilter,
-      tableFilter: tableFilter,
-    },
-  )
-  console.log(data)
+  const { isError, error, data, isFetching } = useGetShsTableDataQuery({
+    page,
+    search: debounceValue,
+    filterBy: globalFilter,
+    tableFilter: tableFilter,
+  })
+
   const {
     isFetching: isAnalyticsFetching,
     isError: isAnalyticsError,
@@ -105,7 +103,6 @@ const SHS = () => {
   }, [isAnalyticsFetching])
 
   useEffect(() => {
-    refetch()
     analyticRefetch()
   }, [globalFilter])
 
@@ -212,12 +209,12 @@ const SHS = () => {
       ),
       key: 'status',
       dataIndex: 'status',
-      sorter: (a, b) => a.status - b.status,
+      sorter: (a, b) => a.status.localeCompare(b.status),
       render: (value) => {
-        const color = value !== 'OFF' ? '#027A48' : '#606062'
+        const color = value && value !== 'OFF' ? '#027A48' : '#606062'
         return (
           <Tag
-            color={value !== 'OFF' ? 'success' : '#E6E6E6'}
+            color={value && value !== 'OFF' ? 'success' : '#E6E6E6'}
             key={value}
             style={{
               borderRadius: '10px',
@@ -230,7 +227,7 @@ const SHS = () => {
             }}
           >
             <BsDot size={20} />
-            {value}
+            {value || 'OFF'}
           </Tag>
         )
       },
@@ -293,6 +290,7 @@ const SHS = () => {
             onFilterChanged={(e) => setTableFilter(e)}
             url={'imperium-admin/shs/list-table-export/'}
             tableName={'shs_table'}
+            cancelValue=" "
           />
         </div>
       </div>

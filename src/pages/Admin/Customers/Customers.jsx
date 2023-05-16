@@ -8,9 +8,7 @@ import {
 
 import AdminPageLayout from '../../../components/Layout/AdminPageLayout/AdminPageLayout'
 import CustomerChartWidget from '../../../components/Widget/Customers/CustomerChartWidget'
-import { ExclamationCircleOutlined } from '@ant-design/icons'
 import { FiHome } from 'react-icons/fi'
-import { Link } from 'react-router-dom'
 import PageBreadcrumb from '../../../components/PageBreadcrumb/PageBreadcrumb'
 import ReactAvatar from 'react-avatar'
 import TableFooter from '../../../components/TableFooter/TableFooter'
@@ -56,11 +54,10 @@ const Customers = () => {
   const handleSearch = (e) => setSearch(e.target.value)
   const debounceValue = useDebounce(search, 1000)
 
-  const { isLoading, isError, error, data, isFetching, refetch } =
+  const { isLoading, isError, error, data, isFetching } =
     useGetAdminCustomersListQuery({
       page,
       search: debounceValue,
-      filterBy: globalFilter,
     })
 
   const {
@@ -91,7 +88,6 @@ const Customers = () => {
   }, [statisticsData])
 
   useEffect(() => {
-    refetch()
     analyticsRefetch()
     statisticsRefetch()
   }, [globalFilter])
@@ -104,7 +100,6 @@ const Customers = () => {
       sorter: (a, b) => a.customer_name.localeCompare(b.customer_name),
       render: (_, record) => {
         setSwitchValue(record.status)
-        console.log({ switchValue, re: record.status })
         return (
           <div className={classes.Customers__nameDiv}>
             <Switch

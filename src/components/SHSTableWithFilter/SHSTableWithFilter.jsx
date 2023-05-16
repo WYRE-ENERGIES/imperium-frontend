@@ -22,8 +22,8 @@ const SHSTableWithFilter = ({
   showSearch = true,
   url,
   tableName,
+  cancelValue = 'yearly',
 }) => {
-  console.log(url)
   return (
     <div className={classes.SHSTable}>
       <section className={classes.SHSTable__shsTableTitle}>
@@ -61,6 +61,7 @@ const SHSTableWithFilter = ({
           showSearch={showSearch}
           url={url}
           tableName={tableName}
+          cancelValue={cancelValue}
         />
       </section>
       <Table

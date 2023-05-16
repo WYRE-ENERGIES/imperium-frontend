@@ -37,7 +37,6 @@ const PanelAnalytic = () => {
     error: tableError,
     data,
     isFetching,
-    refetch,
   } = useGetClientPanelTableDataQuery(
     {
       page,
@@ -70,7 +69,6 @@ const PanelAnalytic = () => {
 
   useEffect(() => {
     if (deviceId) {
-      refetch()
       refetchAnalytics()
     }
   }, [globalFilter])

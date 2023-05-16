@@ -29,8 +29,8 @@ const SearchAndFilter = ({
   showSearch,
   url,
   tableName,
+  cancelValue,
 }) => {
-  console.log(url, tableName, isAdmin)
   const options = filterOptions?.map((option, index) => (
     <Option key={index} value={option.value}>
       {option.name}
@@ -50,7 +50,11 @@ const SearchAndFilter = ({
       )}
       <Suspense fallback={<h4>loading</h4>}>
         {filterOptions?.length ? (
-          <DropDownFilter onFilterChanged={onFilterChanged} options={options} />
+          <DropDownFilter
+            onFilterChanged={onFilterChanged}
+            options={options}
+            cancelValue={cancelValue}
+          />
         ) : null}
       </Suspense>
       {isAdmin && <ExportFileButton url={url} tableName={tableName} />}

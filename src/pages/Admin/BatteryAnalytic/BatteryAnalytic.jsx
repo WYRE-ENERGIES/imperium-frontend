@@ -93,7 +93,7 @@ const columns = [
                   size={20}
                   style={{ marginLeft: 0 }}
                 />
-                {value.battery_health}%
+                {value.battery_status}%
               </h4>
               <h5 className={classes.Battery__statusResult}>
                 {value.charging ? 'Charging' : 'Not Charging'}
@@ -130,7 +130,7 @@ const BatteryAnalytic = () => {
     useGetBatteryTableDataQuery({
       page,
       search: debounceValue,
-      filterBy: globalFilter,
+      // filterBy: globalFilter,
     })
 
   const {

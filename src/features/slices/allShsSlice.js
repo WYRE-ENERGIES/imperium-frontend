@@ -12,7 +12,7 @@ export const allShsSlice = apiSlice.injectEndpoints({
         }
 
         if (tableFilter) {
-          url += `&device_switch_state__icontains=${tableFilter}`
+          url += `&shsrecord__device_switch_state__icontains=${tableFilter}`
         }
 
         return { url }
