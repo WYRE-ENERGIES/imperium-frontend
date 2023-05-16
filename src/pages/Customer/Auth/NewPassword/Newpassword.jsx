@@ -15,6 +15,7 @@ const NewPasswordPage = () => {
   const [pwdValid, setPwdValid] = useState(false)
   const [customerNewPassword, { isLoading }] = useCustomerNewPasswordMutation()
   const email = useLocation()
+  const otp = useLocation()
   const navigate = useNavigate()
   const pwdRef1 = useRef()
   const pwdRef2 = useRef()
@@ -26,15 +27,15 @@ const NewPasswordPage = () => {
         await customerNewPassword({
           email: email.state.email,
           password: values.password1,
-          confirm_password: values.password2,
+          code: otp?.state?.otp,
         }).unwrap()
         navigate('/admin/')
       } catch (err) {
-        console.log(err)
-        setErrMsg(ErrorMessage(err?.data?.message))
+        setErrMsg(ErrorMessage(err?.data?.code || err?.data?.detail))
       }
     }
   }
+  console.log(otp?.state?.otp)
   return (
     <div className={classes.NewPassword}>
       <Layout

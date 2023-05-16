@@ -55,7 +55,9 @@ const OTP = () => {
         email: email.state.email,
         otp: OTP,
       }).unwrap()
-      navigate('/new-password', { state: { email: email.state.email } })
+      navigate('/new-password', {
+        state: { email: email.state.email, otp: OTP },
+      })
     } catch (err) {
       let errorMsg = ''
       if (err.status === 401) {
