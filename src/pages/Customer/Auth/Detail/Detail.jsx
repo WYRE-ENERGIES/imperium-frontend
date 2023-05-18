@@ -19,7 +19,6 @@ import {
 } from '../../../../utils/helpers'
 import {
   addressValidation,
-  nameValidation,
   phoneValidation,
 } from '../../../../components/RegEx/RegEx'
 
@@ -47,7 +46,7 @@ const Details = () => {
   const onFinish = async (values) => {
     try {
       await customerUpdateDetails({
-        credentials: values,
+        credentials: { ...values, phone: `+234${values?.phone}` },
       }).unwrap()
       navigate('/business')
       saveToLocalStorage('userInfo', { ...userInfo, ...values })
@@ -101,16 +100,16 @@ const Details = () => {
                 style={{ marginTop: '10px' }}
               >
                 <Input
-                  onChange={(e) =>
-                    nameValidation(
-                      e,
+                  // onChange={(e) =>
+                  //   nameValidation(
+                  //     e,
 
-                      fnameRef,
+                  //     fnameRef,
 
-                      "Numbers and '!@#$%^&*()+=_`' are not valid characters.",
-                      setFormValid,
-                    )
-                  }
+                  //     "Numbers and '!@#$%^&*()+=_`' are not valid characters.",
+                  //     setFormValid,
+                  //   )
+                  // }
                   className={classes.DetailsForm__Input}
                   style={{ marginBottom: '-10px' }}
                   placeholder="Enter your first name"
@@ -131,14 +130,14 @@ const Details = () => {
                 style={{ marginTop: '-25px' }}
               >
                 <Input
-                  onChange={(e) =>
-                    nameValidation(
-                      e,
-                      lnameRef,
-                      "Numbers and '!@#$%^&*()+=_`' are not valid characters.",
-                      setFormValid,
-                    )
-                  }
+                  // onChange={(e) =>
+                  //   nameValidation(
+                  //     e,
+                  //     lnameRef,
+                  //     "Numbers and '!@#$%^&*()+=_`' are not valid characters.",
+                  //     setFormValid,
+                  //   )
+                  // }
                   className={classes.DetailsForm__Input}
                   style={{ marginTop: '-4px' }}
                   placeholder="Enter your last name"

@@ -1,5 +1,5 @@
 import { Col, Form, Input, Row, notification } from 'antd'
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import FormButton from '../../../../components/Auth/Forms/Widgets/FormButton'
 import Error from '../../../../components/ErrorMessage/Error'
@@ -21,6 +21,7 @@ import {
   phoneValidation,
 } from '../../../../components/RegEx/RegEx'
 const AccountDetails = () => {
+  const [details, setDetails] = useState(null)
   const [form] = Form.useForm()
   const userInfo = getItemFromLocalStorage('userInfo')
 
@@ -46,7 +47,7 @@ const AccountDetails = () => {
   const onFinish = async (values) => {
     try {
       await customerUpdateDetails({
-        credentials: values,
+        credentials: { ...values, phone: `+234${values?.phone}` },
       }).unwrap()
       saveToLocalStorage('userInfo', {
         ...userInfo,
@@ -57,17 +58,22 @@ const AccountDetails = () => {
       setErrMsg(ErrorMessage(err?.data?.message))
     }
   }
+  useEffect(() => {
+    if (userData) {
+      setDetails({ ...userData, phone: userData.phone.substring(4) })
+    }
+  }, [userData])
 
   return (
     <Account props={'details'}>
       <div className={classes.AccountDetails}>
         {' '}
-        {userData ? (
+        {details ? (
           <Form
             form={form}
             onFinish={onFinish}
             layout="vertical"
-            initialValues={{ ...userData }}
+            initialValues={{ ...details }}
           >
             {errMsg && <Error Errormsg={errMsg} />}
             <Row justify={'space-between'}>

@@ -90,7 +90,7 @@ const SignUp = () => {
                   rules={[
                     {
                       required: true,
-                      message: 'This field is required.',
+                      message: <small>This filed is required</small>,
                     },
                   ]}
                   required
@@ -112,7 +112,9 @@ const SignUp = () => {
                 </Form.Item>
                 <Form.Item
                   label="Password"
-                  extra={<small ref={pwdRef}></small>}
+                  extra={
+                    <small ref={pwdRef}>Must be at least 8 characters.</small>
+                  }
                   name="password"
                   style={{ marginTop: '-1.5rem' }}
                   rules={[
@@ -167,7 +169,7 @@ const SignUp = () => {
           <div className={classes.SignUpPage__content}>
             <FormDescription content={formDescription} />
           </div>
-          <div>
+          <div className={classes.SignUpPage__PageIndicator}>
             <PageIndicator pageNum={0} />
           </div>
         </RightLayout>
