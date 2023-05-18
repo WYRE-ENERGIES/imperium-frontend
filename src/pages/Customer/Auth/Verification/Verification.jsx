@@ -74,7 +74,9 @@ const Verification = () => {
               layout="vertical"
               requiredMark="optional"
             >
-              {errMsg && <Error Errormsg={errMsg} />}
+              <div className={classes.Verification__Error}>
+                {errMsg && <Error Errormsg={errMsg} />}
+              </div>
               <Form.Item
                 label={
                   <p
@@ -91,7 +93,7 @@ const Verification = () => {
                 rules={[
                   {
                     required: true,
-                    message: 'This field is required.',
+                    message: <small>This filed is required</small>,
                   },
                 ]}
                 required
