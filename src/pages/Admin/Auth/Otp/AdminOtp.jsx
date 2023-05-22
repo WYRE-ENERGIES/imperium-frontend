@@ -10,6 +10,7 @@ import Layout from '../../../../components/Auth/Forms/AuthForm/PasswordReset/Lay
 import FormButton from '../../../../components/Auth/Forms/Widgets/FormButton'
 import icon from '../../../../assets/Auth/Group 18.svg'
 import classes from './AdminOtp.module.scss'
+import { ErrorMessage } from '../../../../components/ErrorMessage/ErrorMessage'
 const AdminOTP = () => {
   const [OTP, setOTP] = useState('')
   const [errMsg, setErrMsg] = useState('')
@@ -31,17 +32,7 @@ const AdminOTP = () => {
       }).unwrap()
       openNotification(email?.state?.email)
     } catch (err) {
-      let errorMsg = ''
-      if (err.status === 401) {
-        errorMsg += err?.data?.email?.message || err?.data?.email
-        setErrMsg(errorMsg)
-      } else if (err.status === 400) {
-        setErrMsg(err?.data?.email?.message || err?.data?.email)
-      } else if (err.status === 500) {
-        setErrMsg('Server could not be reached. Try later!')
-      } else {
-        setErrMsg('Check your internet connection')
-      }
+      setErrMsg(ErrorMessage(err?.data?.message))
     }
   }
   const onFinish = async (values) => {
@@ -52,17 +43,7 @@ const AdminOTP = () => {
       }).unwrap()
       navigate('/admin/new-password', { state: { email: email.state.email } })
     } catch (err) {
-      let errorMsg = ''
-      if (err.status === 401) {
-        errorMsg += err?.data?.message
-        setErrMsg(errorMsg)
-      } else if (err.status === 400) {
-        setErrMsg(err?.data?.message)
-      } else if (err.status === 500) {
-        setErrMsg('Server could not be reached. Try later!')
-      } else {
-        setErrMsg('Check your internet connection')
-      }
+      setErrMsg(ErrorMessage(err?.data?.message))
     }
   }
   return (
