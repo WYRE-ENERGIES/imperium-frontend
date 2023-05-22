@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import OTPInput from 'otp-input-react'
 
 import Layout from '../../../../components/Auth/Forms/AuthForm/PasswordReset/Layout/Layout'
@@ -12,12 +12,14 @@ import FormButton from '../../../../components/Auth/Forms/Widgets/FormButton'
 import classes from './Otp.module.scss'
 import { Form, notification } from 'antd'
 import { ArrowLeftOutlined } from '@ant-design/icons'
+import { ErrorMessage } from '../../../../components/ErrorMessage/ErrorMessage'
 
 const OTP = () => {
   const admin = false
   const [OTP, setOTP] = useState('')
   const [errMsg, setErrMsg] = useState('')
-  const [adminOtp, { isLoading: otpisLoading }] = useCustomerOtpMutation()
+  const [customerOtp, { isLoading: otpisLoading, data }] =
+    useCustomerOtpMutation()
   const navigate = useNavigate()
   const email = useLocation()
   const [customerforgotPassword, { isLoading: resetOtpisLoading }] =
@@ -36,42 +38,26 @@ const OTP = () => {
       }).unwrap()
       openNotification(email?.state?.email)
     } catch (err) {
-      let errorMsg = ''
-      if (err.status === 401) {
-        errorMsg += err?.data?.email?.message || err?.data?.email
-        setErrMsg(errorMsg)
-      } else if (err.status === 400) {
-        setErrMsg(err?.data?.email?.message || err?.data?.email)
-      } else if (err.status === 500) {
-        setErrMsg('Server could not be reached. Try later!')
-      } else {
-        setErrMsg('Check your internet connection')
-      }
+      setErrMsg(ErrorMessage(err?.data?.errors))
     }
   }
   const onFinish = async () => {
     try {
-      await adminOtp({
+      await customerOtp({
         email: email.state.email,
         otp: OTP,
       }).unwrap()
-      navigate('/new-password', {
-        state: { email: email.state.email, otp: OTP },
-      })
     } catch (err) {
-      let errorMsg = ''
-      if (err.status === 401) {
-        errorMsg += err?.data?.errors
-        setErrMsg(errorMsg)
-      } else if (err.status === 400) {
-        setErrMsg(err?.data?.errors)
-      } else if (err.status === 500) {
-        setErrMsg('Server could not be reached. Try later!')
-      } else {
-        setErrMsg('Check your internet connection')
-      }
+      setErrMsg(ErrorMessage(err?.data?.errors))
     }
   }
+  useEffect(() => {
+    if (data) {
+      navigate('/new-password', {
+        state: { email: email.state.email, code: data?.code },
+      })
+    }
+  })
   return (
     <div className={classes.Otp}>
       <Layout
