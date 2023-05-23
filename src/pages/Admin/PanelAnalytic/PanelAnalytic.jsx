@@ -61,11 +61,11 @@ const PanelAnalytic = () => {
       return
     }
     setWidgets(analyticsData)
-  }, [isAnalyticsFetching, analyticsData])
+  }, [isAnalyticsFetching, analyticsData, isAnalyticsError])
 
   useEffect(() => {
     refetchAnalytics()
-  }, [globalFilter])
+  }, [globalFilter, refetchAnalytics])
 
   return (
     <AdminPageLayout>

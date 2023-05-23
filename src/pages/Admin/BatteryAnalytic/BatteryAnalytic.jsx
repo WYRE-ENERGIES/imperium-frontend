@@ -168,7 +168,7 @@ const BatteryAnalytic = () => {
     }
 
     setChartData(statisticsData)
-  }, [isStatisticsFetching, isStatisticsError])
+  }, [isStatisticsFetching, isStatisticsError, statisticsData])
 
   useEffect(() => {
     if (isAnalyticsFetching) return
@@ -216,13 +216,13 @@ const BatteryAnalytic = () => {
         />
       )),
     )
-  }, [isAnalyticsFetching])
+  }, [isAnalyticsFetching, analyticsData, globalFilter])
 
   useEffect(() => {
     refetch()
     analyticsRefetch()
     statisticsRefetch()
-  }, [globalFilter])
+  }, [globalFilter, analyticsRefetch, refetch, statisticsRefetch])
 
   return (
     <AdminPageLayout>

@@ -65,13 +65,13 @@ const PanelAnalytic = () => {
       return
     }
     setWidgets(analyticsData)
-  }, [isAnalyticsFetching, analyticsData])
+  }, [isAnalyticsFetching, analyticsData, isAnalyticsError])
 
   useEffect(() => {
     if (deviceId) {
       refetchAnalytics()
     }
-  }, [globalFilter])
+  }, [globalFilter, refetchAnalytics, deviceId])
 
   return (
     <PageLayout>

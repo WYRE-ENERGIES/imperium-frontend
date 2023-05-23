@@ -85,12 +85,12 @@ const Customers = () => {
     }
 
     setChartData([cData])
-  }, [statisticsData])
+  }, [statisticsData, chartData, isStatisticsLoading])
 
   useEffect(() => {
     analyticsRefetch()
     statisticsRefetch()
-  }, [globalFilter])
+  }, [globalFilter, analyticsRefetch, statisticsRefetch])
 
   const columns = [
     {
