@@ -148,7 +148,7 @@ const Battery = () => {
         />
       )),
     )
-  }, [isAnalyticsFetching])
+  }, [isAnalyticsFetching, analyticsData])
 
   return (
     <PageLayout>

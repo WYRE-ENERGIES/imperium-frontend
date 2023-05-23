@@ -115,7 +115,7 @@ const EnergyAnalytic = () => {
         />
       )),
     )
-  }, [isAnalyticsLoading])
+  }, [isAnalyticsLoading, analyticsData, globalFilter])
 
   useEffect(() => {
     if (isStatLoading) return
@@ -123,7 +123,7 @@ const EnergyAnalytic = () => {
     if (isStatSuccess) {
       setChartData([statData.energyConsumed, statData.energyGenerated])
     }
-  }, [isStatLoading, isStatSuccess])
+  }, [isStatLoading, isStatSuccess, statData])
 
   useEffect(() => {
     if (deviceId) {
@@ -131,7 +131,7 @@ const EnergyAnalytic = () => {
       statRefetch()
       refetchAnalytics()
     }
-  }, [globalFilter])
+  }, [globalFilter, deviceId, refetch, statRefetch, refetchAnalytics])
 
   return (
     <PageLayout>

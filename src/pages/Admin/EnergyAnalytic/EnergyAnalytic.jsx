@@ -129,13 +129,13 @@ const EnergyAnalytic = () => {
         />
       )),
     )
-  }, [isAnalyticsFetching])
+  }, [isAnalyticsFetching, analyticsData, globalFilter])
 
   useEffect(() => {
     refetch()
     refetchAnalytics()
     refetchCapacity()
-  }, [globalFilter])
+  }, [globalFilter, refetch, refetchAnalytics, refetchCapacity])
 
   return (
     <AdminPageLayout>

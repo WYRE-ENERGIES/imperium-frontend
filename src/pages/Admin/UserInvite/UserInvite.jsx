@@ -54,7 +54,7 @@ const UserInvite = () => {
         theme: 'colored',
       })
     }
-  }, [isLoading, isSuccess, isError])
+  }, [isLoading, isSuccess, isError, email, navigate])
 
   return (
     <div className={classes.UserInvite}>

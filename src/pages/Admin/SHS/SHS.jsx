@@ -100,11 +100,11 @@ const SHS = () => {
         />
       )),
     )
-  }, [isAnalyticsFetching])
+  }, [isAnalyticsFetching, analyticsData, globalFilter])
 
   useEffect(() => {
     analyticRefetch()
-  }, [globalFilter])
+  }, [globalFilter, analyticRefetch])
 
   const columns = [
     {
