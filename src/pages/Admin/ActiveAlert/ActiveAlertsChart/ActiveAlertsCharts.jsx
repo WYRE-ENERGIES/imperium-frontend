@@ -11,7 +11,7 @@ const ActiveAlertsCharts = () => {
   const [statsFilter, setStatsFilter] = useState('weekly')
   const { data: statistics, isLoading: isLoadingStatistics } =
     useGetAdminActiveAlertsStatisticsQuery({ filter: statsFilter })
-
+  console.log(statsFilter)
   return (
     <section className={classes.ActiveAlertsCharts}>
       <div className={classes.ActiveAlertsCharts__ActiveAlertStats}>
@@ -101,6 +101,9 @@ const ActiveAlertsCharts = () => {
                 yaxis: {
                   show: true,
                   showAlways: true,
+                  axisBorder: {
+                    show: true,
+                  },
                 },
                 dataLabels: {
                   enabled: false,
@@ -130,7 +133,7 @@ const ActiveAlertsCharts = () => {
                   categories: [
                     'Jan',
                     'feb',
-                    'March',
+                    'Mar',
                     'Apr',
                     'May',
                     'Jun',

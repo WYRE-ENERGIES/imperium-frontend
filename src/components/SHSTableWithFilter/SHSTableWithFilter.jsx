@@ -65,7 +65,8 @@ const SHSTableWithFilter = ({
         />
       </section>
       <Table
-        style={{ width: '100%', overflow: 'scroll' }}
+        style={{ width: '100%' }}
+        scroll={{ x: '100%' }}
         columns={columns}
         dataSource={data}
         className={classes.SHSTable__table}

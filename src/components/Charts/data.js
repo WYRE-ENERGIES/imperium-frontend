@@ -71,6 +71,9 @@ export const groupedChartOptions = {
       'Nov',
       'Dec',
     ],
+    lines: {
+      show: false,
+    },
   },
   plotOptions: {
     bar: {
@@ -80,9 +83,9 @@ export const groupedChartOptions = {
   dataLabels: {
     enabled: false,
   },
-  theme: {
-    mode: 'dark',
-  },
+  // theme: {
+  //   mode: 'dark',
+  // },
 }
 
 export const areaChartOptions = {
