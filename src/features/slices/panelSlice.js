@@ -12,6 +12,9 @@ export const panelApiSlice = apiSlice.injectEndpoints({
         if (search) {
           url += `&search=${search}`
         }
+        if (filterBy) {
+          url += `&order_by=${filterBy}`
+        }
 
         return { url }
       },

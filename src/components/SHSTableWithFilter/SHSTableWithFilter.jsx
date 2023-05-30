@@ -71,7 +71,7 @@ const SHSTableWithFilter = ({
         dataSource={data}
         className={classes.SHSTable__table}
         pagination={{
-          hideOnSinglePage: true,
+          position: ['none', 'none'],
         }}
         footer={footer}
         loading={isLoading}

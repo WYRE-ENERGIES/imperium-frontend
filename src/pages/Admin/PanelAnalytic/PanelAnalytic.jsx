@@ -16,7 +16,6 @@ import WidgetLoader from '../../../components/Widget/WidgetLoader/WidgetLoader'
 import classes from '../../Customer/PanelAnalytic/PanelAnalytic.module.scss'
 import useDebounce from '../../../hooks/useDebounce'
 import useWeather from '../../../hooks/useWeather'
-// import ReactHTMLTableToExcel from 'react-html-table-to-excel'
 
 const PanelAnalytic = () => {
   const [coord, weatherResult, isLoading, error] = useWeather()
@@ -36,6 +35,7 @@ const PanelAnalytic = () => {
   } = useGetPanelTableDataQuery({
     page,
     search: debounceValue,
+    filterBy: globalFilter,
   })
 
   // const {
@@ -67,6 +67,10 @@ const PanelAnalytic = () => {
     refetchAnalytics()
   }, [globalFilter, refetchAnalytics])
 
+  const selectFilterBy = (value) => {
+    setPage(1)
+    setGlobalFilter(value)
+  }
   return (
     <AdminPageLayout>
       <div
@@ -78,7 +82,7 @@ const PanelAnalytic = () => {
         </section>
         <section className={classes.PanelAnalytic__filters}>
           <WidgetFilter
-            selectFilterBy={(value) => setGlobalFilter(value)}
+            selectFilterBy={selectFilterBy}
             filterBy={globalFilter}
           />
         </section>
@@ -106,15 +110,15 @@ const PanelAnalytic = () => {
             isAdmin={true}
             handleSearch={handleSearch}
             isLoading={isFetching}
-            // footer={() => (
-            //   <TableFooter
-            //     pageNo={data?.page}
-            //     totalPages={data?.total_pages}
-            //     handleClick={setPage}
-            //     hasNext={data?.page === data?.total_pages}
-            //     hasPrev={!data?.total_pages || data?.page === 1}
-            //   />
-            // )}
+            footer={() => (
+              <TableFooter
+                pageNo={data?.page}
+                totalPages={data?.total_pages}
+                handleClick={setPage}
+                hasNext={data?.page === data?.total_pages}
+                hasPrev={!data?.total_pages || data?.page === 1}
+              />
+            )}
             url={'imperium-admin/panel/list-table/export/'}
             tableName={'panel-table'}
           />
