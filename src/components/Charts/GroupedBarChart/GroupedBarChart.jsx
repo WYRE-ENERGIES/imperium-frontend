@@ -33,6 +33,7 @@ const GroupedBarChart = ({ chartData, colors, borderRadius, columnWidth }) => {
         }}
         type="bar"
         series={chartData}
+        height={'100%'}
       />
     </div>
   )

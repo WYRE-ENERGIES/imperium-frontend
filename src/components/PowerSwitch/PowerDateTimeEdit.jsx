@@ -1,11 +1,23 @@
 import React from 'react'
 import classes from './PowerSwitch.module.scss'
 import { Divider } from 'antd'
+import { useAdminShsPowerScheduleCancelMutation } from '../../features/slices/shs/admin/adminShsSlice'
 const PowerDateTimeEdit = ({
   scheduledTime,
-  setIsModalOpen,
+  device_id,
   setScheduledTime,
+  setCloseMenu,
 }) => {
+  const [adminShsPowerScheduleCancel, { isLoading }] =
+    useAdminShsPowerScheduleCancelMutation()
+  const handleCancleShsSchedule = async (e) => {
+    try {
+      await adminShsPowerScheduleCancel({ deviceId: device_id }).unwrap()
+      setScheduledTime('')
+    } catch (error) {
+      console.log(error)
+    }
+  }
   return (
     <div>
       <p
@@ -23,7 +35,7 @@ const PowerDateTimeEdit = ({
       <Divider />
       <div className={classes.PowerSwitch__EditShutDown}>
         <button
-          onClick={() => setIsModalOpen(false)}
+          onClick={() => setCloseMenu(false)}
           style={{
             width: '134px',
             height: '40px',
@@ -36,7 +48,7 @@ const PowerDateTimeEdit = ({
           Cancel
         </button>
         <button
-          onClick={() => setScheduledTime('')}
+          onClick={() => handleCancleShsSchedule()}
           style={{
             width: '134px',
             height: '40px',
@@ -47,7 +59,7 @@ const PowerDateTimeEdit = ({
             color: 'white',
           }}
         >
-          Edit
+          {isLoading ? 'Loading...' : 'Edit'}
         </button>
       </div>
     </div>

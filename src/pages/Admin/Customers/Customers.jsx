@@ -48,7 +48,7 @@ const Customers = () => {
   }
   const handleCancelActivateCustomerModal = () => {
     setOpenModal(!openModal)
-    setSwitchValue(!switchValue)
+    setSwitchValue(switchValue)
   }
 
   const handleSearch = (e) => setSearch(e.target.value)
@@ -85,7 +85,7 @@ const Customers = () => {
     }
 
     setChartData([cData])
-  }, [statisticsData, chartData, isStatisticsLoading])
+  }, [statisticsData, isStatisticsLoading])
 
   useEffect(() => {
     analyticsRefetch()
@@ -104,9 +104,8 @@ const Customers = () => {
           <div className={classes.Customers__nameDiv}>
             <Switch
               defaultChecked={record.status}
-              value={switchValue}
+              checked={record.status}
               onChange={() => {
-                setSwitchValue(!record.status)
                 toggleActivateCustomerModal(record)
               }}
             />

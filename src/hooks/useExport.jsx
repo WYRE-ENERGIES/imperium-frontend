@@ -10,7 +10,7 @@ const useExPort = (url) => {
   useEffect(() => {
     axios({
       method: 'get',
-      url: `${process.env.REACT_APP_API_BASE_URL}/${url}`,
+      url: `${process.env.REACT_APP_API_BASE_URL}${url}`,
       responseType: 'blob',
       headers: {
         'Content-Type': 'text/csv',

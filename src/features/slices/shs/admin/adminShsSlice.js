@@ -67,6 +67,23 @@ export const shsSlice = apiSlice.injectEndpoints({
 
       transformErrorResponse: (response, meta, arg) => response,
     }),
+    adminShsPowerScheduleCancel: build.mutation({
+      query: ({ deviceId }) => {
+        return {
+          url: `${SHS_BASE_URL}schedule/${deviceId}/cancel/`,
+          body: {
+            cancel: true,
+          },
+          method: 'PUT',
+        }
+      },
+      invalidatesTags: ['shsSchedule'],
+      transformResponse: (response, meta, arg) => {
+        return response
+      },
+
+      transformErrorResponse: (response, meta, arg) => response,
+    }),
   }),
 })
 
@@ -77,4 +94,5 @@ export const {
   useGetShsPerformanceQuery,
   useAdminShsPowerScheduleMutation,
   useGetShsDetailsQuery,
+  useAdminShsPowerScheduleCancelMutation,
 } = shsSlice

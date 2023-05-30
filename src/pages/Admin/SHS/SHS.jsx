@@ -116,6 +116,7 @@ const SHS = () => {
         return (
           <div className={classes.Support__nameDiv}>
             <Switch
+              checked={record.status === 'ON'}
               defaultChecked={record.status === 'ON'}
               onChange={(e) => toggleActivateShsModal(e, record)}
             />

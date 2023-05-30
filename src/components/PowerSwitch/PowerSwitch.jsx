@@ -14,6 +14,7 @@ import PowerDateTimeEdit from './PowerDateTimeEdit'
 const PowerSwitch = ({ device_id, user }) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [directPowerOption, setDirectPowerOption] = useState(true)
+  const [closeMenu, setCloseMenu] = useState(false)
   const [shsData, setShsData] = useState({
     scheduled_time: '',
     schedule_type: '',
@@ -21,7 +22,7 @@ const PowerSwitch = ({ device_id, user }) => {
   })
   const [scheduledTime, setScheduledTime] = useState('')
   const { data, isLoading } = useGetShsDetailsQuery({ deviceId: device_id })
-  console.log('data : ', data)
+
   const scheduledTimeModal = () => {
     setIsModalOpen(true)
   }
@@ -32,6 +33,7 @@ const PowerSwitch = ({ device_id, user }) => {
   const handleScheduledTime = (e) => {
     const date = new Date(e?.$d)
     setScheduledTime(dateTimeConverter(e?.$d))
+
     setShsData({
       ...shsData,
       scheduled_time: date.toISOString(),
@@ -94,19 +96,25 @@ const PowerSwitch = ({ device_id, user }) => {
     },
   ]
 
-  const powerSchedule = [
+  const showPowerEdit = [
     {
-      label: scheduledTime ? (
+      label: (
         <PowerDateTimeEdit
           scheduledTime={scheduledTime}
-          setIsModalOpen={setIsModalOpen}
           setScheduledTime={setScheduledTime}
+          setCloseMenu={setCloseMenu}
+          device_id={device_id}
         />
-      ) : (
-        <PowerDatePicker handleScheduledTime={handleScheduledTime} />
       ),
     },
   ]
+  const showPowerDatePicker = [
+    {
+      label: <PowerDatePicker handleScheduledTime={handleScheduledTime} />,
+    },
+  ]
+
+  const ITEMS = scheduledTime ? showPowerEdit : showPowerDatePicker
 
   return (
     <div className={classes.PowerSwitch}>
@@ -129,9 +137,10 @@ const PowerSwitch = ({ device_id, user }) => {
         <Dropdown
           className={classes.PowerSwitch__PowerBtnDropDown}
           menu={{
-            items: powerSchedule,
+            items: ITEMS,
             onClick: (e) => e.preventDefault(),
           }}
+          open={closeMenu}
           trigger={['click']}
           placement="bottom"
           overlayStyle={{
@@ -140,8 +149,11 @@ const PowerSwitch = ({ device_id, user }) => {
             paddingRight: '50px',
           }}
         >
-          <button>Power Schedule </button>
+          <button onClick={() => setCloseMenu(!closeMenu)}>
+            Power Schedule{' '}
+          </button>
         </Dropdown>
+
         {scheduledTime && (
           <Modal
             open={isModalOpen}

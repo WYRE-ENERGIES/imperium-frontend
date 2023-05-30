@@ -66,7 +66,6 @@ const PowerButton = ({
         setErrMsg(ErrorMessage(error))
       }
     } else if (user === 'admin') {
-      console.log(data)
       try {
         await adminShsPowerSchedule({ data, deviceId }).unwrap()
         setPowerBtnModalOpen(false)
@@ -83,7 +82,7 @@ const PowerButton = ({
   useEffect(() => {
     setDeviceId(device_id)
     setPowerOption(directPowerOption)
-  }, [directPowerOption])
+  }, [directPowerOption, device_id])
 
   return (
     <div>

@@ -416,7 +416,14 @@ const Overview = () => {
                         title={item.active_alert}
                         description={item.shs_name}
                       />
-                      <p style={{ color: item.status ? '#5C9D48' : '#B42318' }}>
+                      <p
+                        style={{
+                          color:
+                            item.status === 'UNRESOLVED'
+                              ? '#B42318'
+                              : '#5C9D48',
+                        }}
+                      >
                         {item.status}
                       </p>
                     </List.Item>
