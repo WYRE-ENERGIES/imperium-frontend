@@ -103,10 +103,10 @@ export const getHourFromDate = (dateString) => {
 export const emptyLocalStorage = () => localStorage.clear()
 
 export const chartLabelFormatter = (value) => {
-  if (value >= 1000000) {
-    return (value / 1000000).toFixed(1) + 'M'
+  if (value >= 100000) {
+    return value / 1000000000 + 'M'
   } else if (value >= 1000) {
-    return (value / 1000).toFixed(1) + 'K'
+    return value / 1000 + 'K'
   }
 
   return value

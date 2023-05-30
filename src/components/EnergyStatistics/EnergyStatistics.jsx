@@ -24,16 +24,24 @@ const EnergyStatistics = ({ duration, chartData, areaChartData }) => {
         <GroupedBarChart
           chartData={chartData}
           colors={['#CEE5C8', '#497A38']}
-          borderRadius={5}
-          columnWidth={50}
+          borderRadius={3}
+          columnWidth={55}
+          height="350px"
+          borderRadiusApplication="around"
+          axisTicks={false}
         />
       </ChartCard>
 
       <ChartCard title="Energy Difference(kWh)" subTitle={duration}>
         <AreaChart
           chartData={areaChartData}
-          themeMode="dark"
-          optionProps={{ colors: ['#497A38'] }}
+          height="250px"
+          showGrid={true}
+          showGridX={false}
+          showGridY={false}
+          axisColor={'gray'}
+          axisTicks={false}
+          colors={['#65AA4F']}
         />
       </ChartCard>
     </div>
