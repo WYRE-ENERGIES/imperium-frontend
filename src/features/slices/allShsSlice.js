@@ -38,6 +38,10 @@ export const allShsSlice = apiSlice.injectEndpoints({
         method: 'PUT',
         body: data,
       }),
+      transformResponse: (response, meta, arg) => {
+        return response
+      },
+      transformErrorResponse: (response, meta, arg) => response,
       invalidatesTags: ['ShsList'],
     }),
     listClientShsDevices: builder.query({

@@ -11,13 +11,23 @@ import { useDeactivateDeviceMutation } from '../../../../features/slices/allShsS
 const { Text, Title } = Typography
 
 const ActivateContent = ({ shs, toggleModal }) => {
+  const [errorMsg, setErrorMsg] = useState()
   const { id: shsId, status } = shs
   const title = status === 'OFF' ? 'Activate SHS' : 'Disabled SHS'
   const TIcon = status === 'OFF' ? TicketIcon : DisableTicketIcon
 
-  const [deactivateDevice, { isLoading, isSuccess, data }] =
+  const [deactivateDevice, { isLoading, isSuccess, data, isError }] =
     useDeactivateDeviceMutation()
-
+  const handleDeactivateDevice = async () => {
+    try {
+      await deactivateDevice({
+        shsId,
+        data: { deactivate: status !== 'OFF' },
+      }).unwrap()
+    } catch (error) {
+      return setErrorMsg(error?.data?.message)
+    }
+  }
   useEffect(() => {
     if (!isLoading && isSuccess) {
       toast.success(
@@ -43,11 +53,15 @@ const ActivateContent = ({ shs, toggleModal }) => {
         >
           {title}
         </Title>
-        <Text type="secondary" className={classes.SHSForm__subTitle}>
-          {status === 'OFF'
-            ? 'Enable this SHS'
-            : 'By disabling this SHS, you will stop collecting data from the SHS.Would you like to proceed?'}
-        </Text>
+        {isError ? (
+          errorMsg
+        ) : (
+          <Text type="secondary" className={classes.SHSForm__subTitle}>
+            {status === 'OFF'
+              ? 'Enable this SHS'
+              : 'By disabling this SHS, you will stop collecting data from the SHS.Would you like to proceed?'}
+          </Text>
+        )}
       </div>
       <div className={classes.AddSHSForm__btn}>
         <Button
@@ -59,9 +73,7 @@ const ActivateContent = ({ shs, toggleModal }) => {
         </Button>
         <Button
           className={classes.AddSHSForm__submitBtn}
-          onClick={() =>
-            deactivateDevice({ shsId, data: { deactivate: status !== 'OFF' } })
-          }
+          onClick={handleDeactivateDevice}
           htmlType="button"
         >
           {isLoading ? <ButtonLoader color="#fff" /> : 'Proceed'}
