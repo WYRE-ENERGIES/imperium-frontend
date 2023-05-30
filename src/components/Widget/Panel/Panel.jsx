@@ -62,57 +62,54 @@ const PanelWidgets = ({
   weatherError,
   globalFilter,
 }) => {
-  let widgets = []
-  if (!isLoading && data) {
-    widgets = [
-      {
-        id: 1,
-        icon: EnergyWidgetIcon,
-        title: 'Panel Total Energy',
-        value: data?.panel_total_energy
-          ? parseFloat(data?.panel_total_energy?.toFixed(1)).toLocaleString()
-          : 0,
-        valueCurrency: 'WH',
-      },
-      {
-        id: 2,
-        icon: BentArrowWidgetIcon,
-        title: 'Panel Voltage',
-        value: data?.panel_voltage
-          ? parseFloat(data?.panel_voltage?.toFixed(1)).toLocaleString()
-          : 0,
-        valueCurrency: 'V',
-      },
-      {
-        id: 1,
-        icon: SEnergyWidgetIcon,
-        title: 'Panel Total Power',
-        value: data?.panel_total_power
-          ? parseFloat(data?.panel_total_power?.toFixed(1)).toLocaleString()
-          : 0,
-        valueCurrency: 'W',
-      },
-      {
-        id: 1,
-        icon: SunWidgetIcon,
-        title: 'Panel Current',
-        value: data?.panel_current
-          ? parseFloat(data?.panel_current?.toFixed(1)).toLocaleString()
-          : 0,
-        valueCurrency: 'A',
-      },
-    ].map((data, index) => (
-      <Widget
-        key={index}
-        title={data.title}
-        Icon={data.icon}
-        value={data.value}
-        range={formatLabel(globalFilter)}
-        valueCurrency={data.valueCurrency}
-        style={{ height: '100%' }}
-      />
-    ))
-  }
+  const widgets = [
+    {
+      id: 1,
+      icon: EnergyWidgetIcon,
+      title: 'Panel Total Energy',
+      value: data?.panel_total_energy
+        ? parseFloat(data?.panel_total_energy?.toFixed(1)).toLocaleString()
+        : 0,
+      valueCurrency: 'WH',
+    },
+    {
+      id: 2,
+      icon: BentArrowWidgetIcon,
+      title: 'Panel Voltage',
+      value: data?.panel_voltage
+        ? parseFloat(data?.panel_voltage?.toFixed(1)).toLocaleString()
+        : 0,
+      valueCurrency: 'V',
+    },
+    {
+      id: 1,
+      icon: SEnergyWidgetIcon,
+      title: 'Panel Total Power',
+      value: data?.panel_total_power
+        ? parseFloat(data?.panel_total_power?.toFixed(1)).toLocaleString()
+        : 0,
+      valueCurrency: 'W',
+    },
+    {
+      id: 1,
+      icon: SunWidgetIcon,
+      title: 'Panel Current',
+      value: data?.panel_current
+        ? parseFloat(data?.panel_current?.toFixed(1)).toLocaleString()
+        : 0,
+      valueCurrency: 'A',
+    },
+  ].map((data, index) => (
+    <Widget
+      key={index}
+      title={data.title}
+      Icon={data.icon}
+      value={data.value}
+      range={formatLabel(globalFilter)}
+      valueCurrency={data.valueCurrency}
+      style={{ height: '100%' }}
+    />
+  ))
 
   let weatherForecast = []
   if (!weatherLoading && result?.weatherReport?.length) {
