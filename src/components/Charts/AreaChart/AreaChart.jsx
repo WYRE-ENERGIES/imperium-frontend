@@ -15,6 +15,9 @@ const AreaChart = ({
   axisColor,
   axisTicks,
   height,
+  width,
+  showYAxis,
+  strokeWidth = 1,
 }) => {
   return (
     <div style={{ height: '100%' }}>
@@ -32,13 +35,14 @@ const AreaChart = ({
           colors: colors,
           stroke: {
             ...areaChartOptions.stroke,
-            width: 1,
+            width: strokeWidth,
           },
           theme: {
             mode: themeMode,
           },
           ...optionProps,
           yaxis: {
+            show: showYAxis,
             labels: {
               formatter: (value) => chartLabelFormatter(value),
               style: {
@@ -88,6 +92,7 @@ const AreaChart = ({
         {...chartProps}
         height={height}
         type="area"
+        width={width}
       />
     </div>
   )

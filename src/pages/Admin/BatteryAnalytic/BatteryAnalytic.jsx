@@ -246,9 +246,12 @@ const BatteryAnalytic = () => {
               chartData={chartData}
               colors={['#F04438', '#66AB4F']}
               borderRadius={2}
-              columnWidth={15}
+              columnWidth={8}
               legendPosition="bottom"
               legendHorizontalAlign="center"
+              showGrid={true}
+              showGridY={false}
+              showYAxisBorder={true}
             />
           ) : (
             <WidgetLoader />

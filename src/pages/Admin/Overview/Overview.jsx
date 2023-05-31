@@ -68,6 +68,7 @@ const Overview = () => {
   const [alertPage, setAlertPage] = useState(1)
   const [globalFilter, setGlobalFilter] = useState('yearly')
   const [sectorId, setSectorId] = useState()
+  const [sectorName, setSectorName] = useState('All')
   const [regionId, setRegionId] = useState()
   const [alertData, setAlertData] = useState([])
 
@@ -141,7 +142,6 @@ const Overview = () => {
   } = useGetOverviewSectorQuery({
     filterBy: globalFilter,
   })
-
   const {
     isFetching: isEnergyFetching,
     isError: isEnergyError,
@@ -180,7 +180,7 @@ const Overview = () => {
     if (isSectorSuccess) {
       setPieChartData(sectorData)
     }
-  }, [isSectorFetching, isSectorSuccess, sectorData])
+  }, [isSectorFetching])
 
   useEffect(() => {
     if (isAnalyticsFetching) return
@@ -229,7 +229,7 @@ const Overview = () => {
         />
       )),
     )
-  }, [isAnalyticsFetching, analyticsData, globalFilter])
+  }, [isAnalyticsFetching])
 
   useEffect(() => {
     refetchAnalytics()
@@ -239,16 +239,7 @@ const Overview = () => {
     refetchSolar()
     refetchSector()
     refetchEnergy()
-  }, [
-    globalFilter,
-    refetchAnalytics,
-    refetchAlert,
-    refetchEmission,
-    refetchVoltage,
-    refetchSolar,
-    refetchSector,
-    refetchEnergy,
-  ])
+  }, [globalFilter])
 
   useEffect(() => {
     if (alertPage == 1) setAlertData([])
@@ -262,7 +253,7 @@ const Overview = () => {
     if (aData?.results?.length) {
       setAlertData((prev) => [...prev, ...aData.results])
     }
-  }, [isAlertFetching, isAlertError, alertPage, aData])
+  }, [isAlertFetching, isAlertError])
 
   useEffect(() => {
     if (isEmissionFetching) return
@@ -276,7 +267,7 @@ const Overview = () => {
     }
 
     setChartData([{ ...chartData[0], data: emissionData || [] }])
-  }, [isEmissionFetching, isEmissionError, chartData, emissionData])
+  }, [isEmissionFetching, isEmissionError])
 
   useEffect(() => {
     if (isVoltageFetching) return
@@ -287,7 +278,7 @@ const Overview = () => {
     }
 
     setVoltageChartData(voltageData)
-  }, [isVoltageFetching, isVoltageError, voltageData])
+  }, [isVoltageFetching, isVoltageError])
 
   useEffect(() => {
     if (isEnergyFetching) return
@@ -306,7 +297,7 @@ const Overview = () => {
       return
     }
     setAreaChartData(energyData)
-  }, [isEnergyFetching, isEnergyError, energyData])
+  }, [isEnergyFetching, isEnergyError])
 
   return (
     <AdminPageLayout>
@@ -330,6 +321,7 @@ const Overview = () => {
               setAlertPage(1)
               setSectorId(val)
             }}
+            setSectorName={setSectorName}
           />
         </section>
         <div className={classes.Overview__widgets}>
@@ -342,7 +334,7 @@ const Overview = () => {
           <Donut
             labels={pieChartData.labels}
             chartData={pieChartData.data}
-            title="Imperium Users by Sector"
+            title={sectorName}
             loading={isSectorFetching}
           />
         </div>
@@ -358,8 +350,13 @@ const Overview = () => {
           ) : (
             <AreaChart
               chartData={areaChartData}
-              chartProps={{ height: '100%', width: '100%' }}
               optionProps={additionalOverviewProps}
+              height={'100%'}
+              width={'100%'}
+              strokeWidth={3}
+              showGridY={true}
+              showGrid={true}
+              showYAxis={false}
             />
           )}
         </div>
@@ -379,8 +376,8 @@ const Overview = () => {
                 <SimpleBarChart
                   title="CO2 Emission Avoided"
                   chartData={chartData}
-                  colors={['#66AB4F']}
-                  borderRadius={5}
+                  colors={['#99C78A']}
+                  borderRadius={100}
                   columnWidth={50}
                   optionProps={additionalOverviewBarProps}
                 />
@@ -398,6 +395,10 @@ const Overview = () => {
                     title: { text: 'Voltage & Current Statistic ' },
                     colors: ['#385E2B', '#7F56D9'],
                   }}
+                  showGridY={true}
+                  showGrid={true}
+                  showYAxis={false}
+                  strokeWidth={3}
                 />
               )}
             </div>
