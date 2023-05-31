@@ -180,7 +180,7 @@ const Overview = () => {
     if (isSectorSuccess) {
       setPieChartData(sectorData)
     }
-  }, [sectorData])
+  }, [isSectorFetching])
 
   useEffect(() => {
     if (isAnalyticsFetching) return
@@ -229,7 +229,7 @@ const Overview = () => {
         />
       )),
     )
-  }, [analyticsData])
+  }, [isAnalyticsFetching])
 
   useEffect(() => {
     refetchAnalytics()
@@ -239,16 +239,7 @@ const Overview = () => {
     refetchSolar()
     refetchSector()
     refetchEnergy()
-  }, [
-    globalFilter,
-    // refetchAnalytics,
-    // refetchAlert,
-    // refetchEmission,
-    // refetchVoltage,
-    // refetchSolar,
-    // refetchSector,
-    // refetchEnergy,
-  ])
+  }, [globalFilter])
 
   useEffect(() => {
     if (alertPage == 1) setAlertData([])
@@ -262,7 +253,7 @@ const Overview = () => {
     if (aData?.results?.length) {
       setAlertData((prev) => [...prev, ...aData.results])
     }
-  }, [aData])
+  }, [isAlertFetching, isAlertError])
 
   useEffect(() => {
     if (isEmissionFetching) return
@@ -276,7 +267,7 @@ const Overview = () => {
     }
 
     setChartData([{ ...chartData[0], data: emissionData || [] }])
-  }, [chartData, emissionData])
+  }, [isEmissionFetching, isEmissionError])
 
   useEffect(() => {
     if (isVoltageFetching) return
@@ -287,9 +278,11 @@ const Overview = () => {
     }
 
     setVoltageChartData(voltageData)
-  }, [voltageData])
+  }, [isVoltageFetching, isVoltageError])
 
   useEffect(() => {
+    if (isEnergyFetching) return
+
     if (isEnergyError) {
       setAreaChartData([
         {
@@ -301,9 +294,10 @@ const Overview = () => {
           data: [],
         },
       ])
+      return
     }
     setAreaChartData(energyData)
-  }, [energyData])
+  }, [isEnergyFetching, isEnergyError])
 
   return (
     <AdminPageLayout>
