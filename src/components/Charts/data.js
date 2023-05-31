@@ -11,6 +11,9 @@ export const apexChartOptions = {
     markers: {
       radius: 10,
     },
+    labels: {
+      useSeriesColors: false,
+    },
   },
   xaxis: {
     categories: [
@@ -30,12 +33,17 @@ export const apexChartOptions = {
     title: {
       offsetY: 90,
     },
+    tickPlacement: 'on',
   },
-  yaxis: {},
+  yaxis: {
+    axisTicks: {
+      show: true,
+    },
+  },
   plotOptions: {
     bar: {
-      borderRadiusWhenStacked: 'last',
-      borderRadiusApplication: 'end',
+      borderRadiusWhenStacked: 'all',
+      borderRadiusApplication: 'around',
     },
   },
   dataLabels: {
@@ -231,10 +239,13 @@ export const barChartOptions = {
     axisTicks: {
       show: false,
     },
+    labels: {
+      rotate: 0,
+    },
   },
   plotOptions: {
     bar: {
-      borderRadiusApplication: 'around',
+      borderRadiusApplication: 'end',
     },
   },
   dataLabels: {

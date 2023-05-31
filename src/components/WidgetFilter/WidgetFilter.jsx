@@ -1,5 +1,5 @@
 import { DatePicker, Radio, Select, Space } from 'antd'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   useListShsRegionsQuery,
   useListShsSectorsQuery,
@@ -35,6 +35,7 @@ const WidgetFilter = ({
   hasExportButton = false,
   selectFilterBy,
   filterBy,
+  setSectorName,
   hasSectorFilter = false,
   setRegionId,
   setSectorId,
@@ -69,6 +70,10 @@ const WidgetFilter = ({
         {region.name}
       </Option>
     ))
+  }
+  const handleSectorChange = (val, { children }) => {
+    setSectorId(val)
+    setSectorName(children)
   }
 
   return (
@@ -144,7 +149,7 @@ const WidgetFilter = ({
             <Select
               className={classes.WidgetFilter__select}
               placeholder="Select Sector"
-              onChange={(val) => setSectorId(val)}
+              onChange={(val, region) => handleSectorChange(val, region)}
               allowClear
             >
               {sectors}

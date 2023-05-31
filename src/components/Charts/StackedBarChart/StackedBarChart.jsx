@@ -4,6 +4,9 @@ import { apexChartOptions } from '../data'
 import classes from './StackedBarChart.module.scss'
 import { chartLabelFormatter } from '../../../utils/helpers'
 
+const FormatData = ({ value }) => {
+  return
+}
 const StackedBarChart = ({
   title,
   chartData,
@@ -14,6 +17,12 @@ const StackedBarChart = ({
   legendHorizontalAlign,
   yLabelTitle,
   xLabelTitle,
+  showGrid,
+  showGridX,
+  showGridY,
+  tickPlacement = 'on',
+  labelColors,
+  showYAxisBorder,
 }) => {
   return (
     <div className={classes.StackedBarChart}>
@@ -30,6 +39,9 @@ const StackedBarChart = ({
               ...apexChartOptions.legend.markers,
               fillColors: colors,
             },
+            labels: {
+              ...apexChartOptions.legend.labels,
+            },
           },
           plotOptions: {
             ...apexChartOptions.plotOptions,
@@ -39,8 +51,22 @@ const StackedBarChart = ({
               columnWidth,
             },
           },
+          grid: {
+            show: showGrid,
+            xaxis: {
+              lines: {
+                show: showGridX,
+              },
+            },
+            yaxis: {
+              lines: {
+                show: showGridY,
+              },
+            },
+          },
           xaxis: {
             ...apexChartOptions.xaxis,
+            tickPlacement: tickPlacement,
             title: {
               ...apexChartOptions.xaxis.title,
               text: xLabelTitle,
@@ -48,10 +74,16 @@ const StackedBarChart = ({
           },
           yaxis: {
             ...apexChartOptions.yaxis,
+            axisBorder: {
+              show: showYAxisBorder,
+            },
             title: {
               text: yLabelTitle,
             },
             labels: {
+              // style: {
+              //   colors: 'red',
+              // },
               formatter: (value) => chartLabelFormatter(value),
             },
           },

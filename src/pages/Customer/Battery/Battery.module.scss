@@ -12,6 +12,14 @@
     margin-bottom: 32px;
   }
 
+  &__chart {
+    background: #fcfcfd;
+    border: 1px solid #dcecd5;
+    border-radius: 8px;
+    height: 400px;
+    padding: 20px;
+  }
+
   &__widgets {
     display: flex;
     overflow: scroll;

@@ -7,7 +7,10 @@ import classes from './Donut.module.scss'
 const Donut = ({ title, chartData, labels, loading }) => {
   return (
     <div className={classes.Donut}>
-      <h1>{title}</h1>
+      <h1>
+        Imperium Users by Sector for{' '}
+        <span style={{ color: '#497A38' }}>{title}</span>
+      </h1>
       {loading ? (
         <Loading />
       ) : (
