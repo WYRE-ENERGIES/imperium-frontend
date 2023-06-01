@@ -7,7 +7,7 @@ import imageDesc from '../../../../../src/assets/Auth/Multi-device targeting-pan
 import classes from './SignUp.module.scss'
 import PageIndicator from '../../../../components/Auth/Forms/Widgets/FormPageIndicator'
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { getItemFromLocalStorage } from '../../../../utils/helpers'
 
 import FormHeader from '../../../../components/Auth/Forms/Widgets/FormHeader'
@@ -35,9 +35,15 @@ const SignUp = () => {
   const [formValid, setFormValid] = useState(false)
   const [customerRegister, { isLoading }] = useCustomerRegisterMutation()
   const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
 
+  const emailInvite = searchParams.get('email')
   const accessToken = getItemFromLocalStorage('access')
   const onFinish = async (values) => {
+    if (values.email !== emailInvite) {
+      setErrMsg('Email does not match invitation email.')
+      return
+    }
     try {
       await customerRegister({
         credentials: values,
@@ -75,7 +81,7 @@ const SignUp = () => {
                 labelCol={8}
                 wrapperCol={32}
                 initialValues={{
-                  remember: false,
+                  email: emailInvite,
                 }}
                 onFinish={onFinish}
                 autoComplete="off"

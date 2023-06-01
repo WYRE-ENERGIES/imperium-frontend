@@ -33,6 +33,7 @@ export const usersApiSlice = apiSlice.injectEndpoints({
         method: 'POST',
         body: data,
       }),
+      transformErrorResponse: (response, meta, arg) => response,
       invalidatesTags: ['Users'],
     }),
     removeUser: builder.mutation({
