@@ -8,6 +8,7 @@ import {
 
 import { ReactComponent as TicketIcon } from '../../../../assets/user-icon.svg'
 import classes from '../../../Customer/Users/NewUserForm/NewUserForm.module.scss'
+import { ErrorMessage } from '../../../../components/ErrorMessage/ErrorMessage'
 
 const ButtonLoader = lazy(() =>
   import('../../../../components/ButtonLoader/ButtonLoader'),
@@ -27,21 +28,26 @@ const layout = {
 
 const ModalForm = ({ toggleModal }) => {
   const [roleDescription, setRoleDescription] = useState('')
-
+  const [errMsg, setErrMsg] = useState('')
   const { data } = useGetUsersRolesQuery()
-  const [inviteUser, { isLoading, isSuccess }] = useInviteUserMutation()
+  const [inviteUser, { isLoading, isSuccess, isError }] =
+    useInviteUserMutation()
 
   const [form] = Form.useForm()
-  const onFinish = ({ invitee_email, role }) => {
+  const onFinish = async ({ invitee_email, role }) => {
     let choice = JSON.parse(role)
-    inviteUser({
-      invitee_email,
-      role: choice.value,
-      redirect_url:
-        choice.value === 'client'
-          ? `${window.location.origin}/accept-user`
-          : `${window.location.origin}/admin/accept-user`,
-    })
+    try {
+      await inviteUser({
+        invitee_email,
+        role: choice.value,
+        redirect_url:
+          choice.value === 'client'
+            ? `${window.location.origin}/accept-user`
+            : `${window.location.origin}/admin/accept-user`,
+      }).unwrap()
+    } catch (err) {
+      setErrMsg(ErrorMessage(err?.data?.invitee_email?.message))
+    }
   }
 
   const handleRoleChange = (role) => {
@@ -58,7 +64,7 @@ const ModalForm = ({ toggleModal }) => {
       })
       toggleModal()
     }
-  }, [isLoading, isSuccess, toggleModal])
+  }, [isLoading, isSuccess, toggleModal, isError])
 
   return (
     <Form
@@ -76,6 +82,7 @@ const ModalForm = ({ toggleModal }) => {
         span: 32,
       }}
     >
+      <small style={{ color: 'red' }}>{errMsg}</small>
       <Form.Item
         name="invitee_email"
         label="Email"
