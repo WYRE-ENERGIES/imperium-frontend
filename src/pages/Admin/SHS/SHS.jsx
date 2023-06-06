@@ -46,7 +46,6 @@ const SHS = () => {
     filterBy: globalFilter,
     tableFilter: tableFilter,
   })
-
   const {
     isFetching: isAnalyticsFetching,
     isError: isAnalyticsError,

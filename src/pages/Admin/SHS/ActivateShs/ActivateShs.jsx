@@ -1,6 +1,7 @@
 import { Button, Form, Modal, Typography } from 'antd'
 import React, { useEffect, useState } from 'react'
 import { ToastContainer, toast } from 'react-toastify'
+// import { notification } from 'antd'
 
 import ButtonLoader from '../../../../components/ButtonLoader/ButtonLoader'
 import { ReactComponent as DisableTicketIcon } from '../../../../assets/widget-icons/disable-caution-icon.svg'
@@ -16,6 +17,14 @@ const ActivateContent = ({ shs, toggleModal }) => {
   const title = status === 'OFF' ? 'Activate SHS' : 'Disabled SHS'
   const TIcon = status === 'OFF' ? TicketIcon : DisableTicketIcon
 
+  // const openNotification = () => {
+  //   notification.open({
+  //     message: 'Notification Title',
+  //     description:
+  //       'This is the content of the notification. This is the content of the notification. This is the content of the notification.',
+  //   })
+  // }
+
   const [deactivateDevice, { isLoading, isSuccess, data, isError }] =
     useDeactivateDeviceMutation()
   const handleDeactivateDevice = async () => {
@@ -24,8 +33,10 @@ const ActivateContent = ({ shs, toggleModal }) => {
         shsId,
         data: { deactivate: status !== 'OFF' },
       }).unwrap()
+
+      toggleModal()
     } catch (error) {
-      return setErrorMsg(error?.data?.message)
+      setErrorMsg(error?.data?.message)
     }
   }
   useEffect(() => {
@@ -40,7 +51,7 @@ const ActivateContent = ({ shs, toggleModal }) => {
       )
       toggleModal()
     }
-  }, [isLoading, isSuccess, data?.device_switch_state, toggleModal])
+  }, [isLoading, isSuccess])
 
   return (
     <div>
