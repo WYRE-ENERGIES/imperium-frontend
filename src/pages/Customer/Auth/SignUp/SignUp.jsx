@@ -103,6 +103,7 @@ const SignUp = () => {
                   extra={<small ref={emailRef}></small>}
                 >
                   <Input
+                    disabled={emailInvite ? true : false}
                     className={classes.SignUpPage__Input}
                     placeholder="Enter your email"
                     style={{ marginTop: '-1rem' }}

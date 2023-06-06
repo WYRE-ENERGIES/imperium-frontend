@@ -18,9 +18,17 @@ const ExportFileButton = ({ url, tableName }) => {
 
     document.body.removeChild(link)
   }
+
+  const handleDownload = () => {
+    if (error) {
+      window.location.reload()
+    } else if (downloadUrl) {
+      handleExportFileDownLoad()
+    }
+  }
   return (
     <div className={classes.ExportFileButton}>
-      <button onClick={() => handleExportFileDownLoad()}>
+      <button onClick={() => handleDownload()} disabled={loading}>
         {' '}
         <CloudDownloadOutlined />
         <span>
