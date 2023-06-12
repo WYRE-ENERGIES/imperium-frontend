@@ -1,5 +1,5 @@
 import { Button, List, Spin } from 'antd'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import {
   additionalOverviewBarProps,
   additionalOverviewProps,
@@ -173,65 +173,64 @@ const Overview = () => {
     sectorId,
     regionId,
   })
-  console.log('Map data: ', mapData?.results)
-  useEffect(() => {
-    if (isSectorFetching) return
 
-    if (isSectorSuccess) {
+  useEffect(() => {
+    if (sectorData) {
       setPieChartData(sectorData)
     }
-  }, [isSectorFetching])
+  }, [sectorData])
 
   useEffect(() => {
-    if (isAnalyticsFetching) return
-    setWidgets(
-      [
-        {
-          id: 1,
-          title: 'Total Energy Generation',
-          value: analyticsData?.total_installed_capacity
-            ? parseFloat(
-                analyticsData?.total_installed_capacity?.toFixed(1),
-              )?.toLocaleString()
-            : 0,
-          valueCurrency: 'kWh',
-          graph: GraphIcon2,
-        },
-        {
-          id: 2,
-          title: 'Total Energy Consumption',
-          value: analyticsData?.total_energy_consumed
-            ? parseFloat(
-                analyticsData?.total_energy_consumed?.toFixed(1),
-              )?.toLocaleString()
-            : 0,
-          valueCurrency: 'kWh',
-          graph: GraphIcon,
-        },
-        {
-          id: 3,
-          title: 'Total Customers',
-          value: analyticsData?.total_customers
-            ? parseFloat(
-                analyticsData?.total_customers?.toFixed(1),
-              )?.toLocaleString()
-            : 0,
-          graph: GraphIcon2,
-        },
-      ].map((widget) => (
-        <AdminEnergyAnalytic
-          key={widget.id}
-          duration={formatLabel(globalFilter)}
-          valueCurrency={widget.valueCurrency}
-          title={widget.title}
-          value={widget.value}
-          LineGraph={widget.graph}
-        />
-      )),
-    )
-  }, [isAnalyticsFetching])
+    if (analyticsData) {
+      setWidgets(
+        [
+          {
+            id: 1,
+            title: 'Total Energy Generation',
+            value: analyticsData?.total_installed_capacity
+              ? parseFloat(
+                  analyticsData?.total_installed_capacity?.toFixed(1),
+                )?.toLocaleString()
+              : 0,
+            valueCurrency: 'kWh',
+            graph: GraphIcon2,
+          },
+          {
+            id: 2,
+            title: 'Total Energy Consumption',
+            value: analyticsData?.total_energy_consumed
+              ? parseFloat(
+                  analyticsData?.total_energy_consumed?.toFixed(1),
+                )?.toLocaleString()
+              : 0,
+            valueCurrency: 'kWh',
+            graph: GraphIcon,
+          },
+          {
+            id: 3,
+            title: 'Total Customers',
+            value: analyticsData?.total_customers
+              ? parseFloat(
+                  analyticsData?.total_customers?.toFixed(1),
+                )?.toLocaleString()
+              : 0,
+            graph: GraphIcon2,
+          },
+        ].map((widget) => (
+          <AdminEnergyAnalytic
+            key={widget.id}
+            duration={formatLabel(globalFilter)}
+            valueCurrency={widget.valueCurrency}
+            title={widget.title}
+            value={widget.value}
+            LineGraph={widget.graph}
+          />
+        )),
+      )
+    }
+  }, [analyticsData, globalFilter])
 
-  useEffect(() => {
+  const fetchData = useCallback(() => {
     refetchAnalytics()
     refetchAlert()
     refetchEmission()
@@ -239,7 +238,19 @@ const Overview = () => {
     refetchSolar()
     refetchSector()
     refetchEnergy()
-  }, [globalFilter])
+  }, [
+    refetchAnalytics,
+    refetchAlert,
+    refetchEmission,
+    refetchVoltage,
+    refetchSolar,
+    refetchSector,
+    refetchEnergy,
+  ])
+
+  useEffect(() => {
+    fetchData()
+  }, [fetchData, globalFilter])
 
   useEffect(() => {
     if (alertPage == 1) setAlertData([])
@@ -253,7 +264,7 @@ const Overview = () => {
     if (aData?.results?.length) {
       setAlertData((prev) => [...prev, ...aData.results])
     }
-  }, [isAlertFetching, isAlertError])
+  }, [aData, isAlertFetching, isAlertError, alertPage])
 
   useEffect(() => {
     if (isEmissionFetching) return
@@ -267,7 +278,7 @@ const Overview = () => {
     }
 
     setChartData([{ ...chartData[0], data: emissionData || [] }])
-  }, [isEmissionFetching, isEmissionError])
+  }, [isEmissionFetching, isEmissionError, chartData, emissionData])
 
   useEffect(() => {
     if (isVoltageFetching) return
@@ -278,7 +289,7 @@ const Overview = () => {
     }
 
     setVoltageChartData(voltageData)
-  }, [isVoltageFetching, isVoltageError])
+  }, [isVoltageFetching, isVoltageError, voltageData])
 
   useEffect(() => {
     if (isEnergyFetching) return
@@ -297,7 +308,7 @@ const Overview = () => {
       return
     }
     setAreaChartData(energyData)
-  }, [isEnergyFetching, isEnergyError])
+  }, [isEnergyFetching, isEnergyError, energyData])
 
   return (
     <AdminPageLayout>
