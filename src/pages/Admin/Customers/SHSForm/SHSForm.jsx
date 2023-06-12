@@ -5,6 +5,7 @@ import {
   Input,
   Modal,
   Select,
+  Spin,
   Typography,
 } from 'antd'
 import React, { useEffect, useState } from 'react'
@@ -23,6 +24,11 @@ import { ReactComponent as TicketIcon } from '../../../../assets/widget-icons/ho
 import classes from './SHSForm.module.scss'
 import { useAdminGetClientListQuery } from '../../../../features/slices/clientUserApiSlice'
 import useDebounce from '../../../../hooks/useDebounce'
+import {
+  ExclamationCircleOutlined,
+  LoadingOutlined,
+  CheckCircleOutlined,
+} from '@ant-design/icons'
 
 const { Text, Title } = Typography
 const { Option } = Select
@@ -44,7 +50,11 @@ const AddSHSForm = ({ toggleModal }) => {
   let states = []
   let vendors = []
 
-  const { data: clientList } = useAdminGetClientListQuery(debounceValue, {
+  const {
+    data: clientList,
+    isFetching: isFetchingClientList,
+    isError: isErrorClientList,
+  } = useAdminGetClientListQuery(debounceValue, {
     skip: debounceValue == '',
   })
 
@@ -131,6 +141,11 @@ const AddSHSForm = ({ toggleModal }) => {
       </Option>
     ))
   }
+  const loadingIcon = (
+    <LoadingOutlined
+      style={{ fontSize: 24, marginRight: 10, color: '#66ab4f' }}
+    />
+  )
 
   return (
     <Form
@@ -153,16 +168,46 @@ const AddSHSForm = ({ toggleModal }) => {
           label="Customer Email"
           style={{ marginBottom: '12px', flex: 1 }}
         >
-          <SearchDropdown
-            value={search}
-            placeholder="Enter users email"
-            data={clientList}
-            handleChange={handleChange}
-            handleSearch={handleSearch}
-          />
-          {err && err.client_email && (
-            <Text type="danger">{err.client_email}</Text>
-          )}
+          <div className={classes.AddSHSForm__EmailField}>
+            <div className={classes.AddSHSForm__SelectInput}>
+              <SearchDropdown
+                value={search}
+                placeholder="Enter users email"
+                data={clientList}
+                handleChange={handleChange}
+                handleSearch={handleSearch}
+                loading={isFetchingClientList}
+              />
+              {err && err.client_email && (
+                <Text type="danger">{err.client_email}</Text>
+              )}
+            </div>
+            {debounceValue.length === 0 ? (
+              ''
+            ) : (
+              <div>
+                {' '}
+                {isFetchingClientList ? (
+                  <div className={classes.AddSHSForm__Loader}>
+                    {' '}
+                    <Spin indicator={loadingIcon} />
+                  </div>
+                ) : clientList?.length === 0 ? (
+                  <div className={classes.AddSHSForm__Closed}>
+                    {' '}
+                    <ExclamationCircleOutlined />
+                  </div>
+                ) : clientList?.length != 0 ? (
+                  <div className={classes.AddSHSForm__Check}>
+                    {' '}
+                    <CheckCircleOutlined />
+                  </div>
+                ) : (
+                  ''
+                )}
+              </div>
+            )}
+          </div>
         </Form.Item>
 
         <Form.Item

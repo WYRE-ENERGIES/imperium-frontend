@@ -38,7 +38,6 @@ const useCurrentLocation = () => {
 
     getCurrentCoordinates()
   }, [])
-
   return { location, error }
 }
 
