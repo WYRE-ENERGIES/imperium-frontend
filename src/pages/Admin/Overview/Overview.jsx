@@ -66,7 +66,7 @@ const Overview = () => {
   const [widgets, setWidgets] = useState([])
   const [page, setPage] = useState(1)
   const [alertPage, setAlertPage] = useState(1)
-  const [globalFilter, setGlobalFilter] = useState('yearly')
+  const [globalFilter, setGlobalFilter] = useState('weekly')
   const [sectorId, setSectorId] = useState()
   const [sectorName, setSectorName] = useState('All')
   const [regionId, setRegionId] = useState()
@@ -169,11 +169,11 @@ const Overview = () => {
     error: mapError,
     data: mapData,
   } = useGetMapDataQuery({
-    filterBy: globalFilter,
+    page: 1,
     sectorId,
     regionId,
   })
-
+  console.log('Map data: ', mapData?.results)
   useEffect(() => {
     if (isSectorFetching) return
 

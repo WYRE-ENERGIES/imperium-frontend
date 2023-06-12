@@ -63,7 +63,7 @@ const ShsDeviceMap = ({ isLoading, data = [] }) => {
       <GoogleMap
         mapContainerStyle={containerStyle}
         center={center}
-        zoom={10}
+        zoom={5}
         onLoad={onLoad}
         options={options}
       >

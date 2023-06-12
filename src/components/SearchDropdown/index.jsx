@@ -8,9 +8,11 @@ const SearchDropdown = ({
   data,
   handleChange,
   handleSearch,
+  loading,
 }) => {
   return (
     <Select
+      loading={loading}
       className={classes.SearchDropdown}
       showSearch
       value={value}

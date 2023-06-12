@@ -46,6 +46,7 @@ const SHS = () => {
     filterBy: globalFilter,
     tableFilter: tableFilter,
   })
+
   const {
     isFetching: isAnalyticsFetching,
     isError: isAnalyticsError,
@@ -107,7 +108,7 @@ const SHS = () => {
 
   const columns = [
     {
-      title: 'SHS Name',
+      title: 'Shs Name',
       dataIndex: 'device_name',
       key: 'device_name',
       sorter: (a, b) => a.device_name.localeCompare(b.device_name),
@@ -136,6 +137,14 @@ const SHS = () => {
             </div>
           </div>
         )
+      },
+    },
+    {
+      title: 'Device Name',
+      dataIndex: 'client_name',
+      key: 'client_name',
+      render: (_, record) => {
+        return record.client_name
       },
     },
     {
