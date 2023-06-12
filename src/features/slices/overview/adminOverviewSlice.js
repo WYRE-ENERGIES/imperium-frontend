@@ -162,7 +162,7 @@ export const adminOverviewSlice = apiSlice.injectEndpoints({
     }),
     getMapData: builder.query({
       query: ({ sectorId, regionId, page }) => {
-        let url = `${ADMIN_OVERVIEW_URL_PATH}map/?page=${page}`
+        let url = `${ADMIN_OVERVIEW_URL_PATH}map`
 
         if (sectorId) {
           url += `&device__sector_id=${sectorId}`
