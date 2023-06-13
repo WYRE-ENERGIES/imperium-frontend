@@ -336,7 +336,7 @@ const Overview = () => {
           {isAnalyticsFetching ? <WidgetLoader /> : widgets}
         </div>
         <div className={classes.Overview__map}>
-          <ShsDeviceMap isLoading={isMapFetching} data={mapData?.results} />
+          <ShsDeviceMap isLoading={isMapFetching} data={mapData} />
         </div>
         <div className={classes.Overview__donutChart}>
           <Donut
