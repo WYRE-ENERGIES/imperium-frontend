@@ -1,5 +1,5 @@
 import { Button, List, Spin } from 'antd'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import {
   additionalOverviewBarProps,
   additionalOverviewProps,
@@ -107,6 +107,9 @@ const Overview = () => {
     regionId,
   })
 
+  console.log('emissionData ;', emissionData)
+  console.log('chartData ;', chartData)
+
   const {
     isFetching: isVoltageFetching,
     isError: isVoltageError,
@@ -169,18 +172,17 @@ const Overview = () => {
     error: mapError,
     data: mapData,
   } = useGetMapDataQuery({
-    page: 1,
     sectorId,
     regionId,
   })
-  console.log('Map data: ', mapData?.results)
+
   useEffect(() => {
     if (isSectorFetching) return
 
-    if (isSectorSuccess) {
+    if (sectorData) {
       setPieChartData(sectorData)
     }
-  }, [isSectorFetching])
+  }, [isSectorFetching, sectorData])
 
   useEffect(() => {
     if (isAnalyticsFetching) return
@@ -229,9 +231,9 @@ const Overview = () => {
         />
       )),
     )
-  }, [isAnalyticsFetching])
+  }, [analyticsData, isAnalyticsFetching, globalFilter])
 
-  useEffect(() => {
+  const refetchData = useCallback(() => {
     refetchAnalytics()
     refetchAlert()
     refetchEmission()
@@ -239,7 +241,19 @@ const Overview = () => {
     refetchSolar()
     refetchSector()
     refetchEnergy()
-  }, [globalFilter])
+  }, [
+    refetchAnalytics,
+    refetchAlert,
+    refetchEmission,
+    refetchVoltage,
+    refetchSolar,
+    refetchSector,
+    refetchEnergy,
+  ])
+
+  useEffect(() => {
+    refetchData()
+  }, [refetchData, globalFilter])
 
   useEffect(() => {
     if (alertPage == 1) setAlertData([])
@@ -253,21 +267,15 @@ const Overview = () => {
     if (aData?.results?.length) {
       setAlertData((prev) => [...prev, ...aData.results])
     }
-  }, [isAlertFetching, isAlertError])
+  }, [aData, isAlertFetching, isAlertError, alertPage])
 
   useEffect(() => {
-    if (isEmissionFetching) return
-    if (isEmissionError) {
-      setChartData({
-        name: 'Emission avoided',
-        data: [],
-      })
-
-      return
+    if (emissionData) {
+      setChartData((prevChartData) => [
+        { ...prevChartData[0], data: emissionData },
+      ])
     }
-
-    setChartData([{ ...chartData[0], data: emissionData || [] }])
-  }, [isEmissionFetching, isEmissionError])
+  }, [emissionData])
 
   useEffect(() => {
     if (isVoltageFetching) return
@@ -278,7 +286,7 @@ const Overview = () => {
     }
 
     setVoltageChartData(voltageData)
-  }, [isVoltageFetching, isVoltageError])
+  }, [isVoltageFetching, isVoltageError, voltageData])
 
   useEffect(() => {
     if (isEnergyFetching) return
@@ -297,7 +305,7 @@ const Overview = () => {
       return
     }
     setAreaChartData(energyData)
-  }, [isEnergyFetching, isEnergyError])
+  }, [isEnergyFetching, isEnergyError, energyData])
 
   return (
     <AdminPageLayout>
@@ -350,6 +358,7 @@ const Overview = () => {
           ) : (
             <AreaChart
               chartData={areaChartData}
+              chartProps={{ height: '100%', width: '100%' }}
               optionProps={additionalOverviewProps}
               height={'100%'}
               width={'100%'}

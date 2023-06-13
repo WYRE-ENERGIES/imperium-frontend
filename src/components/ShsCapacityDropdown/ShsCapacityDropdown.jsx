@@ -1,5 +1,5 @@
 import { Dropdown, Space, Typography } from 'antd'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 
 import { BsSunset } from 'react-icons/bs'
 import { FaAngleDoubleDown } from 'react-icons/fa'
@@ -42,21 +42,11 @@ function ShsCapacityDropdown({ setDeviceId }) {
   }
 
   const { isFetching, isError, data } = useGetClientDeviceListQuery()
-
+  const setDeviceID = useCallback(() => {
+    setDeviceId(data[0].id)
+  }, [setDeviceId, data])
   useEffect(() => {
     if (isFetching) return
-
-    if (isError) {
-      setItems([
-        {
-          key: 'SHS-Panel-Capacity-1',
-          icon: <RiHome6Line color="#66ab4f" />,
-          label: 'SHS, Panel, Capacity',
-          disabled: true,
-        },
-      ])
-      return
-    }
 
     const deviceList = data?.map((device) => ({
       key: device.id,
@@ -77,10 +67,10 @@ function ShsCapacityDropdown({ setDeviceId }) {
         name: data[0].device_name || 'Device',
         capacity: parseFloat(Number(data[0].capacity)?.toFixed(1)),
       })
-      setItems([...items, ...deviceList])
-      setDeviceId(data[0].id)
+      setItems((prev) => [{ ...prev, ...deviceList }])
+      setDeviceID()
     }
-  }, [isFetching])
+  }, [isFetching, data, setDeviceID])
 
   return (
     <section className={classes.ShsCapacityDropdown}>

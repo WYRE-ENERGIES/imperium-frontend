@@ -1,4 +1,4 @@
-import React, { useEffect, useState, Suspense, lazy } from 'react'
+import React, { useEffect, useState, Suspense, lazy, useCallback } from 'react'
 import {
   useGetClientOverviewAnalyticsQuery,
   useGetClientOverviewEnergyDataQuery,
@@ -126,7 +126,7 @@ const Overview = () => {
         />
       )),
     )
-  }, [isAnalyticsFetching])
+  }, [isAnalyticsFetching, analyticsData, globalFilter])
 
   useEffect(() => {
     if (isEnergyFetching) return
@@ -145,13 +145,15 @@ const Overview = () => {
       return
     }
     setChartData(energyData)
-  }, [isEnergyFetching, isEnergyError])
-
-  useEffect(() => {
+  }, [isEnergyFetching, isEnergyError, energyData])
+  const reFetchData = useCallback(() => {
     refetchAnalytics()
     refetchSolar()
     refetchEnergy()
-  }, [globalFilter])
+  }, [refetchAnalytics, refetchSolar, refetchEnergy])
+  useEffect(() => {
+    reFetchData()
+  }, [globalFilter, reFetchData])
 
   return (
     <PageLayout>

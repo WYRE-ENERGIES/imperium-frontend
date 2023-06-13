@@ -14,6 +14,7 @@ import classes from './MapStyle.module.scss'
 const containerStyle = {
   width: '100%',
   height: '500px',
+  borderRadius: '8px',
 }
 
 const libraries = ['places']

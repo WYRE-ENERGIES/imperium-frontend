@@ -75,7 +75,15 @@ const ModalForm = ({ toggleModal, ticketData }) => {
         }
       })
     }
-  }, [isLoading, isSuccess, isUpdating, isUpdateSuccess])
+  }, [
+    isLoading,
+    isSuccess,
+    isUpdating,
+    isUpdateSuccess,
+    form,
+    ticketData,
+    toggleModal,
+  ])
 
   useEffect(() => {
     if (shsLoading) return
@@ -89,7 +97,7 @@ const ModalForm = ({ toggleModal, ticketData }) => {
         )),
       )
     }
-  }, [shsLoading])
+  }, [shsLoading, shsData])
 
   useEffect(() => {
     const currentClient = getItemFromLocalStorage('current_client')

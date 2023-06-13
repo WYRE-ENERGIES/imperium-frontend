@@ -89,7 +89,7 @@ const SwitchAccountContent = ({ toggleModal, isAdmin }) => {
       setSelected(data?.current)
     }
     setList(data.response)
-  }, [isFetching, isError])
+  }, [isFetching, isError, data])
 
   return (
     <div className={classes.SwitchAccount__content}>
