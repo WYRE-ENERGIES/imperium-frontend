@@ -107,9 +107,6 @@ const Overview = () => {
     regionId,
   })
 
-  console.log('emissionData ;', emissionData)
-  console.log('chartData ;', chartData)
-
   const {
     isFetching: isVoltageFetching,
     isError: isVoltageError,
