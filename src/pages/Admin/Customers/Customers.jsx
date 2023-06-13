@@ -79,12 +79,9 @@ const Customers = () => {
   } = useGetCustomerPageStatisticsQuery({ filterBy: globalFilter })
 
   useEffect(() => {
-    const cData = chartData[0]
     if (!isStatisticsLoading && statisticsData?.length) {
-      cData.data = statisticsData
+      setChartData((prevChart) => [{ ...prevChart, data: statisticsData }])
     }
-
-    setChartData([cData])
   }, [statisticsData, isStatisticsLoading])
 
   useEffect(() => {

@@ -1,5 +1,5 @@
 import { Button, Form, Input, Modal, Select, Typography } from 'antd'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { ToastContainer, toast } from 'react-toastify'
 import {
   useActivateCustomerMutation,
@@ -58,7 +58,7 @@ const ActivateContent = ({ user, toggleModal, toggleForm }) => {
     }, 1000)
 
     return () => clearTimeout(timeoutId)
-  }, [isSuccess])
+  }, [isSuccess, toggleModal])
 
   return (
     <div>
@@ -101,11 +101,11 @@ const ActivateContent = ({ user, toggleModal, toggleForm }) => {
 }
 
 const DisableClientForm = ({ user, toggleModal }) => {
-  const [deactivateCustomer, { isLoading, isSuccess }] =
+  const [deactivateCustomer, { isLoading, isSuccess: deactivateSuccessfull }] =
     useDeactivateCustomerMutation()
 
   useEffect(() => {
-    if (!isSuccess) return
+    if (!deactivateSuccessfull) return
 
     toast.success('deactivated', {
       hideProgressBar: true,
@@ -118,7 +118,7 @@ const DisableClientForm = ({ user, toggleModal }) => {
     }, 1000)
 
     return () => clearTimeout(timeoutId)
-  }, [isSuccess])
+  }, [deactivateSuccessfull, toggleModal])
 
   const [form] = Form.useForm()
   const onFinish = (values) => {

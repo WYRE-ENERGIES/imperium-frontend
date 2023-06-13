@@ -60,7 +60,7 @@ const ModalForm = ({ toggleModal }) => {
         theme: 'colored',
       })
     }
-  }, [isLoading, isError])
+  }, [isLoading, isError, error])
 
   return (
     <Form

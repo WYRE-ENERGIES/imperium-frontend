@@ -51,8 +51,7 @@ const ModalForm = ({ toggleModal, ticketData, isAdmin }) => {
 
   useEffect(() => {
     form.resetFields()
-
-    if (!isLoading && isSuccess) {
+    if (isSuccess) {
       toast.success(
         `Ticket ${
           isResolved === supportStatusEnums.RESOLVED ? 'Resolved' : 'Unresolved'
@@ -65,11 +64,9 @@ const ModalForm = ({ toggleModal, ticketData, isAdmin }) => {
       )
       toggleModal()
     }
-  }, [ticketData, isLoading, isSuccess])
+  }, [ticketData, isSuccess, isResolved, toggleModal, form])
 
   useEffect(() => {
-    if (isLoading) return
-
     if (shsData?.length) {
       setShsDevices(
         shsData.map(({ id, name }) => (
@@ -79,7 +76,7 @@ const ModalForm = ({ toggleModal, ticketData, isAdmin }) => {
         )),
       )
     }
-  }, [shsLoading])
+  }, [shsLoading, shsData])
 
   return (
     <Form
