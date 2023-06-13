@@ -107,9 +107,6 @@ const Overview = () => {
     regionId,
   })
 
-  console.log('emissionData ;', emissionData)
-  console.log('chartData ;', chartData)
-
   const {
     isFetching: isVoltageFetching,
     isError: isVoltageError,
@@ -336,7 +333,7 @@ const Overview = () => {
           {isAnalyticsFetching ? <WidgetLoader /> : widgets}
         </div>
         <div className={classes.Overview__map}>
-          <ShsDeviceMap isLoading={isMapFetching} data={mapData?.results} />
+          <ShsDeviceMap isLoading={isMapFetching} data={mapData} />
         </div>
         <div className={classes.Overview__donutChart}>
           <Donut

@@ -57,14 +57,15 @@ const ShsDeviceMap = ({ isLoading, data = [] }) => {
       />
     ))
 
-  if (!isLoaded || !location || isLoading) return <Loading />
+  if (!isLoaded || !location || isLoading)
+    return <Loading data={'SHS devices on map...'} />
 
   return (
     <div>
       <GoogleMap
         mapContainerStyle={containerStyle}
         center={center}
-        zoom={5}
+        zoom={10}
         onLoad={onLoad}
         options={options}
       >
