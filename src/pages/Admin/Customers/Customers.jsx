@@ -126,6 +126,15 @@ const Customers = () => {
       },
     },
     {
+      title: 'Name',
+      dataIndex: 'customer_name',
+      key: 'customer_name',
+      sorter: (a, b) => a.customer_name.localeCompare(b.customer_name),
+      render: (_, record) => {
+        return record.customer_name
+      },
+    },
+    {
       title: 'Purchase Date',
       key: 'purchased_date',
       dataIndex: 'purchased_date',
