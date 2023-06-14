@@ -108,7 +108,7 @@ const SHS = () => {
 
   const columns = [
     {
-      title: 'Shs Name',
+      title: 'Shs Device',
       dataIndex: 'device_name',
       key: 'device_name',
       sorter: (a, b) => a.device_name.localeCompare(b.device_name),
@@ -139,14 +139,7 @@ const SHS = () => {
         )
       },
     },
-    {
-      title: 'Device Name',
-      dataIndex: 'client_name',
-      key: 'client_name',
-      render: (_, record) => {
-        return record.client_name
-      },
-    },
+
     {
       title: 'Energy Consumed',
       key: 'energy_consumed',
