@@ -39,6 +39,7 @@ const UserInvite = () => {
     useAcceptInviteMutation()
 
   const handleAccept = () => {
+    localStorage.clear();
     acceptInvite({ invitee_email: email, role })
   }
 
