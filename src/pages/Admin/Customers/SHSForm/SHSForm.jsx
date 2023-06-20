@@ -102,8 +102,9 @@ const AddSHSForm = ({ toggleModal }) => {
       toggleModal()
     } catch (error) {
       const { data } = error
+
       if (data) {
-        setErr(data)
+        setErr(data?.message || data?.capacity || data?.serial_number)
       } else {
         setErr('An Error occurred')
       }
@@ -397,7 +398,7 @@ const AddSHSForm = ({ toggleModal }) => {
         </Form.Item>
       </div>
 
-      {err && err.message && <Text type="danger">{err.message}</Text>}
+      {err && err[0] && <Text type="danger">{err[0]}</Text>}
       <div className={classes.AddSHSForm__btn}>
         <Button
           className={classes.AddSHSForm__cancelBtn}
