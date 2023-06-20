@@ -8,7 +8,10 @@ import classes from './SignUp.module.scss'
 import PageIndicator from '../../../../components/Auth/Forms/Widgets/FormPageIndicator'
 import { useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
-import { getItemFromLocalStorage } from '../../../../utils/helpers'
+import {
+  emptyLocalStorage,
+  getItemFromLocalStorage,
+} from '../../../../utils/helpers'
 
 import FormHeader from '../../../../components/Auth/Forms/Widgets/FormHeader'
 import ThirdPartyAuth from '../../../../components/Auth/Forms/Widgets/ThirdPartyAuth'
@@ -59,6 +62,11 @@ const SignUp = () => {
       navigate('/overview')
     }
   })
+  useEffect(() => {
+    if (emailInvite) {
+      emptyLocalStorage()
+    }
+  }, [emailInvite])
 
   return (
     <section className={classes.SignUpPage}>
