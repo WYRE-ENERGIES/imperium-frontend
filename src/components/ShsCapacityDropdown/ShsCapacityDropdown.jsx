@@ -50,7 +50,7 @@ function ShsCapacityDropdown({ setDeviceId }) {
 
     const deviceList = data?.map((device) => ({
       key: device.id,
-      name: device.device_name || 'Device',
+      name: device.device_name || 'No device name',
       capacity: parseFloat(Number(device.capacity)?.toFixed(1)),
       label: (
         <MenuItemLabel
@@ -72,6 +72,7 @@ function ShsCapacityDropdown({ setDeviceId }) {
     }
   }, [isFetching, data, setDeviceID])
 
+  console.log('SHS dropdown capacity: ', data)
   return (
     <section className={classes.ShsCapacityDropdown}>
       {isFetching ? (

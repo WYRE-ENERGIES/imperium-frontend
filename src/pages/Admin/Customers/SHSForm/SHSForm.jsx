@@ -93,11 +93,11 @@ const AddSHSForm = ({ toggleModal }) => {
         client_email: search,
       }).unwrap()
 
-      toast.success('SHS Added', {
-        hideProgressBar: true,
-        autoClose: 3000,
-        theme: 'colored',
-      })
+      // toast.success('SHS Added', {
+      //   hideProgressBar: true,
+      //   autoClose: 3000,
+      //   theme: 'colored',
+      // })
 
       toggleModal()
     } catch (error) {
@@ -146,6 +146,16 @@ const AddSHSForm = ({ toggleModal }) => {
       style={{ fontSize: 24, marginRight: 10, color: '#66ab4f' }}
     />
   )
+
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success('SHS Added', {
+        hideProgressBar: true,
+        autoClose: 3000,
+        theme: 'colored',
+      })
+    }
+  }, [isSuccess])
 
   return (
     <Form
@@ -211,14 +221,27 @@ const AddSHSForm = ({ toggleModal }) => {
         </Form.Item>
 
         <Form.Item
+          name="device_name"
+          label="Device Name"
+          style={{ marginBottom: '12px', flex: 1 }}
+          rules={[{ required: true, message: 'Enter a device name' }]}
+        >
+          <Input
+            placeholder="Enter a device name"
+            className={classes.AddSHSForm__input}
+          />
+        </Form.Item>
+      </div>
+      <div>
+        <Form.Item
           name="address"
           label="Customer Address"
           style={{ marginBottom: '12px', flex: 1 }}
           rules={[{ required: true, message: 'Please enter a valid address' }]}
         >
-          <Input
+          <Input.TextArea
             placeholder="Enter Address"
-            className={classes.AddSHSForm__input}
+            className={classes.AddSHSForm__inputTextArea}
           />
         </Form.Item>
       </div>
