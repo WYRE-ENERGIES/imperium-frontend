@@ -39,7 +39,6 @@ const Verification = () => {
       navigate('/details')
       saveToLocalStorage('userInfo', { email: email.state.email })
     } catch (err) {
-      console.log(err)
       setErrMsg(ErrorMessage(err?.data?.detail))
     }
   }

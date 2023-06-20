@@ -40,7 +40,7 @@ const SignUp = () => {
   const emailInvite = searchParams.get('email')
   const accessToken = getItemFromLocalStorage('access')
   const onFinish = async (values) => {
-    if (values.email !== emailInvite) {
+    if (emailInvite && values.email !== emailInvite) {
       setErrMsg('Email does not match invitation email.')
       return
     }
@@ -81,7 +81,7 @@ const SignUp = () => {
                 labelCol={8}
                 wrapperCol={32}
                 initialValues={{
-                  email: emailInvite,
+                  email: emailInvite ? emailInvite : '',
                 }}
                 onFinish={onFinish}
                 autoComplete="off"

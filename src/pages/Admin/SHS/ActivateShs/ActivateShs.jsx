@@ -77,7 +77,7 @@ const ActivateContent = ({ shs, toggleModal }) => {
           <Text type="secondary" className={classes.SHSForm__subTitle}>
             {status === 'OFF'
               ? 'Enable this SHS'
-              : 'By disabling this SHS, you will stop collecting data from the SHS.Would you like to proceed?'}
+              : 'By disabling this SHS, you will stop collecting data from the SHS. Would you like to proceed?'}
           </Text>
         )}
       </div>

@@ -34,6 +34,7 @@ const Users = () => {
   const [isPending, startTransition] = useTransition()
   const [search, setSearch] = useState('')
   const [page, setPage] = useState(1)
+  const [tableData, setTableData] = useState()
 
   const toggleModal = () => setOpenModal(!openModal)
   const handleSearch = (e) => setSearch(e.target.value)
@@ -74,7 +75,11 @@ const Users = () => {
       })
     }
   }, [isLoading, isSuccess])
-
+  useEffect(() => {
+    if (data) {
+      setTableData(data)
+    }
+  }, [data])
   const columns = [
     {
       title: 'Name',
