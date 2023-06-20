@@ -6,8 +6,9 @@ import { logOutUser } from '../../../../features/slices/auth/authSlice'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import classes from './InstructionModal.module.scss'
+import { CloseOutlined } from '@ant-design/icons'
 
-const InstructionModal = ({ open, isAdmin }) => {
+const InstructionModal = ({ open, isAdmin, setOpen }) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const onLogout = () => {
@@ -18,6 +19,12 @@ const InstructionModal = ({ open, isAdmin }) => {
   return (
     <Modal centered open={open} footer={null} className={classes.ModalMain}>
       <div className={classes.InstructionModal}>
+        <div
+          className={classes.InstructionModal__CloseIcon}
+          onClick={() => setOpen(!open)}
+        >
+          <CloseOutlined />
+        </div>
         <h1>Welcome to Imperium Solar house system</h1>
         <h4>
           You do not have an active SHS connected to this account. How would you
