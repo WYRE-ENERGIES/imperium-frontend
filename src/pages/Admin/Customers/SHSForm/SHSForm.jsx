@@ -233,19 +233,6 @@ const AddSHSForm = ({ toggleModal }) => {
           />
         </Form.Item>
       </div>
-      <div>
-        <Form.Item
-          name="address"
-          label="Customer Address"
-          style={{ marginBottom: '12px', flex: 1 }}
-          rules={[{ required: true, message: 'Please enter a valid address' }]}
-        >
-          <Input.TextArea
-            placeholder="Enter Address"
-            className={classes.AddSHSForm__inputTextArea}
-          />
-        </Form.Item>
-      </div>
 
       <div className="inputGroupField">
         <Form.Item
@@ -394,6 +381,19 @@ const AddSHSForm = ({ toggleModal }) => {
             disabledDate={(current) =>
               current && current.toDate() >= new Date()
             }
+          />
+        </Form.Item>
+      </div>
+      <div>
+        <Form.Item
+          name="address"
+          label="Customer Address"
+          style={{ marginBottom: '12px', flex: 1 }}
+          rules={[{ required: true, message: 'Please enter a valid address' }]}
+        >
+          <Input.TextArea
+            placeholder="Enter Address"
+            className={classes.AddSHSForm__inputTextArea}
           />
         </Form.Item>
       </div>
