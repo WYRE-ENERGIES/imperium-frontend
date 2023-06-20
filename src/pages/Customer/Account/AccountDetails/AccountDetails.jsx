@@ -60,7 +60,7 @@ const AccountDetails = () => {
   }
   useEffect(() => {
     if (userData) {
-      setDetails({ ...userData, phone: userData.phone.substring(4) })
+      setDetails(userData)
     }
   }, [userData])
 
@@ -76,8 +76,8 @@ const AccountDetails = () => {
             initialValues={{ ...details }}
           >
             {errMsg && <Error Errormsg={errMsg} />}
-            <Row justify={'space-between'}>
-              <Col>
+            <div className={classes.AccountDetails__Inputs}>
+              <div>
                 {' '}
                 <Form.Item
                   label="First Name"
@@ -105,8 +105,8 @@ const AccountDetails = () => {
                     }
                   />
                 </Form.Item>
-              </Col>
-              <Col>
+              </div>
+              <div>
                 {' '}
                 <Form.Item
                   label="Last Name"
@@ -134,8 +134,8 @@ const AccountDetails = () => {
                     }
                   />
                 </Form.Item>
-              </Col>
-              <Col>
+              </div>
+              <div>
                 {' '}
                 <Form.Item
                   label="Phone Number"
@@ -150,8 +150,8 @@ const AccountDetails = () => {
                 >
                   <Input
                     maxLength={14}
-                    className={classes.AccountDetails__Phone}
-                    addonBefore="+ 234"
+                    className={classes.AccountDetails__Input}
+                    // addonBefore="+ 234"
                     placeholder="Enter phone number"
                     onChange={(e) =>
                       phoneValidation(
@@ -165,8 +165,8 @@ const AccountDetails = () => {
                     }
                   />
                 </Form.Item>
-              </Col>
-            </Row>
+              </div>
+            </div>
 
             <Form.Item
               label="Address"

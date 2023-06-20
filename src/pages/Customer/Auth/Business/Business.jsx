@@ -269,7 +269,7 @@ const Business = () => {
                         fontWeight: 'bolder',
                         fontSize: '14px',
                       }}
-                      to="/"
+                      to="/overview"
                     >
                       Skip
                     </Link>

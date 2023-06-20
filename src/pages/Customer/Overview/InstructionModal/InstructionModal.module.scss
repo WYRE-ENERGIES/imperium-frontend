@@ -59,4 +59,20 @@
       color: #18181b !important;
     }
   }
+  &__logoutBottom {
+    border: 1px solid red;
+    padding: 10px;
+    border-radius: 8px;
+    margin-top: 15px;
+    display: flex;
+    color: red;
+    gap: 10px;
+    transition: 0.2s all ease-in-out;
+    &:hover {
+      cursor: pointer;
+      background: white;
+      border: none;
+      color: black;
+    }
+  }
 }

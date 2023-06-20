@@ -202,7 +202,7 @@ const Overview = () => {
         </div>
       )}
       <Suspense fallback={<h4>Loading...</h4>}>
-        {open && <InstructionModal open={open} />}
+        {open && <InstructionModal open={open} isAdmin={false} />}
       </Suspense>
     </PageLayout>
   )

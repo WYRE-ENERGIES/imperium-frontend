@@ -1,10 +1,20 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { MdLogout } from 'react-icons/md'
 import { Modal } from 'antd'
-
+import { logOutUser } from '../../../../features/slices/auth/authSlice'
+import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import classes from './InstructionModal.module.scss'
 
-const InstructionModal = ({ open }) => {
+const InstructionModal = ({ open, isAdmin }) => {
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const onLogout = () => {
+    const navigateTo = isAdmin ? '/admin/sign-in' : '/'
+    dispatch(logOutUser())
+    navigate(navigateTo)
+  }
   return (
     <Modal centered open={open} footer={null} className={classes.ModalMain}>
       <div className={classes.InstructionModal}>
@@ -21,12 +31,20 @@ const InstructionModal = ({ open }) => {
           >
             Visit Imperium Ecommerce to view all SHS offers
           </a>
+
           <Link
             to="/support"
             className={classes.InstructionModal__buttonBottom}
           >
             Contact Support
           </Link>
+          <div
+            className={classes.InstructionModal__logoutBottom}
+            onClick={onLogout}
+          >
+            <MdLogout />
+            <span> Log Out</span>
+          </div>
         </div>
       </div>
     </Modal>

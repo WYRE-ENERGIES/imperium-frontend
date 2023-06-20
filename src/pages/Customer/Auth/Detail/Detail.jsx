@@ -54,8 +54,11 @@ const Details = () => {
       setErrMsg(ErrorMessage(err?.data?.message))
     }
   }
+
   useEffect(() => {
-    saveToLocalStorage('user_role', jwt_decode(token)?.user_role)
+    if (token) {
+      saveToLocalStorage('user_role', jwt_decode(token)?.user_role)
+    }
   })
 
   return (
@@ -159,7 +162,7 @@ const Details = () => {
               >
                 <Input
                   maxLength={11}
-                  addonBefore="+ 234"
+                  // addonBefore="+ 234"
                   onChange={(e) =>
                     phoneValidation(
                       e,
@@ -169,7 +172,7 @@ const Details = () => {
                       setFormValid,
                     )
                   }
-                  className={classes.DetailsForm__Phone}
+                  className={classes.DetailsForm__Input}
                   style={{ marginBottom: '1px', marginTop: '-10xp' }}
                   placeholder=" 08012345678"
                 />
