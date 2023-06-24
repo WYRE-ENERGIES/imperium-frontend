@@ -104,7 +104,7 @@ const AddSHSForm = ({ toggleModal }) => {
       const { data } = error
 
       if (data) {
-        setErr(data?.message || data?.capacity || data?.serial_number)
+        setErr(`${Object.keys(data)[0]} : ${data[Object.keys(data)[0]]}`)
       } else {
         setErr('An Error occurred')
       }
@@ -233,7 +233,6 @@ const AddSHSForm = ({ toggleModal }) => {
           />
         </Form.Item>
       </div>
-
       <div className="inputGroupField">
         <Form.Item
           name="region_id"
@@ -277,7 +276,6 @@ const AddSHSForm = ({ toggleModal }) => {
           </Select>
         </Form.Item>
       </div>
-
       <div className="inputGroupField">
         <Form.Item
           name="vendor_id"
@@ -321,7 +319,6 @@ const AddSHSForm = ({ toggleModal }) => {
           </Select>
         </Form.Item>
       </div>
-
       <div className="inputGroupField">
         <Form.Item
           name="device_id"
@@ -353,7 +350,6 @@ const AddSHSForm = ({ toggleModal }) => {
           />
         </Form.Item>
       </div>
-
       <div className="inputGroupField">
         <Form.Item
           name="serial_number"
@@ -398,7 +394,11 @@ const AddSHSForm = ({ toggleModal }) => {
         </Form.Item>
       </div>
 
-      {err && err[0] && <Text type="danger">{err[0]}</Text>}
+      {err && (
+        <Text type="danger" style={{ textTransform: 'capitalize' }}>
+          {err}
+        </Text>
+      )}
       <div className={classes.AddSHSForm__btn}>
         <Button
           className={classes.AddSHSForm__cancelBtn}

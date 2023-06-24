@@ -1,11 +1,14 @@
 import 'antd/dist/reset.css'
 import 'react-toastify/dist/ReactToastify.css'
 
+import { ErrorBoundary } from 'react-error-boundary'
+
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom'
 
 import PageLoader from './components/PageLoader/PageLoader'
 import { Suspense } from 'react'
 import { lazy } from 'react'
+import Fallback from './components/ErrorBoundary/errorBoundary'
 
 const AccountBusiness = lazy(() =>
   import('./pages/Customer/Account/AccountBusiness/AccountBusiness'),
@@ -117,91 +120,104 @@ function App() {
   return (
     <Router>
       <Suspense fallback={<PageLoader />}>
-        <Routes>
-          <Route path="/">
-            <Route index element={<SignIn />} />
-            <Route path="sign-up" element={<SignUp />} />
-            <Route path="verification" element={<Verification />} />
-            <Route path="details" element={<Detail />} />
-            <Route path="business" element={<Business />} />
-            <Route path="forgot-password" element={<ForgotPasswordPage />} />
-            <Route path="otp" element={<OTP />} />
-            <Route path="new-password" element={<NewPasswordPage />} />
+        <ErrorBoundary
+          FallbackComponent={Fallback}
+          onReset={(details) => {
+            window.location.reload()
+          }}
+        >
+          <Routes>
+            <Route path="/">
+              <Route index element={<SignIn />} />
+              <Route path="sign-up" element={<SignUp />} />
+              <Route path="verification" element={<Verification />} />
+              <Route path="details" element={<Detail />} />
+              <Route path="business" element={<Business />} />
+              <Route path="forgot-password" element={<ForgotPasswordPage />} />
+              <Route path="otp" element={<OTP />} />
+              <Route path="new-password" element={<NewPasswordPage />} />
 
-            <Route path="contact-error" element={<ContactError />} />
-            <Route element={<PrivateRoute pathTo={USER_ROLE.accessTwo} />}>
-              <Route path="account">
-                <Route path="business" element={<AccountBusiness />} />
-                <Route index path="details" element={<AccountDetails />} />
-                <Route path="password" element={<AccountPassword />} />
-              </Route>
-              <Route path="overview">
-                <Route index element={<Overview />} />
-                <Route path="shs/:id" element={<CustomerShsDetails />} />
-              </Route>
-              <Route path="support" element={<Support />} />
-              <Route path="energy-analytic" element={<EnergyAnalytic />} />
-              <Route path="panel-analytic" element={<PanelAnalytic />} />
-              <Route path="battery-analytic" element={<Battery />} />
-              <Route path="active-alerts" element={<ActiveAlerts />} />
-              <Route path="users" element={<Users />} />
-            </Route>
-            <Route path="accept-user" element={<UserInvitePage />} />
-
-            {/* Admin routes */}
-
-            <Route path="admin">
-              <Route path="/admin" element={<ErroPage status={404} />} />
-              <Route path="sign-in" element={<AdminSignIn />} />
-              <Route path="sign-up" element={<AdminSignUp />} />
-              <Route path="forgot-password" element={<AdminForgotPassword />} />
-              <Route path="new-password" element={<AdminResetPassword />} />
-              <Route path="otp" element={<AdminOtp />} />
-              <Route element={<PrivateRoute pathTo={USER_ROLE.accessOne} />}>
-                <Route path="account" element={<AdminAccount />} />
-                <Route path="active-alerts">
-                  <Route index element={<AdminActiveAlert />} />
-                  <Route
-                    path="created-alerts"
-                    element={<AdminActiveAlertCreated />}
-                  />
-                  <Route
-                    path="location-alerts"
-                    element={<AdminActiveAlertLocation />}
-                  />
-                </Route>
-                <Route path="panel-analytic" element={<AdminPanelAnalytic />} />
-                <Route path="battery-analytic" element={<AdminBattery />} />
-                <Route
-                  path="energy-analytic"
-                  element={<AdminEnergyAnalytic />}
-                />
-                <Route path="users" element={<AdminUsers />} />
-                <Route path="support" element={<AdminSupport />} />
-
-                <Route path="customers">
-                  <Route index element={<AdminCustomers />} />
-                  <Route path=":id" element={<AdminCustomer />} />
-                </Route>
-                <Route path="all-shs">
-                  <Route index element={<AdminSHS />} />
-                  <Route path="shs/:id" element={<AdminShsDetails />} />
+              <Route path="contact-error" element={<ContactError />} />
+              <Route element={<PrivateRoute pathTo={USER_ROLE.accessTwo} />}>
+                <Route path="account">
+                  <Route path="business" element={<AccountBusiness />} />
+                  <Route index path="details" element={<AccountDetails />} />
+                  <Route path="password" element={<AccountPassword />} />
                 </Route>
                 <Route path="overview">
-                  <Route index element={<AdminOverview />} />
-                  <Route path="shs/:id" element={<AdminShsDetails />} />
+                  <Route index element={<Overview />} />
+                  <Route path="shs/:id" element={<CustomerShsDetails />} />
                 </Route>
-                <Route
-                  path="voltage-current-analytics"
-                  element={<AdminVoltageCurrent />}
-                />
+                <Route path="support" element={<Support />} />
+                <Route path="energy-analytic" element={<EnergyAnalytic />} />
+                <Route path="panel-analytic" element={<PanelAnalytic />} />
+                <Route path="battery-analytic" element={<Battery />} />
+                <Route path="active-alerts" element={<ActiveAlerts />} />
+                <Route path="users" element={<Users />} />
               </Route>
-              <Route path="accept-user" element={<AdminUserInvitePage />} />
-              <Route />
+              <Route path="accept-user" element={<UserInvitePage />} />
+
+              {/* Admin routes */}
+
+              <Route path="admin">
+                <Route path="/admin" element={<ErroPage status={404} />} />
+                <Route path="sign-in" element={<AdminSignIn />} />
+                <Route path="sign-up" element={<AdminSignUp />} />
+                <Route
+                  path="forgot-password"
+                  element={<AdminForgotPassword />}
+                />
+                <Route path="new-password" element={<AdminResetPassword />} />
+                <Route path="otp" element={<AdminOtp />} />
+                <Route element={<PrivateRoute pathTo={USER_ROLE.accessOne} />}>
+                  <Route path="account" element={<AdminAccount />} />
+                  <Route path="active-alerts">
+                    <Route index element={<AdminActiveAlert />} />
+                    <Route
+                      path="created-alerts"
+                      element={<AdminActiveAlertCreated />}
+                    />
+                    <Route
+                      path="location-alerts"
+                      element={<AdminActiveAlertLocation />}
+                    />
+                  </Route>
+                  <Route
+                    path="panel-analytic"
+                    element={<AdminPanelAnalytic />}
+                  />
+                  <Route path="battery-analytic" element={<AdminBattery />} />
+                  <Route
+                    path="energy-analytic"
+                    element={<AdminEnergyAnalytic />}
+                  />
+                  <Route path="users" element={<AdminUsers />} />
+                  <Route path="support" element={<AdminSupport />} />
+
+                  <Route path="customers">
+                    <Route index element={<AdminCustomers />} />
+                    <Route path=":id" element={<AdminCustomer />} />
+                  </Route>
+                  <Route path="all-shs">
+                    <Route index element={<AdminSHS />} />
+                    <Route path="shs/:id" element={<AdminShsDetails />} />
+                  </Route>
+                  <Route path="overview">
+                    <Route index element={<AdminOverview />} />
+                    <Route path="shs/:id" element={<AdminShsDetails />} />
+                  </Route>
+                  <Route
+                    path="voltage-current-analytics"
+                    element={<AdminVoltageCurrent />}
+                  />
+                </Route>
+                <Route path="accept-user" element={<AdminUserInvitePage />} />
+                <Route />
+              </Route>
             </Route>
-          </Route>
-          <Route path="*" element={<ErroPage status={404} />} />
-        </Routes>
+            <Route path="*" element={<ErroPage status={404} />} />
+          </Routes>
+        </ErrorBoundary>
       </Suspense>
     </Router>
   )

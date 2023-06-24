@@ -97,6 +97,7 @@
     flex-direction: column;
     justify-content: space-between;
     gap: 24px;
+    flex: 2;
 
     & > * {
       flex: 1;
@@ -123,7 +124,7 @@
 
   &__alerts {
     background: #fff;
-    height: 712px;
+    height: 800px;
     padding: 20px;
     border: 1px solid #eaecf0;
     box-shadow: 0px 1px 3px rgba(16, 24, 40, 0.1),

@@ -60,7 +60,7 @@ function ShsCapacityDropdown({ setDeviceId }) {
         />
       ),
     }))
-
+    console.log('device list :', deviceList)
     if (data.length) {
       setSelectedDevice({
         ...data[0],
@@ -98,7 +98,7 @@ function ShsCapacityDropdown({ setDeviceId }) {
               }}
             >
               <RiHome6Line />
-              <h3>{selectedDevice?.name || 'No Device Available'}</h3>
+              <h3>{selectedDevice?.name}</h3>
             </Space>
             <Dropdown
               menu={{

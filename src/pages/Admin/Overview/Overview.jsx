@@ -4,6 +4,7 @@ import {
   additionalOverviewBarProps,
   additionalOverviewProps,
 } from '../../../components/Charts/data'
+import Chart from 'react-apexcharts'
 import {
   useGetActiveUsersQuery,
   useGetAdminOverviewAnalyticsQuery,
@@ -303,7 +304,6 @@ const Overview = () => {
     }
     setAreaChartData(energyData)
   }, [isEnergyFetching, isEnergyError, energyData])
-
   return (
     <AdminPageLayout>
       <div className={classes.Overview}>
@@ -376,16 +376,102 @@ const Overview = () => {
         <div className={classes.Overview__bottom}>
           <div className={classes.Overview__bottomLeft}>
             <div className={classes.Overview__bottomChart}>
-              {isEmissionFetching ? (
+              {!chartData ? (
                 <Spin />
               ) : (
-                <SimpleBarChart
-                  title="CO2 Emission Avoided"
-                  chartData={chartData}
-                  colors={['#99C78A']}
-                  borderRadius={100}
-                  columnWidth={50}
-                  optionProps={additionalOverviewBarProps}
+                <Chart
+                  type="bar"
+                  height="100%"
+                  series={chartData}
+                  width="100%"
+                  options={{
+                    plotOptions: {
+                      bar: {
+                        borderRadius: 5,
+                        borderRadiusApplication: 'end',
+                        borderRadiusWhenStacked: 'last',
+                        columnWidth: '70%',
+                      },
+                    },
+                    // grid: {
+                    //   padding: {
+                    //     top: -30,
+                    //     right: 0,
+                    //     bottom: 0,
+                    //     left: 0,
+                    //   },
+                    // },
+                    chart: {
+                      type: 'bar',
+                      fontFamily: 'baloo 2',
+                      offsetY: 20,
+                      toolbar: {
+                        show: false,
+                      },
+                    },
+                    dataLabels: {
+                      enabled: false,
+                    },
+                    title: {
+                      text: 'CO2 Emission Avoided',
+                      style: {
+                        fontSize: '20px',
+                        fontWeight: 'bold',
+                        fontFamily: 'baloo 2',
+                      },
+                    },
+                    fill: {
+                      colors: ['rgba(153, 199, 138, 1)'],
+                    },
+                    yaxis: {
+                      title: {
+                        text: 'CO2',
+                        offsetx: 10,
+                      },
+                      labels: {
+                        show: true,
+                        align: 'right',
+
+                        formatter: (val) => {
+                          const value = val / 100000000
+                          return `${value} kg`
+                        },
+                      },
+                    },
+                    xaxis: {
+                      title: {
+                        text: 'Month',
+                        offsetY: 120,
+                      },
+                      axisTicks: {
+                        show: false,
+                      },
+                      categories: [
+                        'Jan',
+                        'Feb',
+                        'Mar',
+                        'Apr',
+                        'May',
+                        'Jun',
+                        'Jul',
+                        'Aug',
+                        'Sept',
+                        'Oct',
+                        'Nov',
+                        'Dec',
+                      ],
+                      labels: {
+                        show: true,
+                        rotate: -45,
+
+                        style: {
+                          fontSize: '12px',
+                          fontFamily: 'baloo 2',
+                          fontWeight: 400,
+                        },
+                      },
+                    },
+                  }}
                 />
               )}
             </div>

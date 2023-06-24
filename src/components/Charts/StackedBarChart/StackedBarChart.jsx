@@ -23,6 +23,7 @@ const StackedBarChart = ({
   tickPlacement = 'on',
   labelColors,
   showYAxisBorder,
+  yAxisTick,
 }) => {
   return (
     <div className={classes.StackedBarChart}>
@@ -76,6 +77,9 @@ const StackedBarChart = ({
             ...apexChartOptions.yaxis,
             axisBorder: {
               show: showYAxisBorder,
+            },
+            axisTicks: {
+              show: yAxisTick,
             },
             title: {
               text: yLabelTitle,

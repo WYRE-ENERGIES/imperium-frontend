@@ -107,7 +107,7 @@ const PanelWidgets = ({
       value={data.value}
       range={formatLabel(globalFilter)}
       valueCurrency={data.valueCurrency}
-      style={{ height: '100%' }}
+      style={{ height: '150px', width: '260px' }}
     />
   ))
 
@@ -177,7 +177,9 @@ const PanelWidgets = ({
           </div>
           <div>
             CO2 avoided{' '}
-            <span>{parseFloat(data?.weather_stats?.co2?.toFixed(1)) || 0}</span>
+            <span>
+              {parseFloat(data?.weather_stats?.co2?.toFixed(1)) || 0}Kg
+            </span>
           </div>
           <div>
             Total Panel <span>{data?.weather_stats?.total_panel || 0}</span>
