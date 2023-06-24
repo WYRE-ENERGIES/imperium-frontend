@@ -1,7 +1,8 @@
-import { Row, Form, Input } from 'antd'
+import { Row, Form, Input, InputNumber } from 'antd'
 import React, { useEffect, useRef, useState } from 'react'
 import FormDescription from '../../../../components/Auth/Forms/Widgets/FormDescription'
 import jwt_decode from 'jwt-decode'
+import PhoneInput from 'react-phone-number-input'
 import LeftLayout from '../../../../components/Auth/Layout/LeftLayout/LeftLayout'
 import RightLayout from '../../../../components/Auth/Layout/RightLayout/RightLayout'
 import classes from './Details.module.scss'
@@ -13,6 +14,7 @@ import FormButton from '../../../../components/Auth/Forms/Widgets/FormButton'
 import FormHeader from '../../../../components/Auth/Forms/Widgets/FormHeader'
 import Error from '../../../../components/ErrorMessage/Error'
 import { ErrorMessage } from '../../../../components/ErrorMessage/ErrorMessage'
+import './detail.css'
 import {
   getItemFromLocalStorage,
   saveToLocalStorage,
@@ -21,6 +23,7 @@ import {
   addressValidation,
   phoneValidation,
 } from '../../../../components/RegEx/RegEx'
+import PhoneNumInput from './PhoneNumInput'
 
 const Details = () => {
   const formDescription = {
@@ -38,6 +41,7 @@ const Details = () => {
   const token = getItemFromLocalStorage('access')
 
   const [errMsg, setErrMsg] = useState('')
+  const [phone, setPhone] = useState('')
   const [formValid, setFormValid] = useState(false)
   const navigate = useNavigate()
   const [customerUpdateDetails, { isLoading }] =
@@ -53,6 +57,16 @@ const Details = () => {
     } catch (err) {
       setErrMsg(ErrorMessage(err?.data?.message))
     }
+  }
+
+  const handlePhoneChange = (value) => {
+    phoneValidation(
+      value?.substring(4),
+      phoneRef,
+      'Invalid phone number',
+      setFormValid,
+    )
+    setPhone(value)
   }
 
   useEffect(() => {
@@ -103,16 +117,6 @@ const Details = () => {
                 style={{ marginTop: '10px' }}
               >
                 <Input
-                  // onChange={(e) =>
-                  //   nameValidation(
-                  //     e,
-
-                  //     fnameRef,
-
-                  //     "Numbers and '!@#$%^&*()+=_`' are not valid characters.",
-                  //     setFormValid,
-                  //   )
-                  // }
                   className={classes.DetailsForm__Input}
                   style={{ marginBottom: '-10px' }}
                   placeholder="Enter your first name"
@@ -133,14 +137,6 @@ const Details = () => {
                 style={{ marginTop: '-25px' }}
               >
                 <Input
-                  // onChange={(e) =>
-                  //   nameValidation(
-                  //     e,
-                  //     lnameRef,
-                  //     "Numbers and '!@#$%^&*()+=_`' are not valid characters.",
-                  //     setFormValid,
-                  //   )
-                  // }
                   className={classes.DetailsForm__Input}
                   style={{ marginTop: '-4px' }}
                   placeholder="Enter your last name"
@@ -160,21 +156,14 @@ const Details = () => {
                 extra={<small ref={phoneRef}></small>}
                 style={{ marginTop: '-25px' }}
               >
-                <Input
-                  maxLength={11}
-                  // addonBefore="+ 234"
-                  onChange={(e) =>
-                    phoneValidation(
-                      e,
-                      phoneRef,
-
-                      'Invalid phone number',
-                      setFormValid,
-                    )
-                  }
-                  className={classes.DetailsForm__Input}
-                  style={{ marginBottom: '1px', marginTop: '-10xp' }}
-                  placeholder=" 08012345678"
+                <PhoneInput
+                  placeholder="Enter phone number"
+                  value={phone}
+                  onChange={(e) => handlePhoneChange(e)}
+                  defaultCountry="NG"
+                  numberInputProps={{
+                    maxLength: 13,
+                  }}
                 />
               </Form.Item>
               <Form.Item

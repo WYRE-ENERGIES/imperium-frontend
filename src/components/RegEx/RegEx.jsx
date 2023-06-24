@@ -1,5 +1,5 @@
 const nameRegEx = /^[a-zA-Z-]+$/g
-const phoneRegEx = /^([0]([789]))[0-1](\d{8})+$/g
+const phoneRegEx = /^([789])[0-1](\d{8})+$/g
 const urlRegEx = /^(www)[.][a-z0-9]+[.]([a-z]{2,3})/
 
 const addressRegEx = /^[^!@#$%^*_+]+$/
@@ -45,11 +45,11 @@ export const urlValidation = (e, ref, message, setFormValid) => {
     setFormValid(false)
   }
 }
-export const phoneValidation = (e, ref, message, setFormValid) => {
-  if (phoneRegEx.test(e.target.value)) {
+export const phoneValidation = (value, ref, message, setFormValid) => {
+  if (phoneRegEx.test(value)) {
     ref.current.innerHTML = ''
     setFormValid(true)
-  } else if (!phoneRegEx.test(e.target.value)) {
+  } else if (!phoneRegEx.test(value)) {
     ref.current.innerHTML = message
     ref.current.style.color = 'red'
     setFormValid(false)

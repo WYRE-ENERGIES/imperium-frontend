@@ -1,0 +1,32 @@
+.Fallback {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f0f7ed;
+  width: 100%;
+  &__Content {
+    padding: 10px;
+  }
+  &__Header {
+    font-size: 25px;
+  }
+  &__Button {
+    text-align: center;
+    button {
+      background: white;
+      transition: all 0.2s ease-in-out;
+      padding: 10px;
+      width: 20%;
+      border: none;
+      border-radius: 10px;
+      box-shadow: rgba(16, 24, 40, 0.05);
+      color: black;
+      &:hover {
+        cursor: pointer;
+        background: rgba(56, 94, 43, 1);
+        color: white;
+      }
+    }
+  }
+}

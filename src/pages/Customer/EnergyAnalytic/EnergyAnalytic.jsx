@@ -25,11 +25,11 @@ const EnergyAnalytic = () => {
   const [chartData, setChartData] = useState([
     {
       name: 'Energy Consumed',
-      data: [],
+      data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     },
     {
       name: 'Energy Generated',
-      data: [],
+      data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     },
   ])
   const [search, setSearch] = useState('')
@@ -158,11 +158,15 @@ const EnergyAnalytic = () => {
             chartData={chartData}
             colors={['#C9E00C', '#5C9D48']}
             borderRadius={2}
-            columnWidth={10}
+            columnWidth={40}
             legendPosition="top"
             legendHorizontalAlign="right"
             yLabelTitle="kWh"
             xLabelTitle="Month"
+            showGridY={true}
+            showGrid={true}
+            tickPlacement={'off'}
+            yAxisTick={false}
           />
         </div>
         <div className={classes.EnergyAnalytic__shsTable}>

@@ -154,7 +154,6 @@ const Overview = () => {
   useEffect(() => {
     reFetchData()
   }, [globalFilter, reFetchData])
-
   return (
     <PageLayout>
       {open ? (
@@ -184,12 +183,17 @@ const Overview = () => {
               title="Energy Generation vs Energy Consumption"
               chartData={chartData}
               colors={['#66AB4F', '#497A38']}
-              borderRadius={10}
-              columnWidth={30}
+              borderRadius={5}
+              columnWidth={40}
               legendPosition="top"
               legendHorizontalAlign="right"
               yLabelTitle="kWh"
               xLabelTitle="Month"
+              showGridX={true}
+              showGridY={true}
+              showGrid={true}
+              tickPlacement={'off'}
+              yAxisTick={false}
             />
           </div>
           <div className={classes.Overview__shsTable}>

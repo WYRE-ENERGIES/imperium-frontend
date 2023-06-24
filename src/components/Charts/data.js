@@ -241,6 +241,10 @@ export const barChartOptions = {
     },
     labels: {
       rotate: 0,
+      style: {
+        fontSize: '80px',
+        fontWeight: 400,
+      },
     },
   },
   plotOptions: {

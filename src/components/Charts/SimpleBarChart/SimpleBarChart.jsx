@@ -10,6 +10,7 @@ const SimpleBarChart = ({
   borderRadius,
   columnWidth,
   optionProps,
+  xLabel,
 }) => {
   return (
     <Chart
@@ -30,6 +31,49 @@ const SimpleBarChart = ({
         yaxis: {
           labels: {
             formatter: (value) => chartLabelFormatter(value),
+          },
+        },
+        // xaxis: {
+        //   labels: {
+        //     show: true,
+        //     rotate: -45,
+        //     rotateAlways: false,
+        //     hideOverlappingLabels: true,
+        //     showDuplicates: false,
+        //     trim: false,
+        //     minHeight: undefined,
+        //     maxHeight: 120,
+        //     style: {
+        //       colors: [],
+        //       fontSize: '4px',
+        //       fontFamily: 'Helvetica, Arial, sans-serif',
+        //       fontWeight: 400,
+        //       cssClass: 'apexcharts-xaxis-label',
+        //     },
+        //     offsetX: 0,
+        //     offsetY: 0,
+        //     format: undefined,
+        //     formatter: undefined,
+        //     datetimeUTC: true,
+        //     datetimeFormatter: {
+        //       year: 'yyyy',
+        //       month: "MMM 'yy",
+        //       day: 'dd MMM',
+        //       hour: 'HH:mm',
+        //     },
+        //   },
+        // },
+        xaxis: {
+          title: {
+            text: xLabel,
+            offsetX: 0,
+            offsetY: 130,
+            style: {
+              color: '#737373',
+              fontSize: '12px',
+              fontFamily: 'Baloo 2',
+              fontWeight: 600,
+            },
           },
         },
         ...optionProps,
