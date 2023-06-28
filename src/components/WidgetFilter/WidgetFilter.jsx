@@ -49,7 +49,7 @@ const WidgetFilter = ({
     isError: regionError,
     data: regionData,
   } = useListShsRegionsQuery()
-
+  console.log('Region :', regionData)
   const {
     isFetching: fetchingSector,
     isError: sectorError,
