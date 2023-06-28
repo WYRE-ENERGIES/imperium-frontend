@@ -120,11 +120,12 @@
       0px 1px 2px rgba(16, 24, 40, 0.06);
     border-radius: 12px;
     background: #fff;
+    height: 200px;
   }
 
   &__alerts {
     background: #fff;
-    height: 800px;
+    height: 850px;
     padding: 20px;
     border: 1px solid #eaecf0;
     box-shadow: 0px 1px 3px rgba(16, 24, 40, 0.1),
@@ -176,6 +177,57 @@
       color: #838997 !important;
       cursor: not-allowed;
     }
+  }
+
+  &__SilhouetteMap {
+    height: 560px;
+    background: #ffffff;
+    border: 1px solid #e6e6e6;
+    box-shadow: 0px 1px 3px rgba(16, 24, 40, 0.1),
+      0px 1px 2px rgba(16, 24, 40, 0.06);
+    border-radius: 8px;
+    padding: 24px;
+  }
+  &__Silhouette {
+    padding: 0 80px;
+  }
+  &__ActiveUsers {
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgb(236, 236, 236);
+    margin-bottom: 50px;
+    h1 {
+      font-size: 24px;
+    }
+  }
+  &__SilhouetteInfo {
+    display: flex;
+    justify-content: space-between;
+  }
+  &__SilhouetteList {
+    margin-right: 80px;
+    h1 {
+      font-size: 30px;
+      font-weight: bolder;
+    }
+  }
+  &__SilhouetteRegionList {
+    margin-top: 30px;
+  }
+  &__SilhouetteRegionListItems {
+    display: flex;
+    gap: 10px;
+  }
+  &__SilhouetteRegionListItemsRegion {
+    p:nth-child(2) {
+      margin-top: -10px;
+      color: rgb(179, 179, 179);
+    }
+  }
+  &__SilhouetteRegionIcon {
+    background: gray;
+    height: 25px;
+    padding: 5px;
+    border-radius: 50%;
   }
 }
 
