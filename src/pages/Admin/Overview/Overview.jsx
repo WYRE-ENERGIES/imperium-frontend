@@ -71,6 +71,7 @@ const Overview = () => {
   const [globalFilter, setGlobalFilter] = useState('weekly')
   const [sectorId, setSectorId] = useState()
   const [sectorName, setSectorName] = useState('All')
+  const [regionName, setRegionName] = useState('')
   const [regionId, setRegionId] = useState()
   const [alertData, setAlertData] = useState([])
 
@@ -328,6 +329,7 @@ const Overview = () => {
               setSectorId(val)
             }}
             setSectorName={setSectorName}
+            setRegionName={setRegionName}
           />
         </section>
         <div className={classes.Overview__widgets}>
@@ -340,7 +342,7 @@ const Overview = () => {
         <div className={classes.Overview__SilhouetteMap}>
           <div>
             <div className={classes.Overview__ActiveUsers}>
-              <h1>Active Users {globalFilter ? `in ${globalFilter}` : ''}</h1>
+              <h1>Active Users {regionName ? `in ${regionName}` : ''}</h1>
             </div>
             <div className={classes.Overview__SilhouetteInfo}>
               <div className={classes.Overview__Silhouette}>
