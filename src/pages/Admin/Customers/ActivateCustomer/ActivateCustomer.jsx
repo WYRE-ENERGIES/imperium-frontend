@@ -72,11 +72,9 @@ const ActivateContent = ({ user, toggleModal, toggleForm }) => {
           {title}
         </Title>
         <Text type="secondary" className={classes.SHSForm__subTitle}>
-          {`If you proceed with this the client and their users will ${
+          {`If you proceed with this, the client and their users will  ${
             user.status ? 'not' : ''
-          } have
-          access the platform, the power supply from all the Imperium Solar
-          Housing System will be shut down`}
+          } have access to the platform, and the power supply from all the Imperium Solar Housing System will be shut down.`}
         </Text>
       </div>
       <div className={classes.AddSHSForm__btn}>

@@ -39,6 +39,7 @@ const WidgetFilter = ({
   hasSectorFilter = false,
   setRegionId,
   setSectorId,
+  setRegionName,
   show = true,
 }) => {
   let sectors = []
@@ -49,7 +50,6 @@ const WidgetFilter = ({
     isError: regionError,
     data: regionData,
   } = useListShsRegionsQuery()
-  console.log('Region :', regionData)
   const {
     isFetching: fetchingSector,
     isError: sectorError,
@@ -140,7 +140,10 @@ const WidgetFilter = ({
             <Select
               className={classes.WidgetFilter__select}
               placeholder="Select Region"
-              onChange={setRegionId}
+              onChange={(val, region) => {
+                setRegionId
+                setRegionName(region?.children)
+              }}
               allowClear
             >
               {regions}
