@@ -33,6 +33,8 @@ const ActivateContent = ({ shs, toggleModal }) => {
         shsId,
         data: { deactivate: status !== 'OFF' },
       }).unwrap()
+
+      toggleModal()
       toast.success(
         `Device ${data.device_switch_state === 'ON' ? 'Enabled' : 'Disabled'}`,
         {
@@ -41,24 +43,22 @@ const ActivateContent = ({ shs, toggleModal }) => {
           theme: 'colored',
         },
       )
-      toggleModal()
     } catch (error) {
       setErrorMsg(error?.data?.message)
     }
   }
-  // useEffect(() => {
-  //   if (!isLoading && isSuccess) {
-  //     toast.success(
-  //       `Device ${data.device_switch_state === 'ON' ? 'Enabled' : 'Disabled'}`,
-  //       {
-  //         hideProgressBar: true,
-  //         autoClose: 3000,
-  //         theme: 'colored',
-  //       },
-  //     )
-  //     toggleModal()
-  //   }
-  // }, [isLoading, isSuccess, data])
+  useEffect(() => {
+    if (!isLoading && isSuccess) {
+      toast.success(
+        `Device ${data.device_switch_state === 'ON' ? 'Enabled' : 'Disabled'}`,
+        {
+          hideProgressBar: true,
+          autoClose: 3000,
+          theme: 'colored',
+        },
+      )
+    }
+  }, [isLoading, isSuccess, data])
 
   return (
     <div>

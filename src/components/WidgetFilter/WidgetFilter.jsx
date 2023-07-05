@@ -140,7 +140,10 @@ const WidgetFilter = ({
             <Select
               className={classes.WidgetFilter__select}
               placeholder="Select Region"
-              onChange={setRegionId}
+              onChange={(val, region) => {
+                setRegionId
+                console.log(val)
+              }}
               allowClear
             >
               {regions}

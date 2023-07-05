@@ -340,7 +340,7 @@ const Overview = () => {
         <div className={classes.Overview__SilhouetteMap}>
           <div>
             <div className={classes.Overview__ActiveUsers}>
-              <h1>Active Users </h1>
+              <h1>Active Users {globalFilter ? `in ${globalFilter}` : ''}</h1>
             </div>
             <div className={classes.Overview__SilhouetteInfo}>
               <div className={classes.Overview__Silhouette}>
