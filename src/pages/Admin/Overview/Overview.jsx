@@ -347,7 +347,7 @@ const Overview = () => {
             <div className={classes.Overview__SilhouetteInfo}>
               <div className={classes.Overview__Silhouette}>
                 {' '}
-                <MySVGMap />
+                <MySVGMap className={classes.Overview__SilhouetteSVGMap} />
               </div>
               <div className={classes.Overview__SilhouetteList}>
                 <h1>200 Devices</h1>
