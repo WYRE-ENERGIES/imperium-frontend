@@ -1,6 +1,7 @@
 import { Col, Form, Input, Row, notification } from 'antd'
 import React, { useState, useRef, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { isValidPhoneNumber } from 'react-phone-number-input'
 import FormButton from '../../../../components/Auth/Forms/Widgets/FormButton'
 import Error from '../../../../components/ErrorMessage/Error'
 import { ErrorMessage } from '../../../../components/ErrorMessage/ErrorMessage'
@@ -155,12 +156,13 @@ const AccountDetails = () => {
                     placeholder="Enter phone number"
                     onChange={(e) =>
                       phoneValidation(
-                        e,
+                        `+234${e}`,
 
                         phoneRef,
 
                         'Invalid phone number',
                         setFormValid,
+                        isValidPhoneNumber,
                       )
                     }
                   />

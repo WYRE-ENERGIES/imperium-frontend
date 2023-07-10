@@ -2,7 +2,7 @@ import { Row, Form, Input, InputNumber } from 'antd'
 import React, { useEffect, useRef, useState } from 'react'
 import FormDescription from '../../../../components/Auth/Forms/Widgets/FormDescription'
 import jwt_decode from 'jwt-decode'
-import PhoneInput from 'react-phone-number-input'
+import PhoneInput, { isValidPhoneNumber } from 'react-phone-number-input'
 import LeftLayout from '../../../../components/Auth/Layout/LeftLayout/LeftLayout'
 import RightLayout from '../../../../components/Auth/Layout/RightLayout/RightLayout'
 import classes from './Details.module.scss'
@@ -61,10 +61,11 @@ const Details = () => {
 
   const handlePhoneChange = (value) => {
     phoneValidation(
-      value?.substring(4),
+      value,
       phoneRef,
       'Invalid phone number',
       setFormValid,
+      isValidPhoneNumber,
     )
     setPhone(value)
   }

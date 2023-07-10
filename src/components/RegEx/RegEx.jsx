@@ -45,11 +45,17 @@ export const urlValidation = (e, ref, message, setFormValid) => {
     setFormValid(false)
   }
 }
-export const phoneValidation = (value, ref, message, setFormValid) => {
-  if (phoneRegEx.test(value)) {
+export const phoneValidation = (
+  value,
+  ref,
+  message,
+  setFormValid,
+  isValidPhoneNumber,
+) => {
+  if (value && isValidPhoneNumber(value)) {
     ref.current.innerHTML = ''
     setFormValid(true)
-  } else if (!phoneRegEx.test(value)) {
+  } else {
     ref.current.innerHTML = message
     ref.current.style.color = 'red'
     setFormValid(false)
