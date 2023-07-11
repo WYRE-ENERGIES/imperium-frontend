@@ -1,5 +1,5 @@
 const nameRegEx = /^[a-zA-Z-]+$/g
-const phoneRegEx = /^([789])[0-1](\d{8})+$/g
+const phoneRegEx = /^([789])[0-1](\d{6})+$/g
 const urlRegEx = /^(www)[.][a-z0-9]+[.]([a-z]{2,3})/
 
 const addressRegEx = /^[^!@#$%^*_+]+$/
