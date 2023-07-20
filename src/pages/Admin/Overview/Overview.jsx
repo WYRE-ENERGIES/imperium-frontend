@@ -16,7 +16,7 @@ import {
   useGetOverviewSectorQuery,
   useGetOverviewSolarHouseDataQuery,
 } from '../../../features/slices/overview/adminOverviewSlice'
-
+import { ReactComponent as MySVGMap } from '../../../assets/map/ng-svg.svg'
 import AdminEnergyAnalytic from '../../../components/Widget/AdminEnergyAnalytic/AdminEnergyAnalytic'
 import AdminPageLayout from '../../../components/Layout/AdminPageLayout/AdminPageLayout'
 import AreaChart from '../../../components/Charts/AreaChart/AreaChart'
@@ -31,6 +31,7 @@ import WidgetFilter from '../../../components/WidgetFilter/WidgetFilter'
 import WidgetLoader from '../../../components/Widget/WidgetLoader/WidgetLoader'
 import classes from '../../Customer/Overview/Overview.module.scss'
 import { formatLabel } from '../../../utils/helpers'
+import { EnvironmentOutlined } from '@ant-design/icons'
 
 const Overview = () => {
   const [pieChartData, setPieChartData] = useState({
@@ -70,6 +71,7 @@ const Overview = () => {
   const [globalFilter, setGlobalFilter] = useState('weekly')
   const [sectorId, setSectorId] = useState()
   const [sectorName, setSectorName] = useState('All')
+  const [regionName, setRegionName] = useState('')
   const [regionId, setRegionId] = useState()
   const [alertData, setAlertData] = useState([])
 
@@ -327,13 +329,111 @@ const Overview = () => {
               setSectorId(val)
             }}
             setSectorName={setSectorName}
+            setRegionName={setRegionName}
           />
         </section>
         <div className={classes.Overview__widgets}>
           {isAnalyticsFetching ? <WidgetLoader /> : widgets}
         </div>
+
         <div className={classes.Overview__map}>
           <ShsDeviceMap isLoading={isMapFetching} data={mapData} />
+        </div>
+        <div className={classes.Overview__SilhouetteMap}>
+          <div>
+            <div className={classes.Overview__ActiveUsers}>
+              <h1>Active Users {regionName ? `in ${regionName}` : ''}</h1>
+            </div>
+            <div className={classes.Overview__SilhouetteInfo}>
+              <div className={classes.Overview__Silhouette}>
+                {' '}
+                <MySVGMap className={classes.Overview__SilhouetteSVGMap} />
+              </div>
+              <div className={classes.Overview__SilhouetteList}>
+                <h1>200 Devices</h1>
+                <div className={classes.Overview__SilhouetteRegionList}>
+                  <div className={classes.Overview__SilhouetteRegionListItems}>
+                    <div className={classes.Overview__SilhouetteRegionIcon}>
+                      <EnvironmentOutlined />
+                    </div>
+                    <div
+                      className={
+                        classes.Overview__SilhouetteRegionListItemsRegion
+                      }
+                    >
+                      <p>North East</p>
+                      <p>50</p>
+                    </div>
+                  </div>
+                  <div className={classes.Overview__SilhouetteRegionListItems}>
+                    <div className={classes.Overview__SilhouetteRegionIcon}>
+                      <EnvironmentOutlined />
+                    </div>
+                    <div
+                      className={
+                        classes.Overview__SilhouetteRegionListItemsRegion
+                      }
+                    >
+                      <p>North East</p>
+                      <p>50</p>
+                    </div>
+                  </div>
+                  <div className={classes.Overview__SilhouetteRegionListItems}>
+                    <div className={classes.Overview__SilhouetteRegionIcon}>
+                      <EnvironmentOutlined />
+                    </div>
+                    <div
+                      className={
+                        classes.Overview__SilhouetteRegionListItemsRegion
+                      }
+                    >
+                      <p>North East</p>
+                      <p>50</p>
+                    </div>
+                  </div>
+                  <div className={classes.Overview__SilhouetteRegionListItems}>
+                    <div className={classes.Overview__SilhouetteRegionIcon}>
+                      <EnvironmentOutlined />
+                    </div>
+                    <div
+                      className={
+                        classes.Overview__SilhouetteRegionListItemsRegion
+                      }
+                    >
+                      <p>North East</p>
+                      <p>50</p>
+                    </div>
+                  </div>
+                  <div className={classes.Overview__SilhouetteRegionListItems}>
+                    <div className={classes.Overview__SilhouetteRegionIcon}>
+                      <EnvironmentOutlined />
+                    </div>
+                    <div
+                      className={
+                        classes.Overview__SilhouetteRegionListItemsRegion
+                      }
+                    >
+                      <p>North East</p>
+                      <p>50</p>
+                    </div>
+                  </div>
+                  <div className={classes.Overview__SilhouetteRegionListItems}>
+                    <div className={classes.Overview__SilhouetteRegionIcon}>
+                      <EnvironmentOutlined />
+                    </div>
+                    <div
+                      className={
+                        classes.Overview__SilhouetteRegionListItemsRegion
+                      }
+                    >
+                      <p>North East</p>
+                      <p>50</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
         <div className={classes.Overview__donutChart}>
           <Donut

@@ -6,7 +6,10 @@ import { useNavigate, useSearchParams } from 'react-router-dom'
 import ButtonLoader from '../../../components/ButtonLoader/ButtonLoader'
 import { ReactComponent as Logo } from '../../../assets/logo.svg'
 import classes from './UserInvite.module.scss'
-import { getItemFromLocalStorage } from '../../../utils/helpers'
+import {
+  getItemFromLocalStorage,
+  removeItemFromLocalStorage,
+} from '../../../utils/helpers'
 import { useAcceptInviteMutation } from '../../../features/slices/users/customer/usersSlice'
 
 const { Text, Title } = Typography
@@ -57,6 +60,9 @@ const UserInvite = () => {
       })
     }
   }, [isLoading, isSuccess, isError, email, navigate])
+  useEffect(() => {
+    localStorage.clear()
+  }, [])
 
   return (
     <div className={classes.UserInvite}>
