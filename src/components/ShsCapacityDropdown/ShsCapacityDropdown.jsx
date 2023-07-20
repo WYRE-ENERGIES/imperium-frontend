@@ -80,7 +80,7 @@ function ShsCapacityDropdown({ setDeviceId }) {
       ) : (
         <>
           <div className={classes.ShsCapacityDropdown__left}>
-            <h2>{selectedDevice && selectedDevice.capacity}</h2>
+            <h2>{selectedDevice && selectedDevice.capacity}kVA</h2>
             <h3>
               <ThunderboltOutlined
                 style={{ color: '#66AB4F', marginRight: '5px' }}
