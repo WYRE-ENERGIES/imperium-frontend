@@ -84,7 +84,7 @@ const ShsDeviceMap = ({ isLoading, data = [] }) => {
           >
             <div className={classes.MapStyle}>
               <h5>{hoveredMarker?.device_name}</h5>
-              <h5>({hoveredMarker?.device_address})</h5>
+              <span>({hoveredMarker?.device_address})</span>
               <p>
                 Energy Today:{' '}
                 <span
