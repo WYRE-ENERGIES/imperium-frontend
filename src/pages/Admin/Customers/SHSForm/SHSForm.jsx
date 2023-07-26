@@ -360,6 +360,7 @@ const AddSHSForm = ({ toggleModal }) => {
           <Input
             placeholder={`Enter Serial number`}
             className={classes.AddSHSForm__input}
+            type="number"
           />
         </Form.Item>
 
