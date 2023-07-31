@@ -28,8 +28,9 @@ const layout = {
 
 const ModalForm = ({ toggleModal }) => {
   const [roleDescription, setRoleDescription] = useState('')
+
   const [errMsg, setErrMsg] = useState('')
-  const { data } = useGetUsersRolesQuery()
+  // const { data } = useGetUsersRolesQuery()
   const [inviteUser, { isLoading, isSuccess, isError }] =
     useInviteUserMutation()
 
@@ -49,7 +50,19 @@ const ModalForm = ({ toggleModal }) => {
       setErrMsg(ErrorMessage(err?.data?.invitee_email?.message))
     }
   }
-
+  const userInviteRole = [
+    {
+      name: 'Client',
+      value: 'client',
+      description: 'Viewer can view all the statistics',
+    },
+    {
+      name: 'Admin',
+      value: 'admin',
+      description:
+        "Admin can view all the statistics as well as shutdown SHS's if needed",
+    },
+  ]
   const handleRoleChange = (role) => {
     let choice = JSON.parse(role)
     setRoleDescription(choice.description)
@@ -116,7 +129,7 @@ const ModalForm = ({ toggleModal }) => {
           onChange={handleRoleChange}
           allowClear
         >
-          {data?.map((role, index) => (
+          {userInviteRole?.map((role, index) => (
             <Option key={`${role.name}-${index}`} value={JSON.stringify(role)}>
               {role.name}
             </Option>
