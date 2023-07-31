@@ -7,6 +7,10 @@ import { RiHome6Line } from 'react-icons/ri'
 import { ThunderboltOutlined } from '@ant-design/icons'
 import classes from './ShsCapacityDropdown.module.scss'
 import { useGetClientDeviceListQuery } from '../../features/slices/clientUserApiSlice'
+import {
+  clientDeviceSelectedGetter,
+  saveToLocalStorage,
+} from '../../utils/helpers'
 
 const { Text } = Typography
 
@@ -37,7 +41,13 @@ function ShsCapacityDropdown({ setDeviceId }) {
   ])
   const [selectedDevice, setSelectedDevice] = useState()
   const onClick = ({ key }) => {
+    const selectedDeviceData = items.find((item) => item.key === Number(key))
+    // filter all unselected item
+    const unselectedItem = items.filter((item) => item.key !== Number(key))
+    saveToLocalStorage('c_device', selectedDeviceData)
     setSelectedDevice(items.find((item) => item.key === Number(key)))
+    // reorder items
+    setItems([selectedDeviceData, ...unselectedItem])
     setDeviceId(Number(key))
   }
 
@@ -50,6 +60,7 @@ function ShsCapacityDropdown({ setDeviceId }) {
 
     const deviceList = data?.map((device) => ({
       key: device.id,
+      id: device.id,
       name: device.device_name || 'No device name',
       capacity: parseFloat(Number(device.capacity)?.toFixed(1)),
       label: (
@@ -60,19 +71,23 @@ function ShsCapacityDropdown({ setDeviceId }) {
         />
       ),
     }))
-    console.log('device list :', deviceList)
+
     if (data.length) {
-      setSelectedDevice({
-        ...data[0],
-        name: data[0].device_name || 'Device',
-        capacity: parseFloat(Number(data[0].capacity)?.toFixed(1)),
-      })
-      setItems((prev) => [{ ...prev, ...deviceList }])
+      // check for data in localstorage
+
+      const currentDevice = clientDeviceSelectedGetter(deviceList)
+
+      setSelectedDevice(currentDevice)
+      saveToLocalStorage('c_device', currentDevice)
+      // setItems((prev) => [{ ...prev, ...deviceList }])
+      const unselectedItem = deviceList.filter(
+        (item) => item.key !== Number(currentDevice.key),
+      )
+      setItems([currentDevice, ...unselectedItem])
       setDeviceID()
     }
   }, [isFetching, data, setDeviceID])
 
-  console.log('SHS dropdown capacity: ', data)
   return (
     <section className={classes.ShsCapacityDropdown}>
       {isFetching ? (
