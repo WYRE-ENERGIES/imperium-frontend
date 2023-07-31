@@ -116,3 +116,18 @@ export const userRole = () => {
   const USER_ROLE = getItemFromLocalStorage('user_role')
   return USER_ROLE
 }
+
+export const clientDeviceSelectedGetter = (deviceList) => {
+  const deviceInLocaStorage = getItemFromLocalStorage('c_device')
+  let deviceRes = deviceList[0] || {}
+  if (deviceInLocaStorage) {
+    // check if device is in list
+    const deviceExist = deviceList.find(
+      (device) => device.id === deviceInLocaStorage.id,
+    )
+    if (deviceExist) {
+      deviceRes = deviceExist
+    }
+  }
+  return deviceRes
+}

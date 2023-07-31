@@ -56,7 +56,7 @@ export const panelApiSlice = apiSlice.injectEndpoints({
       query: ({ filterBy, deviceId }) => {
         const clientId = getItemFromLocalStorage('current_client')
         return {
-          url: `${BASE_CLIENT_URL}analytics/${clientId}/${deviceId}/`,
+          url: `${BASE_CLIENT_URL}analytics/${clientId}/${deviceId}?order_by=${filterBy}`,
         }
       },
     }),
