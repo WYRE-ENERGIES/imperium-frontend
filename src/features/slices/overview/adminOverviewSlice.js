@@ -182,6 +182,16 @@ export const adminOverviewSlice = apiSlice.injectEndpoints({
         url: `${ADMIN_OVERVIEW_URL_PATH}active-users/?order_by=${filterBy}`,
       }),
     }),
+    getSectors: builder.query({
+      query: ({ regionName }) => ({
+        url: `${ADMIN_OVERVIEW_URL_PATH}device-sectors/${regionName}`,
+      }),
+    }),
+    getRegions: builder.query({
+      query: ({ sectorName }) => ({
+        url: `${ADMIN_OVERVIEW_URL_PATH}device-regions/${sectorName}`,
+      }),
+    }),
   }),
 })
 
@@ -195,4 +205,6 @@ export const {
   useGetOverviewEnergyDataQuery,
   useGetMapDataQuery,
   useGetActiveUsersQuery,
+  useGetSectorsQuery,
+  useGetRegionsQuery,
 } = adminOverviewSlice

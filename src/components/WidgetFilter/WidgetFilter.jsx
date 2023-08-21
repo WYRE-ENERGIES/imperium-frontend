@@ -41,6 +41,7 @@ const WidgetFilter = ({
   setSectorId,
   setRegionName,
   show = true,
+  showDate = true,
 }) => {
   let sectors = []
   let regions = []
@@ -75,6 +76,10 @@ const WidgetFilter = ({
     setSectorId(val)
     setSectorName(children)
   }
+  const handleRegionChange = (val, { children }) => {
+    setRegionId(val)
+    setRegionName(children)
+  }
 
   return (
     <div className={classes.WidgetFilter}>
@@ -101,35 +106,37 @@ const WidgetFilter = ({
         )}
 
         <Space>
-          <DatePicker
-            className={classes.WidgetFilter__date}
-            onChange={(d, ds) => selectFilterBy(ds || 'yearly')}
-            showToday={false}
-            disabledDate={(current) => {
-              return current.isAfter(new Date(), 'day')
-            }}
-            dateRender={(current) => {
-              const style = {
-                height: '100%',
-                width: '100%',
-                padding: '5px',
-              }
-              if (current.isSame(new Date(), 'day')) {
-                style.color = 'white'
-                style.background = '#385E2B'
-                style.border = '1px solid #385E2B'
-                style.borderRadius = '50%'
-              }
-              return (
-                <div
-                  className={classes.WidgetFilter__DateDisplay}
-                  style={style}
-                >
-                  <span>{current.date()}</span>
-                </div>
-              )
-            }}
-          />
+          {showDate && (
+            <DatePicker
+              className={classes.WidgetFilter__date}
+              onChange={(d, ds) => selectFilterBy(ds || 'yearly')}
+              showToday={false}
+              disabledDate={(current) => {
+                return current.isAfter(new Date(), 'day')
+              }}
+              dateRender={(current) => {
+                const style = {
+                  height: '100%',
+                  width: '100%',
+                  padding: '5px',
+                }
+                if (current.isSame(new Date(), 'day')) {
+                  style.color = 'white'
+                  style.background = '#385E2B'
+                  style.border = '1px solid #385E2B'
+                  style.borderRadius = '50%'
+                }
+                return (
+                  <div
+                    className={classes.WidgetFilter__DateDisplay}
+                    style={style}
+                  >
+                    <span>{current.date()}</span>
+                  </div>
+                )
+              }}
+            />
+          )}
         </Space>
       </section>
       {hasSectorFilter ? (
@@ -140,10 +147,12 @@ const WidgetFilter = ({
             <Select
               className={classes.WidgetFilter__select}
               placeholder="Select Region"
-              onChange={(val, region) => {
-                setRegionId
-                setRegionName(region?.children)
-              }}
+              // onChange={(val, region) => {
+              //   console.log('this is thw and no technology', val, region)
+              //   setRegionId
+              //   setRegionName(region?.children)
+              // }}
+              onChange={(val, region) => handleRegionChange(val, region)}
               allowClear
             >
               {regions}
@@ -152,7 +161,7 @@ const WidgetFilter = ({
             <Select
               className={classes.WidgetFilter__select}
               placeholder="Select Sector"
-              onChange={(val, region) => handleSectorChange(val, region)}
+              onChange={(val, sector) => handleSectorChange(val, sector)}
               allowClear
             >
               {sectors}
