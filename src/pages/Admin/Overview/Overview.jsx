@@ -7,6 +7,8 @@ import {
 import Chart from 'react-apexcharts'
 import {
   useGetActiveUsersQuery,
+  useGetSectorsQuery,
+  useGetRegionsQuery,
   useGetAdminOverviewAnalyticsQuery,
   useGetAdminOverviewCurrentVoltageQuery,
   useGetMapDataQuery,
@@ -70,10 +72,11 @@ const Overview = () => {
   const [alertPage, setAlertPage] = useState(1)
   const [globalFilter, setGlobalFilter] = useState('weekly')
   const [sectorId, setSectorId] = useState()
-  const [sectorName, setSectorName] = useState('All')
-  const [regionName, setRegionName] = useState('')
+  const [sectorName, setSectorName] = useState('all')
+  const [regionName, setRegionName] = useState('all')
   const [regionId, setRegionId] = useState()
   const [alertData, setAlertData] = useState([])
+  const [totalRegionDevice, setTotalRegionDevice] = useState([])
 
   const {
     isFetching: isAnalyticsFetching,
@@ -135,16 +138,17 @@ const Overview = () => {
     regionId,
   })
 
-  const {
-    isFetching: isSectorFetching,
-    isSuccess: isSectorSuccess,
-    isError: isSectorError,
-    error: sectorError,
-    data: sectorData,
-    refetch: refetchSector,
-  } = useGetOverviewSectorQuery({
-    filterBy: globalFilter,
-  })
+  // const {
+  //   isFetching: isSectorFetching,
+  //   isSuccess: isSectorSuccess,
+  //   isError: isSectorError,
+  //   error: sectorError,
+  //   data: sectorData,
+  //   refetch: refetchSector,
+  // } = useGetOverviewSectorQuery({
+  //   filterBy: globalFilter,
+  // })
+
   const {
     isFetching: isEnergyFetching,
     isError: isEnergyError,
@@ -155,6 +159,26 @@ const Overview = () => {
     filterBy: globalFilter,
     sectorId,
     regionId,
+  })
+
+  const {
+    isFetching: isSectorFetching,
+    isError: isSectorError,
+    error: sectorError,
+    data: sectorData,
+    refetch: refetchSector,
+  } = useGetSectorsQuery({
+    regionName,
+  })
+
+  const {
+    isFetching: isRegionFetching,
+    isError: isRegionError,
+    error: regionError,
+    data: regionData,
+    refetch: refetchRegion,
+  } = useGetRegionsQuery({
+    sectorName,
   })
 
   const {
@@ -179,10 +203,27 @@ const Overview = () => {
   useEffect(() => {
     if (isSectorFetching) return
 
-    if (sectorData) {
-      setPieChartData(sectorData)
+    if (sectorData && sectorData.total_devices) {
+      const pieLabel = []
+      const pieData = []
+      sectorData.total_devices.map((deviceData) => {
+        const regionOrSector = deviceData.region || deviceData.sectors
+        pieLabel.push(regionOrSector)
+        pieData.push(deviceData.devices)
+      })
+      setPieChartData({ labels: pieLabel, data: pieData })
     }
   }, [isSectorFetching, sectorData])
+
+  useEffect(() => {
+    if (regionData) {
+      const sumOfTotalRegionDevice = regionData.total_devices.reduce(
+        (n, { devices }) => n + devices,
+        0,
+      )
+      setTotalRegionDevice(sumOfTotalRegionDevice)
+    }
+  }, [regionData])
 
   useEffect(() => {
     if (isAnalyticsFetching) return
@@ -239,7 +280,8 @@ const Overview = () => {
     refetchEmission()
     refetchVoltage()
     refetchSolar()
-    refetchSector()
+    // refetchSector()
+    // refetchRegion()
     refetchEnergy()
   }, [
     refetchAnalytics,
@@ -247,13 +289,14 @@ const Overview = () => {
     refetchEmission,
     refetchVoltage,
     refetchSolar,
-    refetchSector,
+    // refetchSector,
+    // refetchRegion,
     refetchEnergy,
   ])
 
   useEffect(() => {
     refetchData()
-  }, [refetchData, globalFilter])
+  }, [refetchData, globalFilter, regionId])
 
   useEffect(() => {
     if (alertPage == 1) setAlertData([])
@@ -314,6 +357,7 @@ const Overview = () => {
         </section>
         <section className={classes.Overview__filters}>
           <WidgetFilter
+            showDate={false}
             selectFilterBy={(value) => {
               setAlertPage(1)
               setGlobalFilter(value)
@@ -342,17 +386,44 @@ const Overview = () => {
         <div className={classes.Overview__SilhouetteMap}>
           <div>
             <div className={classes.Overview__ActiveUsers}>
-              <h1>Active Users {regionName ? `in ${regionName}` : ''}</h1>
+              <h1>Active Devices {regionName ? `in ${regionName}` : ''}</h1>
             </div>
-            <div className={classes.Overview__SilhouetteInfo}>
-              <div className={classes.Overview__Silhouette}>
-                {' '}
-                <MySVGMap className={classes.Overview__SilhouetteSVGMap} />
-              </div>
-              <div className={classes.Overview__SilhouetteList}>
-                <h1>200 Devices</h1>
-                <div className={classes.Overview__SilhouetteRegionList}>
-                  <div className={classes.Overview__SilhouetteRegionListItems}>
+            <Spin spinning={isRegionFetching}>
+              <div className={classes.Overview__SilhouetteInfo}>
+                <div className={classes.Overview__Silhouette}>
+                  {' '}
+                  <MySVGMap className={classes.Overview__SilhouetteSVGMap} />
+                </div>
+                <div className={classes.Overview__SilhouetteList}>
+                  <h1>{totalRegionDevice} Devices</h1>
+                  <div className={classes.Overview__SilhouetteRegionList}>
+                    <>
+                      {regionData &&
+                        regionData.total_devices &&
+                        regionData.total_devices.map((regionInfo) => (
+                          <div
+                            key={regionInfo.region}
+                            className={
+                              classes.Overview__SilhouetteRegionListItems
+                            }
+                          >
+                            <div
+                              className={classes.Overview__SilhouetteRegionIcon}
+                            >
+                              <EnvironmentOutlined />
+                            </div>
+                            <div
+                              className={
+                                classes.Overview__SilhouetteRegionListItemsRegion
+                              }
+                            >
+                              <p>{regionInfo.region}</p>
+                              <p>{regionInfo.devices}</p>
+                            </div>
+                          </div>
+                        ))}
+                    </>
+                    {/* <div className={classes.Overview__SilhouetteRegionListItems}>
                     <div className={classes.Overview__SilhouetteRegionIcon}>
                       <EnvironmentOutlined />
                     </div>
@@ -362,7 +433,11 @@ const Overview = () => {
                       }
                     >
                       <p>North East</p>
-                      <p>50</p>
+                      <p>
+                        {regionData &&
+                          regionData.total_devices &&
+                          findARegion(regionData.total_devices, 'North East')}
+                      </p>
                     </div>
                   </div>
                   <div className={classes.Overview__SilhouetteRegionListItems}>
@@ -429,10 +504,11 @@ const Overview = () => {
                       <p>North East</p>
                       <p>50</p>
                     </div>
+                  </div> */}
                   </div>
                 </div>
               </div>
-            </div>
+            </Spin>
           </div>
         </div>
         <div className={classes.Overview__donutChart}>
