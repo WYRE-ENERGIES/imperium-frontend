@@ -9,7 +9,7 @@ const Donut = ({ title, chartData, labels, loading }) => {
     <div className={classes.Donut}>
       <h1>
         Imperium Users by Sector for{' '}
-        <span style={{ color: '#497A38' }}>{title}</span>
+        <span style={{ fontSize: '24px', color: '#497A38' }}>{title}</span>
       </h1>
       {loading ? (
         <Loading />
@@ -17,7 +17,7 @@ const Donut = ({ title, chartData, labels, loading }) => {
         <Chart
           options={{ ...adminPieChartOptions, labels }}
           type="donut"
-          height="100%"
+          height="120%"
           series={chartData}
           width="100%"
         />

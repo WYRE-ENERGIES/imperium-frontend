@@ -33,7 +33,7 @@ import WidgetFilter from '../../../components/WidgetFilter/WidgetFilter'
 import WidgetLoader from '../../../components/Widget/WidgetLoader/WidgetLoader'
 import classes from '../../Customer/Overview/Overview.module.scss'
 import { formatLabel } from '../../../utils/helpers'
-import { EnvironmentOutlined } from '@ant-design/icons'
+import { EnvironmentFilled } from '@ant-design/icons'
 
 const Overview = () => {
   const [pieChartData, setPieChartData] = useState({
@@ -66,6 +66,15 @@ const Overview = () => {
       data: [],
     },
   ])
+
+  const LOCATION_MAP = {
+    'North East': '#A58AFB',
+    'North West': '#2A461F',
+    'North Central': '#84ADFF',
+    'South South': '#CEE5C7',
+    'South East': '#7CD4FD',
+    'South West': '#F9A7E0',
+  }
 
   const [widgets, setWidgets] = useState([])
   const [page, setPage] = useState(1)
@@ -386,7 +395,7 @@ const Overview = () => {
         <div className={classes.Overview__SilhouetteMap}>
           <div>
             <div className={classes.Overview__ActiveUsers}>
-              <h1>Active Devices {regionName ? `in ${regionName}` : ''}</h1>
+              <h1>Active Devices {sectorName ? `in ${sectorName}` : ''}</h1>
             </div>
             <Spin spinning={isRegionFetching}>
               <div className={classes.Overview__SilhouetteInfo}>
@@ -410,7 +419,12 @@ const Overview = () => {
                             <div
                               className={classes.Overview__SilhouetteRegionIcon}
                             >
-                              <EnvironmentOutlined />
+                              <EnvironmentFilled
+                                style={{
+                                  color: LOCATION_MAP[regionInfo.region],
+                                }}
+                                twoToneColor={LOCATION_MAP[regionInfo.region]}
+                              />
                             </div>
                             <div
                               className={
