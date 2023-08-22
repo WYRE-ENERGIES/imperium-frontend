@@ -529,7 +529,7 @@ const Overview = () => {
           <Donut
             labels={pieChartData.labels}
             chartData={pieChartData.data}
-            title={sectorName}
+            title={regionName}
             loading={isSectorFetching}
           />
         </div>
