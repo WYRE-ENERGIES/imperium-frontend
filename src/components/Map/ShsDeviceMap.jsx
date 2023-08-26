@@ -90,7 +90,7 @@ const ShsDeviceMap = ({ isLoading, data = [] }) => {
                 <span
                   style={{
                     color:
-                      hoveredMarker?.device_status === 'on'
+                      hoveredMarker?.device_status === 'ON'
                         ? '#497a38'
                         : '#bf1717',
                   }}
@@ -103,7 +103,7 @@ const ShsDeviceMap = ({ isLoading, data = [] }) => {
                 <span
                   style={{
                     color:
-                      hoveredMarker?.device_status === 'on'
+                      hoveredMarker?.device_status === 'ON'
                         ? '#497a38'
                         : '#bf1717',
                   }}
