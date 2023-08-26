@@ -49,7 +49,7 @@ const ShsDeviceMap = ({ isLoading, data = [] }) => {
           lng: item?.coordinates?.lon,
         }}
         icon={{
-          url: item?.device_status === 'on' ? GoodIcon : BadIcon,
+          url: item?.device_status === 'ON' ? GoodIcon : BadIcon,
           scaledSize: new window.google.maps.Size(40, 40),
         }}
         onMouseOver={() => setHoveredMarker(item)}
