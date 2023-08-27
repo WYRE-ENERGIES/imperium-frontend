@@ -17,13 +17,13 @@ const columns = [
     title: 'Energy Consumed',
     key: 'energy_consumed',
     dataIndex: 'energy_consumed',
-    render: (value) => parseFloat(value.toLocaleString()),
+    render: (value) => value,
   },
   {
     title: 'Energy Generated',
     key: 'energy_generated',
     dataIndex: 'energy_generated',
-    render: (value) => parseFloat(value.toLocaleString()),
+    render: (value) => value,
   },
   {
     title: 'Location',
