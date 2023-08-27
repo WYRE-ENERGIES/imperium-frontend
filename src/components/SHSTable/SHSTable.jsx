@@ -17,13 +17,13 @@ const columns = [
     title: 'Energy Consumed',
     key: 'energy_consumed',
     dataIndex: 'energy_consumed',
-    render: (value) => '-',
+    render: (value) => 2000,
   },
   {
     title: 'Energy Generated',
     key: 'energy_generated',
     dataIndex: 'energy_generated',
-    render: (value) => '-',
+    render: (value) => 2000,
   },
   {
     title: 'Location',
