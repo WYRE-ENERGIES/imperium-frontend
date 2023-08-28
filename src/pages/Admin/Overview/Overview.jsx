@@ -623,7 +623,7 @@ const Overview = () => {
                         align: 'right',
 
                         formatter: (val) => {
-                          const value = val / 100000000
+                          const value = val
                           return `${value} kg`
                         },
                       },
