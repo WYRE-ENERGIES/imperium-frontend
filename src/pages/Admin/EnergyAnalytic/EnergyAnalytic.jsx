@@ -89,8 +89,7 @@ const EnergyAnalytic = () => {
           icon: TbBoltOff,
           title: 'Total Energy Consumed',
           value: analyticsData?.energy_consumed
-            ? 
-                analyticsData?.energy_consumed
+            ? analyticsData?.energy_consumed
             : 0,
           valueCurrency: 'kWh',
           graphColor: '#65AA4F',
