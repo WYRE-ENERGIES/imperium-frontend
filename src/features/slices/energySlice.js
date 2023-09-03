@@ -51,6 +51,8 @@ export const energyApiSlice = apiSlice.injectEndpoints({
           energyConsumed.data.push(1234)
           energyGenerated.data.push(1234)
           energyDifference.data.push(1234)
+          console.log(energy_consumed)
+          console.log(energy_generated)
         })
 
         return {
