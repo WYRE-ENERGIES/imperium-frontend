@@ -48,9 +48,9 @@ export const energyApiSlice = apiSlice.injectEndpoints({
 
         Object.values(res).forEach((result) => {
           const { energy_consumed, energy_generated, capacity } = result
-          energyConsumed.data.push(energy_consumed ?? 0)
-          energyGenerated.data.push(energy_generated ?? 0)
-          energyDifference.data.push(capacity ?? 0)
+          energyConsumed.data.push(1234)
+          energyGenerated.data.push(1234)
+          energyDifference.data.push(1234)
         })
 
         return {
