@@ -73,7 +73,7 @@ const ShsChart = ({
             },
           },
           labels: {
-            rotate: -45
+            rotate: -45,
           },
         },
         yaxis: {
