@@ -60,9 +60,6 @@ const ShsChart = ({
         },
         colors: colors,
         xaxis: {
-          labels: {
-            rotate: -45
-          },
           categories: categories,
           title: {
             text: xLabel,
@@ -74,6 +71,9 @@ const ShsChart = ({
               fontFamily: 'Baloo 2',
               fontWeight: 600,
             },
+          },
+          labels: {
+            rotate: -45
           },
         },
         yaxis: {
