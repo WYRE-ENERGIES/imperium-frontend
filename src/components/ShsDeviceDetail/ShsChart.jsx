@@ -60,6 +60,9 @@ const ShsChart = ({
         },
         colors: colors,
         xaxis: {
+          labels: {
+            rotate: -45
+          },
           categories: categories,
           title: {
             text: xLabel,
