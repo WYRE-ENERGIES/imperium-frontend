@@ -70,7 +70,6 @@ const AreaChart = ({
               style: {
                 colors: 'gray',
               },
-              rotate: 0,
             },
           },
 

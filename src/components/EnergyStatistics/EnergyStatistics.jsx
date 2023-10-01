@@ -29,6 +29,7 @@ const EnergyStatistics = ({ duration, chartData, areaChartData }) => {
           height="350px"
           borderRadiusApplication="around"
           axisTicks={false}
+          themeMode={'dark'}
         />
       </ChartCard>
 
@@ -42,6 +43,7 @@ const EnergyStatistics = ({ duration, chartData, areaChartData }) => {
           axisColor={'gray'}
           axisTicks={false}
           colors={['#65AA4F']}
+          themeMode={'dark'}
         />
       </ChartCard>
     </div>
