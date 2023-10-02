@@ -11,6 +11,7 @@ const GroupedBarChart = ({
   height,
   axisTicks,
   borderRadiusApplication,
+  themeMode,
 }) => {
   return (
     <div>
@@ -27,6 +28,9 @@ const GroupedBarChart = ({
             labels: {
               colors: 'gray',
             },
+          },
+          theme: {
+            mode: themeMode,
           },
           plotOptions: {
             ...groupedChartOptions.plotOptions,
@@ -56,11 +60,11 @@ const GroupedBarChart = ({
           xaxis: {
             ...groupedChartOptions.xaxis,
             labels: {
+              rotate: -90,
               style: {
                 colors: 'gray',
                 fontSize: '9px',
               },
-              rotate: 0,
             },
             axisBorder: {
               show: true,

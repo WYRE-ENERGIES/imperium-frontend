@@ -75,6 +75,7 @@ const EnergyAnalytic = () => {
     if (isCapacityFetching) return
 
     if (capacityData?.energyConsumed) {
+      console.log('this is the capacity data ', capacityData)
       setAreaChartData([capacityData.energyDifference])
       setChartData([capacityData.energyConsumed, capacityData.energyGenerated])
     }
