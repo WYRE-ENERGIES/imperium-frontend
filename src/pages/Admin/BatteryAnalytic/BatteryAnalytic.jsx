@@ -177,7 +177,7 @@ const BatteryAnalytic = () => {
         {
           id: 1,
           icon: EnergyWidgetIcon,
-          title: 'Total SHS Battery',
+          title: 'Total SHS',
           value: analyticsData?.total_shs_battery
             ? parseFloat(
                 analyticsData?.total_shs_battery?.toFixed(1),
@@ -187,7 +187,7 @@ const BatteryAnalytic = () => {
         {
           id: 2,
           icon: GoodBatteryWidgetIcon,
-          title: 'Good SHS Battery',
+          title: 'Good Battery',
           value: analyticsData?.good_shs_battery
             ? parseFloat(
                 analyticsData?.good_shs_battery?.toFixed(1),
@@ -197,7 +197,7 @@ const BatteryAnalytic = () => {
         {
           id: 3,
           icon: BadBatteryWidgetIcon,
-          title: 'Bad SHS Battery',
+          title: 'Bad Battery',
           value: analyticsData?.bad_shs_battery
             ? parseFloat(
                 analyticsData?.bad_shs_battery?.toFixed(1),
