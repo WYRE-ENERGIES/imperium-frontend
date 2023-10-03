@@ -234,6 +234,7 @@ const BatteryAnalytic = () => {
           <WidgetFilter
             selectFilterBy={(value) => setGlobalFilter(value)}
             filterBy={globalFilter}
+            showDate={false}
           />
         </section>
         <div className={classes.Battery__widgets}>
