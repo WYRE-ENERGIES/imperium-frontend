@@ -120,7 +120,7 @@ const Customer = () => {
     {
       id: 1,
       icon: TbBoltOff,
-      title: 'Total Energy Consumped',
+      title: 'Total Energy Consumed',
       duration: 'For the last 12 months',
       value: '1124.89',
       valueCurrency: 'kWh',

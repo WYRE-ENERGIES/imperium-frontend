@@ -205,10 +205,10 @@ const Customers = () => {
           />
         </section>
         <section className={classes.Customers__filters}>
-          <WidgetFilter
+          {/* <WidgetFilter
             selectFilterBy={(value) => setGlobalFilter(value)}
             filterBy={globalFilter}
-          />
+          /> */}
         </section>
         <div className={classes.Customers__widgets}>
           <CustomerChartWidget
