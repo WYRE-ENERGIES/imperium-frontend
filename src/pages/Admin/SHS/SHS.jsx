@@ -61,7 +61,7 @@ const SHS = () => {
       [
         {
           id: 1,
-          title: 'Total Energy Consumped',
+          title: 'Total Energy Consumed',
           duration: 'For the last 12 months',
           value: analyticsData?.total_shs
             ? analyticsData?.total_shs?.toLocaleString()
