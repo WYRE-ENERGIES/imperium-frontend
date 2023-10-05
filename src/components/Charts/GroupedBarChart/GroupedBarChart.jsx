@@ -60,7 +60,7 @@ const GroupedBarChart = ({
           xaxis: {
             ...groupedChartOptions.xaxis,
             labels: {
-              rotate: -90,
+              // rotate: -90,
               style: {
                 colors: 'gray',
                 fontSize: '9px',
