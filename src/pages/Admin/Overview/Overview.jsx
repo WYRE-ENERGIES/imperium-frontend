@@ -3,6 +3,7 @@ import React, { useCallback, useEffect, useState } from 'react'
 import {
   additionalOverviewBarProps,
   additionalOverviewProps,
+  getChartCategory,
 } from '../../../components/Charts/data'
 import Chart from 'react-apexcharts'
 import {
@@ -28,7 +29,6 @@ import { ReactComponent as GraphIcon2 } from '../../../assets/widget-icons/overv
 import PageBreadcrumb from '../../../components/PageBreadcrumb/PageBreadcrumb'
 import SHSTable from '../../../components/SHSTable/SHSTable'
 import ShsDeviceMap from '../../../components/Map/ShsDeviceMap'
-import SimpleBarChart from '../../../components/Charts/SimpleBarChart/SimpleBarChart'
 import WidgetFilter from '../../../components/WidgetFilter/WidgetFilter'
 import WidgetLoader from '../../../components/Widget/WidgetLoader/WidgetLoader'
 import classes from '../../Customer/Overview/Overview.module.scss'
@@ -122,6 +122,7 @@ const Overview = () => {
     regionId,
   })
 
+  console.log('this is the emission data', emissionData)
   const {
     isFetching: isVoltageFetching,
     isError: isVoltageError,
@@ -553,6 +554,7 @@ const Overview = () => {
               showGridY={true}
               showGrid={true}
               showYAxis={false}
+              currentMonth={new Date().getMonth() + 1}
             />
           )}
         </div>
@@ -636,20 +638,23 @@ const Overview = () => {
                       axisTicks: {
                         show: false,
                       },
-                      categories: [
-                        'Jan',
-                        'Feb',
-                        'Mar',
-                        'Apr',
-                        'May',
-                        'Jun',
-                        'Jul',
-                        'Aug',
-                        'Sept',
-                        'Oct',
-                        'Nov',
-                        'Dec',
-                      ],
+                      categories: getChartCategory(
+                        [
+                          'Jan',
+                          'Feb',
+                          'Mar',
+                          'Apr',
+                          'May',
+                          'Jun',
+                          'Jul',
+                          'Aug',
+                          'Sept',
+                          'Oct',
+                          'Nov',
+                          'Dec',
+                        ],
+                        new Date().getMonth() + 1,
+                      ),
                       labels: {
                         show: true,
                         rotate: -45,
@@ -681,6 +686,7 @@ const Overview = () => {
                   showGrid={true}
                   showYAxis={false}
                   strokeWidth={3}
+                  currentMonth={new Date().getMonth() + 1}
                 />
               )}
             </div>

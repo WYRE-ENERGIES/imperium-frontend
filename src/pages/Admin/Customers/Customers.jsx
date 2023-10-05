@@ -216,6 +216,13 @@ const Customers = () => {
             colors="#497A38"
             borderRadius={5}
             columnWidth={30}
+            height={'100%'}
+            width={'100%'}
+            strokeWidth={3}
+            showGridY={true}
+            showGrid={true}
+            showYAxis={false}
+            currentMonth={new Date().getMonth() + 1}
             loading={isStatisticsLoading || isStatisticsFetching}
           />
           <div className={classes.Customers__innerWidgets}>

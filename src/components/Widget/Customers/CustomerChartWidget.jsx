@@ -10,6 +10,13 @@ const CustomerChartWidget = ({
   borderRadius,
   columnWidth,
   loading,
+  height,
+  width,
+  strokeWidth,
+  showGridY,
+  showGrid,
+  showYAxis,
+  currentMonth,
 }) => {
   return (
     <div className={classes.CustomerChartWidget}>
@@ -32,6 +39,13 @@ const CustomerChartWidget = ({
           borderRadius={borderRadius}
           columnWidth={columnWidth}
           optionProps={additionalCustomerProps}
+          height={height}
+          width={width}
+          strokeWidth={strokeWidth}
+          showGridY={showGridY}
+          showGrid={showGrid}
+          showYAxis={showYAxis}
+          currentMonth={currentMonth}
         />
       )}
     </div>

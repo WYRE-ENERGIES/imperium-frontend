@@ -107,6 +107,8 @@ export const chartLabelFormatter = (value) => {
     return value / 1000000000 + 'M'
   } else if (value >= 1000) {
     return value / 1000 + 'K'
+  } else if (value < 1000) {
+    return value / 1000 + 'K'
   }
 
   return value
