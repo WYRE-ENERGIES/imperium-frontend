@@ -163,13 +163,13 @@ export const panelColumns = [
     title: 'Panel Power',
     key: 'total_panel_power',
     dataIndex: 'total_panel_power',
-    render: (value) => `${parseFloat(value.toLocaleString()).toFixed(1)} W`,
+    render: (value) => `${parseFloat(value.toLocaleString()).toFixed(1)} kW`,
   },
   {
     title: 'Panel Total Energy',
     key: 'total_panel_energy',
     dataIndex: 'total_panel_energy',
-    render: (value) => `${parseFloat(value.toLocaleString()).toFixed(1)} WH`,
+    render: (value) => `${parseFloat(value).toFixed(1)} kWh`,
   },
 ]
 

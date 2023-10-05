@@ -48,7 +48,7 @@ const columns = [
     render: (value) => `${value} A`,
   },
   {
-    title: ' Energy',
+    title: ' Power Demand',
     key: 'total_kw',
     dataIndex: 'total_kw',
     render: (value) => `${value} W`,

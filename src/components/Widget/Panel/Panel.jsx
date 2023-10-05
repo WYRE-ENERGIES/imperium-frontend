@@ -70,7 +70,7 @@ const PanelWidgets = ({
       value: data?.panel_total_energy
         ? parseFloat(data?.panel_total_energy?.toFixed(1)).toLocaleString()
         : 0,
-      valueCurrency: 'WH',
+      valueCurrency: 'kWh',
     },
     {
       id: 2,
@@ -88,7 +88,7 @@ const PanelWidgets = ({
       value: data?.panel_total_power
         ? parseFloat(data?.panel_total_power?.toFixed(1)).toLocaleString()
         : 0,
-      valueCurrency: 'W',
+      valueCurrency: 'kW',
     },
     {
       id: 1,
