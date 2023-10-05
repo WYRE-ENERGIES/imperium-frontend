@@ -122,7 +122,6 @@ const Overview = () => {
     regionId,
   })
 
-  console.log('this is the emission data', emissionData)
   const {
     isFetching: isVoltageFetching,
     isError: isVoltageError,

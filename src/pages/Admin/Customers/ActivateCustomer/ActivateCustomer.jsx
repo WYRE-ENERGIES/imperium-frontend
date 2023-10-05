@@ -30,7 +30,6 @@ const ActivateContent = ({ user, toggleModal, toggleForm }) => {
 
   const [activateCustomer, { isLoading, isSuccess }] =
     useActivateCustomerMutation()
-  console.log('user.status ', user.status)
   const onSubmit = () => {
     if (user.status) {
       toggleForm()
