@@ -150,7 +150,6 @@ const BatteryAnalytic = () => {
     refetch: statisticsRefetch,
   } = useGetBatteryStatisticsQuery({ filterBy: globalFilter })
 
-
   useEffect(() => {
     if (isStatisticsFetching) return
     if (isStatisticsError) {
