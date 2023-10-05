@@ -1,6 +1,6 @@
 import Chart from 'react-apexcharts'
 import React from 'react'
-import { barChartOptions } from '../data'
+import { barChartOptions, getChartCategory } from '../data'
 import { chartLabelFormatter } from '../../../utils/helpers'
 
 const SimpleBarChart = ({
@@ -11,6 +11,13 @@ const SimpleBarChart = ({
   columnWidth,
   optionProps,
   xLabel,
+  height,
+  width,
+  strokeWidth,
+  showGridY,
+  showGrid,
+  showYAxis,
+  currentMonth,
 }) => {
   return (
     <Chart
@@ -21,17 +28,17 @@ const SimpleBarChart = ({
           ...barChartOptions.plotOptions,
           bar: {
             ...barChartOptions.plotOptions.bar,
-            borderRadius,
-            columnWidth,
+            // borderRadius,
+            // columnWidth,
           },
         },
         title: {
           text: title,
         },
         yaxis: {
-          labels: {
-            formatter: (value) => chartLabelFormatter(value),
-          },
+          // labels: {
+          //   formatter: (value) => chartLabelFormatter(value),
+          // },
         },
         // xaxis: {
         //   labels: {
@@ -64,6 +71,18 @@ const SimpleBarChart = ({
         //   },
         // },
         xaxis: {
+          ...barChartOptions.xaxis,
+          ...(currentMonth && {
+            categories: getChartCategory(
+              barChartOptions.xaxis.categories,
+              currentMonth,
+            ),
+          }),
+          labels: {
+            // rotate: 90,
+            minHeight: undefined,
+            maxHeight: 120,
+          },
           title: {
             text: xLabel,
             offsetX: 0,
@@ -76,6 +95,7 @@ const SimpleBarChart = ({
             },
           },
         },
+
         ...optionProps,
       }}
       type="bar"

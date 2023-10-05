@@ -45,10 +45,16 @@ export const batteryApiSlice = apiSlice.injectEndpoints({
           statistics: [data],
         } = response
 
-        Object.values(data).forEach((stat) => {
+        const currentDateMonth = new Date().getMonth() + 1
+        Object.values(data).forEach((stat, index) => {
           const { good, bad } = stat
-          goodStats.data.push(good ?? 0)
-          badStats.data.push(bad ?? 0)
+          if (index + 1 > currentDateMonth) {
+            goodStats.data.splice(index - currentDateMonth, 0, good ?? 0)
+            badStats.data.splice(index - currentDateMonth, 0, bad ?? 0)
+          } else {
+            goodStats.data.push(good ?? 0)
+            badStats.data.push(bad ?? 0)
+          }
         })
 
         return [badStats, goodStats]

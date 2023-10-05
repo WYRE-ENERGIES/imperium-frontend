@@ -24,6 +24,9 @@ import {
 } from '../../../utils/helpers'
 import Loading from '../../../components/Loading/Loading'
 import DataTable from '../../../components/Table/DataTable'
+import AreaChart from '../../../components/Charts/AreaChart/AreaChart'
+import { useGetOverviewEnergyDataQuery } from '../../../features/slices/overview/adminOverviewSlice'
+import { additionalOverviewProps } from '../../../components/Charts/data'
 
 const columns = [
   {
@@ -72,6 +75,27 @@ const VoltageCurrent = () => {
   const [pageNum, setPageNum] = useState(1)
   const [search, setSearch] = useState('')
   const [table, setTable] = useState([])
+  const [areaChartData, setAreaChartData] = useState([
+    {
+      name: 'Energy Consumed',
+      data: [],
+    },
+    {
+      name: 'Energy Generation',
+      data: [],
+    },
+  ])
+
+  const {
+    isFetching: isEnergyFetching,
+    isError: isEnergyError,
+    error: energyError,
+    data: energyData,
+    refetch: refetchEnergy,
+  } = useGetOverviewEnergyDataQuery({
+    filterBy: filter,
+  })
+
   const {
     data: dataAnalytics,
     isLoading: DataAnaylyticsisLoading,
@@ -106,6 +130,25 @@ const VoltageCurrent = () => {
       },
     ])
   }, [dataAnalytics, dataTable, dataStatistics, pageNum, filter])
+
+  useEffect(() => {
+    if (isEnergyFetching) return
+
+    if (isEnergyError) {
+      setAreaChartData([
+        {
+          name: 'Energy Consumed',
+          data: [],
+        },
+        {
+          name: 'Energy Generation',
+          data: [],
+        },
+      ])
+      return
+    }
+    setAreaChartData(energyData)
+  }, [isEnergyFetching, isEnergyError, energyData])
 
   const widgets = [
     {
@@ -197,75 +240,87 @@ const VoltageCurrent = () => {
           {statisticsisLoading ? (
             <Loading data={'Graph'} />
           ) : dataStatistics ? (
-            <Chart
-              height="100%"
-              options={{
-                title: {
-                  text: 'Energy Consumed VS Energy Generated',
-                  align: 'left',
-                  margin: 50,
-                  offsetX: 10,
-                  offsetY: 20,
-                  floating: false,
-                  style: {
-                    fontSize: '18px',
-                    fontWeight: '500',
-                    fontFamily: undefined,
-                    color: '#263238',
-                  },
-                },
-                legend: {
-                  fontSize: '14px',
-                  position: 'bottom',
-                  horizontalAlign: 'center',
-                },
-                fill: {
-                  opacity: 0.1,
-                  gradient: {
-                    shadeIntensity: 1,
-                    inverseColors: false,
-                    opacityFrom: 0.45,
-                    opacityTo: 0.05,
-                    stops: [20, 100, 100, 100],
-                  },
-                },
+            // <Chart
+            //   height="100%"
+            //   options={{
+            //     title: {
+            //       text: 'Energy Consumed VS Energy Generated',
+            //       align: 'left',
+            //       margin: 50,
+            //       offsetX: 10,
+            //       offsetY: 20,
+            //       floating: false,
+            //       style: {
+            //         fontSize: '18px',
+            //         fontWeight: '500',
+            //         fontFamily: undefined,
+            //         color: '#263238',
+            //       },
+            //     },
+            //     legend: {
+            //       fontSize: '14px',
+            //       position: 'bottom',
+            //       horizontalAlign: 'center',
+            //     },
+            //     fill: {
+            //       opacity: 0.1,
+            //       gradient: {
+            //         shadeIntensity: 1,
+            //         inverseColors: false,
+            //         opacityFrom: 0.45,
+            //         opacityTo: 0.05,
+            //         stops: [20, 100, 100, 100],
+            //       },
+            //     },
 
-                chart: {
-                  id: 'VoltageCurrent-bar',
-                  fontFamily: 'baloo 2',
-                  stacked: true,
-                  toolbar: {
-                    show: false,
-                  },
-                  type: 'area',
-                },
-                stroke: {
-                  curve: 'smooth',
-                },
-                colors: ['#C9E00C', '#5C9D48'],
-                xaxis: {
-                  categories: [
-                    'Jan',
-                    'Feb',
-                    'Mar',
-                    'Apr',
-                    'May',
-                    'Jun',
-                    'Jul',
-                    'Aug',
-                    'Sep',
-                    'Oct',
-                    'Nov',
-                    'Dec',
-                  ],
-                },
-                dataLabels: {
-                  enabled: false,
-                },
-              }}
-              type="area"
-              series={chartData}
-              width="100%"
+            //     chart: {
+            //       id: 'VoltageCurrent-bar',
+            //       fontFamily: 'baloo 2',
+            //       stacked: true,
+            //       toolbar: {
+            //         show: false,
+            //       },
+            //       type: 'area',
+            //     },
+            //     stroke: {
+            //       curve: 'smooth',
+            //     },
+            //     colors: ['#C9E00C', '#5C9D48'],
+            //     xaxis: {
+            //       categories: [
+            //         'Jan',
+            //         'Feb',
+            //         'Mar',
+            //         'Apr',
+            //         'May',
+            //         'Jun',
+            //         'Jul',
+            //         'Aug',
+            //         'Sep',
+            //         'Oct',
+            //         'Nov',
+            //         'Dec',
+            //       ],
+            //     },
+            //     dataLabels: {
+            //       enabled: false,
+            //     },
+            //   }}
+            //   type="area"
+            //   series={chartData}
+            //   width="100%"
+            // />
+            <AreaChart
+              chartData={areaChartData}
+              chartProps={{ height: '100%', width: '100%' }}
+              optionProps={additionalOverviewProps}
+              height={'100%'}
+              width={'100%'}
+              strokeWidth={3}
+              showGridY={true}
+              showGrid={true}
+              showYAxis={true}
+              currentMonth={new Date().getMonth() + 1}
             />
           ) : (
             'No data records found'

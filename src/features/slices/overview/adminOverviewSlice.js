@@ -41,10 +41,22 @@ export const adminOverviewSlice = apiSlice.injectEndpoints({
           url,
         }
       },
-      transformResponse: (response) =>
-        Object.values(response[0]).map((data) =>
-          !data ? 0 : Math.floor(data),
-        ),
+      transformResponse: (response) => {
+        const currentDateMonth = new Date().getMonth() + 1
+        const responseData = []
+        Object.values(response[0]).map((data, index) => {
+          if (index + 1 > currentDateMonth) {
+            responseData.splice(
+              index - currentDateMonth,
+              0,
+              Math.floor(data) ?? 0,
+            )
+          } else {
+            responseData.push(Math.floor(data) ?? 0)
+          }
+        })
+        return responseData
+      },
     }),
     getAdminOverviewCurrentVoltage: builder.query({
       query: ({ sectorId, regionId, filterBy }) => {
@@ -72,10 +84,25 @@ export const adminOverviewSlice = apiSlice.injectEndpoints({
           data: [],
         }
 
-        Object.values(response[0]).forEach((stat) => {
+        const currentDateMonth = new Date().getMonth() + 1
+        Object.values(response[0]).forEach((stat, index) => {
           const { month_current, month_voltage } = stat
-          current.data.push(Math.floor(month_current) ?? 0)
-          voltage.data.push(Math.floor(month_voltage) ?? 0)
+
+          if (index + 1 > currentDateMonth) {
+            current.data.splice(
+              index - currentDateMonth,
+              0,
+              Math.floor(month_current) ?? 0,
+            )
+            voltage.data.splice(
+              index - currentDateMonth,
+              0,
+              Math.floor(month_voltage) ?? 0,
+            )
+          } else {
+            current.data.push(Math.floor(month_current) ?? 0)
+            voltage.data.push(Math.floor(month_voltage) ?? 0)
+          }
         })
 
         return [current, voltage]
@@ -149,11 +176,26 @@ export const adminOverviewSlice = apiSlice.injectEndpoints({
           data: [],
         }
 
+        const currentDateMonth = new Date().getMonth() + 1
         Object.values(response[0]).forEach((stat, index) => {
           if (index < 12) {
             const { energy_generated, energy_consumed } = stat
-            energyGenerated.data.push(Math.floor(energy_generated) ?? 0)
-            energyConsumed.data.push(Math.floor(energy_consumed) ?? 0)
+
+            if (index + 1 > currentDateMonth) {
+              energyGenerated.data.splice(
+                index - currentDateMonth,
+                0,
+                Math.floor(energy_generated) ?? 0,
+              )
+              energyConsumed.data.splice(
+                index - currentDateMonth,
+                0,
+                Math.floor(energy_consumed) ?? 0,
+              )
+            } else {
+              energyGenerated.data.push(Math.floor(energy_generated) ?? 0)
+              energyConsumed.data.push(Math.floor(energy_consumed) ?? 0)
+            }
           }
         })
 

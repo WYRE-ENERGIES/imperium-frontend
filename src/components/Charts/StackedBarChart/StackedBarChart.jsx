@@ -1,12 +1,13 @@
 import Chart from 'react-apexcharts'
 import React from 'react'
-import { apexChartOptions } from '../data'
+import { apexChartOptions, getChartCategory } from '../data'
 import classes from './StackedBarChart.module.scss'
 import { chartLabelFormatter } from '../../../utils/helpers'
 
 const FormatData = ({ value }) => {
   return
 }
+
 const StackedBarChart = ({
   title,
   chartData,
@@ -24,7 +25,9 @@ const StackedBarChart = ({
   labelColors,
   showYAxisBorder,
   yAxisTick,
+  currentMonth,
 }) => {
+  console.log('this is the sjdkjdsokjalkjdkd ============>>>>>>>>>', chartData)
   return (
     <div className={classes.StackedBarChart}>
       <h1>{title}</h1>
@@ -67,6 +70,12 @@ const StackedBarChart = ({
           },
           xaxis: {
             ...apexChartOptions.xaxis,
+            ...(currentMonth && {
+              categories: getChartCategory(
+                apexChartOptions.xaxis.categories,
+                currentMonth,
+              ),
+            }),
             tickPlacement: tickPlacement,
             title: {
               ...apexChartOptions.xaxis.title,

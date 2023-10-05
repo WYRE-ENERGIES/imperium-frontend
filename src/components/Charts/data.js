@@ -51,6 +51,18 @@ export const apexChartOptions = {
   },
 }
 
+export const getChartCategory = (categories, date) => {
+  const newCategory = []
+  categories.forEach((value, index) => {
+    if (index + 1 > date) {
+      newCategory.splice(index - date, 0, value)
+    } else {
+      newCategory.push(value)
+    }
+  })
+  return newCategory
+}
+
 export const groupedChartOptions = {
   chart: {
     toolbar: {
