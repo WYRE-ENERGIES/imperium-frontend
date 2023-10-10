@@ -34,6 +34,7 @@ import WidgetLoader from '../../../components/Widget/WidgetLoader/WidgetLoader'
 import classes from '../../Customer/Overview/Overview.module.scss'
 import { formatLabel } from '../../../utils/helpers'
 import { EnvironmentFilled } from '@ant-design/icons'
+import { Link } from 'react-router-dom'
 
 const Overview = () => {
   const [pieChartData, setPieChartData] = useState({
@@ -720,11 +721,11 @@ const Overview = () => {
               )}
             </div>
             <Button
-              onClick={() => setAlertPage(aData?.page + 1)}
-              disabled={aData?.page === aData?.total_pages}
+              // onClick={() => setAlertPage(aData?.page + 1)}
+              // disabled={aData?.page === aData?.total_pages}
               className={classes.Overview__alertBtn}
             >
-              Show more
+              <Link to="/admin/active-alerts">Show more</Link>
             </Button>
           </div>
         </div>

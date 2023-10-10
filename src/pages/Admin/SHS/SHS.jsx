@@ -259,12 +259,12 @@ const SHS = () => {
         <section className={classes.Support__headerSection}>
           <PageBreadcrumb title="All SHS" items={['All SHS']} />
         </section>
-        <section className={classes.Support__filters}>
+        {/* <section className={classes.Support__filters}>
           <WidgetFilter
             selectFilterBy={(value) => setGlobalFilter(value)}
             filterBy={globalFilter}
           />
-        </section>
+        </section> */}
         <div className={classes.Support__widgets}>
           {widgets.length ? widgets : <WidgetLoader />}
         </div>
