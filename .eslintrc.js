@@ -31,7 +31,7 @@ module.exports = {
   plugins: ['prettier'],
   rules: {
     camelcase: 0,
-    'prettier/prettier': ['error', {}, { usePrettierrc: true }],
+    'prettier/prettier': ['error', {'endOfLine': 'auto'}, { usePrettierrc: true }],
     'react/react-in-jsx-scope': 'off',
     'react/prop-types': 'off',
     'no-unused-vars': 'off',

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 
 import { SearchOutlined } from '@ant-design/icons'
-import { Input, Space, Select, Tag } from 'antd'
+import { Input, Space, Select, Tag, Button } from 'antd'
 
 import {
   useGetAdminVoltageCurrentAnalyticsQuery,
@@ -234,9 +234,25 @@ const VoltageCurrent = () => {
             height: '500px',
             border: '1px solid #DCECD5',
             borderRadius: '8px',
-            paddingBottom: '20px',
+            paddingBottom: '45px',
+            paddingRight: '10px',
+            paddingLeft: '10px',
           }}
         >
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              padding: '10px',
+            }}
+          >
+            <h1 style={{ fontWeight: 'heavy', fontSize: '22px' }}>
+              Energy Generation vs Energy Consumption
+            </h1>
+            <Button className={classes.Overview__chartHeaderBtn}>
+              <b>View report</b>
+            </Button>
+          </div>
           {statisticsisLoading ? (
             <Loading data={'Graph'} />
           ) : dataStatistics ? (
@@ -319,7 +335,7 @@ const VoltageCurrent = () => {
               strokeWidth={3}
               showGridY={true}
               showGrid={true}
-              showYAxis={true}
+              showYAxis={false}
               currentMonth={new Date().getMonth() + 1}
             />
           ) : (
