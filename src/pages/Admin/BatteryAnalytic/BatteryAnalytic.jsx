@@ -230,13 +230,13 @@ const BatteryAnalytic = () => {
         <section className={classes.Battery__headerSection}>
           <PageBreadcrumb title="Battery" items={['Battery']} />
         </section>
-        <section className={classes.Battery__filters}>
+        {/* <section className={classes.Battery__filters}>
           <WidgetFilter
             selectFilterBy={(value) => setGlobalFilter(value)}
             filterBy={globalFilter}
             showDate={false}
           />
-        </section>
+        </section> */}
         <div className={classes.Battery__widgets}>
           {widgets.length ? widgets : <WidgetLoader />}
         </div>
