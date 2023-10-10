@@ -80,12 +80,12 @@ const PanelAnalytic = () => {
         <section className={classes.PanelAnalytic__headerSection}>
           <PageBreadcrumb title="Panel Analytic" items={['Panel Analytic']} />
         </section>
-        <section className={classes.PanelAnalytic__filters}>
+        {/* <section className={classes.PanelAnalytic__filters}>
           <WidgetFilter
             selectFilterBy={selectFilterBy}
             filterBy={globalFilter}
           />
-        </section>
+        </section> */}
         <div className={classes.PanelAnalytic__widgets}>
           {isAnalyticsFetching && !widgets ? (
             <WidgetLoader />
