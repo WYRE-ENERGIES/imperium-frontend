@@ -253,7 +253,7 @@ const BatteryAnalytic = () => {
               showGrid={true}
               showGridY={false}
               showYAxisBorder={true}
-              currentMonth={10}
+              currentMonth={new Date().getMonth() + 1}
             />
           ) : (
             <WidgetLoader />

@@ -60,11 +60,13 @@ export const getChartCategory = (categories, date) => {
       newCategory.push(value)
     }
   })
+
   return newCategory
 }
 
 export const groupedChartOptions = {
   chart: {
+    type: 'bar',
     toolbar: {
       show: false,
     },

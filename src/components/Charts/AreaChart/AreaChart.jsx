@@ -62,10 +62,12 @@ const AreaChart = ({
           xaxis: {
             ...areaChartOptions.xaxis,
             ...(currentMonth && {
-              categories: getChartCategory(
-                areaChartOptions.xaxis.categories,
-                currentMonth,
-              ),
+              categories: currentMonth
+                ? getChartCategory(
+                    areaChartOptions.xaxis.categories,
+                    currentMonth,
+                  )
+                : areaChartOptions.xaxis.categories,
             }),
             style: {
               colors: axisColor,
@@ -74,6 +76,8 @@ const AreaChart = ({
               color: 'gray',
             },
             labels: {
+              rotate: -45,
+              rotateAlways: true,
               style: {
                 colors: 'gray',
               },
