@@ -146,12 +146,12 @@ const EnergyAnalytic = () => {
         <section className={classes.EnergyAnalytic__headerSection}>
           <PageBreadcrumb title="Energy Analytic" items={['Energy Analytic']} />
         </section>
-        <section className={classes.EnergyAnalytic__filters}>
+        {/* <section className={classes.EnergyAnalytic__filters}>
           <WidgetFilter
             selectFilterBy={(value) => setGlobalFilter(value)}
             filterBy={globalFilter}
           />
-        </section>
+        </section> */}
         <div className={classes.EnergyAnalytic__widgets}>
           {isAnalyticsFetching ? <WidgetLoader /> : widgets}
         </div>
