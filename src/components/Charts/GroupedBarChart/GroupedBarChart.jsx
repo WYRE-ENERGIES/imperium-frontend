@@ -1,6 +1,6 @@
 import Chart from 'react-apexcharts'
 import React from 'react'
-import { groupedChartOptions } from '../data'
+import { getChartCategory, groupedChartOptions } from '../data'
 import { chartLabelFormatter } from '../../../utils/helpers'
 
 const GroupedBarChart = ({
@@ -12,13 +12,14 @@ const GroupedBarChart = ({
   axisTicks,
   borderRadiusApplication,
   themeMode,
+  currentMonth,
 }) => {
   return (
     <div>
       <Chart
         options={{
           ...groupedChartOptions,
-          fill: { colors },
+          // fill: { colors },
           legend: {
             ...groupedChartOptions.legend,
             markers: {
@@ -32,6 +33,7 @@ const GroupedBarChart = ({
           theme: {
             mode: themeMode,
           },
+
           plotOptions: {
             ...groupedChartOptions.plotOptions,
             bar: {
@@ -44,36 +46,60 @@ const GroupedBarChart = ({
               rangeBarGroupRows: true,
             },
           },
+          // yaxis: {
+          //   labels: {
+          //     formatter: (value) => chartLabelFormatter(value),
+          //     style: {
+          //       colors: 'gray',
+          //     },
+          //   },
+          //   axisBorder: {
+          //     show: true,
+          //     color: 'gray',
+          //   },
+          //   axisTicks: axisTicks,
+          // },
           yaxis: {
             labels: {
-              formatter: (value) => chartLabelFormatter(value),
-              style: {
-                colors: 'gray',
-              },
+              show: false,
+              // formatter: (value) => chartLabelFormatter(value),
+              // style: {
+              //   colors: 'gray',
+              // },
             },
-            axisBorder: {
-              show: true,
-              color: 'gray',
-            },
-            axisTicks: axisTicks,
+            // axisBorder: {
+            //   show: true,
+            //   color: 'gray',
+            // },
+            // axisTicks: axisTicks,
           },
           xaxis: {
             ...groupedChartOptions.xaxis,
+            show: true,
             labels: {
-              // rotate: -90,
+              rotate: -45,
+              rotateAlways: true,
+              minHeight: 100,
+              maxHeight: 180,
               style: {
                 colors: 'gray',
-                fontSize: '9px',
               },
             },
             axisBorder: {
-              show: true,
               color: 'gray',
             },
             axisTicks: axisTicks,
+            ...(currentMonth
+              ? {
+                  categories: getChartCategory(
+                    groupedChartOptions.xaxis.categories,
+                    currentMonth,
+                  ),
+                }
+              : {}),
           },
           grid: {
-            show: true,
+            show: false,
             xaxis: {
               lines: {
                 show: false,

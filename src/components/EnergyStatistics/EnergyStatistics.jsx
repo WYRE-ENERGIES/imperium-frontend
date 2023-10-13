@@ -25,11 +25,12 @@ const EnergyStatistics = ({ duration, chartData, areaChartData }) => {
           chartData={chartData}
           colors={['#CEE5C8', '#497A38']}
           borderRadius={3}
-          columnWidth={55}
+          columnWidth={8}
           height="350px"
           borderRadiusApplication="around"
           axisTicks={false}
           themeMode={'dark'}
+          currentMonth={new Date().getMonth() + 1}
         />
       </ChartCard>
 
@@ -38,12 +39,14 @@ const EnergyStatistics = ({ duration, chartData, areaChartData }) => {
           chartData={areaChartData}
           height="250px"
           showGrid={true}
+          columnWidth={55}
           showGridX={false}
           showGridY={false}
           axisColor={'gray'}
           axisTicks={false}
           colors={['#65AA4F']}
           themeMode={'dark'}
+          currentMonth={new Date().getMonth() + 1}
         />
       </ChartCard>
     </div>
