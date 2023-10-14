@@ -33,7 +33,7 @@ const ActiveAlertsWidgets = () => {
               <BsBell color={'#497A38'} size={15} />
             </div>
             <div className={classes.ActiveAlertWidgets__WidgetText}>
-              <p>Active alerts created</p>
+              <p>Active alerts event</p>
               <h1 className={classes.ActiveAlertWidgets__WidgetValue}>
                 {activeAlertsDataAnalytics?.active_alerts_created}
               </h1>

@@ -170,10 +170,10 @@ const VoltageCurrent = () => {
     {
       id: 3,
       icon: EnergyWidgetIcon,
-      title: 'Energy',
+      title: 'Power Demand',
       range: formatLabel(filter),
-      value: analytics?.kw ? analytics?.kw?.toLocaleString() : 0,
-      valueCurrency: 'KWh',
+      value: analytics?.energy ? analytics?.energy?.toLocaleString() : 0,
+      valueCurrency: 'kW',
     },
   ].map((widget) => (
     <Widget
