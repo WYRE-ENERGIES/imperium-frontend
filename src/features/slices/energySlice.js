@@ -45,14 +45,33 @@ export const energyApiSlice = apiSlice.injectEndpoints({
           name: 'Energy Difference',
           data: [],
         }
-
-        Object.values(res).forEach((result) => {
+        const currentDateMonth = new Date().getMonth() + 1
+        Object.values(res).forEach((result, index) => {
           const { energy_consumed, energy_generated, capacity } = result
-          energyConsumed.data.push(Math.round(energy_consumed) ?? 0)
-          energyGenerated.data.push(Math.round(energy_generated) ?? 0)
-          energyDifference.data.push(
-            Math.round(energy_generated - energy_consumed) ?? 0,
-          )
+
+          if (index + 1 > currentDateMonth) {
+            energyConsumed.data.splice(
+              index - currentDateMonth,
+              0,
+              energy_consumed ?? 0,
+            )
+            energyGenerated.data.splice(
+              index - currentDateMonth,
+              0,
+              energy_generated ?? 0,
+            )
+            energyDifference.data.splice(
+              index - currentDateMonth,
+              0,
+              Math.round(energy_generated - energy_consumed) ?? 0,
+            )
+          } else {
+            energyConsumed.data.push(Math.round(energy_consumed) ?? 0)
+            energyGenerated.data.push(Math.round(energy_generated) ?? 0)
+            energyDifference.data.push(
+              Math.round(energy_generated - energy_consumed) ?? 0,
+            )
+          }
         })
 
         return {

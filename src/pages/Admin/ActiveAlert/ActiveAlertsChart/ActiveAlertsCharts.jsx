@@ -11,7 +11,7 @@ const ActiveAlertsCharts = () => {
   const [statsFilter, setStatsFilter] = useState('weekly')
   const { data: statistics, isLoading: isLoadingStatistics } =
     useGetAdminActiveAlertsStatisticsQuery({ filter: statsFilter })
-  console.log(statsFilter)
+
   return (
     <section className={classes.ActiveAlertsCharts}>
       <div className={classes.ActiveAlertsCharts__ActiveAlertStats}>
