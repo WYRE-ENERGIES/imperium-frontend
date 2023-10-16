@@ -84,8 +84,10 @@ const SHS = () => {
           id: 3,
           title: 'Total Capacity',
           duration: 'For the last 12 months',
-          value: analyticsData?.capacity
-            ? parseFloat(analyticsData?.capacity?.toFixed(1))?.toLocaleString()
+          value: analyticsData?.total_capacity
+            ? parseFloat(
+                analyticsData?.total_capacity?.toFixed(1),
+              )?.toLocaleString()
             : 0,
           graphColor: '#5714E4',
         },
