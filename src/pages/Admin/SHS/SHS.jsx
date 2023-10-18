@@ -64,7 +64,7 @@ const SHS = () => {
           title: 'Total Energy Consumed',
           duration: 'For the last 12 months',
           value: analyticsData?.total_shs
-            ? analyticsData?.total_shs?.toLocaleString()
+            ? parseFloat(analyticsData?.total_shs?.toFixed(2))?.toLocaleString()
             : 0,
           graphColor: '#65AA4F',
         },
@@ -74,7 +74,7 @@ const SHS = () => {
           duration: 'For the last 12 months',
           value: analyticsData?.energy_generated
             ? parseFloat(
-                analyticsData?.energy_generated?.toFixed(1),
+                analyticsData?.energy_generated?.toFixed(2),
               )?.toLocaleString()
             : 0,
           valueCurrency: 'kWh',
@@ -143,22 +143,22 @@ const SHS = () => {
     },
 
     {
-      title: 'Energy Consumed',
+      title: 'Energy Consumed (kW)',
       key: 'energy_consumed',
       dataIndex: 'energy_consumed',
       render: (value, record) => (
         <p style={{ color: record.status !== 'OFF' ? '' : '#C4C4C4' }}>
-          {parseFloat(value?.toLocaleString())?.toFixed(1)}
+          {parseFloat(value?.toLocaleString())?.toFixed(2)}
         </p>
       ),
     },
     {
-      title: 'Energy Generated',
+      title: 'Energy Generated (kW)',
       key: 'energy_generated',
       dataIndex: 'energy_generated',
       render: (value, record) => (
         <p style={{ color: record.status !== 'OFF' ? '' : '#C4C4C4' }}>
-          {parseFloat(value?.toLocaleString())?.toFixed(1)}
+          {parseFloat(value?.toLocaleString())?.toFixed(2)}
         </p>
       ),
     },
