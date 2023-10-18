@@ -14,16 +14,16 @@ const columns = [
     key: 'device_name',
   },
   {
-    title: 'Energy Consumed',
+    title: 'Energy Consumed (kWh)',
     key: 'energy_consumed',
     dataIndex: 'energy_consumed',
-    render: (value) => (0 + value).toFixed(1),
+    render: (value) => (0 + value).toFixed(2),
   },
   {
-    title: 'Energy Generated',
+    title: 'Energy Generated (kWh)',
     key: 'energy_generated',
     dataIndex: 'energy_generated',
-    render: (value) => (0 + value).toFixed(1),
+    render: (value) => (0 + value).toFixed(2),
   },
   {
     title: 'Location',

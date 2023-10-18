@@ -90,7 +90,7 @@ const EnergyAnalytic = () => {
           title: 'Total Energy Consumed',
           value: analyticsData?.energy_consumed
             ? parseFloat(
-                analyticsData?.energy_consumed?.toFixed(1),
+                analyticsData?.energy_consumed?.toFixed(2),
               )?.toLocaleString()
             : 0,
           valueCurrency: 'kWh',
@@ -102,7 +102,7 @@ const EnergyAnalytic = () => {
           title: 'Total Energy Generated',
           value: analyticsData?.energy_generated
             ? parseFloat(
-                analyticsData?.energy_generated?.toFixed(1),
+                analyticsData?.energy_generated?.toFixed(2),
               )?.toLocaleString()
             : 0,
           valueCurrency: 'kWh',
@@ -114,7 +114,7 @@ const EnergyAnalytic = () => {
           title: 'Energy Difference',
           valueCurrency: 'kWh',
           value: analyticsData?.capacity
-            ? parseFloat(analyticsData?.capacity?.toFixed(1))?.toLocaleString()
+            ? parseFloat(analyticsData?.capacity?.toFixed(2))?.toLocaleString()
             : 0,
         },
       ].map((widget) => (
