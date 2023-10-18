@@ -148,28 +148,28 @@ export const panelColumns = [
     render: (val) => (val ? new Date(val).toLocaleDateString() : ''),
   },
   {
-    title: 'Panel Voltage',
+    title: 'Panel Voltage (V)',
     key: 'total_panel_voltage',
     dataIndex: 'total_panel_voltage',
-    render: (value) => `${parseFloat(value.toLocaleString()).toFixed(1)} V`,
+    render: (value) => `${parseFloat(value.toLocaleString()).toFixed(2)}`,
   },
   {
-    title: 'Panel Current',
+    title: 'Panel Current (A)',
     key: 'total_panel_current',
     dataIndex: 'total_panel_current',
-    render: (value) => `${parseFloat(value.toLocaleString()).toFixed(1)} A`,
+    render: (value) => `${parseFloat(value.toLocaleString()).toFixed(2)}`,
   },
   {
-    title: 'Panel Power',
+    title: 'Panel Power (kW)',
     key: 'total_panel_power',
     dataIndex: 'total_panel_power',
-    render: (value) => `${parseFloat(value.toLocaleString()).toFixed(1)} kW`,
+    render: (value) => `${parseFloat(value.toLocaleString()).toFixed(2)}`,
   },
   {
-    title: 'Panel Total Energy',
+    title: 'Panel Total Energy (kWh)',
     key: 'total_panel_energy',
     dataIndex: 'total_panel_energy',
-    render: (value) => `${parseFloat(value).toFixed(1)} kWh`,
+    render: (value) => `${parseFloat(value).toFixed(2)}`,
   },
 ]
 
@@ -203,7 +203,7 @@ export const adminEnergyAnalyticColumns = [
     ),
     key: 'energy_consumed',
     dataIndex: 'energy_consumed',
-    render: (value) => `${parseFloat(value).toFixed(1)} kWh`,
+    render: (value) => `${parseFloat(value).toFixed(2)} kWh`,
   },
   {
     title: (
@@ -222,7 +222,7 @@ export const adminEnergyAnalyticColumns = [
     ),
     key: 'energy_generated',
     dataIndex: 'energy_generated',
-    render: (value) => `${parseFloat(value).toFixed(1)} kWh`,
+    render: (value) => `${parseFloat(value).toFixed(2)} kWh`,
   },
   {
     title: (
@@ -241,6 +241,6 @@ export const adminEnergyAnalyticColumns = [
     ),
     key: 'shs_capacity',
     dataIndex: 'shs_capacity',
-    render: (value) => `${parseFloat(value).toFixed(1)} kWh`,
+    render: (value) => `${parseFloat(value).toFixed(2)} kWh`,
   },
 ]

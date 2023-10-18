@@ -30,17 +30,17 @@ const columns = [
     key: 'shs_name',
   },
   {
-    title: 'Battery Voltage',
+    title: 'Battery Voltage (V)',
     key: 'battery_voltage',
     dataIndex: 'battery_voltage',
-    render: (value) => `${parseFloat(value.toLocaleString()).toFixed(1)} V`,
+    render: (value) => `${parseFloat(value.toLocaleString()).toFixed(2)}`,
   },
 
   {
-    title: 'Battery Current',
+    title: 'Battery Current (A)',
     key: 'battery_current',
     dataIndex: 'battery_current',
-    render: (value) => `${parseFloat(value.toLocaleString()).toFixed(1)} A`,
+    render: (value) => `${parseFloat(value.toLocaleString()).toFixed(2)}`,
   },
   {
     title: 'Battery Health',

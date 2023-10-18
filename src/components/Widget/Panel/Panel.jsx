@@ -68,7 +68,7 @@ const PanelWidgets = ({
       icon: EnergyWidgetIcon,
       title: 'Panel Total Energy',
       value: data?.panel_total_energy
-        ? parseFloat(data?.panel_total_energy?.toFixed(1)).toLocaleString()
+        ? parseFloat(data?.panel_total_energy?.toFixed(2)).toLocaleString()
         : 0,
       valueCurrency: 'kWh',
     },
@@ -77,7 +77,7 @@ const PanelWidgets = ({
       icon: BentArrowWidgetIcon,
       title: 'Panel Voltage',
       value: data?.panel_voltage
-        ? parseFloat(data?.panel_voltage?.toFixed(1)).toLocaleString()
+        ? parseFloat(data?.panel_voltage?.toFixed(2)).toLocaleString()
         : 0,
       valueCurrency: 'V',
     },
@@ -86,7 +86,7 @@ const PanelWidgets = ({
       icon: SEnergyWidgetIcon,
       title: 'Panel Total Power',
       value: data?.panel_total_power
-        ? parseFloat(data?.panel_total_power?.toFixed(1)).toLocaleString()
+        ? parseFloat(data?.panel_total_power?.toFixed(2)).toLocaleString()
         : 0,
       valueCurrency: 'kW',
     },
@@ -95,7 +95,7 @@ const PanelWidgets = ({
       icon: SunWidgetIcon,
       title: 'Panel Current',
       value: data?.panel_current
-        ? parseFloat(data?.panel_current?.toFixed(1)).toLocaleString()
+        ? parseFloat(data?.panel_current?.toFixed(2)).toLocaleString()
         : 0,
       valueCurrency: 'A',
     },

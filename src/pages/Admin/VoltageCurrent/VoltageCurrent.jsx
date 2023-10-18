@@ -38,23 +38,23 @@ const columns = [
     },
   },
   {
-    title: ' Voltage',
+    title: ' Voltage (V)',
     key: 'total_voltage',
     dataIndex: 'total_voltage',
-    render: (value) => `${value} V`,
+    render: (value) => value.toFixed(2),
   },
 
   {
-    title: ' Current',
+    title: ' Current (A)',
     key: 'total_current',
     dataIndex: 'total_current',
-    render: (value) => `${value} A`,
+    render: (value) => value.toFixed(2),
   },
   {
-    title: ' Power Demand',
+    title: ' Power Demand (kW)',
     key: 'total_kw',
     dataIndex: 'total_kw',
-    render: (value) => `${value} W`,
+    render: (value) => value.toFixed(2),
   },
 ]
 
@@ -70,7 +70,7 @@ const VoltageCurrent = () => {
     },
   ])
   const [filter, setFilter] = useState('yearly')
-  const [tableFilter, setTableFilter] = useState('monthly')
+  const [tableFilter, setTableFilter] = useState('yearly')
   const [analytics, setAnalytics] = useState(null)
   const [pageNum, setPageNum] = useState(1)
   const [search, setSearch] = useState('')
@@ -112,7 +112,7 @@ const VoltageCurrent = () => {
   } = useGetAdminVoltageCurrentTableQuery({
     page: pageNum,
     search: search,
-    filter: tableFilter,
+    filter: filter,
   })
 
   useEffect(() => {
@@ -156,7 +156,7 @@ const VoltageCurrent = () => {
       icon: SunWidgetIcon,
       title: 'Voltage',
       range: formatLabel(filter),
-      value: analytics?.voltage ? analytics?.voltage?.toLocaleString() : 0,
+      value: analytics?.voltage ? analytics?.voltage?.toFixed(2) : 0,
       valueCurrency: 'V',
     },
     {
@@ -164,15 +164,15 @@ const VoltageCurrent = () => {
       icon: SunWidgetIcon,
       title: 'Current',
       range: formatLabel(filter),
-      value: analytics?.current ? analytics?.current?.toLocaleString() : 0,
-      valueCurrency: 'V',
+      value: analytics?.current ? analytics?.current?.toFixed(2) : 0,
+      valueCurrency: 'A',
     },
     {
       id: 3,
       icon: EnergyWidgetIcon,
       title: 'Power Demand',
       range: formatLabel(filter),
-      value: analytics?.energy ? analytics?.energy?.toLocaleString() : 0,
+      value: analytics?.energy ? analytics?.energy?.toFixed(2) : 0,
       valueCurrency: 'kW',
     },
   ].map((widget) => (
