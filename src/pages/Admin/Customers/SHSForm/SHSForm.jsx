@@ -36,10 +36,10 @@ const { Option } = Select
 const AddSHSForm = ({ toggleModal }) => {
   const [form] = Form.useForm()
   const [purchaseDate, setPurchaseDate] = useState('')
-  const [regionState, setRegionState] = useState([])
-  const [vendors, setVendors] = useState([])
-  const [sectors, setSectors] = useState([])
-  const [regions, setRegion] = useState([])
+  const [regionState, setRegionState] = useState('')
+  const [vendors, setVendors] = useState('')
+  const [sectors, setSectors] = useState('')
+  const [regions, setRegion] = useState('')
   const [search, setSearch] = useState('')
   const [err, setErr] = useState('')
   const handleChange = (value) => setSearch(value)
@@ -92,12 +92,6 @@ const AddSHSForm = ({ toggleModal }) => {
         client_email: search,
       }).unwrap()
 
-      // toast.success('SHS Added', {
-      //   hideProgressBar: true,
-      //   autoClose: 3000,
-      //   theme: 'colored',
-      // })
-
       toggleModal()
     } catch (error) {
       const { data } = error
@@ -123,9 +117,9 @@ const AddSHSForm = ({ toggleModal }) => {
 
   useEffect(() => {
     if (!fetchingSector && !sectorError && sectorData.results) {
-      const sectors = sectorData.results.map((region, index) => (
-        <Option value={region.id} key={index}>
-          {region.name}
+      const sectors = sectorData.results.map((sector, index) => (
+        <Option value={sector.id} key={index}>
+          {sector.name}
         </Option>
       ))
       setSectors(sectors)
@@ -136,9 +130,9 @@ const AddSHSForm = ({ toggleModal }) => {
     if (!fetchingState && !stateError && stateData) {
       const states = stateData
         .filter((aState) => aState.region_id === region)
-        .map((region, index) => (
-          <Option value={region.id} key={index}>
-            {region.name}
+        .map((state, index) => (
+          <Option value={state.id} key={index}>
+            {state.name}
           </Option>
         ))
       setRegionState(states)
