@@ -36,6 +36,10 @@ const { Option } = Select
 const AddSHSForm = ({ toggleModal }) => {
   const [form] = Form.useForm()
   const [purchaseDate, setPurchaseDate] = useState('')
+  const [regionState, setRegionState] = useState([])
+  const [vendors, setVendors] = useState([])
+  const [sectors, setSectors] = useState([])
+  const [regions, setRegion] = useState([])
   const [search, setSearch] = useState('')
   const [err, setErr] = useState('')
   const handleChange = (value) => setSearch(value)
@@ -44,11 +48,6 @@ const AddSHSForm = ({ toggleModal }) => {
   }
 
   const debounceValue = useDebounce(search, 200)
-
-  let sectors = []
-  let regions = []
-  let states = []
-  let vendors = []
 
   const {
     data: clientList,
@@ -111,37 +110,52 @@ const AddSHSForm = ({ toggleModal }) => {
     }
   }
 
-  if (!fetchingRegion && !regionError && regionData.results) {
-    regions = regionData.results.map((region, index) => (
-      <Option value={region.id} key={index}>
-        {region.name}
-      </Option>
-    ))
+  useEffect(() => {
+    if (regionData && regionData.results) {
+      const regionsData = regionData.results.map((region, index) => (
+        <Option value={region.id} key={index}>
+          {region.name}
+        </Option>
+      ))
+      setRegion(regionsData)
+    }
+  }, [regionData])
+
+  useEffect(() => {
+    if (!fetchingSector && !sectorError && sectorData.results) {
+      const sectors = sectorData.results.map((region, index) => (
+        <Option value={region.id} key={index}>
+          {region.name}
+        </Option>
+      ))
+      setSectors(sectors)
+    }
+  }, [sectorData])
+
+  const statePicker = (region) => {
+    if (!fetchingState && !stateError && stateData) {
+      const states = stateData
+        .filter((aState) => aState.region_id === region)
+        .map((region, index) => (
+          <Option value={region.id} key={index}>
+            {region.name}
+          </Option>
+        ))
+      setRegionState(states)
+    }
   }
 
-  if (!fetchingSector && !sectorError && sectorData.results) {
-    sectors = sectorData.results.map((region, index) => (
-      <Option value={region.id} key={index}>
-        {region.name}
-      </Option>
-    ))
-  }
+  useEffect(() => {
+    if (!fetchingVendor && !vendorError && vendorData.results) {
+      const vendors = vendorData.results.map((region, index) => (
+        <Option value={region.id} key={index}>
+          {region.name}
+        </Option>
+      ))
+      setVendors(vendors)
+    }
+  }, [vendorData])
 
-  if (!fetchingState && !stateError && stateData.results) {
-    states = stateData.results.map((region, index) => (
-      <Option value={region.id} key={index}>
-        {region.name}
-      </Option>
-    ))
-  }
-
-  if (!fetchingVendor && !vendorError && vendorData.results) {
-    vendors = vendorData.results.map((region, index) => (
-      <Option value={region.id} key={index}>
-        {region.name}
-      </Option>
-    ))
-  }
   const loadingIcon = (
     <LoadingOutlined
       style={{ fontSize: 24, marginRight: 10, color: '#66ab4f' }}
@@ -249,6 +263,7 @@ const AddSHSForm = ({ toggleModal }) => {
             className={classes.AddSHSForm__select}
             placeholder="Select Region"
             onChange={() => {}}
+            onSelect={statePicker}
             allowClear
           >
             {regions}
@@ -272,7 +287,7 @@ const AddSHSForm = ({ toggleModal }) => {
             onChange={() => {}}
             allowClear
           >
-            {states}
+            {regionState}
           </Select>
         </Form.Item>
       </div>
