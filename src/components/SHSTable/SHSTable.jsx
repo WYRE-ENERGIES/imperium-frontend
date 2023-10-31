@@ -95,7 +95,7 @@ const columns = [
     title: '',
     key: 'action',
     render: (_, record) => (
-      <Link style={{ color: '#737373' }} to={`shs/${record.device_id}`}>
+      <Link style={{ color: '#737373' }} to={`shs/${record.id}`}>
         <EyeOutlined />
       </Link>
     ),

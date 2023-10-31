@@ -10,6 +10,7 @@ import Panel from './Panel'
 
 import ShsChart from './ShsChart'
 import { RxCaretDown } from 'react-icons/rx'
+import { getChartCategory } from '../Charts/data'
 
 const Shs = ({
   device_id,
@@ -79,20 +80,37 @@ const Shs = ({
                   series={energyConsumedAndGeneratedSeries}
                   type="area"
                   title="Energy Consumed VS Energy Generated"
-                  categories={[
-                    'Jan',
-                    'feb',
-                    'Mar',
-                    'Apr',
-                    'May',
-                    'Jun',
-                    'Jul',
-                    'Aug',
-                    'Sep',
-                    'Oct',
-                    'Nov',
-                    'Dec',
-                  ]}
+                  // categories={[
+                  //   'Jan',
+                  //   'feb',
+                  //   'Mar',
+                  //   'Apr',
+                  //   'May',
+                  //   'Jun',
+                  //   'Jul',
+                  //   'Aug',
+                  //   'Sep',
+                  //   'Oct',
+                  //   'Nov',
+                  //   'Dec',
+                  // ]}
+                  categories={getChartCategory(
+                    [
+                      'Jan',
+                      'Feb',
+                      'Mar',
+                      'Apr',
+                      'May',
+                      'Jun',
+                      'Jul',
+                      'Aug',
+                      'Sept',
+                      'Oct',
+                      'Nov',
+                      'Dec',
+                    ],
+                    new Date().getMonth() + 1,
+                  )}
                   xLabel="Month"
                   colors={['#C9E00C', '#5C9D48']}
                   opacity={0.1}
