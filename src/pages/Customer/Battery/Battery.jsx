@@ -59,20 +59,20 @@ const columns = [
     title: 'Battery Voltage',
     key: 'battery_voltage',
     dataIndex: 'battery_voltage',
-    render: (value) => `${value.toLocaleString()} V`,
+    render: (value) => `${value?.toLocaleString()} V`,
   },
 
   {
     title: 'Battery Current',
     key: 'battery_current',
     dataIndex: 'battery_current',
-    render: (value) => `${value.toLocaleString()} A`,
+    render: (value) => `${value?.toLocaleString()} A`,
   },
   {
     title: 'Charging Source',
     key: 'source',
     dataIndex: 'source',
-    render: (value) => value.toLocaleString(),
+    render: (value) => value?.toLocaleString(),
   },
 ]
 
