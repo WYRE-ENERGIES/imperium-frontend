@@ -50,11 +50,36 @@ export const energyApiSlice = apiSlice.injectEndpoints({
           data: [],
         }
 
-        Object.values(res).forEach((result) => {
-          const { energy_consumed, energy_generated } = result
-          energyConsumed.data.push(Math.round(energy_consumed) ?? 0)
-          energyGenerated.data.push(Math.round(energy_generated) ?? 0)
+        // Object.values(res).forEach((result) => {
+        //   const { energy_consumed, energy_generated } = result
+        //   energyConsumed.data.push(Math.round(energy_consumed) ?? 0)
+        //   energyGenerated.data.push(Math.round(energy_generated) ?? 0)
+        // })
+
+        const currentDateMonth = new Date().getMonth() + 1
+        Object.values(res).forEach((result, index) => {
+          if (index < 12) {
+            const { energy_generated, energy_consumed } = result
+
+            if (index + 1 > currentDateMonth) {
+              energyGenerated.data.splice(
+                index - currentDateMonth,
+                0,
+                Math.floor(energy_generated) ?? 0,
+              )
+              energyConsumed.data.splice(
+                index - currentDateMonth,
+                0,
+                Math.floor(energy_consumed) ?? 0,
+              )
+            } else {
+              energyGenerated.data.push(Math.floor(energy_generated) ?? 0)
+              energyConsumed.data.push(Math.floor(energy_consumed) ?? 0)
+            }
+          }
         })
+
+        // return [energyGenerated, energyConsumed]
 
         return {
           energyConsumed,

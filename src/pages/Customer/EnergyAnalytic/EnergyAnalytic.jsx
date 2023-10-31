@@ -167,6 +167,7 @@ const EnergyAnalytic = () => {
             showGrid={true}
             tickPlacement={'off'}
             yAxisTick={false}
+            currentMonth={new Date().getMonth() + 1}
           />
         </div>
         <div className={classes.EnergyAnalytic__shsTable}>

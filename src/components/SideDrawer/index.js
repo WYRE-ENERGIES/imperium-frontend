@@ -35,7 +35,7 @@ const SideDrawer = ({
         className={styles.SidebarMenu}
         theme="light"
         mode="inline"
-        selectedKeys={[location.pathname]}
+        selectedKeys={[window.location.pathname]}
         style={{
           flex: 1,
           marginTop: '24px',
@@ -49,7 +49,7 @@ const SideDrawer = ({
           className={styles.SidebarMenu}
           theme="light"
           mode="inline"
-          selectedKeys={[location.pathname]}
+          selectedKeys={[window.location.pathname]}
           items={bottomItems}
           style={{
             backgroundColor: isAdmin ? '#294620' : '',
