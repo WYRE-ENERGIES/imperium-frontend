@@ -15,7 +15,7 @@ export const shsSlice = apiSlice.injectEndpoints({
     }),
     getCustomerEnergyStatistics: build.query({
       query: ({ client_id, id }) => {
-        return `${SHS_CUSTOMER_BASE_URL}energy-generation/${client_id}/${id}`
+        return `${SHS_CUSTOMER_BASE_URL}energy-statistics/${client_id}/${id}`
       },
       transformResponse: (response, meta, arg) => {
         return response

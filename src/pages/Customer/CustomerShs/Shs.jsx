@@ -307,7 +307,7 @@ const Shs = () => {
             <div className={classes.Shs__Generation}>
               <div className={classes.Shs__GenerationHeader}>
                 <h1>
-                  Energy Generation <span>(kWh)</span>
+                  Average Panel Load <span>(kWh)</span>
                 </h1>
                 <Tag
                   key={'1'}
