@@ -11,6 +11,8 @@ import Panel from './Panel'
 import ShsChart from './ShsChart'
 import { RxCaretDown } from 'react-icons/rx'
 import { getChartCategory } from '../Charts/data'
+import { useState } from 'react'
+import { useEffect } from 'react'
 
 const Shs = ({
   device_id,
@@ -25,29 +27,28 @@ const Shs = ({
   energyGeneration,
   energyGenerationLoading,
 }) => {
+  const [statisticsChartData, setStatisticsChartData] = useState([
+    {
+      name: 'Energy Consumed',
+      data: [],
+    },
+    {
+      name: 'Energy Generation',
+      data: [],
+    },
+  ])
   const energyGenerationSeries = [
     {
       name: 'Kwh',
       data: energyGeneration
-        ? energyGeneration.map((data, key) => Math.round(data?.energy))
+        ? energyGeneration.map((data, key) => Math.round(data?.daily_energy))
         : [],
     },
   ]
-  const energyConsumedAndGeneratedSeries = [
-    {
-      name: 'Energy Consumed',
-      align: 'top',
-      data: energyStatistics
-        ? energyStatistics.map((data, key) => data?.energy)
-        : [],
-    },
-    {
-      name: ' Energy Generated',
-      data: energyGeneration
-        ? energyGeneration.map((data, key) => data?.energy)
-        : [],
-    },
-  ]
+  useEffect(() => {
+    if (energyStatisticsLoading) return
+    setStatisticsChartData(energyStatistics)
+  }, [energyStatistics])
 
   return (
     <section className={classes.Shs}>
@@ -77,7 +78,7 @@ const Shs = ({
                 <Loading data={'energy chart'} />
               ) : (
                 <ShsChart
-                  series={energyConsumedAndGeneratedSeries}
+                  series={statisticsChartData}
                   type="area"
                   title="Energy Consumed VS Energy Generated"
                   // categories={[
@@ -128,7 +129,7 @@ const Shs = ({
             <div className={classes.Shs__Generation}>
               <div className={classes.Shs__GenerationHeader}>
                 <h1>
-                  Energy Generation <span>(kWh)</span>
+                  Average Panel Load <span>(kWh)</span>
                 </h1>
                 <Tag
                   key={'1'}
@@ -146,7 +147,7 @@ const Shs = ({
               </div>
 
               {energyGenerationLoading ? (
-                <Loading data={'energy generated'} />
+                <Loading data={'Average Panel generated'} />
               ) : (
                 <ShsChart
                   series={energyGenerationSeries}
@@ -155,10 +156,11 @@ const Shs = ({
                   categories={
                     energyGeneration
                       ? energyGeneration.map((data, key) => {
-                          const hour = new Date(data?.hour)
-                          return hour.toLocaleTimeString('en-US', {
-                            hour12: true,
-                            hour: 'numeric',
+                          const hour = new Date(data?.created_at__date)
+                          return hour.toDateString('en-US', {
+                            // hour12: true,
+                            // hour: 'numeric',
+                            day: 'numeric',
                           })
                         })
                       : []

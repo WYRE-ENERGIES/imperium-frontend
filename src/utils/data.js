@@ -141,11 +141,16 @@ export const batteryTableData = [
 ]
 
 export const panelColumns = [
+  // {
+  //   title: 'Date',
+  //   dataIndex: 'date',
+  //   key: 'date',
+  //   render: (val) => (val ? new Date(val).toLocaleDateString() : ''),
+  // },
   {
-    title: 'Date',
-    dataIndex: 'date',
-    key: 'date',
-    render: (val) => (val ? new Date(val).toLocaleDateString() : ''),
+    title: 'Device Name',
+    dataIndex: 'device_name',
+    key: 'device_name',
   },
   {
     title: 'Panel Voltage (V)',
