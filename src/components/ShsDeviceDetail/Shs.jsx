@@ -39,7 +39,7 @@ const Shs = ({
   ])
   const energyGenerationSeries = [
     {
-      name: 'Kwh',
+      name: 'kWh',
       data: energyGeneration
         ? energyGeneration.map((data, key) => Math.round(data?.daily_energy))
         : [],
@@ -168,7 +168,7 @@ const Shs = ({
                   colors="#497A38"
                   opacity={0.9}
                   dataLabels={{
-                    enabled: true,
+                    enabled: false,
                     position: 'top',
                     style: {
                       fontSize: '14px',
@@ -180,7 +180,7 @@ const Shs = ({
                       barHeight: '7%',
                       borderRadius: 7,
                       borderRadiusApplication: 'end',
-                      columnWidth: '100px',
+                      columnWidth: '60px',
                       dataLabels: {
                         enabled: false,
                         position: 'top',

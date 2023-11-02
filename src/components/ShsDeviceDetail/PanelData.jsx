@@ -33,7 +33,7 @@ const PanelData = ({ panel }) => {
                   {' '}
                   <ThunderboltOutlined style={{ color: '#EAAA08' }} size={20} />
                 </p>
-                <p>{panel?.panel_kwh} kwh</p>
+                <p>{panel?.panel_kwh} kWh</p>
               </div>
             </div>
           </Col>
