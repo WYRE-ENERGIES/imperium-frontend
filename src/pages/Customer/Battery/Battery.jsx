@@ -26,10 +26,10 @@ import { dateTimeConverter } from '../../../utils/helpers'
 
 const columns = [
   {
-    title: 'Date',
-    dataIndex: 'created_at',
-    key: 'created_at',
-    render: (value) => dateTimeConverter(value),
+    title: 'Device Name',
+    dataIndex: 'shs_name',
+    key: 'shs_name',
+    // render: (value) => dateTimeConverter(value),
   },
   {
     title: 'Battery Health',
@@ -56,23 +56,23 @@ const columns = [
     },
   },
   {
-    title: 'Battery Voltage',
+    title: 'Battery Voltage (V)',
     key: 'battery_voltage',
     dataIndex: 'battery_voltage',
-    render: (value) => `${value?.toLocaleString()} V`,
+    render: (value) => `${value?.toLocaleString()}`,
   },
 
   {
-    title: 'Battery Current',
+    title: 'Battery Current (A)',
     key: 'battery_current',
     dataIndex: 'battery_current',
-    render: (value) => `${value?.toLocaleString()} A`,
+    render: (value) => `${value?.toLocaleString()}`,
   },
   {
     title: 'Charging Source',
-    key: 'source',
-    dataIndex: 'source',
-    render: (value) => value?.toLocaleString(),
+    key: 'charging_source',
+    dataIndex: 'charging_source',
+    // render: (value) => value?.toLocaleString(),
   },
 ]
 
