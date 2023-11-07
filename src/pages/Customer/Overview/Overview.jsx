@@ -94,8 +94,9 @@ const Overview = () => {
           title: 'Total Energy Generation',
           icon: EnergyWidgetIcon,
           value:
-            parseFloat(analyticsData?.total_installed_capacity?.toFixed(1)) ||
-            0,
+            parseFloat(
+              analyticsData?.total_installed_capacity?.toFixed(1),
+            )?.toLocaleString() || 0,
           valueCurrency: 'kWh',
           range: 'For the year',
         },
@@ -104,7 +105,9 @@ const Overview = () => {
           icon: SEnergyWidgetIcon,
           title: 'Total Energy Consumption',
           value:
-            parseFloat(analyticsData?.total_energy_consumed?.toFixed(1)) || 0,
+            parseFloat(
+              analyticsData?.total_energy_consumed?.toFixed(1),
+            )?.toLocaleString() || 0,
           valueCurrency: 'kWh',
           range: 'For the year',
         },

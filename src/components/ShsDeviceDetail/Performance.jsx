@@ -84,7 +84,7 @@ const Performance = ({ performanceLoading, performance }) => {
                     <small>System Load</small>
                     <p>
                       {performance?.system_load}%{' '}
-                      <small style={{ color: '#ABABAB' }}>(36 kw)</small>
+                      <small style={{ color: '#ABABAB' }}>(36 kW)</small>
                     </p>
                   </div>
                   <div>
@@ -102,7 +102,7 @@ const Performance = ({ performanceLoading, performance }) => {
                   <div>
                     <small>Power Usage Today</small>
                     <p>
-                      {performance?.power_usage_today} kwh
+                      {performance?.power_usage_today} kWh
                       <span>
                         <span>
                           <BiTrendingUp />+ 2.0 %

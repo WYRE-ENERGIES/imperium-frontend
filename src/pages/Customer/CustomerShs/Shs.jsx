@@ -138,7 +138,7 @@ const Shs = () => {
               style={{ margin: '-40px 0 0 1px', width: '20px' }}
             />
           </div>
-          <PowerSwitch device_id={id} user={'client'} />
+          {/* <PowerSwitch device_id={id} user={'client'} /> */}
         </section>
         <section className={classes.Shs__EnergyPerfomance}>
           <div>
@@ -209,7 +209,7 @@ const Shs = () => {
                             <p>
                               {performance?.system_load}%{' '}
                               <small style={{ color: '#ABABAB' }}>
-                                (36 kw)
+                                (36 kW)
                               </small>
                             </p>
                           </div>
@@ -228,7 +228,7 @@ const Shs = () => {
                           <div>
                             <small>Power Usage Today</small>
                             <p>
-                              {performance?.power_usage_today} kwh
+                              {performance?.power_usage_today} kWh
                               <span>
                                 <span>
                                   <BiTrendingUp />+ 2.0 %
@@ -327,7 +327,7 @@ const Shs = () => {
                 type="bar"
                 options={{
                   dataLabels: {
-                    enabled: true,
+                    enabled: false,
                     position: 'top',
                     style: {
                       fontSize: '12px',
@@ -361,7 +361,7 @@ const Shs = () => {
                       barHeight: '7%',
                       borderRadius: 7,
                       borderRadiusApplication: 'end',
-                      columnWidth: '70px',
+                      columnWidth: '60px',
                       dataLabels: {
                         enabled: false,
                         position: 'top',
@@ -371,10 +371,11 @@ const Shs = () => {
                   xaxis: {
                     categories: energyGeneration
                       ? energyGeneration.map((data, key) => {
-                          const hour = new Date(data?.hour)
-                          return hour.toLocaleTimeString('en-US', {
-                            hour12: true,
-                            hour: 'numeric',
+                          const hour = new Date(data?.created_at__date)
+                          return hour.toDateString('en-US', {
+                            // hour12: true,
+                            // hour: 'numeric',
+                            day: 'numeric',
                           })
                         })
                       : [],
@@ -393,10 +394,10 @@ const Shs = () => {
                 }}
                 series={[
                   {
-                    name: 'Kwh',
+                    name: 'kWh',
                     data: energyGeneration
                       ? energyGeneration.map((data, key) =>
-                          Math.round(data?.energy),
+                          Math.round(data?.daily_energy),
                         )
                       : [],
                   },
@@ -504,16 +505,11 @@ const Shs = () => {
                 series={[
                   {
                     name: 'Energy Consumed',
-                    align: 'top',
-                    data: energyStatistics
-                      ? energyStatistics.map((data, key) => data?.energy)
-                      : [],
+                    data: energyStatistics ? energyStatistics : [],
                   },
                   {
                     name: ' Energy Generated',
-                    data: energyGeneration
-                      ? energyGeneration.map((data, key) => data?.energy)
-                      : [],
+                    data: energyStatistics ? energyStatistics : [],
                   },
                 ]}
                 width="100%"
@@ -562,7 +558,7 @@ const Shs = () => {
                                     size={20}
                                   />
                                 </p>
-                                <p>{panel?.panel_kwh} kwh</p>
+                                <p>{panel?.panel_kwh} kWh</p>
                               </div>
                             </div>
                           </Col>
