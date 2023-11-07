@@ -25,11 +25,11 @@ const EnergyAnalytic = () => {
   const [chartData, setChartData] = useState([
     {
       name: 'Energy Consumed',
-      data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      data: [],
     },
     {
       name: 'Energy Generated',
-      data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      data: [],
     },
   ])
   const [search, setSearch] = useState('')
