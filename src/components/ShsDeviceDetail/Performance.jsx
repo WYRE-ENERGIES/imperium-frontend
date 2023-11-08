@@ -102,7 +102,8 @@ const Performance = ({ performanceLoading, performance }) => {
                   <div>
                     <small>Power Usage Today</small>
                     <p>
-                      {performance?.power_usage_today} kWh
+                      {performance?.power_usage_today.toLocaleString('us-US')}{' '}
+                      kWh
                       <span>
                         <span>
                           <BiTrendingUp />+ 2.0 %

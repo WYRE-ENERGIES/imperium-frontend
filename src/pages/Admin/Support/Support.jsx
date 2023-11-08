@@ -77,6 +77,16 @@ const Support = () => {
       render: (text) => `#${text}`,
     },
     {
+      title: 'Client Name',
+      dataIndex: 'client',
+      key: 'client',
+    },
+    {
+      title: 'User Name',
+      dataIndex: 'user',
+      key: 'user',
+    },
+    {
       title: 'Subject',
       dataIndex: 'subject',
       key: 'subject',

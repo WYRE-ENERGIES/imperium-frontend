@@ -26,6 +26,7 @@ import {
 import { useEffect } from 'react'
 import Loading from '../../../components/Loading/Loading'
 import { getItemFromLocalStorage } from '../../../utils/helpers'
+import { getChartCategory } from '../../../components/Charts/data'
 
 const DeviceInfo = ({ data }) => {
   return (
@@ -80,6 +81,16 @@ const Shs = () => {
   const [panels, setPanels] = useState([])
   const [performance, setPerformance] = useState('')
   const [client, setclient] = useState('---')
+  const [clientStatChartData, setClientStatChartData] = useState([
+    {
+      name: 'Energy Consumed',
+      data: [],
+    },
+    {
+      name: 'Energy Generation',
+      data: [],
+    },
+  ])
   const { data: energyGeneration, isLoading: energyGenerationLoading } =
     useGetCustomerEnergyGenerationQuery({ id: id, client_id: client_id })
 
@@ -110,6 +121,10 @@ const Shs = () => {
     setPerformance(performanceData)
     setclient(performanceData?.device_details.device_name)
   }, [performanceData])
+  useEffect(() => {
+    if (energyStatisticsLoading) return
+    setClientStatChartData(energyStatistics)
+  }, [energyStatistics])
 
   const deviceDetails = [
     {
@@ -228,7 +243,10 @@ const Shs = () => {
                           <div>
                             <small>Power Usage Today</small>
                             <p>
-                              {performance?.power_usage_today} kWh
+                              {performance?.power_usage_today.toLocaleString(
+                                'us-US',
+                              )}{' '}
+                              kWh
                               <span>
                                 <span>
                                   <BiTrendingUp />+ 2.0 %
@@ -458,20 +476,37 @@ const Shs = () => {
                   },
                   colors: ['#C9E00C', '#5C9D48'],
                   xaxis: {
-                    categories: [
-                      'Jan',
-                      'feb',
-                      'Mar',
-                      'Apr',
-                      'May',
-                      'Jun',
-                      'Jul',
-                      'Aug',
-                      'Sep',
-                      'Oct',
-                      'Nov',
-                      'Dec',
-                    ],
+                    // categories: [
+                    //   'Jan',
+                    //   'feb',
+                    //   'Mar',
+                    //   'Apr',
+                    //   'May',
+                    //   'Jun',
+                    //   'Jul',
+                    //   'Aug',
+                    //   'Sep',
+                    //   'Oct',
+                    //   'Nov',
+                    //   'Dec',
+                    // ],
+                    categories: getChartCategory(
+                      [
+                        'Jan',
+                        'Feb',
+                        'Mar',
+                        'Apr',
+                        'May',
+                        'Jun',
+                        'Jul',
+                        'Aug',
+                        'Sept',
+                        'Oct',
+                        'Nov',
+                        'Dec',
+                      ],
+                      new Date().getMonth() + 1,
+                    ),
                     title: {
                       text: 'Month',
                       offsetX: 0,
@@ -502,16 +537,7 @@ const Shs = () => {
                   },
                 }}
                 type="area"
-                series={[
-                  {
-                    name: 'Energy Consumed',
-                    data: energyStatistics ? energyStatistics : [],
-                  },
-                  {
-                    name: ' Energy Generated',
-                    data: energyStatistics ? energyStatistics : [],
-                  },
-                ]}
+                series={clientStatChartData}
                 width="100%"
               />
             </div>
