@@ -156,7 +156,9 @@ const VoltageCurrent = () => {
       icon: SunWidgetIcon,
       title: 'Voltage',
       range: formatLabel(filter),
-      value: analytics?.voltage ? analytics?.voltage?.toFixed(2) : 0,
+      value: analytics?.voltage
+        ? parseFloat(analytics?.voltage?.toFixed(1))?.toLocaleString()
+        : 0,
       valueCurrency: 'V',
     },
     {
@@ -164,7 +166,9 @@ const VoltageCurrent = () => {
       icon: SunWidgetIcon,
       title: 'Current',
       range: formatLabel(filter),
-      value: analytics?.current ? analytics?.current?.toFixed(2) : 0,
+      value: analytics?.current
+        ? parseFloat(analytics?.current?.toFixed(1))?.toLocaleString()
+        : 0,
       valueCurrency: 'A',
     },
     {
@@ -172,7 +176,9 @@ const VoltageCurrent = () => {
       icon: EnergyWidgetIcon,
       title: 'Power Demand',
       range: formatLabel(filter),
-      value: analytics?.energy ? analytics?.energy?.toFixed(2) : 0,
+      value: analytics?.energy
+        ? parseFloat(analytics?.energy?.toFixed(1))?.toLocaleString()
+        : 0,
       valueCurrency: 'kW',
     },
   ].map((widget) => (
@@ -250,7 +256,7 @@ const VoltageCurrent = () => {
               Energy Generation vs Energy Consumption
             </h1>
             <Button className={classes.Overview__chartHeaderBtn}>
-              <b>View report</b>
+              <b>Download report</b>
             </Button>
           </div>
           {statisticsisLoading ? (

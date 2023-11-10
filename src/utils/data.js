@@ -25,16 +25,18 @@ export const energyAnalyticColumns = [
     render: (value) => new Date(value).toDateString(),
   },
   {
-    title: 'Energy Consumed',
+    title: 'Energy Consumed (kWh)',
     key: 'energy_consumed',
     dataIndex: 'energy_consumed',
-    render: (value) => `${parseFloat(value?.toLocaleString())?.toFixed(1)} kWh`,
+    render: (value) =>
+      `${value?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`,
   },
   {
-    title: 'Energy Generated',
+    title: 'Energy Generated (kWh)',
     key: 'energy_generated',
     dataIndex: 'energy_generated',
-    render: (value) => `${parseFloat(value?.toLocaleString())?.toFixed(1)} kWh`,
+    render: (value) =>
+      `${value?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`,
   },
 ]
 
@@ -156,25 +158,29 @@ export const panelColumns = [
     title: 'Panel Voltage (V)',
     key: 'total_panel_voltage',
     dataIndex: 'total_panel_voltage',
-    render: (value) => `${parseFloat(value.toLocaleString()).toFixed(2)}`,
+    render: (value) =>
+      `${value?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`,
   },
   {
     title: 'Panel Current (A)',
     key: 'total_panel_current',
     dataIndex: 'total_panel_current',
-    render: (value) => `${parseFloat(value.toLocaleString()).toFixed(2)}`,
+    render: (value) =>
+      `${value?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`,
   },
   {
     title: 'Panel Power (kW)',
     key: 'total_panel_power',
     dataIndex: 'total_panel_power',
-    render: (value) => `${parseFloat(value.toLocaleString()).toFixed(2)}`,
+    render: (value) =>
+      `${value?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`,
   },
   {
     title: 'Panel Total Energy (kWh)',
     key: 'total_panel_energy',
     dataIndex: 'total_panel_energy',
-    render: (value) => `${parseFloat(value).toFixed(2)}`,
+    render: (value) =>
+      `${value?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`,
   },
 ]
 
@@ -202,13 +208,14 @@ export const adminEnergyAnalyticColumns = [
           alignItems: 'center',
         }}
       >
-        Energy Consumed
+        Energy Consumed (kWh)
         <TbBoltOff style={{ marginLeft: '5px', color: '#497A38' }} size={18} />
       </span>
     ),
     key: 'energy_consumed',
     dataIndex: 'energy_consumed',
-    render: (value) => `${parseFloat(value).toFixed(2)} kWh`,
+    render: (value) =>
+      `${value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`,
   },
   {
     title: (
@@ -218,7 +225,7 @@ export const adminEnergyAnalyticColumns = [
           alignItems: 'center',
         }}
       >
-        Energy Generated
+        Energy Generated (kWh)
         <TbActivityHeartbeat
           style={{ marginLeft: '5px', color: '#497A38' }}
           size={18}
@@ -227,7 +234,8 @@ export const adminEnergyAnalyticColumns = [
     ),
     key: 'energy_generated',
     dataIndex: 'energy_generated',
-    render: (value) => `${parseFloat(value).toFixed(2)} kWh`,
+    render: (value) =>
+      `${value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`,
   },
   {
     title: (
@@ -237,7 +245,7 @@ export const adminEnergyAnalyticColumns = [
           alignItems: 'center',
         }}
       >
-        Energy Difference
+        Energy Difference (kWh)
         <RiseOutlined
           style={{ marginLeft: '5px', color: '#497A38' }}
           size={18}
@@ -246,6 +254,7 @@ export const adminEnergyAnalyticColumns = [
     ),
     key: 'shs_capacity',
     dataIndex: 'shs_capacity',
-    render: (value) => `${parseFloat(value).toFixed(2)} kWh`,
+    render: (value) =>
+      `${value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`,
   },
 ]
