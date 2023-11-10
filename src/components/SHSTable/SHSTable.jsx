@@ -17,13 +17,21 @@ const columns = [
     title: 'Energy Consumed (kWh)',
     key: 'energy_consumed',
     dataIndex: 'energy_consumed',
-    render: (value) => (0 + value).toFixed(2),
+    render: (value) =>
+      (0 + value)
+        .toFixed(2)
+        .toString()
+        .replace(/\B(?=(\d{3})+(?!\d))/g, ','),
   },
   {
     title: 'Energy Generated (kWh)',
     key: 'energy_generated',
     dataIndex: 'energy_generated',
-    render: (value) => (0 + value).toFixed(2),
+    render: (value) =>
+      (0 + value)
+        .toFixed(2)
+        .toString()
+        .replace(/\B(?=(\d{3})+(?!\d))/g, ','),
   },
   {
     title: 'Location',

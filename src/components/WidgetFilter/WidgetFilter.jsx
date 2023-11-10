@@ -41,7 +41,7 @@ const WidgetFilter = ({
   setSectorId,
   setRegionName,
   show = true,
-  showDate = true,
+  showDate = false,
 }) => {
   let sectors = []
   let regions = []

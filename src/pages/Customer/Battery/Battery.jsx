@@ -26,10 +26,9 @@ import { dateTimeConverter } from '../../../utils/helpers'
 
 const columns = [
   {
-    title: 'Device Name',
+    title: 'SHS Name',
     dataIndex: 'shs_name',
     key: 'shs_name',
-    // render: (value) => dateTimeConverter(value),
   },
   {
     title: 'Battery Health',
@@ -59,20 +58,21 @@ const columns = [
     title: 'Battery Voltage (V)',
     key: 'battery_voltage',
     dataIndex: 'battery_voltage',
-    render: (value) => `${value?.toLocaleString()}`,
+    render: (value) =>
+      `${value?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`,
   },
 
   {
     title: 'Battery Current (A)',
     key: 'battery_current',
     dataIndex: 'battery_current',
-    render: (value) => `${value?.toLocaleString()}`,
+    render: (value) =>
+      `${value?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`,
   },
   {
     title: 'Charging Source',
     key: 'charging_source',
     dataIndex: 'charging_source',
-    // render: (value) => value?.toLocaleString(),
   },
 ]
 
@@ -113,8 +113,8 @@ const Battery = () => {
           title: 'Battery Status',
           range: 'For the year',
           value: 'Good',
-          valuePercentage: analyticsData?.kw
-            ? analyticsData?.kw.toLocaleString()
+          valuePercentage: analyticsData?.battery_status
+            ? analyticsData?.battery_status.toLocaleString()
             : 98,
         },
         {
@@ -122,8 +122,10 @@ const Battery = () => {
           icon: SEnergyWidgetIcon,
           title: 'Battery Voltage',
           range: 'For the year',
-          value: analyticsData?.voltage
-            ? parseFloat(analyticsData?.voltage?.toFixed(1)).toLocaleString()
+          value: analyticsData?.battery_voltage
+            ? parseFloat(
+                analyticsData?.battery_voltage?.toFixed(2),
+              ).toLocaleString()
             : 0,
           valueCurrency: 'V',
         },
@@ -132,8 +134,10 @@ const Battery = () => {
           icon: HomeWidgetIcon,
           title: 'Battery Current',
           range: 'For the year',
-          value: analyticsData?.current
-            ? parseFloat(analyticsData?.current?.toFixed(1)).toLocaleString()
+          value: analyticsData?.battery_current
+            ? parseFloat(
+                analyticsData?.battery_current?.toFixed(2),
+              ).toLocaleString()
             : 0,
           valueCurrency: 'A',
         },
@@ -158,7 +162,7 @@ const Battery = () => {
           <ShsCapacityDropdown setDeviceId={setDeviceId} />
         </section>
         <section className={classes.Battery__filters}>
-          <WidgetFilter show={false} selectFilterBy={setFilterBy} />
+          {/* <WidgetFilter show={false} selectFilterBy={setFilterBy} /> */}
         </section>
         <div className={classes.Battery__widgets}>{widgets}</div>
         <div className={classes.Battery__shsTable}>
