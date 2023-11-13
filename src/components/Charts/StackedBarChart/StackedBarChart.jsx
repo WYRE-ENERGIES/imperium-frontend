@@ -27,7 +27,6 @@ const StackedBarChart = ({
   yAxisTick,
   currentMonth,
 }) => {
-  console.log('current-month>>>>>>>>>>>', currentMonth)
   return (
     <div className={classes.StackedBarChart}>
       <h1>{title}</h1>

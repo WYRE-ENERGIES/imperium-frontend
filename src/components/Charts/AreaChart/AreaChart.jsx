@@ -1,6 +1,6 @@
 import Chart from 'react-apexcharts'
 import React from 'react'
-import { areaChartOptions, getChartCategory } from '../data'
+import { areaChartOptions, getChartCategory, getMonthFromDate } from '../data'
 import { chartLabelFormatter } from '../../../utils/helpers'
 
 const AreaChart = ({
@@ -19,7 +19,9 @@ const AreaChart = ({
   showYAxis,
   strokeWidth = 1,
   currentMonth,
+  monthData,
 }) => {
+  console.log('this is the usuhdsjhsijhdij', chartData)
   return (
     <div style={{ height: '100%' }}>
       <Chart
@@ -68,6 +70,9 @@ const AreaChart = ({
                     currentMonth,
                   )
                 : areaChartOptions.xaxis.categories,
+            }),
+            ...(monthData && {
+              categories: getMonthFromDate(monthData),
             }),
             style: {
               colors: axisColor,

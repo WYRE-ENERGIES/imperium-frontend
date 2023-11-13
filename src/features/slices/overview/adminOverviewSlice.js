@@ -176,30 +176,32 @@ export const adminOverviewSlice = apiSlice.injectEndpoints({
           data: [],
         }
 
-        const currentDateMonth = new Date().getMonth() + 1
-        Object.values(response[0]).forEach((stat, index) => {
-          if (index < 12) {
-            const { energy_generated, energy_consumed } = stat
+        const dateInformation = []
+        const newObject = []
 
-            if (index + 1 > currentDateMonth) {
-              energyGenerated.data.splice(
-                index - currentDateMonth,
-                0,
-                Math.floor(energy_generated) ?? 0,
-              )
-              energyConsumed.data.splice(
-                index - currentDateMonth,
-                0,
-                Math.floor(energy_consumed) ?? 0,
-              )
-            } else {
-              energyGenerated.data.push(Math.floor(energy_generated) ?? 0)
-              energyConsumed.data.push(Math.floor(energy_consumed) ?? 0)
-            }
-          }
+        // generate the data
+        Object.entries(response[0]).forEach(([key, value], index) => {
+          const { energy_generated, energy_consumed } = value
+
+          newObject.push({
+            date: key,
+            energyGenerated: Math.floor(energy_generated) ?? 0,
+            energyConsumed: Math.floor(energy_consumed) ?? 0,
+          })
+        })
+        // sort the data
+        newObject.sort(function (a, b) {
+          // Turn your strings into dates, and then subtract them
+          // to get a value that is either negative, positive, or zero.
+          return new Date(a.date) - new Date(b.date)
+        })
+        newObject.forEach((eachData) => {
+          energyGenerated.data.push(Math.floor(eachData.energyGenerated) ?? 0)
+          energyConsumed.data.push(Math.floor(energyConsumed) ?? 0)
+          dateInformation.push(eachData.date)
         })
 
-        return [energyGenerated, energyConsumed]
+        return [energyGenerated, energyConsumed, dateInformation, newObject]
       },
     }),
     getMapData: builder.query({
