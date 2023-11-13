@@ -51,6 +51,21 @@ export const apexChartOptions = {
   },
 }
 
+const monthArray = [
+  'Jan',
+  'Feb',
+  'Mar',
+  'Apr',
+  'May',
+  'Jun',
+  'Jul',
+  'Aug',
+  'Sep',
+  'Oct',
+  'Nov',
+  'Dec',
+]
+
 export const getChartCategory = (categories, date) => {
   const newCategory = []
   categories.forEach((value, index) => {
@@ -62,6 +77,15 @@ export const getChartCategory = (categories, date) => {
   })
 
   return newCategory
+}
+export const getMonthFromDate = (dates) => {
+  const newMonth = []
+  dates.forEach((value) => {
+    const dateMonth = new Date(value).getMonth()
+    newMonth.push(monthArray[dateMonth])
+  })
+
+  return newMonth
 }
 
 export const groupedChartOptions = {
@@ -79,20 +103,7 @@ export const groupedChartOptions = {
     },
   },
   xaxis: {
-    categories: [
-      'Jan',
-      'Feb',
-      'Mar',
-      'Apr',
-      'May',
-      'Jun',
-      'Jul',
-      'Aug',
-      'Sep',
-      'Oct',
-      'Nov',
-      'Dec',
-    ],
+    categories: monthArray,
     lines: {
       show: false,
     },
@@ -123,20 +134,7 @@ export const areaChartOptions = {
     curve: 'smooth',
   },
   xaxis: {
-    categories: [
-      'Jan',
-      'Feb',
-      'Mar',
-      'Apr',
-      'May',
-      'Jun',
-      'Jul',
-      'Aug',
-      'Sept',
-      'Oct',
-      'Nov',
-      'Dec',
-    ],
+    categories: monthArray,
     axisTicks: {
       show: false,
     },
@@ -233,20 +231,7 @@ export const barChartOptions = {
     },
   },
   xaxis: {
-    categories: [
-      'Jan',
-      'Feb',
-      'Mar',
-      'Apr',
-      'May',
-      'Jun',
-      'Jul',
-      'Aug',
-      'Sept',
-      'Oct',
-      'Nov',
-      'Dec',
-    ],
+    categories: monthArray,
     axisBorder: {
       show: false,
     },

@@ -235,6 +235,11 @@ const Overview = () => {
     }
   }, [regionData])
 
+  console.log(
+    'this is the chart data and here we are ==========>>>>',
+    energyData,
+  )
+
   useEffect(() => {
     if (isAnalyticsFetching) return
     setWidgets(
@@ -554,7 +559,7 @@ const Overview = () => {
               showGridY={true}
               showGrid={true}
               showYAxis={false}
-              currentMonth={new Date().getMonth() + 1}
+              monthData={areaChartData[2]}
             />
           )}
         </div>
