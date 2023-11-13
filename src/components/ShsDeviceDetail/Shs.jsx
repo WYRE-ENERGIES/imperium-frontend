@@ -157,11 +157,7 @@ const Shs = ({
                     energyGeneration
                       ? energyGeneration.map((data, key) => {
                           const hour = new Date(data?.created_at__date)
-                          return hour.toDateString('en-US', {
-                            // hour12: true,
-                            // hour: 'numeric',
-                            day: 'numeric',
-                          })
+                          return hour.toString().split(' ')[0]
                         })
                       : []
                   }
@@ -180,7 +176,7 @@ const Shs = ({
                       barHeight: '7%',
                       borderRadius: 7,
                       borderRadiusApplication: 'end',
-                      columnWidth: '60px',
+                      columnWidth: '20px',
                       dataLabels: {
                         enabled: false,
                         position: 'top',

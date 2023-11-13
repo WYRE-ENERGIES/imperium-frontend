@@ -342,7 +342,7 @@ const VoltageCurrent = () => {
               showGridY={true}
               showGrid={true}
               showYAxis={false}
-              currentMonth={new Date().getMonth() + 1}
+              monthData={areaChartData[2]}
             />
           ) : (
             'No data records found'
