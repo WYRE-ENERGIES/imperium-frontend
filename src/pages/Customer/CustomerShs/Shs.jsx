@@ -341,83 +341,89 @@ const Shs = () => {
                   Today
                 </Tag>
               </div>
-              <Chart
-                type="bar"
-                options={{
-                  dataLabels: {
-                    enabled: false,
-                    position: 'top',
-                    style: {
-                      fontSize: '12px',
-                      fontWeight: 'bold',
-                    },
-                    background: {
-                      enabled: true,
-                      foreColor: '#497A38',
-                      padding: 4,
-                      opacity: 1,
-                      borderColor: '#fff',
-                      borderRadius: '100px',
-                    },
-                  },
-                  fill: {
-                    colors: undefined,
-                    opacity: 0.9,
-                    type: 'solid',
-                  },
-                  grid: {
-                    show: true,
-                    padding: {
-                      top: 0,
-                      right: 0,
-                      bottom: 0,
-                      left: 0,
-                    },
-                  },
-                  plotOptions: {
-                    bar: {
-                      barHeight: '7%',
-                      borderRadius: 7,
-                      borderRadiusApplication: 'end',
-                      columnWidth: '20px',
-                      dataLabels: {
-                        enabled: false,
-                        position: 'top',
+              {energyGenerationLoading ? (
+                <Loading data="Average panel load chart" />
+              ) : energyGeneration ? (
+                <Chart
+                  type="bar"
+                  options={{
+                    dataLabels: {
+                      enabled: false,
+                      position: 'top',
+                      style: {
+                        fontSize: '12px',
+                        fontWeight: 'bold',
+                      },
+                      background: {
+                        enabled: true,
+                        foreColor: '#497A38',
+                        padding: 4,
+                        opacity: 1,
+                        borderColor: '#fff',
+                        borderRadius: '100px',
                       },
                     },
-                  },
-                  xaxis: {
-                    categories: energyGeneration
-                      ? energyGeneration.map((data, key) => {
-                          const hour = new Date(data?.created_at__date)
-                          return hour.toString().split(' ')[0]
-                        })
-                      : [],
-                  },
-                  yaxis: {
-                    show: false,
-                  },
-                  colors: ['#497A38'],
-                  chart: {
-                    id: 'basic-bar',
-                    fontFamily: 'baloo 2',
-                    toolbar: {
+                    fill: {
+                      colors: undefined,
+                      opacity: 0.9,
+                      type: 'solid',
+                    },
+                    grid: {
+                      show: true,
+                      padding: {
+                        top: 0,
+                        right: 0,
+                        bottom: 0,
+                        left: 0,
+                      },
+                    },
+                    plotOptions: {
+                      bar: {
+                        barHeight: '7%',
+                        borderRadius: 7,
+                        borderRadiusApplication: 'end',
+                        columnWidth: '20px',
+                        dataLabels: {
+                          enabled: false,
+                          position: 'top',
+                        },
+                      },
+                    },
+                    xaxis: {
+                      categories: energyGeneration
+                        ? energyGeneration.map((data, key) => {
+                            const hour = new Date(data?.created_at__date)
+                            return hour.toString().split(' ')[0]
+                          })
+                        : [],
+                    },
+                    yaxis: {
                       show: false,
                     },
-                  },
-                }}
-                series={[
-                  {
-                    name: 'kWh',
-                    data: energyGeneration
-                      ? energyGeneration.map((data, key) =>
-                          Math.round(data?.daily_energy),
-                        )
-                      : [],
-                  },
-                ]}
-                height="90%"
-              />
+                    colors: ['#497A38'],
+                    chart: {
+                      id: 'basic-bar',
+                      fontFamily: 'baloo 2',
+                      toolbar: {
+                        show: false,
+                      },
+                    },
+                  }}
+                  series={[
+                    {
+                      name: 'kWh',
+                      data: energyGeneration
+                        ? energyGeneration.map((data, key) =>
+                            Math.round(data?.daily_energy),
+                          )
+                        : [],
+                    },
+                  ]}
+                  height="90%"
+                />
+              ) : (
+                'No Data record found'
+              )}
             </div>
           </div>
         </section>
@@ -425,117 +431,109 @@ const Shs = () => {
           <div>
             <div className={classes.Shs__EnergyChart}>
               <div className={classes.Shs__EnergyChartShowMore}></div>
-              <Chart
-                height="100%"
-                options={{
-                  title: {
-                    text: 'Energy Consumed VS Energy Generated',
-                    align: 'left',
-                    margin: 10,
-                    offsetX: 10,
-                    offsetY: 20,
-                    floating: false,
-                    style: {
-                      fontSize: '18px',
-                      fontWeight: '500',
-                      fontFamily: undefined,
-                      color: '#263238',
+              {energyStatisticsLoading ? (
+                <Loading data="Energy statistics chart" />
+              ) : energyStatistics ? (
+                <Chart
+                  height="100%"
+                  options={{
+                    title: {
+                      text: 'Energy Consumed VS Energy Generated',
+                      align: 'left',
+                      margin: 10,
+                      offsetX: 10,
+                      offsetY: 20,
+                      floating: false,
+                      style: {
+                        fontSize: '18px',
+                        fontWeight: '500',
+                        fontFamily: undefined,
+                        color: '#263238',
+                      },
                     },
-                  },
-                  legend: {
-                    fontSize: '14px',
-                    position: 'top',
-                    horizontalAlign: 'right',
-                  },
-                  fill: {
-                    opacity: 0.1,
-                    gradient: {
-                      shadeIntensity: 1,
-                      inverseColors: false,
-                      opacityFrom: 0.45,
-                      opacityTo: 0.05,
-                      stops: [20, 100, 100, 100],
+                    legend: {
+                      fontSize: '14px',
+                      position: 'top',
+                      horizontalAlign: 'right',
                     },
-                  },
+                    fill: {
+                      opacity: 0.1,
+                      gradient: {
+                        shadeIntensity: 1,
+                        inverseColors: false,
+                        opacityFrom: 0.45,
+                        opacityTo: 0.05,
+                        stops: [20, 100, 100, 100],
+                      },
+                    },
 
-                  chart: {
-                    id: 'energy-bar',
-                    fontFamily: 'baloo 2',
-                    stacked: true,
-                    toolbar: {
-                      show: false,
+                    chart: {
+                      id: 'energy-bar',
+                      fontFamily: 'baloo 2',
+                      stacked: true,
+                      toolbar: {
+                        show: false,
+                      },
+                      type: 'area',
                     },
-                    type: 'area',
-                  },
-                  stroke: {
-                    curve: 'smooth',
-                  },
-                  colors: ['#C9E00C', '#5C9D48'],
-                  xaxis: {
-                    // categories: [
-                    //   'Jan',
-                    //   'feb',
-                    //   'Mar',
-                    //   'Apr',
-                    //   'May',
-                    //   'Jun',
-                    //   'Jul',
-                    //   'Aug',
-                    //   'Sep',
-                    //   'Oct',
-                    //   'Nov',
-                    //   'Dec',
-                    // ],
-                    categories: getChartCategory(
-                      [
-                        'Jan',
-                        'Feb',
-                        'Mar',
-                        'Apr',
-                        'May',
-                        'Jun',
-                        'Jul',
-                        'Aug',
-                        'Sept',
-                        'Oct',
-                        'Nov',
-                        'Dec',
-                      ],
-                      new Date().getMonth() + 1,
-                    ),
-                    title: {
-                      text: 'Month',
-                      offsetX: 0,
-                      offsetY: 100,
-                      style: {
-                        color: '#737373',
-                        fontSize: '12px',
-                        fontFamily: 'Baloo 2',
-                        fontWeight: 600,
+                    stroke: {
+                      curve: 'smooth',
+                    },
+                    colors: ['#C9E00C', '#5C9D48'],
+                    xaxis: {
+                      categories: getChartCategory(
+                        [
+                          'Jan',
+                          'Feb',
+                          'Mar',
+                          'Apr',
+                          'May',
+                          'Jun',
+                          'Jul',
+                          'Aug',
+                          'Sept',
+                          'Oct',
+                          'Nov',
+                          'Dec',
+                        ],
+                        new Date().getMonth() + 1,
+                      ),
+                      title: {
+                        text: 'Month',
+                        offsetX: 0,
+                        offsetY: 100,
+                        style: {
+                          color: '#737373',
+                          fontSize: '12px',
+                          fontFamily: 'Baloo 2',
+                          fontWeight: 600,
+                        },
                       },
                     },
-                  },
-                  yaxis: {
-                    title: {
-                      text: 'kWh',
-                      offsetX: 0,
-                      offsetY: 0,
-                      style: {
-                        color: '#737373',
-                        fontSize: '12px',
-                        fontFamily: 'Baloo 2',
-                        fontWeight: 600,
+                    yaxis: {
+                      title: {
+                        text: 'kWh',
+                        offsetX: 0,
+                        offsetY: 0,
+                        style: {
+                          color: '#737373',
+                          fontSize: '12px',
+                          fontFamily: 'Baloo 2',
+                          fontWeight: 600,
+                        },
                       },
                     },
-                  },
-                  dataLabels: {
-                    enabled: false,
-                  },
-                }}
-                type="area"
-                series={clientStatChartData}
-                width="100%"
-              />
+                    dataLabels: {
+                      enabled: false,
+                    },
+                  }}
+                  type="area"
+                  series={clientStatChartData}
+                  width="100%"
+                />
+              ) : (
+                'No data found'
+              )}
             </div>
           </div>
           <div>

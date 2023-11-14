@@ -20,6 +20,7 @@ import WidgetLoader from '../../../components/Widget/WidgetLoader/WidgetLoader'
 import classes from './EnergyAnalytic.module.scss'
 import { formatLabel } from '../../../utils/helpers'
 import useDebounce from '../../../hooks/useDebounce'
+import Loading from '../../../components/Loading/Loading'
 
 const EnergyAnalytic = () => {
   const [chartData, setChartData] = useState([
@@ -153,22 +154,28 @@ const EnergyAnalytic = () => {
           {isAnalyticsLoading ? <WidgetLoader /> : widgets}
         </div>
         <div className={classes.EnergyAnalytic__chart}>
-          <StackedBarChart
-            title="Energy Generation"
-            chartData={chartData}
-            colors={['#C9E00C', '#5C9D48']}
-            borderRadius={2}
-            columnWidth={40}
-            legendPosition="top"
-            legendHorizontalAlign="right"
-            yLabelTitle="kWh"
-            xLabelTitle="Month"
-            showGridY={true}
-            showGrid={true}
-            tickPlacement={'off'}
-            yAxisTick={false}
-            currentMonth={new Date().getMonth() + 1}
-          />
+          {isStatLoading ? (
+            <Loading data="Energy generation chart" />
+          ) : statData ? (
+            <StackedBarChart
+              title="Energy Generation"
+              chartData={chartData}
+              colors={['#C9E00C', '#5C9D48']}
+              borderRadius={2}
+              columnWidth={40}
+              legendPosition="top"
+              legendHorizontalAlign="right"
+              yLabelTitle="kWh"
+              xLabelTitle="Month"
+              showGridY={true}
+              showGrid={true}
+              tickPlacement={'off'}
+              yAxisTick={false}
+              currentMonth={new Date().getMonth() + 1}
+            />
+          ) : (
+            'No data found'
+          )}
         </div>
         <div className={classes.EnergyAnalytic__shsTable}>
           <SHSTableWithFilter
