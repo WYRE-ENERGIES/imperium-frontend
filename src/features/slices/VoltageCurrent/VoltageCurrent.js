@@ -1,6 +1,7 @@
 import { apiSlice } from '../../api/apiSlice'
 
 const BASE_URL = 'imperium-admin/list-voltage/'
+const BASE_URL_Downdload = 'imperium-admin/overview/'
 
 export const voltageCurrentSlice = apiSlice.injectEndpoints({
   endpoints: (build) => ({
@@ -16,6 +17,15 @@ export const voltageCurrentSlice = apiSlice.injectEndpoints({
     getAdminVoltageCurrentStatistics: build.query({
       query: () => {
         return `${BASE_URL}statistics/`
+      },
+      transformResponse: (response, meta, arg) => {
+        return response
+      },
+      transformErrorResponse: (response, meta, arg) => response,
+    }),
+    getAdminVoltageCurrentReportDownload: build.query({
+      query: () => {
+        return `${BASE_URL_Downdload}download_energy_csv/`
       },
       transformResponse: (response, meta, arg) => {
         return response
@@ -44,5 +54,6 @@ export const voltageCurrentSlice = apiSlice.injectEndpoints({
 export const {
   useGetAdminVoltageCurrentAnalyticsQuery,
   useGetAdminVoltageCurrentStatisticsQuery,
+  useGetAdminVoltageCurrentReportDownloadQuery,
   useGetAdminVoltageCurrentTableQuery,
 } = voltageCurrentSlice

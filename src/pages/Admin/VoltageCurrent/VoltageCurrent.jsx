@@ -5,6 +5,7 @@ import { Input, Space, Select, Tag, Button } from 'antd'
 
 import {
   useGetAdminVoltageCurrentAnalyticsQuery,
+  useGetAdminVoltageCurrentReportDownloadQuery,
   useGetAdminVoltageCurrentStatisticsQuery,
   useGetAdminVoltageCurrentTableQuery,
 } from '../../../features/slices/VoltageCurrent/VoltageCurrent'
@@ -54,7 +55,8 @@ const columns = [
     title: ' Power Demand (kW)',
     key: 'total_kw',
     dataIndex: 'total_kw',
-    render: (value) => value.toFixed(2),
+    // render: (value) => value.toFixed(2),
+    render: (value) => parseFloat(value?.toFixed(2))?.toLocaleString(),
   },
 ]
 
@@ -86,6 +88,10 @@ const VoltageCurrent = () => {
     },
   ])
 
+  const [downloadData, setDownloadData] = useState(
+    'Month-Year, Energy Generated, Energy Consumed',
+  )
+
   const {
     isFetching: isEnergyFetching,
     isError: isEnergyError,
@@ -104,6 +110,9 @@ const VoltageCurrent = () => {
 
   const { data: dataStatistics, isLoading: statisticsisLoading } =
     useGetAdminVoltageCurrentStatisticsQuery()
+
+  const { data: downloadCsv, isLoading: downloadCsvLoadingLoading } =
+    useGetAdminVoltageCurrentReportDownloadQuery()
 
   const {
     data: dataTable,
@@ -149,6 +158,10 @@ const VoltageCurrent = () => {
     }
     setAreaChartData(energyData)
   }, [isEnergyFetching, isEnergyError, energyData])
+
+  useEffect(() => {
+    setDownloadData(downloadCsv)
+  }, [downloadCsv])
 
   const widgets = [
     {

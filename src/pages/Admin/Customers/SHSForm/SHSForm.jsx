@@ -97,12 +97,17 @@ const AddSHSForm = ({ toggleModal }) => {
       const { data } = error
 
       if (data) {
-        setErr(`${Object.keys(data)[0]} : ${data[Object.keys(data)[0]]}`)
+        setErr(
+          `${Object.keys(data)[0]} : ${
+            data[Object.keys(data)[0]]?.message || data[Object.keys(data)[0]]
+          } `,
+        )
       } else {
         setErr('An Error occurred')
       }
     }
   }
+  console.log('Looking for Error-message>>>>', error)
 
   useEffect(() => {
     if (regionData && regionData.results) {
