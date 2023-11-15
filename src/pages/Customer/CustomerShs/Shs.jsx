@@ -397,6 +397,16 @@ const Shs = () => {
                           })
                         : [],
                     },
+                    tooltip: {
+                      y: {
+                        formatter: function (
+                          value,
+                          { series, seriesIndex, dataPointIndex, w },
+                        ) {
+                          return value.toLocaleString()
+                        },
+                      },
+                    },
                     yaxis: {
                       show: false,
                     },
@@ -525,6 +535,16 @@ const Shs = () => {
                     },
                     dataLabels: {
                       enabled: false,
+                    },
+                    tooltip: {
+                      y: {
+                        formatter: function (
+                          value,
+                          { series, seriesIndex, dataPointIndex, w },
+                        ) {
+                          return value.toLocaleString()
+                        },
+                      },
                     },
                   }}
                   type="area"
