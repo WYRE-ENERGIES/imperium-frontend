@@ -45,6 +45,16 @@ const ShsChart = ({
             stops: [20, 100, 100, 100],
           },
         },
+        tooltip: {
+          y: {
+            formatter: function (
+              value,
+              { series, seriesIndex, dataPointIndex, w },
+            ) {
+              return value.toLocaleString()
+            },
+          },
+        },
         plotOptions: { ...plotOptions },
         chart: {
           id: 'energy-bar',

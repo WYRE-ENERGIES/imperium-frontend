@@ -19,6 +19,7 @@ import WidgetFilter from '../../../components/WidgetFilter/WidgetFilter'
 import WidgetLoader from '../../../components/Widget/WidgetLoader/WidgetLoader'
 import classes from './Overview.module.scss'
 import { formatLabel, getItemFromLocalStorage } from '../../../utils/helpers'
+import Loading from '../../../components/Loading/Loading'
 
 const InstructionModal = lazy(() =>
   import('./InstructionModal/InstructionModal'),
@@ -183,23 +184,29 @@ const Overview = () => {
             <ShsDeviceMap isLoading={isMapFetching} data={mapData?.results} />
           </div>
           <div className={classes.Overview__chart}>
-            <StackedBarChart
-              title="Energy Generation vs Energy Consumption"
-              chartData={chartData}
-              colors={['#66AB4F', '#497A38']}
-              borderRadius={5}
-              columnWidth={40}
-              legendPosition="top"
-              legendHorizontalAlign="right"
-              yLabelTitle="kWh"
-              xLabelTitle="Month"
-              showGridX={true}
-              showGridY={true}
-              showGrid={true}
-              tickPlacement={'off'}
-              yAxisTick={false}
-              currentMonth={new Date().getMonth() + 1}
-            />
+            {isEnergyFetching ? (
+              <Loading data="Energy chart" />
+            ) : energyData ? (
+              <StackedBarChart
+                title="Energy Generation vs Energy Consumption"
+                chartData={chartData}
+                colors={['#66AB4F', '#497A38']}
+                borderRadius={5}
+                columnWidth={40}
+                legendPosition="top"
+                legendHorizontalAlign="right"
+                yLabelTitle="kWh"
+                xLabelTitle="Month"
+                showGridX={true}
+                showGridY={true}
+                showGrid={true}
+                tickPlacement={'off'}
+                yAxisTick={false}
+                currentMonth={new Date().getMonth() + 1}
+              />
+            ) : (
+              'No Data records'
+            )}
           </div>
           <div className={classes.Overview__shsTable}>
             <SHSTable
