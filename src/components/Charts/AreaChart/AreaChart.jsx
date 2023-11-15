@@ -21,7 +21,6 @@ const AreaChart = ({
   currentMonth,
   monthData,
 }) => {
-  console.log('this is the usuhdsjhsijhdij', chartData)
   return (
     <div style={{ height: '100%' }}>
       <Chart

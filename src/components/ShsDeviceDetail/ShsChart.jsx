@@ -88,6 +88,11 @@ const ShsChart = ({
         },
         yaxis: {
           show: yaxis,
+          labels: {
+            formatter: function (value) {
+              return Number(value) ? value.toLocaleString() : value
+            },
+          },
           title: {
             text: 'kWh',
             offsetX: 0,
