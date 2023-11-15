@@ -573,7 +573,7 @@ const Overview = () => {
         <div className={classes.Overview__bottom}>
           <div className={classes.Overview__bottomLeft}>
             <div className={classes.Overview__bottomChart}>
-              {!chartData ? (
+              {isEmissionFetching ? (
                 <Spin />
               ) : (
                 <Chart
