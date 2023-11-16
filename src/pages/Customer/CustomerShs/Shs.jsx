@@ -532,6 +532,11 @@ const Shs = () => {
                           fontWeight: 600,
                         },
                       },
+                      labels: {
+                        formatter: function (value) {
+                          return Number(value) ? value.toLocaleString() : value
+                        },
+                      },
                     },
                     dataLabels: {
                       enabled: false,

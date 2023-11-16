@@ -235,11 +235,6 @@ const Overview = () => {
     }
   }, [regionData])
 
-  console.log(
-    'this is the chart data and here we are ==========>>>>',
-    energyData,
-  )
-
   useEffect(() => {
     if (isAnalyticsFetching) return
     setWidgets(

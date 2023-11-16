@@ -133,3 +133,13 @@ export const clientDeviceSelectedGetter = (deviceList) => {
   }
   return deviceRes
 }
+
+export const downloadFile = (data, downloadName = 'raw_data.csv') => {
+  const url = window.URL.createObjectURL(new Blob([data]))
+  const link = document.createElement('a')
+  link.href = url
+  link.setAttribute('download', downloadName)
+  document.body.appendChild(link)
+
+  return link.click()
+}

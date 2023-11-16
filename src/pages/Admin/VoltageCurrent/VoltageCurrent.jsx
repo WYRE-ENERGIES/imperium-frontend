@@ -21,6 +21,7 @@ import classes from './VoltageCurrent.module.scss'
 import {
   DataStatistics,
   dateTimeConverter,
+  downloadFile,
   formatLabel,
 } from '../../../utils/helpers'
 import Loading from '../../../components/Loading/Loading'
@@ -28,6 +29,7 @@ import DataTable from '../../../components/Table/DataTable'
 import AreaChart from '../../../components/Charts/AreaChart/AreaChart'
 import { useGetOverviewEnergyDataQuery } from '../../../features/slices/overview/adminOverviewSlice'
 import { additionalOverviewProps } from '../../../components/Charts/data'
+import axios from 'axios'
 
 const columns = [
   {
@@ -77,6 +79,7 @@ const VoltageCurrent = () => {
   const [pageNum, setPageNum] = useState(1)
   const [search, setSearch] = useState('')
   const [table, setTable] = useState([])
+  const [downloadData, setDownloadData] = useState(null)
   const [areaChartData, setAreaChartData] = useState([
     {
       name: 'Energy Consumed',
@@ -88,9 +91,21 @@ const VoltageCurrent = () => {
     },
   ])
 
-  const [downloadData, setDownloadData] = useState(
-    'Month-Year, Energy Generated, Energy Consumed',
-  )
+  useEffect(() => {
+    if (!downloadData) {
+      axios
+        .get(
+          `${process.env.REACT_APP_API_BASE_URL}/imperium-admin/overview/download_energy_csv/`,
+        )
+        .then((res) => {
+          setDownloadData(res.data)
+        })
+    }
+  }, [])
+
+  const handleDownloadReport = () => {
+    downloadFile(downloadData, 'report.csv')
+  }
 
   const {
     isFetching: isEnergyFetching,
@@ -159,9 +174,7 @@ const VoltageCurrent = () => {
     setAreaChartData(energyData)
   }, [isEnergyFetching, isEnergyError, energyData])
 
-  useEffect(() => {
-    setDownloadData(downloadCsv)
-  }, [downloadCsv])
+  useEffect(() => {}, [downloadCsv])
 
   const widgets = [
     {
@@ -268,9 +281,14 @@ const VoltageCurrent = () => {
             <h1 style={{ fontWeight: 'heavy', fontSize: '22px' }}>
               Energy Generation vs Energy Consumption
             </h1>
-            <Button className={classes.Overview__chartHeaderBtn}>
-              <b>Download report</b>
-            </Button>
+            {downloadData && (
+              <Button
+                onClick={handleDownloadReport}
+                className={classes.Overview__chartHeaderBtn}
+              >
+                <b>Download report</b>
+              </Button>
+            )}
           </div>
           {statisticsisLoading ? (
             <Loading data={'Graph'} />
