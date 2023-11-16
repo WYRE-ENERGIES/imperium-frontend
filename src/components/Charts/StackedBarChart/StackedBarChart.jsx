@@ -46,6 +46,16 @@ const StackedBarChart = ({
               ...apexChartOptions.legend.labels,
             },
           },
+          tooltip: {
+            y: {
+              formatter: function (
+                value,
+                { series, seriesIndex, dataPointIndex, w },
+              ) {
+                return value.toLocaleString()
+              },
+            },
+          },
           plotOptions: {
             ...apexChartOptions.plotOptions,
             bar: {

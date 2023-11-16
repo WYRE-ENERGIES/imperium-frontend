@@ -60,6 +60,16 @@ const AreaChart = ({
             },
             axisTicks: axisTicks,
           },
+          tooltip: {
+            y: {
+              formatter: function (
+                value,
+                { series, seriesIndex, dataPointIndex, w },
+              ) {
+                return value.toLocaleString()
+              },
+            },
+          },
           xaxis: {
             ...areaChartOptions.xaxis,
             ...(currentMonth && {

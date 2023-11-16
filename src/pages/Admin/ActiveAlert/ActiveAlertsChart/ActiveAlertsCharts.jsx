@@ -18,9 +18,9 @@ const ActiveAlertsCharts = () => {
         <div className={classes.ActiveAlertsCharts__ActiveAlertStatsHeader}>
           <div>
             <h1>Active Alert Statistic</h1>
-            <p>Updated 1min ago</p>
+            {/* <p>Updated 1min ago</p> */}
           </div>
-          <div className={classes.ActiveAlertsCharts__ActiveAlertStatsFilter}>
+          {/* <div className={classes.ActiveAlertsCharts__ActiveAlertStatsFilter}>
             <Space
               className={
                 classes.ActiveAlertsCharts__ActiveAlertStatsFilterInput
@@ -71,7 +71,7 @@ const ActiveAlertsCharts = () => {
                 onChange={(value) => setStatsFilter(value)}
               />
             </Space>
-          </div>
+          </div> */}
         </div>
         <div className={classes.ActiveAlertsCharts__ActiveAlertStatsGraph}>
           {isLoadingStatistics ? (
@@ -96,6 +96,16 @@ const ActiveAlertsCharts = () => {
                   fontFamily: 'baloo 2',
                   toolbar: {
                     show: false,
+                  },
+                },
+                tooltip: {
+                  y: {
+                    formatter: function (
+                      value,
+                      { series, seriesIndex, dataPointIndex, w },
+                    ) {
+                      return value.toLocaleString()
+                    },
                   },
                 },
                 yaxis: {

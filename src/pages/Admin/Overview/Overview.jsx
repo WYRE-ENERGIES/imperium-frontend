@@ -601,6 +601,16 @@ const Overview = () => {
                         show: false,
                       },
                     },
+                    tooltip: {
+                      y: {
+                        formatter: function (
+                          value,
+                          { series, seriesIndex, dataPointIndex, w },
+                        ) {
+                          return value.toLocaleString()
+                        },
+                      },
+                    },
                     dataLabels: {
                       enabled: false,
                     },
