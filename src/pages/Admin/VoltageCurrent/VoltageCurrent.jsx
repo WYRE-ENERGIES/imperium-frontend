@@ -42,20 +42,19 @@ const columns = [
     title: ' Voltage (V)',
     key: 'total_voltage',
     dataIndex: 'total_voltage',
-    render: (value) => value.toFixed(2),
+    render: (value) => parseFloat(value?.toFixed(2))?.toLocaleString(),
   },
 
   {
     title: ' Current (A)',
     key: 'total_current',
     dataIndex: 'total_current',
-    render: (value) => value.toFixed(2),
+    render: (value) => parseFloat(value?.toFixed(2))?.toLocaleString(),
   },
   {
     title: ' Power Demand (kW)',
     key: 'total_kw',
     dataIndex: 'total_kw',
-    // render: (value) => value.toFixed(2),
     render: (value) => parseFloat(value?.toFixed(2))?.toLocaleString(),
   },
 ]

@@ -73,6 +73,16 @@ const GroupedBarChart = ({
             // },
             // axisTicks: axisTicks,
           },
+          tooltip: {
+            y: {
+              formatter: function (
+                value,
+                { series, seriesIndex, dataPointIndex, w },
+              ) {
+                return value.toLocaleString()
+              },
+            },
+          },
           xaxis: {
             ...groupedChartOptions.xaxis,
             show: true,

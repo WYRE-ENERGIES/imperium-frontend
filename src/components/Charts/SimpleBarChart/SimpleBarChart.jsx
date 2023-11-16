@@ -35,6 +35,16 @@ const SimpleBarChart = ({
         title: {
           text: title,
         },
+        tooltip: {
+          y: {
+            formatter: function (
+              value,
+              { series, seriesIndex, dataPointIndex, w },
+            ) {
+              return value.toLocaleString()
+            },
+          },
+        },
         yaxis: {
           // labels: {
           //   formatter: (value) => chartLabelFormatter(value),
