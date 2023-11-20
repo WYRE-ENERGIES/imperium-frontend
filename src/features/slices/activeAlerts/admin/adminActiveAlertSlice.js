@@ -77,6 +77,16 @@ export const activerAlertsSlice = apiSlice.injectEndpoints({
       },
       invalidatesTags: ['ActiveAlerts', 'ActiveAlertsAnaylytics'],
     }),
+    updateAdminActiveAlerts: build.mutation({
+      query: (device_id, credentials) => {
+        return {
+          method: 'PUT',
+          url: `${BASE_URL}edit/${device_id}/`,
+          body: credentials,
+        }
+      },
+      invalidatesTags: ['ActiveAlerts', 'ActiveAlertsAnaylytics'],
+    }),
     getShsDetails: build.query({
       query: ({ shs_id }) => {
         return {
@@ -101,6 +111,7 @@ export const {
   useGetAdminActiveAlertsStatisticsQuery,
   useGetAdminActiveAlertsTableQuery,
   useCreateAdminActiveAlertsMutation,
+  useUpdateAdminActiveAlertsMutation,
   useGetAdminActiveAlertsLocationQuery,
   useGetShsDetailsQuery,
   useGetDeviceListQuery,

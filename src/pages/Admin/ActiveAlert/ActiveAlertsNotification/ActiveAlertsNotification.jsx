@@ -3,8 +3,9 @@ import classes from './ActiveAlertsNotification.module.scss'
 import {
   useCreateAdminActiveAlertsMutation,
   useGetAdminActiveAlertsQuery,
+  useUpdateAdminActiveAlertsMutation,
 } from '../../../../features/slices/activeAlerts/admin/adminActiveAlertSlice'
-import { Divider, Form, Input, Modal, notification } from 'antd'
+import { Button, Divider, Form, Input, Modal, notification } from 'antd'
 import { ErrorMessage } from '../../../../components/ErrorMessage/ErrorMessage'
 import Error from '../../../../components/ErrorMessage/Error'
 import { BsBell, BsPlus, BsThreeDots } from 'react-icons/bs'
@@ -12,6 +13,7 @@ import Loading from '../../../../components/Loading/Loading'
 import { Link } from 'react-router-dom'
 import { useEffect } from 'react'
 import ActiveAlertsCreateAlertButton from '../ActiveAlertsCreateAlertButton/ActiveAlertsCreateAlertButton'
+import ActiveAlertsEditAlertButton from '../ActiveAlertsEditAlert/ActiveAlertsEditAlertButton'
 const ActiveAlertsNotifcation = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [errMsg, setErrMsg] = useState('')
@@ -26,6 +28,16 @@ const ActiveAlertsNotifcation = () => {
   const openNotification = (description) => {
     notification.success({
       message: 'Alert created',
+      description: `${description}`,
+    })
+  }
+  const alertId = activeAlerts?.results[0].id
+  console.log('Alert-id values >>>>>>', alertId)
+  const [updateAdminActiveAlerts, { isLoading: isLoadingactiveAlertsUpdate }] =
+    useUpdateAdminActiveAlertsMutation()
+  const openUpdateNotification = (description) => {
+    notification.success({
+      message: 'Alert updated',
       description: `${description}`,
     })
   }
@@ -71,7 +83,8 @@ const ActiveAlertsNotifcation = () => {
             activeAlerts?.results.slice(0, 3).map((alert, key) => (
               <div key={key}>
                 <span>
-                  <BsThreeDots />
+                  {/* <BsThreeDots /> */}
+                  <ActiveAlertsEditAlertButton alertId={alertId} />
                 </span>
                 <div>
                   <p>{alert?.title}</p>
