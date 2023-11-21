@@ -78,11 +78,11 @@ export const activerAlertsSlice = apiSlice.injectEndpoints({
       invalidatesTags: ['ActiveAlerts', 'ActiveAlertsAnaylytics'],
     }),
     updateAdminActiveAlerts: build.mutation({
-      query: (device_id, credentials) => {
+      query: ({ alertId, values }) => {
         return {
           method: 'PUT',
-          url: `${BASE_URL}edit/${device_id}/`,
-          body: credentials,
+          url: `${BASE_URL}edit/${alertId}/`,
+          body: values,
         }
       },
       invalidatesTags: ['ActiveAlerts', 'ActiveAlertsAnaylytics'],

@@ -9,7 +9,6 @@ import classes from './ActiveAlertsEditAlertButton.module.scss'
 import Error from '../../../../components/ErrorMessage/Error'
 
 const ActiveAlertsEditAlertButton = ({ alertId }) => {
-  console.log('this is the Alert-Id in EDIT Page', alertId)
   const { form } = Form.useForm
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [errMsg, setErrMsg] = useState('')
@@ -17,18 +16,10 @@ const ActiveAlertsEditAlertButton = ({ alertId }) => {
     useUpdateAdminActiveAlertsMutation()
 
   const handleUpdateAlert = async (values) => {
-    console.log('Title values++++++++', values.title)
-    // setInputs({ ...values })
-    // form.setFieldsValue({
-    //   title: values.title,
-    // })
-    const titleParam = {
-      title: values.title[0],
-    }
     try {
-      await updateAdminActiveAlerts(alertId, titleParam)
+      await updateAdminActiveAlerts({ alertId, values })
       setIsModalOpen(false)
-      openNotification(values.event_description)
+      openNotification(values.title)
     } catch (err) {
       setErrMsg(ErrorMessage(err))
     }
@@ -45,14 +36,6 @@ const ActiveAlertsEditAlertButton = ({ alertId }) => {
       description: `${description}`,
     })
   }
-
-  // useEffect(() => {
-  //   form.setFieldValue({
-  //     title: '',
-  //     description: '',
-  //   })
-  // }, [])
-
   const showModal = () => {
     setIsModalOpen(true)
   }

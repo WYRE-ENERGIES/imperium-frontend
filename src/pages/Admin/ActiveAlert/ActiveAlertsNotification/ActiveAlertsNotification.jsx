@@ -32,7 +32,6 @@ const ActiveAlertsNotifcation = () => {
     })
   }
   const alertId = activeAlerts?.results[0].id
-  console.log('Alert-id values >>>>>>', alertId)
   const [updateAdminActiveAlerts, { isLoading: isLoadingactiveAlertsUpdate }] =
     useUpdateAdminActiveAlertsMutation()
   const openUpdateNotification = (description) => {
