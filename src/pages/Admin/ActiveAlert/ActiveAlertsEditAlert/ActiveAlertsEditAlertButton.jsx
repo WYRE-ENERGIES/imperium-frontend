@@ -3,7 +3,7 @@ import { useUpdateAdminActiveAlertsMutation } from '../../../../features/slices/
 import { ErrorMessage } from '../../../../components/ErrorMessage/ErrorMessage'
 import { Divider, Form, Input, Modal, notification } from 'antd'
 
-import { BsBell, BsPlus } from 'react-icons/bs'
+import { BsBell, BsPlus, BsPatchMinus, BsFileMinus } from 'react-icons/bs'
 // import classes from './ActiveAlertsCreateAlertButton.module.scss'
 import classes from './ActiveAlertsEditAlertButton.module.scss'
 import Error from '../../../../components/ErrorMessage/Error'
@@ -50,10 +50,21 @@ const ActiveAlertsEditAlertButton = ({ alertId }) => {
       <button
         onClick={showModal}
         className={classes.CreatedAlertModal__ActiveAlertNotificationHeaderBtn}
+        style={{
+          justifyContent: 'center',
+        }}
       >
         {' '}
-        <BsPlus size={30} />
-        <span>Edit Alert</span>
+        {/* <BsFileMinus size={25} /> */}
+        <span
+          style={{
+            justifyContent: 'center',
+            textAlign: 'center',
+            alignContent: 'center',
+          }}
+        >
+          Edit Alert
+        </span>
       </button>
       <Modal
         open={isModalOpen}
@@ -110,7 +121,7 @@ const ActiveAlertsEditAlertButton = ({ alertId }) => {
                   <Input
                     className={classes.CreatedAlertModal__AddAlertInput}
                     style={{ marginBottom: '-5px' }}
-                    placeholder="Enter active alert title "
+                    placeholder="Edit alert title "
                   />
                 </Form.Item>
 
@@ -128,7 +139,7 @@ const ActiveAlertsEditAlertButton = ({ alertId }) => {
                   <Input.TextArea
                     className={classes.CreatedAlertModal__AddAlertInput}
                     style={{ marginTop: '-1px' }}
-                    placeholder="Edit instruction to help resolve alert."
+                    placeholder="Make your changes to help resolve alert."
                     rows={5}
                   />
                 </Form.Item>
