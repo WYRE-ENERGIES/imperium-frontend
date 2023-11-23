@@ -51,7 +51,7 @@ const ActiveAlertsEditAlertButton = ({
   }
   return (
     <section className={classes.CreatedAlertModal}>
-      <button
+      {/* <button
         onClick={showModal}
         className={classes.CreatedAlertModal__ActiveAlertNotificationHeaderBtn}
         style={{
@@ -61,7 +61,7 @@ const ActiveAlertsEditAlertButton = ({
         }}
       >
         {' '}
-        {/* <BsFileMinus size={25} /> */}
+        <BsFileMinus size={25} />
         <span
           style={{
             justifyContent: 'center',
@@ -71,7 +71,7 @@ const ActiveAlertsEditAlertButton = ({
         >
           Edit Alert
         </span>
-      </button>
+      </button> */}
       <Modal
         open={displayShowModal}
         onOk={handleOk}

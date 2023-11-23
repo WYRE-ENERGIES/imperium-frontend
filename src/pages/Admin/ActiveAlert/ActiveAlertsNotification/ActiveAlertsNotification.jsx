@@ -121,9 +121,10 @@ const ActiveAlertsNotifcation = () => {
                 <span>
                   <BsThreeDots />
                   <Space wrap>
-                    <Dropdown.Button menu={menuProps} onClick={'Am Clicked'}>
-                      Dropdown
-                    </Dropdown.Button>
+                    <Dropdown.Button
+                      menu={menuProps}
+                      onClick={'Am Clicked'}
+                    ></Dropdown.Button>
                   </Space>
                   <ActiveAlertsEditAlertButton
                     alertId={alertId}
