@@ -5,7 +5,17 @@ import {
   useGetAdminActiveAlertsQuery,
   useUpdateAdminActiveAlertsMutation,
 } from '../../../../features/slices/activeAlerts/admin/adminActiveAlertSlice'
-import { Button, Divider, Form, Input, Modal, notification } from 'antd'
+import {
+  Button,
+  Divider,
+  Dropdown,
+  Form,
+  Input,
+  Modal,
+  Space,
+  message,
+  notification,
+} from 'antd'
 import { ErrorMessage } from '../../../../components/ErrorMessage/ErrorMessage'
 import Error from '../../../../components/ErrorMessage/Error'
 import { BsBell, BsPlus, BsThreeDots } from 'react-icons/bs'
@@ -18,6 +28,7 @@ const ActiveAlertsNotifcation = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [errMsg, setErrMsg] = useState('')
   const [activeAlertsData, setActiveAlertData] = useState(1)
+  const [displayShowModal, setDisplayShowModal] = useState(false)
   const { data: activeAlerts, isLoading: isLoadingactiveAlerts } =
     useGetAdminActiveAlertsQuery({
       page: 1,
@@ -32,6 +43,32 @@ const ActiveAlertsNotifcation = () => {
     })
   }
   const alertId = activeAlerts?.results[0].id
+  // const handleMenuClick = (e) => {
+  //   ;<ActiveAlertsEditAlertButton alertId={alertId} />
+  //   message.info('Click on menu item.')
+  //   console.log('click', e)
+  // }
+  const items = [
+    {
+      // label: 'Edit Active item',
+      key: '1',
+      // onClick: console.log('Stop Clicking me========='),
+      label: (
+        <div
+          onClick={() => {
+            setDisplayShowModal(true)
+            console.log('Show this when am clicked')
+          }}
+        >
+          Edit Active Alert
+        </div>
+      ),
+      // icon: <UserOutlined />,
+    },
+  ]
+  const menuProps = {
+    items,
+  }
   const [updateAdminActiveAlerts, { isLoading: isLoadingactiveAlertsUpdate }] =
     useUpdateAdminActiveAlertsMutation()
   const openUpdateNotification = (description) => {
@@ -82,8 +119,17 @@ const ActiveAlertsNotifcation = () => {
             activeAlerts?.results.slice(0, 3).map((alert, key) => (
               <div key={key}>
                 <span>
-                  {/* <BsThreeDots /> */}
-                  <ActiveAlertsEditAlertButton alertId={alertId} />
+                  <BsThreeDots />
+                  <Space wrap>
+                    <Dropdown.Button menu={menuProps} onClick={'Am Clicked'}>
+                      Dropdown
+                    </Dropdown.Button>
+                  </Space>
+                  <ActiveAlertsEditAlertButton
+                    alertId={alertId}
+                    setDisplayShowModal={setDisplayShowModal}
+                    displayShowModal={displayShowModal}
+                  />
                 </span>
                 <div>
                   <p>{alert?.title}</p>

@@ -8,7 +8,11 @@ import { BsBell, BsPlus, BsPatchMinus, BsFileMinus } from 'react-icons/bs'
 import classes from './ActiveAlertsEditAlertButton.module.scss'
 import Error from '../../../../components/ErrorMessage/Error'
 
-const ActiveAlertsEditAlertButton = ({ alertId }) => {
+const ActiveAlertsEditAlertButton = ({
+  alertId,
+  setDisplayShowModal,
+  displayShowModal,
+}) => {
   const { form } = Form.useForm
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [errMsg, setErrMsg] = useState('')
@@ -18,7 +22,7 @@ const ActiveAlertsEditAlertButton = ({ alertId }) => {
   const handleUpdateAlert = async (values) => {
     try {
       await updateAdminActiveAlerts({ alertId, values })
-      setIsModalOpen(false)
+      setDisplayShowModal(false)
       openNotification(values.title)
     } catch (err) {
       setErrMsg(ErrorMessage(err))
@@ -37,13 +41,13 @@ const ActiveAlertsEditAlertButton = ({ alertId }) => {
     })
   }
   const showModal = () => {
-    setIsModalOpen(true)
+    setDisplayShowModal(true)
   }
   const handleOk = () => {
-    setIsModalOpen(false)
+    setDisplayShowModal(false)
   }
   const handleCancel = () => {
-    setIsModalOpen(false)
+    setDisplayShowModal(false)
   }
   return (
     <section className={classes.CreatedAlertModal}>
@@ -52,6 +56,8 @@ const ActiveAlertsEditAlertButton = ({ alertId }) => {
         className={classes.CreatedAlertModal__ActiveAlertNotificationHeaderBtn}
         style={{
           justifyContent: 'center',
+          backgroundColor: 'white',
+          color: 'green',
         }}
       >
         {' '}
@@ -67,7 +73,7 @@ const ActiveAlertsEditAlertButton = ({ alertId }) => {
         </span>
       </button>
       <Modal
-        open={isModalOpen}
+        open={displayShowModal}
         onOk={handleOk}
         onCancel={handleCancel}
         width={688}
