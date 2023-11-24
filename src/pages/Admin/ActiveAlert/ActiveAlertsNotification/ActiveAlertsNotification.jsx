@@ -43,11 +43,7 @@ const ActiveAlertsNotifcation = () => {
     })
   }
   const alertId = activeAlerts?.results[0].id
-  // const handleMenuClick = (e) => {
-  //   ;<ActiveAlertsEditAlertButton alertId={alertId} />
-  //   message.info('Click on menu item.')
-  //   console.log('click', e)
-  // }
+
   const items = [
     {
       // label: 'Edit Active item',
@@ -119,12 +115,10 @@ const ActiveAlertsNotifcation = () => {
             activeAlerts?.results.slice(0, 3).map((alert, key) => (
               <div key={key}>
                 <span>
-                  <BsThreeDots />
                   <Space wrap>
-                    <Dropdown.Button
-                      menu={menuProps}
-                      onClick={'Am Clicked'}
-                    ></Dropdown.Button>
+                    <Dropdown menu={menuProps} onClick={'Am Clicked'}>
+                      <BsThreeDots />
+                    </Dropdown>
                   </Space>
                   <ActiveAlertsEditAlertButton
                     alertId={alertId}
