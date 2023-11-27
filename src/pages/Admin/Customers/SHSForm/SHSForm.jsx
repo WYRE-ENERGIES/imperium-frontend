@@ -107,7 +107,6 @@ const AddSHSForm = ({ toggleModal }) => {
       }
     }
   }
-  console.log('Looking for Error-message>>>>', error)
 
   useEffect(() => {
     if (regionData && regionData.results) {
@@ -206,7 +205,7 @@ const AddSHSForm = ({ toggleModal }) => {
                 <Text type="danger">{err.client_email}</Text>
               )}
             </div>
-            {debounceValue.length === 0 ? (
+            {!debounceValue ? (
               ''
             ) : (
               <div>

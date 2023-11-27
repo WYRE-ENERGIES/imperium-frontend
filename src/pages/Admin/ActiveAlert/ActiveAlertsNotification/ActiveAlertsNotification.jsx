@@ -42,7 +42,6 @@ const ActiveAlertsNotifcation = () => {
       description: `${description}`,
     })
   }
-  const alertId = activeAlerts?.results[0].id
 
   const items = [
     {
@@ -121,9 +120,12 @@ const ActiveAlertsNotifcation = () => {
                     </Dropdown>
                   </Space>
                   <ActiveAlertsEditAlertButton
-                    alertId={alertId}
+                    alertId={alert.id}
+                    activeAlerts={activeAlerts}
                     setDisplayShowModal={setDisplayShowModal}
                     displayShowModal={displayShowModal}
+                    title={alert?.title}
+                    description={alert?.event_description}
                   />
                 </span>
                 <div>

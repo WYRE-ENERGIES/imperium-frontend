@@ -14,7 +14,7 @@ const { Text, Title } = Typography
 const ActivateContent = ({ shs, toggleModal }) => {
   const [errorMsg, setErrorMsg] = useState()
   const { id: shsId, status } = shs
-  const title = status === 'OFF' ? 'Activate SHS' : 'Disabled SHS'
+  const title = status === 'OFF' ? 'Activate SHS' : 'Deactivate SHS'
   const TIcon = status === 'OFF' ? TicketIcon : DisableTicketIcon
 
   // const openNotification = () => {

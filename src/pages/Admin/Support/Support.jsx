@@ -77,6 +77,18 @@ const Support = () => {
       render: (text) => `#${text}`,
     },
     {
+      title: 'Date',
+      key: 'purchased_date',
+      dataIndex: 'created_at',
+      sorter: (a, b) =>
+        a.created_at ? a.created_at.localeCompare(b.created_at) : null,
+      render: (value, record) => (
+        <p style={{ color: record.status ? '' : '#C4C4C4' }}>
+          {new Date(value).toLocaleDateString()}
+        </p>
+      ),
+    },
+    {
       title: 'Client Name',
       dataIndex: 'client',
       key: 'client',

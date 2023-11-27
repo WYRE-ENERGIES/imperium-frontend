@@ -9,9 +9,12 @@ import classes from './ActiveAlertsEditAlertButton.module.scss'
 import Error from '../../../../components/ErrorMessage/Error'
 
 const ActiveAlertsEditAlertButton = ({
+  activeAlerts,
   alertId,
   setDisplayShowModal,
   displayShowModal,
+  title,
+  description,
 }) => {
   const { form } = Form.useForm
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -40,6 +43,12 @@ const ActiveAlertsEditAlertButton = ({
       description: `${description}`,
     })
   }
+  // useEffect(() => {
+  //   form.setFieldsValue({
+  //     title: title,
+  //     description: description,
+  //   })
+  // }, [activeAlerts])
   const showModal = () => {
     setDisplayShowModal(true)
   }
