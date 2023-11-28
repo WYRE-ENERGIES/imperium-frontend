@@ -43,12 +43,12 @@ const ActiveAlertsEditAlertButton = ({
       description: `${description}`,
     })
   }
-  // useEffect(() => {
-  //   form.setFieldsValue({
-  //     title: title,
-  //     description: description,
-  //   })
-  // }, [activeAlerts])
+  useEffect(() => {
+    form.setFieldsValue({
+      title: title,
+      description: description,
+    })
+  }, [activeAlerts])
   const showModal = () => {
     setDisplayShowModal(true)
   }

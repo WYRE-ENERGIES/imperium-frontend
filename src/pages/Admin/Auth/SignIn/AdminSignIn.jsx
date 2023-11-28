@@ -136,11 +136,11 @@ const AdminSignIn = () => {
                 <FormButton action={'Log In'} isLoading={isLoading} />
               </Form.Item>
 
-              <FormFooter
+              {/* <FormFooter
                 footer={'Don’t have an account?'}
                 action={'Sign Up'}
                 footerlink={'/admin/sign-up'}
-              />
+              /> */}
             </Form>
           </div>
         </LeftLayout>

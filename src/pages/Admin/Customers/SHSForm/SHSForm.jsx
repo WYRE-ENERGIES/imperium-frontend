@@ -360,6 +360,8 @@ const AddSHSForm = ({ toggleModal }) => {
             placeholder={`Enter device capacity`}
             className={classes.AddSHSForm__input}
             type="number"
+            min="0"
+            oninput="validity.valid||(value='')"
           />
         </Form.Item>
       </div>
@@ -373,7 +375,9 @@ const AddSHSForm = ({ toggleModal }) => {
           <Input
             placeholder={`Enter Serial number`}
             className={classes.AddSHSForm__input}
-            // type="number"
+            type="number"
+            min="0"
+            oninput="validity.valid||(value='')"
           />
         </Form.Item>
 
