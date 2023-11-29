@@ -3,21 +3,19 @@ import { useUpdateAdminActiveAlertsMutation } from '../../../../features/slices/
 import { ErrorMessage } from '../../../../components/ErrorMessage/ErrorMessage'
 import { Divider, Form, Input, Modal, notification } from 'antd'
 
-import { BsBell, BsPlus, BsPatchMinus, BsFileMinus } from 'react-icons/bs'
+import { BsBell } from 'react-icons/bs'
 // import classes from './ActiveAlertsCreateAlertButton.module.scss'
 import classes from './ActiveAlertsEditAlertButton.module.scss'
 import Error from '../../../../components/ErrorMessage/Error'
 
 const ActiveAlertsEditAlertButton = ({
-  activeAlerts,
   alertId,
   setDisplayShowModal,
   displayShowModal,
   title,
   description,
 }) => {
-  const { form } = Form.useForm
-  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [form] = Form.useForm()
   const [errMsg, setErrMsg] = useState('')
   const [updateAdminActiveAlerts, { isLoading: isLoadingactiveAlertsUpdate }] =
     useUpdateAdminActiveAlertsMutation()
@@ -37,21 +35,14 @@ const ActiveAlertsEditAlertButton = ({
       description: `${description}`,
     })
   }
-  const errorNotification = (description) => {
-    notification.failed({
-      message: 'detail not found',
-      description: `${description}`,
-    })
-  }
+
   useEffect(() => {
     form.setFieldsValue({
       title: title,
-      description: description,
+      event_description: description,
     })
-  }, [activeAlerts])
-  const showModal = () => {
-    setDisplayShowModal(true)
-  }
+  }, [alertId])
+
   const handleOk = () => {
     setDisplayShowModal(false)
   }
@@ -60,27 +51,6 @@ const ActiveAlertsEditAlertButton = ({
   }
   return (
     <section className={classes.CreatedAlertModal}>
-      {/* <button
-        onClick={showModal}
-        className={classes.CreatedAlertModal__ActiveAlertNotificationHeaderBtn}
-        style={{
-          justifyContent: 'center',
-          backgroundColor: 'white',
-          color: 'green',
-        }}
-      >
-        {' '}
-        <BsFileMinus size={25} />
-        <span
-          style={{
-            justifyContent: 'center',
-            textAlign: 'center',
-            alignContent: 'center',
-          }}
-        >
-          Edit Alert
-        </span>
-      </button> */}
       <Modal
         open={displayShowModal}
         onOk={handleOk}
@@ -137,6 +107,7 @@ const ActiveAlertsEditAlertButton = ({
                     className={classes.CreatedAlertModal__AddAlertInput}
                     style={{ marginBottom: '-5px' }}
                     placeholder="Edit alert title "
+                    disabled={isLoadingactiveAlertsUpdate}
                   />
                 </Form.Item>
 
@@ -156,6 +127,7 @@ const ActiveAlertsEditAlertButton = ({
                     style={{ marginTop: '-1px' }}
                     placeholder="Make your changes to help resolve alert."
                     rows={5}
+                    disabled={isLoadingactiveAlertsUpdate}
                   />
                 </Form.Item>
                 <Form.Item>
