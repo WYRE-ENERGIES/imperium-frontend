@@ -45,7 +45,7 @@ const DataTable = ({
           )}
         </div>
         <div className={classes.DataTable__TableHeaderFilter}>
-          <div>
+          {/* <div>
             <Input
               placeholder="Search"
               size="large"
@@ -53,7 +53,7 @@ const DataTable = ({
               prefix={prefix}
               className={classes.DataTable__SearchAndFilter}
             />
-          </div>
+          </div> */}
           {sortTable ? (
             <div className={classes.DataTable__TableFilter}>
               <Space className={classes.DataTable__TableFilterInput}>

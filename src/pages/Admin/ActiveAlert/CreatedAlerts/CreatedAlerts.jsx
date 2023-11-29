@@ -37,7 +37,7 @@ const CreatedAlerts = () => {
   const columns = [
     {
       key: 'title',
-      title: 'Active Alerts',
+      title: 'Alerts Title',
       dataIndex: 'title',
       render: (data) => (
         <span

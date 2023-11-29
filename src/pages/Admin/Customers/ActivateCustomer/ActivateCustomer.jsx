@@ -25,7 +25,7 @@ const layout = {
 }
 
 const ActivateContent = ({ user, toggleModal, toggleForm }) => {
-  const title = !user.status ? 'Activate Client' : 'Disabled Client'
+  const title = !user.status ? 'Activate Client' : 'Deactivate Client'
   const TIcon = !user.status ? TicketIcon : DisableTicketIcon
 
   const [activateCustomer, { isLoading, isSuccess }] =

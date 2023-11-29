@@ -60,9 +60,9 @@ const SignIn = () => {
                 tagline={'Welcome back! Please enter your details.'}
               />
             </div>
-            <div>
+            {/* <div>
               <ThirdPartyAuth signIn={true} />
-            </div>
+            </div> */}
             <div>
               <Form
                 name="admin-login"
@@ -123,11 +123,11 @@ const SignIn = () => {
                   <FormButton action={'Log In'} isLoading={isLoading} />
                 </Form.Item>
 
-                <FormFooter
+                {/* <FormFooter
                   footer={'Don’t have an account?'}
                   action={'Sign Up'}
                   footerlink={'/sign-up'}
-                />
+                /> */}
               </Form>
             </div>
           </div>
