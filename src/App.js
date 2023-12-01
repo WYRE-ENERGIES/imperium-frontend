@@ -110,6 +110,7 @@ const AdminUsers = lazy(() => import('./pages/Admin/Users/Users'))
 const AdminUserInvitePage = lazy(() =>
   import('./pages/Admin/UserInvite/UserInvite'),
 )
+const UserAuditLog = lazy(() => import('./pages/Admin/AuditLog/UserAuditLog'))
 
 const PrivateRoute = lazy(() => import('./utils/PrivateRoute'))
 const USER_ROLE = {
@@ -212,6 +213,7 @@ function App() {
                   />
                 </Route>
                 <Route path="accept-user" element={<AdminUserInvitePage />} />
+                <Route path="audit-logs" element={<UserAuditLog />} />
                 <Route />
               </Route>
             </Route>

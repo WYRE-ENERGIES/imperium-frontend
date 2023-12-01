@@ -91,6 +91,11 @@ export const adminMenuItems = [
     title: 'Users',
     linkTo: '/admin/users',
   },
+  {
+    icon: BsBell,
+    title: 'Audit logs',
+    linkTo: '/admin/audit-logs',
+  },
 ].map((item) => ({
   key: `${item.linkTo}`,
   icon: React.createElement(item.icon),
