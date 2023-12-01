@@ -24,7 +24,7 @@ const SearchDropdown = ({
       onSearch={handleSearch}
       notFoundContent={null}
       options={(data || []).map((d) => ({
-        value: d?.email,
+        value: d?.email || d.name,
         label: d?.email || d.name,
       }))}
     />
