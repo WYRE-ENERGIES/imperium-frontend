@@ -9,19 +9,12 @@ import { useGetCustomerActiveAlertsQuery } from '../../../features/slices/active
 import {
   dateTimeConverter,
   getItemFromLocalStorage,
-  RecentAlerts,
 } from '../../../utils/helpers'
-import { useListClientShsDevicesQuery } from '../../../features/slices/allShsSlice'
 import { useEffect } from 'react'
 import DataTable from '../../../components/Table/DataTable'
 import Loading from '../../../components/Loading/Loading'
 
 const ActiveAlerts = () => {
-  const title = () => {
-    return (
-      <p style={{ fontWeight: '500', fontSize: '18px' }}>Active Alerts Table</p>
-    )
-  }
   const today = new Date()
   const clientId = getItemFromLocalStorage('current_client')
   const [activeAlertsTable, setActiveAlertsTable] = useState(1)
