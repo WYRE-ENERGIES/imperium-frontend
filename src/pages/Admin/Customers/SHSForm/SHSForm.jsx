@@ -170,6 +170,15 @@ const AddSHSForm = ({ toggleModal }) => {
     }
   }, [isSuccess])
 
+  const maxLengthCheck = (object) => {
+    if (object.target.value.length > object.target.maxLength) {
+      object.target.value = object.target.value.slice(
+        0,
+        object.target.maxLength,
+      )
+    }
+  }
+
   return (
     <Form
       name="newUser"
@@ -205,7 +214,7 @@ const AddSHSForm = ({ toggleModal }) => {
                 <Text type="danger">{err.client_email}</Text>
               )}
             </div>
-            {!debounceValue ? (
+            {debounceValue.length === 0 ? (
               ''
             ) : (
               <div>
@@ -357,10 +366,13 @@ const AddSHSForm = ({ toggleModal }) => {
           rules={[{ required: true, message: 'Please enter device capacity' }]}
         >
           <Input
-            placeholder={`Enter device capacity`}
+            placeholder={`Device capacity(not more than 3 digits)`}
             className={classes.AddSHSForm__input}
             type="number"
             min="0"
+            maxLength="3"
+            onInput={maxLengthCheck}
+            onKeyDown={(evt) => evt.key === 'e' && evt.preventDefault()}
             oninput="validity.valid||(value='')"
           />
         </Form.Item>
@@ -377,6 +389,7 @@ const AddSHSForm = ({ toggleModal }) => {
             className={classes.AddSHSForm__input}
             type="number"
             min="0"
+            onKeyDown={(evt) => evt.key === 'e' && evt.preventDefault()}
             oninput="validity.valid||(value='')"
           />
         </Form.Item>
