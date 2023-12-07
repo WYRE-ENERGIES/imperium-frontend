@@ -80,9 +80,9 @@ const SignUp = () => {
                 tagline={'Let’s get started with imperium today'}
               />
             </div>
-            <div>
+            {/* <div>
               <ThirdPartyAuth signIn={false} />
-            </div>
+            </div> */}
             <div>
               <Form
                 name="customer-login"

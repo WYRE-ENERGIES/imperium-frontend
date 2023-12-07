@@ -4,7 +4,10 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import '../../../../components/Auth/Forms/global.module.scss'
 import { Row, Form, Input } from 'antd'
 
-import { useCustomerVerificationCodeMutation } from '../../../../features/slices/auth/customer/customerAuthApiSlice'
+import {
+  useCustomerVerificationCodeMutation,
+  useResendCustomerOtpMutation,
+} from '../../../../features/slices/auth/customer/customerAuthApiSlice'
 import FormDescription from '../../../../components/Auth/Forms/Widgets/FormDescription'
 import PageIndicator from '../../../../components/Auth/Forms/Widgets/FormPageIndicator'
 import imageDesc from '../../../../../src/assets/Auth/Analyze-amico 1.svg'
@@ -29,8 +32,12 @@ const Verification = () => {
   const [errMsg, setErrMsg] = useState('')
   const [customerVerificationCode, { data, isLoading }] =
     useCustomerVerificationCodeMutation()
+  const [OTP, setOTP] = useState('')
+  const [resendCustomerOtp, { isLoading: otpisLoading, reSendData }] =
+    useResendCustomerOtpMutation()
   const navigate = useNavigate()
   const onFinish = async (values) => {
+    console.log('verifications values', values)
     try {
       await customerVerificationCode({
         email: email.state.email,
@@ -42,6 +49,16 @@ const Verification = () => {
       setErrMsg(ErrorMessage(err?.data?.detail))
     }
   }
+  const handleResendOtp = async () => {
+    try {
+      await resendCustomerOtp({
+        email: email.state.email,
+        password: OTP,
+      }).unwrap()
+    } catch (err) {
+      setErrMsg(ErrorMessage(err?.data?.errors))
+    }
+  }
 
   useEffect(() => {
     if (data) {
@@ -49,6 +66,14 @@ const Verification = () => {
       saveToLocalStorage('access', token)
     }
   }, [data])
+
+  useEffect(() => {
+    if (reSendData) {
+      navigate('/request-new-otp', {
+        state: { email: email.state.email, password: data?.password },
+      })
+    }
+  })
 
   return (
     <div className={classes.Verification}>
@@ -75,6 +100,11 @@ const Verification = () => {
             >
               <div className={classes.Verification__Error}>
                 {errMsg && <Error Errormsg={errMsg} />}
+                {errMsg && (
+                  <Form.Item>
+                    <FormButton o action={'Resend'} isLoading={isLoading} />
+                  </Form.Item>
+                )}
               </div>
               <Form.Item
                 label={

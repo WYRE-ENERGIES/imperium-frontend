@@ -10,9 +10,9 @@ const FormFooter = ({ footer, action, footerlink, extra }) => {
         {' '}
         {footerlink ? (
           <div className={classes.FormFooter__content}>
-            <p>
+            {/* <p>
               <Link>Continue with SAML SSO</Link>
-            </p>
+            </p> */}
             <p className={classes.FormFooter__AuthOpt}>
               {footer}
               <Link to={footerlink}>{action}</Link>

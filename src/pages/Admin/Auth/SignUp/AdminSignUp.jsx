@@ -58,7 +58,7 @@ const AdminSignUp = () => {
               header={'Create Account'}
               tagline={'Let’s get started with imperium today'}
             />
-            <ThirdPartyAuth signIn={false} />
+            {/* <ThirdPartyAuth signIn={false} /> */}
             <Form
               name="admin-login"
               labelCol={8}
