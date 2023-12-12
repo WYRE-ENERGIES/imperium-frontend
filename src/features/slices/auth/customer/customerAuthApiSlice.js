@@ -31,11 +31,11 @@ export const authApiSlice = apiSlice.injectEndpoints({
       },
     }),
     resendCustomerOtp: builder.mutation({
-      query: (credentials) => {
+      query: ({ resendparams }) => {
         return {
           url: '/auth/request-new-otp/',
           method: 'POST',
-          body: credentials,
+          body: resendparams,
         }
       },
     }),
@@ -114,8 +114,8 @@ export const authApiSlice = apiSlice.injectEndpoints({
 export const {
   useCustomerforgotPasswordMutation,
   useCustomerOtpMutation,
-  useResendCustomerOtpMutation,
   useCustomerNewPasswordMutation,
+  useResendCustomerOtpMutation,
   useCustomerVerificationCodeMutation,
   useCustomerRegisterMutation,
   useCustomerBusinessMutation,

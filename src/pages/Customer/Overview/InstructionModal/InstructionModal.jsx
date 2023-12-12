@@ -32,7 +32,8 @@ const InstructionModal = ({ open, isAdmin, setOpen }) => {
         </h4>
         <div className={classes.InstructionModal__buttons}>
           <a
-            href="#"
+            href="https://www.imperiumng.com/"
+            rel="noreferrer"
             target="_blank"
             className={classes.InstructionModal__buttonTop}
           >

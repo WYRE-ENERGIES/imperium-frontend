@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
+import React, { useRef, useState } from 'react'
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 
 import '../../../../components/Auth/Forms/global.module.scss'
 import { Row, Form, Input } from 'antd'
@@ -17,11 +17,17 @@ import classes from './Verification.module.scss'
 import FormButton from '../../../../components/Auth/Forms/Widgets/FormButton'
 import FormHeader from '../../../../components/Auth/Forms/Widgets/FormHeader'
 import { useEffect } from 'react'
-import { saveToLocalStorage } from '../../../../utils/helpers'
+import {
+  emptyLocalStorage,
+  saveToLocalStorage,
+} from '../../../../utils/helpers'
 import { ErrorMessage } from '../../../../components/ErrorMessage/ErrorMessage'
 import Error from '../../../../components/ErrorMessage/Error'
 const Verification = () => {
   const email = useLocation()
+  const pwdRef = useRef(null)
+  const emailRef = useRef()
+  const [searchParams] = useSearchParams()
   const formDescription = {
     image: imageDesc,
     header: 'Graphs and charts',
@@ -32,6 +38,7 @@ const Verification = () => {
   const [errMsg, setErrMsg] = useState('')
   const [customerVerificationCode, { data, isLoading }] =
     useCustomerVerificationCodeMutation()
+  const emailInvite = searchParams.get('email')
   const [OTP, setOTP] = useState('')
   const [resendCustomerOtp, { isLoading: otpisLoading, reSendData }] =
     useResendCustomerOtpMutation()
@@ -50,11 +57,14 @@ const Verification = () => {
     }
   }
   const handleResendOtp = async () => {
+    console.log('Email values>>>>>>> ', email)
+    const resendparams = {
+      email: email.state.email,
+      password: data?.password,
+    }
     try {
-      await resendCustomerOtp({
-        email: email.state.email,
-        password: OTP,
-      }).unwrap()
+      console.log('Looking for values>>>>>>> ', resendparams)
+      await resendCustomerOtp({ resendparams }).unwrap()
     } catch (err) {
       setErrMsg(ErrorMessage(err?.data?.errors))
     }
@@ -68,12 +78,19 @@ const Verification = () => {
   }, [data])
 
   useEffect(() => {
+    console.log('whats here: ', reSendData)
     if (reSendData) {
-      navigate('/request-new-otp', {
+      navigate('/verification', {
         state: { email: email.state.email, password: data?.password },
       })
     }
   })
+  useEffect(() => {
+    console.log('email-invite here: ', emailInvite)
+    if (emailInvite) {
+      emptyLocalStorage()
+    }
+  }, [emailInvite])
 
   return (
     <div className={classes.Verification}>
@@ -102,7 +119,12 @@ const Verification = () => {
                 {errMsg && <Error Errormsg={errMsg} />}
                 {errMsg && (
                   <Form.Item>
-                    <FormButton o action={'Resend'} isLoading={isLoading} />
+                    <button
+                      onClick={handleResendOtp}
+                      className={classes.Otp__Resend}
+                    >
+                      send again
+                    </button>
                   </Form.Item>
                 )}
               </div>
