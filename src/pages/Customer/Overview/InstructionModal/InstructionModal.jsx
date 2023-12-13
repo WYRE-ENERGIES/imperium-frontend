@@ -32,19 +32,21 @@ const InstructionModal = ({ open, isAdmin, setOpen }) => {
         </h4>
         <div className={classes.InstructionModal__buttons}>
           <a
-            href="#"
+            href="https://www.imperiumng.com/"
+            rel="noreferrer"
             target="_blank"
             className={classes.InstructionModal__buttonTop}
           >
             Visit Imperium Ecommerce to view all SHS offers
           </a>
-
-          <Link
-            to="/support"
+          <a
+            href="mailto:imperiumbysterling@gmail.com"
+            rel="noreferrer"
+            target="_blank"
             className={classes.InstructionModal__buttonBottom}
           >
             Contact Support
-          </Link>
+          </a>
           <div
             className={classes.InstructionModal__logoutBottom}
             onClick={onLogout}

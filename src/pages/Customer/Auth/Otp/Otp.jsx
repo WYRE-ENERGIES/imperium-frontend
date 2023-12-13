@@ -26,7 +26,7 @@ const OTP = () => {
     useCustomerforgotPasswordMutation()
   const openNotification = (email) => {
     notification.success({
-      message: 'OTP sent!',
+      message: 'If your email is found, an OTP would be sent to you.!',
       description: `OTP resent to ${email}`,
     })
   }
@@ -65,7 +65,8 @@ const OTP = () => {
           icon: icon,
           header: 'OTP Verification',
           tag: email?.state?.email
-            ? `Enter OTP sent to ${email?.state?.email}`
+            ? `If your email is found, an OTP would be sent to you.
+            Please Enter OTP sent to ${email?.state?.email}`
             : 'You need to provide an email to receive OTP.',
           footer: (
             <div style={{ textAlign: 'center', marginTop: '5px' }}>
