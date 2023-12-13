@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react'
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 
 import '../../../../components/Auth/Forms/global.module.scss'
-import { Row, Form, Input } from 'antd'
+import { Row, Form, Input, notification } from 'antd'
 
 import {
   useCustomerVerificationCodeMutation,
@@ -25,6 +25,12 @@ import { ErrorMessage } from '../../../../components/ErrorMessage/ErrorMessage'
 import Error from '../../../../components/ErrorMessage/Error'
 const Verification = () => {
   const email = useLocation()
+  const openNotification = (email) => {
+    notification.success({
+      message: 'OTP sent!',
+      description: `OPT resent to ${email}`,
+    })
+  }
   const pwdRef = useRef(null)
   const emailRef = useRef()
   const [searchParams] = useSearchParams()
@@ -39,7 +45,6 @@ const Verification = () => {
   const [customerVerificationCode, { data, isLoading }] =
     useCustomerVerificationCodeMutation()
   const emailInvite = searchParams.get('email')
-  const [OTP, setOTP] = useState('')
   const [resendCustomerOtp, { isLoading: otpisLoading, reSendData }] =
     useResendCustomerOtpMutation()
   const navigate = useNavigate()
@@ -65,6 +70,7 @@ const Verification = () => {
     try {
       console.log('Looking for values>>>>>>> ', resendparams)
       await resendCustomerOtp({ resendparams }).unwrap()
+      openNotification(email?.state?.email)
     } catch (err) {
       setErrMsg(ErrorMessage(err?.data?.errors))
     }

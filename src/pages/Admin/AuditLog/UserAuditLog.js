@@ -101,6 +101,13 @@ const Users = () => {
     //   ),
     // },
     {
+      title: 'Date Added',
+      key: 'created_at',
+      dataIndex: 'created_at',
+      sorter: (a, b) => a.created_at.localeCompare(b.created_at),
+      render: (val) => (val ? new Date(val).toLocaleDateString() : ''),
+    },
+    {
       title: 'User name',
       key: 'Username',
       dataIndex: 'Username',
@@ -124,14 +131,6 @@ const Users = () => {
       dataIndex: 'ActivityDescription',
       // sorter: (a, b) => a.role.localeCompare(b.role),
     },
-
-    // {
-    //   title: 'Date Added',
-    //   key: 'created_at',
-    //   dataIndex: 'created_at',
-    //   sorter: (a, b) => a.created_at.localeCompare(b.created_at),
-    //   render: (val) => (val ? new Date(val).toLocaleDateString() : ''),
-    // },
     // {
     //   title: 'Last Active',
     //   key: 'last_login',
