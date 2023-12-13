@@ -123,16 +123,21 @@ const Verification = () => {
             >
               <div className={classes.Verification__Error}>
                 {errMsg && <Error Errormsg={errMsg} />}
-                {errMsg && (
-                  <Form.Item>
-                    <button
-                      onClick={handleResendOtp}
-                      className={classes.Otp__Resend}
-                    >
-                      send again
-                    </button>
-                  </Form.Item>
-                )}
+                <div className={classes.Otp}>
+                  {errMsg && (
+                    <div style={{ textAlign: 'center', marginTop: '5px' }}>
+                      Need a new code?{' '}
+                      <button
+                        onClick={handleResendOtp}
+                        className={classes.Otp__Resend}
+                      >
+                        <span style={{ color: 'white', background: '#294620' }}>
+                          Resend
+                        </span>
+                      </button>
+                    </div>
+                  )}
+                </div>
               </div>
               <Form.Item
                 label={
