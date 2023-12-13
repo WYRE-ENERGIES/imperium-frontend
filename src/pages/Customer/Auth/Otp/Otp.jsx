@@ -27,7 +27,7 @@ const OTP = () => {
   const openNotification = (email) => {
     notification.success({
       message: 'If your email is found, an OTP would be sent to you.!',
-      description: `OTP resent to ${email}`,
+      description: `Check ${email} for OTP`,
     })
   }
 
