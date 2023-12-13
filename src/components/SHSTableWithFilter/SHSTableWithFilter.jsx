@@ -49,7 +49,7 @@ const SHSTableWithFilter = ({
         ) : (
           <h1>{tableTitle}</h1>
         )}
-        {/* <SearchAndFilter
+        <SearchAndFilter
           filterOptions={filterOptions}
           isAdmin={isAdmin}
           hasBtn={hasBtn}
@@ -62,7 +62,7 @@ const SHSTableWithFilter = ({
           url={url}
           tableName={tableName}
           cancelValue={cancelValue}
-        /> */}
+        />
       </section>
       <Table
         style={{ width: '100%' }}
