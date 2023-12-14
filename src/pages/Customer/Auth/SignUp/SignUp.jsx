@@ -91,9 +91,10 @@ const SignUp = () => {
                 initialValues={{
                   email: emailInvite ? emailInvite : '',
                 }}
-                onFinish={onFinish}
+                // onFinish={onFinish}
                 autoComplete="off"
                 layout="vertical"
+                onFinish={onFinish}
                 requiredMark="optional"
               >
                 {errMsg && <Error Errormsg={errMsg} />}
