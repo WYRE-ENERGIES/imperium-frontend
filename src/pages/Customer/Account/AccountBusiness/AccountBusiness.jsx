@@ -131,7 +131,10 @@ const AccountBusiness = () => {
             layout="vertical"
             onFinish={onFinish}
             requiredMark="optional"
-            initialValues={{ ...userdata }}
+            initialValues={{
+              ...userdata,
+              company_url: userdata.company_url.replace('https://', ''),
+            }}
           >
             <div className={classes.AccountBusiness__Form}>
               {errMsg && <Error Errormsg={errMsg} />}

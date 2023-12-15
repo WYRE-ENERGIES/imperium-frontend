@@ -52,6 +52,7 @@ export const phoneValidation = (
   setFormValid,
   isValidPhoneNumber,
 ) => {
+  // console.log('Phone-no value >>>>>>', value)
   if (value && isValidPhoneNumber(value)) {
     ref.current.innerHTML = ''
     setFormValid(true)
