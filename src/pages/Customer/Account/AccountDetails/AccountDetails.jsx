@@ -48,7 +48,7 @@ const AccountDetails = () => {
   const onFinish = async (values) => {
     try {
       await customerUpdateDetails({
-        credentials: { ...values, phone: `+234${values?.phone}` },
+        credentials: { ...values, phone: `${values?.phone}` },
       }).unwrap()
       saveToLocalStorage('userInfo', {
         ...userInfo,
@@ -150,7 +150,7 @@ const AccountDetails = () => {
                   extra={<small ref={phoneRef}></small>}
                 >
                   <Input
-                    maxLength={14}
+                    maxLength={11}
                     className={classes.AccountDetails__Input}
                     // addonBefore="+ 234"
                     placeholder="Enter phone number"
