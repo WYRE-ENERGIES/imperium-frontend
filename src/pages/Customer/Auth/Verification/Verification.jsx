@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useState } from 'react'
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 
 import '../../../../components/Auth/Forms/global.module.scss'
@@ -17,10 +17,7 @@ import classes from './Verification.module.scss'
 import FormButton from '../../../../components/Auth/Forms/Widgets/FormButton'
 import FormHeader from '../../../../components/Auth/Forms/Widgets/FormHeader'
 import { useEffect } from 'react'
-import {
-  emptyLocalStorage,
-  saveToLocalStorage,
-} from '../../../../utils/helpers'
+import { saveToLocalStorage } from '../../../../utils/helpers'
 import { ErrorMessage } from '../../../../components/ErrorMessage/ErrorMessage'
 import Error from '../../../../components/ErrorMessage/Error'
 const Verification = () => {
@@ -31,9 +28,6 @@ const Verification = () => {
       description: `OPT resent to ${email}`,
     })
   }
-  const pwdRef = useRef(null)
-  const emailRef = useRef()
-  const [searchParams] = useSearchParams()
   const formDescription = {
     image: imageDesc,
     header: 'Graphs and charts',
@@ -44,12 +38,10 @@ const Verification = () => {
   const [errMsg, setErrMsg] = useState('')
   const [customerVerificationCode, { data, isLoading }] =
     useCustomerVerificationCodeMutation()
-  const emailInvite = searchParams.get('email')
-  const [resendCustomerOtp, { isLoading: otpisLoading, reSendData }] =
+  const [resendCustomerOtp, { isLoading: otpIsLoading }] =
     useResendCustomerOtpMutation()
   const navigate = useNavigate()
   const onFinish = async (values) => {
-    console.log('verifications values', values)
     try {
       await customerVerificationCode({
         email: email.state.email,
@@ -62,13 +54,11 @@ const Verification = () => {
     }
   }
   const handleResendOtp = async () => {
-    console.log('Email values>>>>>>> ', email)
     const resendparams = {
       email: email.state.email,
       password: data?.password,
     }
     try {
-      console.log('Looking for values>>>>>>> ', resendparams)
       await resendCustomerOtp({ resendparams }).unwrap()
       openNotification(email?.state?.email)
     } catch (err) {
@@ -82,21 +72,6 @@ const Verification = () => {
       saveToLocalStorage('access', token)
     }
   }, [data])
-
-  useEffect(() => {
-    console.log('whats here: ', reSendData)
-    if (reSendData) {
-      navigate('/verification', {
-        state: { email: email.state.email, password: data?.password },
-      })
-    }
-  })
-  useEffect(() => {
-    console.log('email-invite here: ', emailInvite)
-    if (emailInvite) {
-      emptyLocalStorage()
-    }
-  }, [emailInvite])
 
   return (
     <div className={classes.Verification}>
