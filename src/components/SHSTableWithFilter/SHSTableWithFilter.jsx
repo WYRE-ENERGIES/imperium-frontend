@@ -68,6 +68,7 @@ const SHSTableWithFilter = ({
         style={{ width: '100%' }}
         scroll={{ x: '100%' }}
         columns={columns}
+        rowKey={'invitee_email'}
         dataSource={data}
         className={classes.SHSTable__table}
         pagination={{

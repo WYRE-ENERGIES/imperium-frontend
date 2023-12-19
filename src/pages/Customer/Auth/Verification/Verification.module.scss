@@ -1,14 +1,19 @@
+@import '../../../../components/Auth/Forms/variables.module';
+
+
 .Verification {
   &__Form {
     width: 300px;
     margin-top: 15%;
   }
+
   &__Message {
     color: red;
     font-size: 14px;
     position: relative;
     top: 15px;
   }
+
   &__Input {
     font-size: 15px !important;
     padding: 7px 10px;
@@ -31,8 +36,10 @@
     width: 100%;
     line-height: 30px;
   }
+
   &__content {
     width: 400px;
+
     img {
       margin-top: -13.3%;
       width: 280px;
@@ -47,8 +54,29 @@
       padding: 0 22px;
     }
   }
+
   &__Error {
     margin-bottom: -1rem;
+  }
+}
+
+.Otp__Resend {
+  cursor: pointer;
+  width: 80px;
+  border-radius: $borderRadius;
+  border: none;
+  background: $dark-green;
+  color: white;
+
+  box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05);
+
+  &:hover {
+    background: #294620;
+    cursor: pointer;
+  }
+  &:disabled {
+    background: #517a44;
+    cursor: not-allowed;
   }
 }
 
@@ -58,6 +86,7 @@
       display: block;
       overflow-x: hidden;
     }
+
     &__Form {
       width: 100%;
       margin-top: 30%;

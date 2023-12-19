@@ -1,8 +1,13 @@
 import React, { useState } from 'react'
-import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
+import {
+  redirect,
+  useLocation,
+  useNavigate,
+  useSearchParams,
+} from 'react-router-dom'
 
 import '../../../../components/Auth/Forms/global.module.scss'
-import { Row, Form, Input, notification } from 'antd'
+import { Row, Form, Input, notification, InputNumber } from 'antd'
 
 import {
   useCustomerVerificationCodeMutation,
@@ -38,6 +43,7 @@ const Verification = () => {
   const [errMsg, setErrMsg] = useState('')
   const [customerVerificationCode, { data, isLoading }] =
     useCustomerVerificationCodeMutation()
+
   const [resendCustomerOtp, { isLoading: otpIsLoading }] =
     useResendCustomerOtpMutation()
   const navigate = useNavigate()
@@ -53,7 +59,8 @@ const Verification = () => {
       setErrMsg(ErrorMessage(err?.data?.detail))
     }
   }
-  const handleResendOtp = async () => {
+  const handleResendOtp = async (e) => {
+    e.preventDefault()
     const resendparams = {
       email: email.state.email,
       password: data?.password,
@@ -100,21 +107,27 @@ const Verification = () => {
                 {errMsg && <Error Errormsg={errMsg} />}
                 <div className={classes.Otp}>
                   {errMsg && (
-                    <div style={{ textAlign: 'center', marginTop: '5px' }}>
+                    <div
+                      style={{
+                        textAlign: 'center',
+                        marginTop: '5px',
+                        marginBottom: '8px',
+                      }}
+                    >
                       Need a new code?{' '}
                       <button
                         onClick={handleResendOtp}
                         className={classes.Otp__Resend}
+                        disabled={otpIsLoading}
                       >
-                        <span style={{ color: 'white', background: '#294620' }}>
-                          Resend
-                        </span>
+                        <span>Resend</span>
                       </button>
                     </div>
                   )}
                 </div>
               </div>
               <Form.Item
+                style={{ paddingTop: '10px' }}
                 label={
                   <p
                     style={{
@@ -140,6 +153,14 @@ const Verification = () => {
                   placeholder="Enter code"
                   style={{ marginTop: '-1rem' }}
                   maxLength={4}
+                  min={1}
+                  max={4}
+                  onKeyPress={(event) => {
+                    if (!/[0-9]/.test(event.key)) {
+                      event.preventDefault()
+                    }
+                  }}
+                  // max={9999}
                 />
               </Form.Item>
 
