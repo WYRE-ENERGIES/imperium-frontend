@@ -12,8 +12,8 @@ const ForgotPasswordPage = () => {
     useCustomerforgotPasswordMutation()
   const openNotification = (email) => {
     notification.success({
-      message: 'OTP sent!',
-      description: `OTP has been sent to ${email}`,
+      message: 'If your email is found, an OTP would be sent to you.!',
+      description: `Check ''${email}'' for OTP`,
     })
   }
   const navigate = useNavigate()

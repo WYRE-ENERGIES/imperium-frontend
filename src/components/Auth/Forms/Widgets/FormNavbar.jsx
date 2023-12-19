@@ -47,12 +47,12 @@ const FormNavbar = ({
           <img src={btnColor1 === '#FFFF' ? CustomerLogo : AdminLogo} alt="" />
         </div>
         <div className={classes.Navbar__btn}>
-          <Link
+          {/* <Link
             style={{ background: btnColor1, color: txtColor1 }}
             to={btnColor1 === '#FFFF' ? '/sign-up' : '/admin/sign-up'}
           >
             Sign Up
-          </Link>
+          </Link> */}
           <Link
             style={{ background: btnColor2, color: txtColor2 }}
             to={btnColor1 === '#FFFF' ? '/' : '/admin/sign-in'}
