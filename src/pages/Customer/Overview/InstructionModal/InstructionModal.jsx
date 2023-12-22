@@ -40,14 +40,14 @@ const InstructionModal = ({ open, isAdmin, setOpen }) => {
           >
             Visit Imperium Ecommerce to view all SHS offers
           </a>
-          <a
+          {/* <a
             href="mailto:imperiumbysterling@gmail.com"
             rel="noreferrer"
             target="_blank"
             className={classes.InstructionModal__buttonBottom}
           >
             Contact Support
-          </a>
+          </a> */}
           <div
             className={classes.InstructionModal__logoutBottom}
             onClick={onLogout}
