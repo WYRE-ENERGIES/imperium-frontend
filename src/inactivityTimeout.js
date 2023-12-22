@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 // import { logOutUser } from 'path/to/authSlice'; // Replace with the actual path
-import { logOutUser } from '../features/slices/auth/authSlice'
+import { logOutUser } from './features/slices/auth/authSlice'
 
 const InactivityTimeout = ({ timeoutInSeconds }) => {
   const dispatch = useDispatch();
