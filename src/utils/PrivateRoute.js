@@ -7,6 +7,8 @@ import { useIdleTimer } from 'react-idle-timer'
 import { useDispatch } from 'react-redux'
 import { logOutUser } from '../features/slices/auth/authSlice'
 
+const DEFAULT_TIMER = 10
+
 const PrivateRoute = ({ pathTo, isAdmin }) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -28,7 +30,9 @@ const PrivateRoute = ({ pathTo, isAdmin }) => {
       // checking if current date is greater than last active date
       const lastActiveInDate = new Date(getLastActiveDate)
       const IDLETIME_IN_MINS =
-        (Number(process.env.REACT_APP_IDLETIME_IN_MINS) || 1) * 60 * 1000
+        (Number(process.env.REACT_APP_IDLETIME_IN_MINS) || DEFAULT_TIMER) *
+        60 *
+        1000
       var duration = Date.now() - lastActiveInDate
       if (duration > IDLETIME_IN_MINS) {
         onLogout()
@@ -40,7 +44,10 @@ const PrivateRoute = ({ pathTo, isAdmin }) => {
   useIdleTimer({
     onIdle,
     onActive,
-    timeout: (Number(process.env.REACT_APP_IDLETIME_IN_MINS) || 1) * 60 * 1000,
+    timeout:
+      (Number(process.env.REACT_APP_IDLETIME_IN_MINS) || DEFAULT_TIMER) *
+      60 *
+      1000,
     throttle: 500,
   })
   return userRole() === pathTo ? (
