@@ -81,11 +81,12 @@ const Support = () => {
       title: 'Date',
       key: 'purchased_date',
       dataIndex: 'created_at',
+      width: '15%',
       sorter: (a, b) =>
         a.created_at ? a.created_at.localeCompare(b.created_at) : null,
       render: (value, record) => (
         <p style={{ color: record.status ? '' : '#C4C4C4' }}>
-          {moment(value).format('DD/MM/YYYY')}
+          {new Date(value).toDateString()}
         </p>
       ),
     },
@@ -93,16 +94,16 @@ const Support = () => {
       title: 'Client Name',
       dataIndex: 'client',
       key: 'client',
+      width: '10%',
     },
     {
       title: 'User Name',
       dataIndex: 'user',
-      key: 'user',
     },
     {
       title: 'Subject',
       dataIndex: 'subject',
-      key: 'subject',
+      width: '25%',
     },
     {
       title: 'Priority',
@@ -199,8 +200,6 @@ const Support = () => {
       search: debounceValue,
       ordering,
     })
-
-  console.log('debounchd value ----======', debounceValue)
 
   const {
     isLoading: isAnalyticsLoading,
