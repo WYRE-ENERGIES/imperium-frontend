@@ -46,8 +46,9 @@ const InstructionModal = ({ open, isAdmin, setOpen }) => {
         </div>
         <h1>Welcome to Imperium Solar house system</h1>
         <h4>
-          You do not have an active SHS connected to this account. How would you
+          You do not have an active SHS connected to this account. Would you
           like to set up an SHS and enjoy all Imperium features?
+          <div>You can contact support via email to imperiumbysterling@gmail.com</div>
         </h4>
         <div className={classes.InstructionModal__buttons}>
           <a
