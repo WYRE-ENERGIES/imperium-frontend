@@ -6,25 +6,18 @@ import ErrorPage from '../components/Error/DisabledAccount/ErrorPage'
 import { useIdleTimer } from 'react-idle-timer'
 import { useDispatch } from 'react-redux'
 import { logOutUser } from '../features/slices/auth/authSlice'
-const redirectTo = (isAdmin, token) => {
-  let path = '/'
-  if (token) {
-    path = isAdmin ? '/admin/overview' : '/overview'
-  } else {
-    path = isAdmin ? '/admin' : '/'
-  }
-  return path
-}
+
 const PrivateRoute = ({ pathTo, isAdmin }) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
+
   const onLogout = () => {
-    const navigateTo = isAdmin ? '/admin/sign-in' : '/'
+    const getAdmin = localStorage.getItem('user_role')
+    const navigateTo = getAdmin === '"admin"' ? '/admin/sign-in' : '/'
     dispatch(logOutUser())
     navigate(navigateTo)
   }
   const onIdle = () => {
-    console.log('user herwe ', isAuthenticated())
     onLogout()
   }
 
@@ -44,13 +37,9 @@ const PrivateRoute = ({ pathTo, isAdmin }) => {
     localStorage.setItem('last_active_time', new Date())
   }
 
-  // const onAction = () => {
-  //   setCount(count + 1)
-  // }
   useIdleTimer({
     onIdle,
     onActive,
-    // onAction,
     timeout: (Number(process.env.REACT_APP_IDLETIME_IN_MINS) || 1) * 60 * 1000,
     throttle: 500,
   })
