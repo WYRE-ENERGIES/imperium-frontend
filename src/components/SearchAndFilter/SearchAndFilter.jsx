@@ -44,8 +44,10 @@ const SearchAndFilter = ({
     <div className={classes.SearchAndFilter}>
       {showSearch && (
         <DatePicker
-          defaultValue={dayjs('01/12/2023', dateFormat)}
           format={dateFormat}
+          onChange={(value) =>
+            handleSearch({ target: { value: value.format('DD/MM/YYYY') } })
+          }
         />
       )}
       {showSearch && (

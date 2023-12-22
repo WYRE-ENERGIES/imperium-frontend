@@ -1,6 +1,7 @@
 import React, { Suspense, lazy, useState, useTransition } from 'react'
 import { Spin, Tag, Tooltip } from 'antd'
-import { ToastContainer, toast } from 'react-toastify'
+import { ToastContainer } from 'react-toastify'
+import moment from 'moment'
 import { supportPriorityEnums, supportStatusEnums } from '../../../utils/enums'
 import {
   useGetAdminSupportTicketsQuery,
@@ -84,7 +85,7 @@ const Support = () => {
         a.created_at ? a.created_at.localeCompare(b.created_at) : null,
       render: (value, record) => (
         <p style={{ color: record.status ? '' : '#C4C4C4' }}>
-          {new Date(value).toLocaleDateString()}
+          {moment(value).format('DD/MM/YYYY')}
         </p>
       ),
     },
@@ -198,6 +199,8 @@ const Support = () => {
       search: debounceValue,
       ordering,
     })
+
+  console.log('debounchd value ----======', debounceValue)
 
   const {
     isLoading: isAnalyticsLoading,
