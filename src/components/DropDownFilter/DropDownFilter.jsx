@@ -9,7 +9,7 @@ const DropDownFilter = ({ options, onFilterChanged, value, cancelValue }) => {
       <MdFilterList />
       <Select
         value={value}
-        placeholder="Filter by"
+        placeholder="Sort by"
         onChange={(e) => onFilterChanged(e || cancelValue)}
         size="large"
         allowClear
