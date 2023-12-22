@@ -26,10 +26,12 @@ const InstructionModal = ({ open, isAdmin, setOpen }) => {
           <CloseOutlined />
         </div>
         <h1>Welcome to Imperium Solar house system</h1>
-        <h4>
+        <h3>
           You do not have an active SHS connected to this account. How would you
-          like to set up an SHS and enjoy all Imperium features? Send an email
-          to imperiumbysterling@gmail.com
+          like to set up an SHS and enjoy all Imperium features?
+        </h3>
+        <h4>
+          Send an email to imperiumbysterling@gmail.com
         </h4>
         <div className={classes.InstructionModal__buttons}>
           <a
