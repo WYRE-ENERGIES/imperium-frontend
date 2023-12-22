@@ -17,26 +17,23 @@ const ForgotPasswordPage = () => {
     })
   }
   const navigate = useNavigate()
-  let errorMsg = ''
+  // let errorMsg = ''
   const onFinish = async (values) => {
     try {
       await customerforgotPassword({
         email: values.email,
       }).unwrap()
-      if (values.code !== 200) {
-        errorMsg += values.message
-        setErrMsg(errorMsg)
-      } else {
-        openNotification(values.email)
-        navigate('/otp', { state: { email: values.email } })
-      }
+      openNotification(values.email)
+      navigate('/otp', { state: { email: values.email } })
     } catch (err) {
-      // let errorMsg = ''
+      let errorMsg = ''
       if (err.status === 401) {
         errorMsg += err?.data?.email?.message || err?.data?.email
-        // setErrMsg(errorMsg)
+        setErrMsg(errorMsg)
       } else if (err.status === 400) {
         setErrMsg(err?.data?.email?.message || err?.data?.email)
+      } else if (err.status === 409) {
+        setErrMsg(err?.data?.message || err?.data)
       } else if (err.status === 500) {
         setErrMsg('Server could not be reached. Try later!')
       } else {
