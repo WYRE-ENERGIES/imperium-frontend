@@ -4,6 +4,7 @@
 // import React from 'react'
 // import ReactDOM from 'react-dom/client'
 // import { store } from './store'
+// import InactivityTimeout from './path/to/InactivityTimeout' // Adjust the path
 
 // const root = ReactDOM.createRoot(document.getElementById('root'))
 // root.render(
@@ -27,9 +28,9 @@ const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <InactivityTimeout timeoutInSeconds={100}>
+      <InactivityTimeout timeoutInSeconds={10}>
         <App />
       </InactivityTimeout>
     </Provider>
   </React.StrictMode>,
-)
+) 
