@@ -4,7 +4,6 @@ import { Provider } from 'react-redux'
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { store } from './store'
-import InactivityTimeout from './path/to/InactivityTimeout' // Adjust the path
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
