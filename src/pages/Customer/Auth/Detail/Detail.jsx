@@ -50,7 +50,7 @@ const Details = () => {
   const onFinish = async (values) => {
     try {
       await customerUpdateDetails({
-        credentials: { ...values, phone: `+234${values?.phone}` },
+        credentials: { ...values, phone: `${values?.phone}` },
       }).unwrap()
       navigate('/business')
       saveToLocalStorage('userInfo', { ...userInfo, ...values })
