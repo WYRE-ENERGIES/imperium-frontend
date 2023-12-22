@@ -45,7 +45,7 @@ const InstructionModal = ({ open, isAdmin, setOpen }) => {
             target="_blank"
             className={classes.InstructionModal__buttonBottom}
           >
-            Contact Support
+            Contact Support on imperiumbysterling@gmail.com
           </a>
           <div
             className={classes.InstructionModal__logoutBottom}
