@@ -33,4 +33,4 @@ root.render(
       </InactivityTimeout>
     </Provider>
   </React.StrictMode>,
-) 
+)
