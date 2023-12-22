@@ -31,6 +31,8 @@ const ForgotPasswordPage = () => {
         setErrMsg(errorMsg)
       } else if (err.status === 400) {
         setErrMsg(err?.data?.email?.message || err?.data?.email)
+      } else if (err.status === 409) {
+        setErrMsg(err?.data?.message || err?.data)
       } else if (err.status === 500) {
         setErrMsg('Server could not be reached. Try later!')
       } else {
