@@ -29,8 +29,8 @@ const InstructionModal = ({ open, isAdmin, setOpen }) => {
         <h4>
           You do not have an active SHS connected to this account. How would you
           like to set up an SHS and enjoy all Imperium features?
-          <div>You can contact support via email to imperiumbysterling@gmail.com</div>
         </h4>
+        <h4>You can contact support via email to imperiumbysterling@gmail.com</h4>
         <div className={classes.InstructionModal__buttons}>
           <a
             href="https://www.imperiumng.com/"
