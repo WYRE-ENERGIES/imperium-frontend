@@ -1,4 +1,5 @@
-import { Button, Input, Select } from 'antd'
+import { Button, DatePicker, Input, Select } from 'antd'
+import dayjs from 'dayjs'
 import { CloudDownloadOutlined, SearchOutlined } from '@ant-design/icons'
 import React, { Suspense, lazy } from 'react'
 
@@ -6,6 +7,8 @@ import classes from './SearchAndFilter.module.scss'
 import ExportFileButton from '../ExportButton/ExportFileButton'
 
 const DropDownFilter = lazy(() => import('../DropDownFilter/DropDownFilter'))
+
+const dateFormat = 'DD/MM/YYYY'
 
 const { Option } = Select
 const prefix = (
@@ -39,6 +42,14 @@ const SearchAndFilter = ({
 
   return (
     <div className={classes.SearchAndFilter}>
+      {showSearch && (
+        <DatePicker
+          format={dateFormat}
+          onChange={(value) =>
+            handleSearch({ target: { value: value.format('DD/MM/YYYY') } })
+          }
+        />
+      )}
       {showSearch && (
         <Input
           placeholder="Search"

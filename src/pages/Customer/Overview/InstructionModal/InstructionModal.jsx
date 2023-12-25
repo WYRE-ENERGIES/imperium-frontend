@@ -26,10 +26,11 @@ const InstructionModal = ({ open, isAdmin, setOpen }) => {
           <CloseOutlined />
         </div>
         <h1>Welcome to Imperium Solar house system</h1>
-        <h4>
+        <h3>
           You do not have an active SHS connected to this account. How would you
           like to set up an SHS and enjoy all Imperium features?
-        </h4>
+        </h3>
+        <h4>Send an email to imperiumbysterling@gmail.com</h4>
         <div className={classes.InstructionModal__buttons}>
           <a
             href="https://www.imperiumng.com/"
@@ -39,14 +40,14 @@ const InstructionModal = ({ open, isAdmin, setOpen }) => {
           >
             Visit Imperium Ecommerce to view all SHS offers
           </a>
-          <a
+          {/* <a
             href="mailto:imperiumbysterling@gmail.com"
             rel="noreferrer"
             target="_blank"
             className={classes.InstructionModal__buttonBottom}
           >
             Contact Support
-          </a>
+          </a> */}
           <div
             className={classes.InstructionModal__logoutBottom}
             onClick={onLogout}

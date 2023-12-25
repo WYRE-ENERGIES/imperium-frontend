@@ -156,7 +156,7 @@ const AccountDetails = () => {
                     placeholder="Enter phone number"
                     onChange={(e) =>
                       phoneValidation(
-                        `+234${e.target.value}`,
+                        `${e.target.value}`,
 
                         phoneRef,
 
