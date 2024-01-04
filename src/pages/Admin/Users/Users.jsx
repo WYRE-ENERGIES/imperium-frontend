@@ -188,6 +188,7 @@ const Users = () => {
           tableTitle="Users"
           isLoading={isFetching}
           handleSearch={handleSearch}
+          removeDate={true}
           footer={() => (
             <TableFooter
               pageNo={data?.page}
