@@ -1,7 +1,10 @@
 import { Col, Form, Input, Row, notification } from 'antd'
 import React, { useState, useRef, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { isValidPhoneNumber } from 'react-phone-number-input'
+import PhoneInput, {
+  isValidPhoneNumber,
+  parsePhoneNumber,
+} from 'react-phone-number-input'
 import FormButton from '../../../../components/Auth/Forms/Widgets/FormButton'
 import Error from '../../../../components/ErrorMessage/Error'
 import { ErrorMessage } from '../../../../components/ErrorMessage/ErrorMessage'
@@ -21,10 +24,13 @@ import {
   nameValidation,
   phoneValidation,
 } from '../../../../components/RegEx/RegEx'
+import './accountDetail.css'
+
 const AccountDetails = () => {
   const [details, setDetails] = useState(null)
   const [form] = Form.useForm()
   const userInfo = getItemFromLocalStorage('userInfo')
+  const [phone, setPhone] = useState('')
 
   const fnameRef = useRef('')
   const lnameRef = useRef('')
@@ -39,12 +45,25 @@ const AccountDetails = () => {
 
   const [customerUpdateDetails, { data, isLoading }] =
     useCustomerUpdateDetailsMutation()
+
   const openNotification = () => {
     notification.success({
       message: 'Successful',
       description: `Details successfully updated.`,
     })
   }
+
+  const handlePhoneChange = (value) => {
+    phoneValidation(
+      value,
+      phoneRef,
+      'Invalid phone number',
+      setFormValid,
+      isValidPhoneNumber,
+    )
+    setPhone(value)
+  }
+
   const onFinish = async (values) => {
     try {
       await customerUpdateDetails({
@@ -62,6 +81,9 @@ const AccountDetails = () => {
   useEffect(() => {
     if (userData) {
       setDetails(userData)
+      setPhone(userData.phone)
+      const abc = parsePhoneNumber(userData.phone)
+      console.log('this is the abc', abc)
     }
   }, [userData])
 
@@ -140,6 +162,7 @@ const AccountDetails = () => {
                 {' '}
                 <Form.Item
                   label="Phone Number"
+                  className={classes.DetailsForm__Elem}
                   name="phone"
                   rules={[
                     {
@@ -149,8 +172,8 @@ const AccountDetails = () => {
                   ]}
                   extra={<small ref={phoneRef}></small>}
                 >
-                  <Input
-                    maxLength={15}
+                  {/* <Input
+                    maxLength={11}
                     className={classes.AccountDetails__Input}
                     // addonBefore="+ 234"
                     placeholder="Enter phone number"
@@ -165,6 +188,16 @@ const AccountDetails = () => {
                         isValidPhoneNumber,
                       )
                     }
+                  /> */}
+                  <PhoneInput
+                    placeholder="Enter phone number"
+                    value={phone}
+                    onChange={(e) => handlePhoneChange(e)}
+                    // defaultCountry="NG"
+                    numberInputProps={{
+                      maxLength: 13,
+                    }}
+                    initialValueFormat="national"
                   />
                 </Form.Item>
               </div>
