@@ -33,6 +33,7 @@ const SearchAndFilter = ({
   url,
   tableName,
   cancelValue,
+  removeDate,
 }) => {
   const options = filterOptions?.map((option, index) => (
     <Option key={index} value={option.value}>
@@ -42,12 +43,12 @@ const SearchAndFilter = ({
 
   return (
     <div className={classes.SearchAndFilter}>
-      {showSearch && (
+      {showSearch && !removeDate && (
         <DatePicker
           format={dateFormat}
-          onChange={(value) =>
-            handleSearch({ target: { value: value.format('DD/MM/YYYY') } })
-          }
+          onChange={(value) => {
+            handleSearch({ target: { value: value?.format('DD/MM/YYYY') } })
+          }}
         />
       )}
       {showSearch && (

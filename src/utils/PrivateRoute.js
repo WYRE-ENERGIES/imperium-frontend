@@ -1,6 +1,6 @@
 import { Navigate, Outlet, useNavigate } from 'react-router-dom'
 
-import React from 'react'
+import React, { useEffect } from 'react'
 import { isAuthenticated, userRole } from './helpers'
 import ErrorPage from '../components/Error/DisabledAccount/ErrorPage'
 import { useIdleTimer } from 'react-idle-timer'
@@ -12,7 +12,6 @@ const DEFAULT_TIMER = 10
 const PrivateRoute = ({ pathTo, isAdmin }) => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
-
   const onLogout = () => {
     const getAdmin = localStorage.getItem('user_role')
     const navigateTo = getAdmin === '"admin"' ? '/admin/sign-in' : '/'
@@ -24,8 +23,14 @@ const PrivateRoute = ({ pathTo, isAdmin }) => {
   }
 
   const onActive = () => {
+    const getRole = localStorage.getItem('user_role')
+    const rolesOfUser = getRole === '"admin"' ? 'admin' : 'client'
+
     // if last active time is greater than current time, log user our
-    const getLastActiveDate = localStorage.getItem('last_active_time')
+    const getLastActiveDate = localStorage.getItem(
+      `${rolesOfUser}last_active_time`,
+    )
+
     if (getLastActiveDate) {
       // checking if current date is greater than last active date
       const lastActiveInDate = new Date(getLastActiveDate)
@@ -38,8 +43,12 @@ const PrivateRoute = ({ pathTo, isAdmin }) => {
         onLogout()
       }
     }
-    localStorage.setItem('last_active_time', new Date())
+    localStorage.setItem(`${rolesOfUser}last_active_time`, new Date())
   }
+
+  useEffect(() => {
+    onActive()
+  }, [])
 
   useIdleTimer({
     onIdle,
