@@ -17,6 +17,7 @@ const ForgotPasswordPage = () => {
     })
   }
   const navigate = useNavigate()
+  // let errorMsg = ''
   const onFinish = async (values) => {
     try {
       await customerforgotPassword({

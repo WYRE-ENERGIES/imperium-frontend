@@ -113,6 +113,7 @@ const PanelAnalytic = () => {
             isAdmin={true}
             handleSearch={handleSearch}
             isLoading={isFetching}
+            showSearch={false}
             footer={() => (
               <TableFooter
                 pageNo={data?.page}

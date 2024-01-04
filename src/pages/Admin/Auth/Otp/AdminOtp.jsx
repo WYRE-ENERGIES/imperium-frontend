@@ -71,14 +71,29 @@ const AdminOTP = () => {
         >
           {errMsg && <small className={classes.Otp__Message}>{errMsg}</small>}
           <div className={classes.Otp__Input}>
-            <OTPInput
-              value={OTP}
-              onChange={setOTP}
-              autoFocus
-              OTPLength={4}
-              otpType="number"
-              disabled={false}
-            />
+            <Form.Item
+              name="title"
+              required
+              rules={[
+                {
+                  required: true,
+                  message: 'This field is required.',
+                },
+                {
+                  min: 4,
+                  message: 'This field must be four numbers.',
+                },
+              ]}
+            >
+              <OTPInput
+                value={OTP}
+                onChange={setOTP}
+                autoFocus
+                OTPLength={4}
+                otpType="number"
+                disabled={false}
+              />
+            </Form.Item>
           </div>
 
           <FormButton

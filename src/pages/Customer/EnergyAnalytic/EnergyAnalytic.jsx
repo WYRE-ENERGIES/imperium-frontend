@@ -186,6 +186,7 @@ const EnergyAnalytic = () => {
             filterOptions={[]}
             handleSearch={handleSearch}
             isLoading={isFetching}
+            showSearch={false}
             footer={() => (
               <TableFooter
                 pageNo={data?.page}
