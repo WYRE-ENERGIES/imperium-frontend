@@ -167,7 +167,7 @@ const Details = () => {
                   }}
                 /> */}
                 <Input
-                  maxLength={11}
+                  maxLength={15}
                   className={classes.AccountDetails__Input}
                   // addonBefore="+ 234"
                   placeholder="Enter phone number"
