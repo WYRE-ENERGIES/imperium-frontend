@@ -12,6 +12,7 @@
     "antd": "^5.1.5",
     "apexcharts": "^3.41.0",
     "axios": "^1.2.5",
+    "helmet": "^7.1.0",
     "jwt-decode": "^3.1.2",
     "node-sass": "^7.0.3",
     "otp-input-react": "^0.3.0",
@@ -34,9 +35,10 @@
   },
   "scripts": {
     "lint": "eslint . --fix",
-    "start": "react-scripts start",
+    "start": "node .",
+    "prestart": "npm run build",
     "dev": "npm run lint & npm start",
-    "build": "react-scripts build",
+    "build": "./node_modules/.bin/react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

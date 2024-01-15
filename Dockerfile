@@ -7,18 +7,20 @@ COPY package*.json .
 RUN npm install --production
 COPY . .
 RUN npm run build
-
-
-# Production Stage
-FROM node:16.3.0-alpine AS PRODUCTION_STAGE
-WORKDIR /app
-COPY --from=BUILD_IMAGE /app/package*.json ./
-COPY --from=BUILD_IMAGE /app/build ./build
-
 EXPOSE 3000
-RUN npm install -g serve
+CMD ["npm", "start"]
 
-EXPOSE 3000
-# RUN serve -s build
+# # Production Stage
+# FROM node:16.3.0-alpine AS PRODUCTION_STAGE
+# WORKDIR /app
+# COPY --from=BUILD_IMAGE /app/package*.json ./
+# RUN npm install --production
+# COPY --from=BUILD_IMAGE /app/build ./build
 
-CMD ["serve", "-s", "build"]
+# EXPOSE 3000
+# # RUN npm install -g serve
+
+# # EXPOSE 3000
+# # RUN serve -s build
+
+# CMD ["npm", "start"]
