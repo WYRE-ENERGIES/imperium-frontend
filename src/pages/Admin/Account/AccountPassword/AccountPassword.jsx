@@ -9,6 +9,7 @@ import { useAdminChangePasswordMutation } from '../../../../features/slices/auth
 import { useNavigate } from 'react-router-dom'
 import { ErrorMessage } from '../../../../components/ErrorMessage/ErrorMessage'
 import Error from '../../../../components/ErrorMessage/Error'
+import { sha256 } from 'js-sha256'
 
 const AccountPassword = () => {
   const [errMsg, setErrMsg] = useState('')
@@ -29,6 +30,8 @@ const AccountPassword = () => {
       setErrMsg("New passwords don't match")
     } else {
       try {
+        values.new_password = sha256(values.new_password)
+        values.old_password = sha256(values.old_password)
         await adminChangePassword({
           old_password: values.old_password,
           new_password: values.new_password,

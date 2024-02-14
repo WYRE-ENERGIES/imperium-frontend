@@ -9,6 +9,7 @@ import FormButton from '../../../../components/Auth/Forms/Widgets/FormButton'
 import Error from '../../../../components/ErrorMessage/Error'
 import { ErrorMessage } from '../../../../components/ErrorMessage/ErrorMessage'
 import { passwordLengthValidation } from '../../../../components/RegEx/RegEx'
+import { sha256 } from 'js-sha256'
 
 const NewPasswordPage = () => {
   const [errMsg, setErrMsg] = useState('')
@@ -32,7 +33,7 @@ const NewPasswordPage = () => {
       try {
         await customerNewPassword({
           email: email.state.email,
-          password: values.password1,
+          password: sha256(values.password1),
           code: code?.state?.code,
         }).unwrap()
         openNotification(email?.state?.email)

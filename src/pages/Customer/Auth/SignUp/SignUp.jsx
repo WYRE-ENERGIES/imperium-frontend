@@ -25,6 +25,7 @@ import {
   emailValidation,
   passwordLengthValidation,
 } from '../../../../components/RegEx/RegEx'
+import { sha256 } from 'js-sha256'
 const SignUp = () => {
   const formDescription = {
     image: imageDesc,
@@ -48,6 +49,7 @@ const SignUp = () => {
       return
     }
     try {
+      values.password = sha256(values.password)
       await customerRegister({
         credentials: values,
       }).unwrap()

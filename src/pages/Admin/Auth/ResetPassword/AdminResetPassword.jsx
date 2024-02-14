@@ -8,6 +8,7 @@ import FormButton from '../../../../components/Auth/Forms/Widgets/FormButton'
 import classes from './AdminResetPassword.module.scss'
 import { ErrorMessage } from '../../../../components/ErrorMessage/ErrorMessage'
 import { passwordLengthValidation } from '../../../../components/RegEx/RegEx'
+import { sha256 } from 'js-sha256'
 const AdminResetPassword = () => {
   const [errMsg, setErrMsg] = useState('')
   const [formValid, setFormValid] = useState(false)
@@ -21,6 +22,8 @@ const AdminResetPassword = () => {
       setErrMsg('New passwords do not match!')
     } else {
       try {
+        values.password1 = sha256(values.password1)
+        values.password2 = sha256(values.password2)
         await adminNewPassword({
           email: email.state.email,
           password: values.password1,
