@@ -9,6 +9,7 @@ import { ErrorMessage } from '../../../../components/ErrorMessage/ErrorMessage'
 import Error from '../../../../components/ErrorMessage/Error'
 import { useRef } from 'react'
 import { passwordLengthValidation } from '../../../../components/RegEx/RegEx'
+import { sha256 } from 'js-sha256'
 
 const AccountPassword = () => {
   const [form] = Form.useForm()
@@ -31,6 +32,8 @@ const AccountPassword = () => {
       setErrMsg("New passwords don't match")
     } else
       try {
+        values.new_password1 = sha256(values.new_password1)
+        values.new_password2 = sha256(values.new_password2)
         await customerChangePassword({
           credentials: values,
         }).unwrap()

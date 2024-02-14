@@ -16,6 +16,7 @@ import classes from './AdminSignIn.module.scss'
 import FormHeader from '../../../../components/Auth/Forms/Widgets/FormHeader'
 import { ErrorMessage } from '../../../../components/ErrorMessage/ErrorMessage'
 import Error from '../../../../components/ErrorMessage/Error'
+import { sha256 } from 'js-sha256'
 
 const AdminSignIn = () => {
   const formDescription = {
@@ -32,6 +33,7 @@ const AdminSignIn = () => {
 
   const onFinish = async (values) => {
     try {
+      values.password = sha256(values.password)
       await login({
         credentials: values,
         endpoint: 'imperium-admin/auth/login/',

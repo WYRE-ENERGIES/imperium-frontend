@@ -25,6 +25,7 @@ import { useEffect } from 'react'
 import { saveToLocalStorage } from '../../../../utils/helpers'
 import { ErrorMessage } from '../../../../components/ErrorMessage/ErrorMessage'
 import Error from '../../../../components/ErrorMessage/Error'
+import { sha256 } from 'js-sha256'
 const Verification = () => {
   const email = useLocation()
   const openNotification = (email) => {
@@ -66,6 +67,7 @@ const Verification = () => {
       password: data?.password,
     }
     try {
+      resendparams.password = sha256(resendparams.password)
       await resendCustomerOtp({ resendparams }).unwrap()
       openNotification(email?.state?.email)
     } catch (err) {

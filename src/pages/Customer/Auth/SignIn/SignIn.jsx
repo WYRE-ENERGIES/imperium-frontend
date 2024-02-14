@@ -16,6 +16,7 @@ import FormButton from '../../../../components/Auth/Forms/Widgets/FormButton'
 import FormFooter from '../../../../components/Auth/Forms/Widgets/FormFooter'
 import Error from '../../../../components/ErrorMessage/Error'
 import { ErrorMessage } from '../../../../components/ErrorMessage/ErrorMessage'
+import { sha256 } from 'js-sha256'
 
 const SignIn = () => {
   const formDescription = {
@@ -32,6 +33,7 @@ const SignIn = () => {
 
   const onFinish = async (values) => {
     try {
+      values.password = sha256(values.password)
       await login({
         credentials: values,
         endpoint: '/auth/login/',
