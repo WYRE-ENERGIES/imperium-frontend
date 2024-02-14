@@ -94,7 +94,7 @@ const Performance = ({ performanceLoading, performance }) => {
                 </div>
                 <div>
                   <div>
-                    <small>Battery Voltage</small>
+                    <small>System Voltage</small>
                     <p>{performance?.battery_voltage || 0} volts</p>
                   </div>
                 </div>

@@ -1,7 +1,6 @@
 import React, { Suspense, lazy, useState, useTransition } from 'react'
 import { Spin, Tag, Tooltip } from 'antd'
 import { ToastContainer } from 'react-toastify'
-import moment from 'moment'
 import { supportPriorityEnums, supportStatusEnums } from '../../../utils/enums'
 import {
   useGetAdminSupportTicketsQuery,
