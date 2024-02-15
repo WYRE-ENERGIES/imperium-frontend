@@ -37,7 +37,7 @@
   "scripts": {
     "lint": "eslint . --fix",
     "start": "node .",
-    "prestart": "react-scripts start",
+    "prestart": "npm run build",
     "dev": "npm run lint & npm start",
     "build": "./node_modules/.bin/react-scripts build",
     "test": "react-scripts test",
