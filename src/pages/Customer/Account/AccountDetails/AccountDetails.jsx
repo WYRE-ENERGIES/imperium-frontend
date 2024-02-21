@@ -172,14 +172,14 @@ const AccountDetails = () => {
                   ]}
                   extra={<small ref={phoneRef}></small>}
                 >
-                  {/* <Input
+                  <Input
                     maxLength={11}
                     className={classes.AccountDetails__Input}
                     // addonBefore="+ 234"
                     placeholder="Enter phone number"
                     onChange={(e) =>
                       phoneValidation(
-                        `${e.target.value}`,
+                        `+234${e.target.value}`,
 
                         phoneRef,
 
@@ -188,8 +188,8 @@ const AccountDetails = () => {
                         isValidPhoneNumber,
                       )
                     }
-                  /> */}
-                  <PhoneInput
+                  />
+                  {/* <PhoneInput
                     placeholder="Enter phone number"
                     value={phone}
                     onChange={(e) => handlePhoneChange(e)}
@@ -198,7 +198,7 @@ const AccountDetails = () => {
                       maxLength: 13,
                     }}
                     initialValueFormat="national"
-                  />
+                  /> */}
                 </Form.Item>
               </div>
             </div>

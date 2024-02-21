@@ -157,7 +157,7 @@ const Details = () => {
                 extra={<small ref={phoneRef}></small>}
                 style={{ marginTop: '-25px' }}
               >
-                <PhoneInput
+                {/* <PhoneInput
                   placeholder="Enter phone number"
                   value={phone}
                   onChange={(e) => handlePhoneChange(e)}
@@ -165,9 +165,9 @@ const Details = () => {
                   numberInputProps={{
                     maxLength: 13,
                   }}
-                />
-                {/* <Input
-                  maxLength={15}
+                /> */}
+                <Input
+                  maxLength={11}
                   className={classes.AccountDetails__Input}
                   // addonBefore="+ 234"
                   placeholder="Enter phone number"
@@ -182,7 +182,7 @@ const Details = () => {
                       isValidPhoneNumber,
                     )
                   }
-                /> */}
+                />
               </Form.Item>
               <Form.Item
                 className={classes.DetailsForm__Elem}
